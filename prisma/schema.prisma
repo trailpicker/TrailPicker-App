@@ -1,0 +1,193 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Brand {
+  id      String  @id @default(cuid())
+  name    String
+  website String?
+  logo    String?
+
+  gear Gear[]
+
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  gear Gear[]
+
+  createdAt DateTime @default(now())
+}
+
+model Gear {
+  id String @id @default(cuid())
+
+  name        String
+  description String?
+
+  weight_g Int?
+
+  price_cad Float?
+
+  capacity_l Float?
+
+  temperature_rating Int?
+
+  season String?
+
+  material String?
+
+  brandId String
+  brand   Brand  @relation(fields: [brandId], references: [id])
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  images GearImage[]
+
+  specifications GearSpecification[]
+
+  prices Price[]
+
+  reviews Review[]
+
+  buildItems BuildItem[]
+
+  favorites Favorite[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model GearImage {
+  id String @id @default(cuid())
+
+  url String
+
+  isPrimary Boolean @default(false)
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id], onDelete: Cascade)
+}
+
+model GearSpecification {
+  id String @id @default(cuid())
+
+  key   String
+  value String
+  unit  String?
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id], onDelete: Cascade)
+}
+
+model Retailer {
+  id String @id @default(cuid())
+
+  name    String
+  website String?
+  logo    String?
+
+  prices Price[]
+}
+
+model Price {
+  id String @id @default(cuid())
+
+  price Float
+
+  currency String @default("CAD")
+
+  url String?
+
+  inStock Boolean @default(true)
+
+  lastUpdated DateTime @default(now())
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  retailerId String
+  retailer   Retailer @relation(fields: [retailerId], references: [id])
+}
+
+model User {
+  id String @id @default(cuid())
+
+  username String?
+  email    String  @unique
+
+  builds Build[]
+
+  reviews Review[]
+
+  favorites Favorite[]
+
+  createdAt DateTime @default(now())
+}
+
+model Build {
+  id String @id @default(cuid())
+
+  name String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  items BuildItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BuildItem {
+  id String @id @default(cuid())
+
+  quantity Int @default(1)
+
+  buildId String
+  build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+}
+
+model Review {
+  id String @id @default(cuid())
+
+  rating Int
+
+  title String?
+  body  String?
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Favorite {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, gearId])
+}
