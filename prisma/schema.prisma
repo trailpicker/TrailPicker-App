@@ -140,8 +140,8 @@ model Build {
 
   name String
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
 
   items BuildItem[]
 
@@ -153,6 +153,18 @@ model BuildItem {
   id String @id @default(cuid())
 
   quantity Int @default(1)
+
+  customWeight Int?
+
+  isConsumable Boolean @default(false)
+
+  isWorn Boolean @default(false)
+
+  gearNameSnapshot String?
+
+  weightSnapshot Int?
+
+  priceSnapshot Float?
 
   buildId String
   build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
