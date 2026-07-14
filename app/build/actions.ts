@@ -49,3 +49,17 @@ export async function addGear(
 
   redirect(`/build/${buildId}`);
 }
+export async function removeGear(
+  formData: FormData
+) {
+  const itemId = formData.get("itemId") as string;
+  const buildId = formData.get("buildId") as string;
+
+  await prisma.buildItem.delete({
+    where: {
+      id: itemId,
+    },
+  });
+
+  redirect(`/build/${buildId}`);
+}

@@ -1,27 +1,33 @@
 "use client";
 
-import { removeGearFromBuild } from "@/app/build/[id]/actions";
+import { removeGear } from "@/app/build/actions";
+
+type Props = {
+  itemId: string;
+  buildId: string;
+};
 
 export default function RemoveGearButton({
   itemId,
   buildId,
-}: {
-  itemId: string;
-  buildId: string;
-}) {
+}: Props) {
   return (
-    <form
-      action={async () => {
-        await removeGearFromBuild(
-          itemId,
-          buildId
-        );
-      }}
-    >
+    <form action={removeGear}>
+      <input type="hidden" name="itemId" value={itemId} />
+      <input type="hidden" name="buildId" value={buildId} />
+
       <button
-        className="mt-3 rounded-lg bg-red-600 px-4 py-2 text-white"
+        className="
+          ml-2
+          text-gray-400
+          hover:text-red-600
+          text-2xl
+          font-semibold
+          transition
+        "
+        title="Remove item"
       >
-        Remove
+        ×
       </button>
     </form>
   );

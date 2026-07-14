@@ -108,92 +108,119 @@ export default async function BuildPage({
 
 
                     {/* Header */}
-                    <div className="grid grid-cols-5 p-2 text-xs font-light text-gray-600">
+                    <div className="grid grid-cols-[180px_minmax(0,1fr)_100px_100px_100px] p-3 text-xs font-light text-gray-600">
                         <div>Component</div>
                         <div>Selection</div>
-                        <div>Weight</div>
-                        <div>Price</div>
+                        <div className="text-center pr-5">Weight</div>
+                        <div className="text-center pr-5">Price</div>
                         <div></div>
                     </div>
 
                     <BuildRow
                         name="Backpack"
-                        link="Packs"
+                        gearLink="/gear/packs"
+                        selectCategory="Packs"
                         buildId={build.id}
-                        gear={
+                        item={
                             build.items.find(
                                 (item) =>
                                     item.gear.category.name === "Packs"
-                            )?.gear
+                            )
                         }
                     />
 
                     <BuildRow
                         name="Shelter"
-                        link="Shelter"
+                        gearLink="/gear/shelter"
+                        selectCategory="Shelter"
                         buildId={build.id}
-                        gear={
+                        item={
                             build.items.find(
                                 (item) =>
                                     item.gear.category.name === "Shelter"
-                            )?.gear
+                            )
                         }
                     />
 
                     <BuildRow
                         name="Sleep System"
-                        link="Sleep"
+                        gearLink="/gear/sleep"
+                        selectCategory="Sleep"
                         buildId={build.id}
-                        gear={
+                        item={
                             build.items.find(
                                 (item) =>
                                     item.gear.category.name === "Sleep"
-                            )?.gear
+                            )
+                        }
+                    />
+
+                    <BuildRow
+                        name="Cooking"
+                        gearLink="/gear/cooking"
+                        selectCategory="Cooking"
+                        buildId={build.id}
+                        item={
+                            build.items.find(
+                                (item) =>
+                                    item.gear.category.name === "Cooking"
+                            )
+                        }
+                    />
+
+                    <BuildRow
+                        name="Water"
+                        gearLink="/gear/water"
+                        selectCategory="Water"
+                        buildId={build.id}
+                        item={
+                            build.items.find(
+                                (item) =>
+                                    item.gear.category.name === "Water"
+                            )
+                        }
+                    />
+
+                    <BuildRow
+                        name="Clothing"
+                        gearLink="/gear/clothing"
+                        selectCategory="Clothing"
+                        buildId={build.id}
+                        item={
+                            build.items.find(
+                                (item) =>
+                                    item.gear.category.name === "Clothing"
+                            )
+                        }
+                    />
+
+                    <BuildRow
+                        name="Electronics"
+                        gearLink="/gear/electronics"
+                        selectCategory="Electronics"
+                        buildId={build.id}
+                        item={
+                            build.items.find(
+                                (item) =>
+                                    item.gear.category.name === "Electronics"
+                            )
+                        }
+                    />
+
+                    <BuildRow
+                        name="Miscellaneous"
+                        gearLink="/gear/misc"
+                        selectCategory="Misc"
+                        buildId={build.id}
+                        item={
+                            build.items.find(
+                                (item) =>
+                                    item.gear.category.name === "Misc"
+                            )
                         }
                     />
 
                 </div>
-                <div className="mt-8 space-y-4">
-                    {build.items.length === 0 ? (
-                        <p>No gear added yet.</p>
-                    ) : (
-                        build.items.map((item) => (
-                            <div
-                                key={item.id}
-                                className="rounded-lg border p-4"
-                            >
-                                <h2 className="font-semibold">
-                                    {item.gear.name}
-
-
-                                    {item.quantity > 1 && (
-                                        <span className="ml-2 rounded bg-gray-200 px-2 py-1 text-sm">
-                                            ×{item.quantity}
-                                        </span>
-                                    )}
-                                </h2>
-
-
-                                <p>{item.gear.brand.name}</p>
-
-
-                                <p>
-                                    {item.gear.weight_g ?? "Unknown"} g
-                                </p>
-                                <RemoveGearButton
-                                    itemId={item.id}
-                                    buildId={build.id}
-                                />
-                            </div>
-                        ))
-                    )}
-                </div>
-                <BuildSummary
-                    itemCount={build.items.length}
-                    baseWeight={baseWeight}
-                    baseWeightLb={baseWeightLb}
-                    totalCost={totalCost}
-                />
             </main>
         </>
     );
