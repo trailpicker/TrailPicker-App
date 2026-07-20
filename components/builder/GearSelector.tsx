@@ -1,6 +1,6 @@
 "use client";
 
-import { addGearToBuild } from "@/app/build/[id]/actions";
+import { addGear } from "@/app/build/actions";
 
 type Gear = {
   id: string;
@@ -34,10 +34,19 @@ export default function GearSelector({
         <form
           key={item.id}
           action={async () => {
-            await addGearToBuild(
-              buildId,
+            const formData = new FormData();
+
+            formData.append(
+              "buildId",
+              buildId
+            );
+
+            formData.append(
+              "gearId",
               item.id
             );
+
+            await addGear(formData);
           }}
           className="border rounded-lg p-3"
         >

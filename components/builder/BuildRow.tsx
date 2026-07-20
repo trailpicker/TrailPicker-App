@@ -7,7 +7,7 @@ type Props = {
     selectCategory: string;
     buildId: string;
 
-    item?: {
+    items: {
         id: string;
         gear: {
             id: string;
@@ -15,7 +15,7 @@ type Props = {
             weight_g: number | null;
             price_cad: number | null;
         };
-    };
+    }[];
 };
 
 export default function BuildRow({
@@ -23,7 +23,7 @@ export default function BuildRow({
     gearLink,
     selectCategory,
     buildId,
-    item,
+    items,
 }: Props) {
 
     return (
@@ -31,7 +31,7 @@ export default function BuildRow({
             className="
             grid
 grid-cols-[180px_minmax(0,1fr)_100px_100px_100px]
-            items-center
+            items-start
             border-t
             p-4
             hover:bg-gray-50
@@ -49,58 +49,114 @@ grid-cols-[180px_minmax(0,1fr)_100px_100px_100px]
 
 
             {/* Selection */}
-            <div>
-                {item?.gear ? (
-                    <Link
-                        href={`/gear/${item.gear.id}`}
-                        className="font-bold truncate block hover:underline hover:text-blue-600"
-                    >
-                        {item.gear.name}
-                    </Link>
+            <div className="space-y-2">
+
+                {items.length > 0 ? (
+                    <>
+                        {items.map((item) => (
+
+                            <div
+                                key={item.id}
+                                className="flex items-center justify-between"
+                            >
+
+                                <Link
+                                    href={`/gear/${item.gear.id}`}
+                                    className="
+                        font-bold
+                        truncate
+                        hover:underline
+                        hover:text-blue-600
+                        "
+                                >
+                                    {item.gear.name}
+                                </Link>
+
+                            </div>
+
+                        ))}
+
+
+                        <Link
+                            href={`/build/${buildId}/select/${selectCategory.toLowerCase()}`}
+                            className="
+                inline-block
+                text-sm
+                text-blue-600
+                hover:underline
+                "
+                        >
+                            + Add Additional
+                        </Link>
+                    </>
                 ) : (
+
                     <Link
-                        href={`/build/${buildId}/select/${selectCategory}`}
+                        href={`/build/${buildId}/select/${selectCategory.toLowerCase()}`}
                         className="
-    rounded-lg
-    bg-blue-500
-    px-4
-    py-2
-    text-white
-    hover:bg-blue-700
-    transition
-    "
+            inline-block
+            rounded-lg
+            bg-blue-500
+            px-4
+            py-2
+            text-white
+            hover:bg-blue-700
+            transition
+            "
                     >
                         Add
                     </Link>
+
                 )}
+
             </div>
 
 
-            <div className="text-center whitespace-nowrap">
-                {item?.gear.weight_g !== null && item?.gear.weight_g !== undefined
-                    ? `${item.gear.weight_g}g`
+            <div className="text-center whitespace-nowrap pt-1">
+                {items.length > 0
+                    ? `${items.reduce(
+                        (total, item) =>
+                            total + (item.gear.weight_g ?? 0),
+                        0
+                    )}g`
                     : "—"}
             </div>
 
-            <div className="text-center whitespace-nowrap">
-                {item?.gear.price_cad !== null && item?.gear.price_cad !== undefined
-                    ? `$${item.gear.price_cad}`
+
+            <div className="text-center whitespace-nowrap pt-1">
+                {items.length > 0
+                    ? `$${items.reduce(
+                        (total, item) =>
+                            total + (item.gear.price_cad ?? 0),
+                        0
+                    )}`
                     : "—"}
             </div>
 
 
             {/* Action */}
-            <div className="flex justify-end items-center gap-3">
+            <div className="flex flex-col gap-2">
 
-                {item?.gear && (
-                    <>
+                {items.map((item) => (
+                    <div
+                        key={item.id}
+                        className="
+            flex
+            items-center
+            justify-end
+            gap-3
+            h-8
+            "
+                    >
+
                         <Link
                             href="#"
                             className="
                 rounded-lg
                 bg-blue-600
-                px-4
-                py-2
+                px-3
+                py-1
+                text-sm
                 text-white
                 hover:bg-blue-700
                 transition
@@ -109,12 +165,14 @@ grid-cols-[180px_minmax(0,1fr)_100px_100px_100px]
                             Buy
                         </Link>
 
+
                         <RemoveGearButton
                             itemId={item.id}
                             buildId={buildId}
                         />
-                    </>
-                )}
+
+                    </div>
+                ))}
 
             </div>
         </div>

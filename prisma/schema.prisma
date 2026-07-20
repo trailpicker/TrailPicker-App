@@ -24,21 +24,36 @@ model Category {
   slug String @unique
 
   gear Gear[]
-
+  subcategories Subcategory[]
   createdAt DateTime @default(now())
 }
+model Subcategory {
+  id         String   @id @default(cuid())
+  name       String
+  slug String
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
 
+  gear        Gear[]
+
+  createdAt  DateTime @default(now())
+  @@unique([categoryId, slug])
+}
 model Gear {
   id String @id @default(cuid())
 
   name        String
   description String?
-
+  
   weight_g Int?
 
   price_cad Float?
 
   capacity_l Float?
+
+  frame_type String?
+
+  waterproof Boolean?
 
   temperature_rating Int?
 
@@ -51,6 +66,9 @@ model Gear {
 
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
+
+  subcategoryId String?
+  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
 
   images GearImage[]
 

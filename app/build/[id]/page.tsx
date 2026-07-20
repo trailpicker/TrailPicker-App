@@ -101,7 +101,7 @@ export default async function BuildPage({
             />
 
 
-            <main className="max-w-7xl mx-auto p-2">
+            <main className="max-w-screen-2xl mx-auto p-2">
 
 
                 <div className="mt-10 overflow-hidden rounded-xl bg-white">
@@ -119,10 +119,10 @@ export default async function BuildPage({
                     <BuildRow
                         name="Backpack"
                         gearLink="/gear/packs"
-                        selectCategory="Packs"
+                        selectCategory="packs"
                         buildId={build.id}
-                        item={
-                            build.items.find(
+                        items={
+                            build.items.filter(
                                 (item) =>
                                     item.gear.category.name === "Packs"
                             )
@@ -132,10 +132,10 @@ export default async function BuildPage({
                     <BuildRow
                         name="Shelter"
                         gearLink="/gear/shelter"
-                        selectCategory="Shelter"
+                        selectCategory="shelter"
                         buildId={build.id}
-                        item={
-                            build.items.find(
+                        items={
+                            build.items.filter(
                                 (item) =>
                                     item.gear.category.name === "Shelter"
                             )
@@ -145,10 +145,10 @@ export default async function BuildPage({
                     <BuildRow
                         name="Sleep System"
                         gearLink="/gear/sleep"
-                        selectCategory="Sleep"
+                        selectCategory="sleep"
                         buildId={build.id}
-                        item={
-                            build.items.find(
+                        items={
+                            build.items.filter(
                                 (item) =>
                                     item.gear.category.name === "Sleep"
                             )
@@ -158,10 +158,10 @@ export default async function BuildPage({
                     <BuildRow
                         name="Cooking"
                         gearLink="/gear/cooking"
-                        selectCategory="Cooking"
+                        selectCategory="cooking"
                         buildId={build.id}
-                        item={
-                            build.items.find(
+                        items={
+                            build.items.filter(
                                 (item) =>
                                     item.gear.category.name === "Cooking"
                             )
@@ -171,10 +171,10 @@ export default async function BuildPage({
                     <BuildRow
                         name="Water"
                         gearLink="/gear/water"
-                        selectCategory="Water"
+                        selectCategory="water"
                         buildId={build.id}
-                        item={
-                            build.items.find(
+                        items={
+                            build.items.filter(
                                 (item) =>
                                     item.gear.category.name === "Water"
                             )
@@ -184,10 +184,10 @@ export default async function BuildPage({
                     <BuildRow
                         name="Clothing"
                         gearLink="/gear/clothing"
-                        selectCategory="Clothing"
+                        selectCategory="clothing"
                         buildId={build.id}
-                        item={
-                            build.items.find(
+                        items={
+                            build.items.filter(
                                 (item) =>
                                     item.gear.category.name === "Clothing"
                             )
@@ -197,10 +197,10 @@ export default async function BuildPage({
                     <BuildRow
                         name="Electronics"
                         gearLink="/gear/electronics"
-                        selectCategory="Electronics"
+                        selectCategory="electronics"
                         buildId={build.id}
-                        item={
-                            build.items.find(
+                        items={
+                            build.items.filter(
                                 (item) =>
                                     item.gear.category.name === "Electronics"
                             )
@@ -210,10 +210,10 @@ export default async function BuildPage({
                     <BuildRow
                         name="Miscellaneous"
                         gearLink="/gear/misc"
-                        selectCategory="Misc"
+                        selectCategory="misc"
                         buildId={build.id}
-                        item={
-                            build.items.find(
+                        items={
+                            build.items.filter(
                                 (item) =>
                                     item.gear.category.name === "Misc"
                             )

@@ -23,6 +23,7 @@ export default function RemoveGearButton({
           hover:text-red-600
           text-2xl
           font-semibold
+          cursor-pointer
           transition
         "
         title="Remove item"

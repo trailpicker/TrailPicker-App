@@ -33,9 +33,12 @@ export default function AddGearButton({
                 className="
                 rounded-lg
                 bg-green-700
-                px-4
-                py-2
+                px-3
+                py-1
                 text-white
+                hover:bg-green-800
+                cursor-pointer
+                transition
                 "
             >
                 Add
