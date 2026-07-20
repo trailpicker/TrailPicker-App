@@ -184,11 +184,15 @@ model BuildItem {
 
   priceSnapshot Float?
 
+  customCategory String?
+
   buildId String
   build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
 
-  gearId String
-  gear   Gear   @relation(fields: [gearId], references: [id])
+  gearId String?
+  gear   Gear?   @relation(fields: [gearId], references: [id])
+
+  @@unique([buildId, gearId])
 }
 
 model Review {

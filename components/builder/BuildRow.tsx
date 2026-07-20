@@ -1,20 +1,27 @@
 import Link from "next/link";
 import RemoveGearButton from "./RemoveGearButton";
+import QuantityStepper from "./QuantityStepper";
+import AddCustomItemForm from "./AddCustomItemForm";
 
 type Props = {
     name: string;
     gearLink: string;
     selectCategory: string;
+    categoryName: string;
     buildId: string;
 
     items: {
         id: string;
+        quantity: number;
+        gearNameSnapshot: string | null;
+        weightSnapshot: number | null;
+        priceSnapshot: number | null;
         gear: {
             id: string;
             name: string;
             weight_g: number | null;
             price_cad: number | null;
-        };
+        } | null;
     }[];
 };
 
@@ -22,23 +29,24 @@ export default function BuildRow({
     name,
     gearLink,
     selectCategory,
+    categoryName,
     buildId,
     items,
 }: Props) {
-
     return (
         <div
             className="
             grid
-grid-cols-[180px_minmax(0,1fr)_100px_100px_100px]
+            grid-cols-[180px_minmax(0,1fr)_100px_100px_100px]
             items-start
             border-t
-            p-4
+            border-gray-400
+            px-3
+            py-4
             hover:bg-gray-50
             transition
             "
         >
-
             {/* Component */}
             <Link
                 href={gearLink}
@@ -47,135 +55,94 @@ grid-cols-[180px_minmax(0,1fr)_100px_100px_100px]
                 {name}
             </Link>
 
-
-            {/* Selection */}
-            <div className="space-y-2">
-
-                {items.length > 0 ? (
-                    <>
-                        {items.map((item) => (
-
-                            <div
-                                key={item.id}
-                                className="flex items-center justify-between"
-                            >
-
-                                <Link
-                                    href={`/gear/${item.gear.id}`}
-                                    className="
-                        font-bold
-                        truncate
-                        hover:underline
-                        hover:text-blue-600
-                        "
-                                >
-                                    {item.gear.name}
-                                </Link>
-
-                            </div>
-
-                        ))}
-
-
+            <div className="col-span-4">
+                {items.length === 0 ? (
+                    <div className="space-y-2">
                         <Link
                             href={`/build/${buildId}/select/${selectCategory.toLowerCase()}`}
-                            className="
-                inline-block
-                text-sm
-                text-blue-600
-                hover:underline
-                "
+                            className="inline-block rounded-lg bg-blue-500 px-3 py-1.5 text-white text-sm hover:bg-blue-700 transition"
                         >
-                            + Add Additional
-                        </Link>
-                    </>
-                ) : (
-
-                    <Link
-                        href={`/build/${buildId}/select/${selectCategory.toLowerCase()}`}
-                        className="
-            inline-block
-            rounded-lg
-            bg-blue-500
-            px-4
-            py-2
-            text-white
-            hover:bg-blue-700
-            transition
-            "
-                    >
-                        Add
-                    </Link>
-
-                )}
-
-            </div>
-
-
-            <div className="text-center whitespace-nowrap pt-1">
-                {items.length > 0
-                    ? `${items.reduce(
-                        (total, item) =>
-                            total + (item.gear.weight_g ?? 0),
-                        0
-                    )}g`
-                    : "—"}
-            </div>
-
-
-            <div className="text-center whitespace-nowrap pt-1">
-                {items.length > 0
-                    ? `$${items.reduce(
-                        (total, item) =>
-                            total + (item.gear.price_cad ?? 0),
-                        0
-                    )}`
-                    : "—"}
-            </div>
-
-
-            {/* Action */}
-            <div className="flex flex-col gap-2">
-
-                {items.map((item) => (
-                    <div
-                        key={item.id}
-                        className="
-            flex
-            items-center
-            justify-end
-            gap-3
-            h-8
-            "
-                    >
-
-                        <Link
-                            href="#"
-                            className="
-                rounded-lg
-                bg-blue-600
-                px-3
-                py-1
-                text-sm
-                text-white
-                hover:bg-blue-700
-                transition
-                "
-                        >
-                            Buy
+                            Add
                         </Link>
 
-
-                        <RemoveGearButton
-                            itemId={item.id}
-                            buildId={buildId}
-                        />
-
+                        <div>
+                            <AddCustomItemForm buildId={buildId} category={categoryName} />
+                        </div>
                     </div>
-                ))}
+                ) : (
+                    <div>
+                        <div className="divide-y divide-gray-100">
+                            {items.map((item) => {
+                                const itemName =
+                                    item.gear?.name ?? item.gearNameSnapshot ?? "Custom item";
+                                const weight =
+                                    item.gear?.weight_g ?? item.weightSnapshot;
+                                const price =
+                                    item.gear?.price_cad ?? item.priceSnapshot;
 
+                                return (
+                                    <div
+                                        key={item.id}
+                                        className="grid grid-cols-[minmax(0,1fr)_100px_100px_100px] items-center py-4 first:pt-0 last:pb-0"
+                                    >
+                                        <div className="flex items-center gap-3 min-w-0">
+                                            {item.gear ? (
+                                                <Link
+                                                    href={`/gear/${item.gear.id}`}
+                                                    className="block font-bold truncate hover:underline hover:text-blue-600"
+                                                >
+                                                    {itemName}
+                                                </Link>
+                                            ) : (
+                                                <span className="block font-bold italic text-gray-700 truncate">
+                                                    {itemName}
+                                                </span>
+                                            )}
+
+                                            <QuantityStepper
+                                                itemId={item.id}
+                                                buildId={buildId}
+                                                quantity={item.quantity}
+                                            />
+                                        </div>
+
+                                        <div className="text-center pr-5">
+                                            {weight != null ? `${weight * item.quantity}g` : "—"}
+                                        </div>
+
+                                        <div className="text-center pr-5">
+                                            {price != null
+                                                ? `$${(price * item.quantity).toFixed(2)}`
+                                                : "—"}
+                                        </div>
+
+                                        <div className="flex items-center justify-end gap-1">
+                                            <Link
+                                                href="#"
+                                                className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700 transition"
+                                            >
+                                                Buy
+                                            </Link>
+                                            <RemoveGearButton itemId={item.id} buildId={buildId} />
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <div className="mt-2 flex items-center gap-4">
+                            <Link
+                                href={`/build/${buildId}/select/${selectCategory.toLowerCase()}`}
+                                className="inline-block text-sm text-blue-600 hover:underline"
+                            >
+                                + Add Additional
+                            </Link>
+
+                            <AddCustomItemForm buildId={buildId} category={categoryName} />
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
-
     );
 }

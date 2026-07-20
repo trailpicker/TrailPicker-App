@@ -120,11 +120,13 @@ export default async function BuildPage({
                         name="Backpack"
                         gearLink="/gear/packs"
                         selectCategory="packs"
+                        categoryName="Packs"
                         buildId={build.id}
                         items={
                             build.items.filter(
                                 (item) =>
-                                    item.gear.category.name === "Packs"
+                                    item.gear?.category.name === "Packs" ||
+                                    item.customCategory === "Packs"
                             )
                         }
                     />
@@ -133,11 +135,13 @@ export default async function BuildPage({
                         name="Shelter"
                         gearLink="/gear/shelter"
                         selectCategory="shelter"
+                        categoryName="Shelter"
                         buildId={build.id}
                         items={
                             build.items.filter(
                                 (item) =>
-                                    item.gear.category.name === "Shelter"
+                                    item.gear?.category.name === "Shelter" ||
+                                    item.customCategory === "Shelter"
                             )
                         }
                     />
@@ -146,11 +150,13 @@ export default async function BuildPage({
                         name="Sleep System"
                         gearLink="/gear/sleep"
                         selectCategory="sleep"
+                        categoryName="Sleep"
                         buildId={build.id}
                         items={
                             build.items.filter(
                                 (item) =>
-                                    item.gear.category.name === "Sleep"
+                                    item.gear?.category.name === "Sleep" ||
+                                    item.customCategory === "Sleep"
                             )
                         }
                     />
@@ -159,11 +165,13 @@ export default async function BuildPage({
                         name="Cooking"
                         gearLink="/gear/cooking"
                         selectCategory="cooking"
+                        categoryName="Cooking"
                         buildId={build.id}
                         items={
                             build.items.filter(
                                 (item) =>
-                                    item.gear.category.name === "Cooking"
+                                    item.gear?.category.name === "Cooking" ||
+                                    item.customCategory === "Cooking"
                             )
                         }
                     />
@@ -172,11 +180,13 @@ export default async function BuildPage({
                         name="Water"
                         gearLink="/gear/water"
                         selectCategory="water"
+                        categoryName="Water"
                         buildId={build.id}
                         items={
                             build.items.filter(
                                 (item) =>
-                                    item.gear.category.name === "Water"
+                                    item.gear?.category.name === "Water" ||
+                                    item.customCategory === "Water"
                             )
                         }
                     />
@@ -185,11 +195,13 @@ export default async function BuildPage({
                         name="Clothing"
                         gearLink="/gear/clothing"
                         selectCategory="clothing"
+                        categoryName="Clothing"
                         buildId={build.id}
                         items={
                             build.items.filter(
                                 (item) =>
-                                    item.gear.category.name === "Clothing"
+                                    item.gear?.category.name === "Clothing" ||
+                                    item.customCategory === "Clothing"
                             )
                         }
                     />
@@ -198,11 +210,13 @@ export default async function BuildPage({
                         name="Electronics"
                         gearLink="/gear/electronics"
                         selectCategory="electronics"
+                        categoryName="Electronics"
                         buildId={build.id}
                         items={
                             build.items.filter(
                                 (item) =>
-                                    item.gear.category.name === "Electronics"
+                                    item.gear?.category.name === "Electronics" ||
+                                    item.customCategory === "Electronics"
                             )
                         }
                     />
@@ -211,11 +225,13 @@ export default async function BuildPage({
                         name="Miscellaneous"
                         gearLink="/gear/misc"
                         selectCategory="misc"
+                        categoryName="Misc"
                         buildId={build.id}
                         items={
                             build.items.filter(
                                 (item) =>
-                                    item.gear.category.name === "Misc"
+                                    item.gear?.category.name === "Miscellaneous" ||
+                                    item.customCategory === "Miscellaneous"
                             )
                         }
                     />
