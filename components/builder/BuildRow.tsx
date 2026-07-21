@@ -3,6 +3,7 @@ import RemoveGearButton from "./RemoveGearButton";
 import QuantityStepper from "./QuantityStepper";
 import AddCustomItemForm from "./AddCustomItemForm";
 import ItemFlagToggle from "./ItemCategoryToggle";
+import Image from "next/image";
 
 type Props = {
     name: string;
@@ -24,6 +25,12 @@ type Props = {
             name: string;
             weight_g: number | null;
             price_cad: number | null;
+
+            images: {
+                id: string;
+                url: string;
+                isPrimary: boolean;
+            }[];
         } | null;
     }[];
 };
@@ -47,6 +54,7 @@ export default function BuildRow({
             px-3
             py-4
             hover:bg-gray-50
+            bg-gray-50
             transition
             "
         >
@@ -88,32 +96,57 @@ export default function BuildRow({
                                         key={item.id}
                                         className="grid grid-cols-[minmax(0,1fr)_100px_100px_100px] items-center py-4 first:pt-0 last:pb-0"
                                     >
-                                        <div className="flex flex-wrap items-center gap-2 min-w-0">
-                                            {item.gear ? (
-                                                <Link
-                                                    href={`/gear/${item.gear.id}`}
-                                                    className="block font-bold truncate hover:underline hover:text-blue-600"
-                                                >
-                                                    {itemName}
-                                                </Link>
-                                            ) : (
-                                                <span className="block font-bold italic text-gray-700 truncate">
-                                                    {itemName}
-                                                </span>
+                                        <div className="flex items-center gap-3 min-w-0">
+
+                                            {item.gear?.images[0] && (
+                                                <div className="
+                                                    relative
+                                                    w-12
+                                                    aspect-square
+                                                    rounded-lg
+                                                    overflow-hidden
+                                                    bg-white
+                                                    border
+                                                    border-gray-200
+                                                    shrink-0
+                                                ">
+                                                    <Image
+                                                        src={item.gear.images[0].url}
+                                                        alt={itemName}
+                                                        fill
+                                                        className="object-contain"
+                                                    />
+                                                </div>
                                             )}
 
-                                            <QuantityStepper
-                                                itemId={item.id}
-                                                buildId={buildId}
-                                                quantity={item.quantity}
-                                            />
+                                            <div className="flex flex-wrap items-center gap-2 min-w-0">
+                                                {item.gear ? (
+                                                    <Link
+                                                        href={`/gear/${item.gear.id}`}
+                                                        className="block font-bold truncate hover:underline hover:text-blue-600"
+                                                    >
+                                                        {itemName}
+                                                    </Link>
+                                                ) : (
+                                                    <span className="block font-bold italic text-gray-700 truncate">
+                                                        {itemName}
+                                                    </span>
+                                                )}
 
-                                            <ItemFlagToggle
-                                                itemId={item.id}
-                                                buildId={buildId}
-                                                isConsumable={item.isConsumable}
-                                                isWorn={item.isWorn}
-                                            />
+                                                <QuantityStepper
+                                                    itemId={item.id}
+                                                    buildId={buildId}
+                                                    quantity={item.quantity}
+                                                />
+
+                                                <ItemFlagToggle
+                                                    itemId={item.id}
+                                                    buildId={buildId}
+                                                    isConsumable={item.isConsumable}
+                                                    isWorn={item.isWorn}
+                                                />
+
+                                            </div>
                                         </div>
 
                                         <div className="text-center pr-5">

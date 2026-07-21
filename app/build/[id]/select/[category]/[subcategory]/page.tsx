@@ -5,6 +5,7 @@ import BrandFilter from "@/components/filters/BrandFilter";
 import FilterSection from "@/components/filters/FilterSection";
 import RangeFilter from "@/components/filters/RangeFilter";
 import SortHeader from "@/components/filters/SortHeader";
+import Image from "next/image";
 
 export default async function SelectGearPage({
     params,
@@ -137,140 +138,169 @@ export default async function SelectGearPage({
         include: {
             brand: true,
             reviews: true,
+            images: true
         },
     });
 
     return (
-        <main className="max-w-[110rem] mx-auto px-8 py-8">
+        <div className="min-h-screen bg-gray-50">
+            <main className="max-w-[110rem] mx-auto px-8 py-8">
 
-            <h1 className="text-3xl font-bold mb-8">
-                Choose {subcategoryData.name}
-            </h1>
+                <h1 className="text-3xl font-bold mb-8">
+                    Choose {subcategoryData.name}
+                </h1>
 
-            <div className="grid grid-cols-[250px_1fr] gap-8">
+                <div className="grid grid-cols-[250px_1fr] gap-8">
 
-                {/* Filters */}
-                <aside className="border-r pr-6">
+                    {/* Filters */}
+                    <aside className="border-r pr-6">
 
-                    <h2 className="font-bold text-xl mb-4">
-                        Filters
-                    </h2>
+                        <h2 className="font-bold text-xl mb-4">
+                            Filters
+                        </h2>
 
 
-                    <div className="space-y">
-                        <FilterSection title="BRAND">
-                            <BrandFilter
-                                brands={availableBrands}
+                        <div className="space-y">
+                            <FilterSection title="BRAND">
+                                <BrandFilter
+                                    brands={availableBrands}
+                                />
+                            </FilterSection>
+
+
+                            <FilterSection title="WEIGHT">
+                                <RangeFilter
+                                    min={0}
+                                    max={3000}
+                                    unit="g"
+                                    param="maxWeight"
+                                />
+                            </FilterSection>
+
+                            <FilterSection title="PRICE">
+                                <RangeFilter
+                                    min={0}
+                                    max={1000}
+                                    unit="CAD"
+                                    param="maxPrice"
+                                />
+                            </FilterSection>
+                        </div>
+                    </aside>
+
+                    {/* Gear */}
+                    <div className="overflow-hidden rounded-lg">
+                        <p className="mb-8 text-lg font-bold text-black">
+                            {gear.length} Compatible Products
+                        </p>
+                        <div className="grid grid-cols-[2.3fr_90px_90px_100px_90px_90px_90px_90px] px-5 py-3 text-xs font-semibold tracking-wide text-gray-500 border-b border-gray-400">
+                            <div>Product</div>
+                            <SortHeader
+                                label="Weight"
+                                value="weight"
                             />
-                        </FilterSection>
-
-
-                        <FilterSection title="WEIGHT">
-                            <RangeFilter
-                                min={0}
-                                max={3000}
-                                unit="g"
-                                param="maxWeight"
+                            <div className="text-center">Capacity</div>
+                            <div className="text-center">Frame</div>
+                            <div className="text-center">Waterproof</div>
+                            <div className="text-center">Rating</div>
+                            <SortHeader
+                                label="Price"
+                                value="price"
                             />
-                        </FilterSection>
+                            <div></div>
+                        </div>
 
-                        <FilterSection title="PRICE">
-                            <RangeFilter
-                                min={0}
-                                max={1000}
-                                unit="CAD"
-                                param="maxPrice"
-                            />
-                        </FilterSection>
-                    </div>
-                </aside>
+                        <div className="divide-y divide-gray-200">
+                            {gear.map((item) => {
+                                const averageRating =
+                                    item.reviews.length > 0
+                                        ? (
+                                            item.reviews.reduce(
+                                                (sum, review) => sum + review.rating,
+                                                0
+                                            ) / item.reviews.length
+                                        ).toFixed(1)
+                                        : null;
 
-                {/* Gear */}
-                <div className="overflow-hidden rounded-lg">
-                    <p className="mb-8 text-lg font-bold text-black">
-                        {gear.length} Compatible Products
-                    </p>
-                    <div className="grid grid-cols-[2.3fr_90px_90px_100px_90px_90px_90px_90px] bg-gray-50 px-5 py-3 text-xs font-semibold tracking-wide text-gray-500">
-                        <div>Product</div>
-                        <SortHeader
-                            label="Weight"
-                            value="weight"
-                        />
-                        <div className="text-center">Capacity</div>
-                        <div className="text-center">Frame</div>
-                        <div className="text-center">Waterproof</div>
-                        <div className="text-center">Rating</div>
-                        <SortHeader
-                            label="Price"
-                            value="price"
-                        />
-                        <div></div>
-                    </div>
+                                return (
+                                    <div
+                                        key={item.id}
+                                        className="grid grid-cols-[2.3fr_90px_90px_100px_90px_90px_90px_90px] items-center px-5 py-2 hover:bg-gray-50"
+                                    >
+                                        <div className="flex items-center gap-3">
 
-                    <div className="divide-y divide-gray-200">
-                        {gear.map((item) => {
-                            const averageRating =
-                                item.reviews.length > 0
-                                    ? (
-                                        item.reviews.reduce(
-                                            (sum, review) => sum + review.rating,
-                                            0
-                                        ) / item.reviews.length
-                                    ).toFixed(1)
-                                    : null;
+                                            <div className="
+                                                    relative
+                                                    w-12
+                                                    aspect-square
+                                                    rounded-lg
+                                                    overflow-hidden
+                                                    bg-white
+                                                    border
+                                                    border-gray-200
+                                                    shrink-0
+                                                ">
+                                                {item.images[0] && (
+                                                    <Image
+                                                        src={item.images[0].url}
+                                                        alt={item.name}
+                                                        fill
+                                                        className="object-contain"
+                                                    />
+                                                )}
+                                            </div>
 
-                            return (
-                                <div
-                                    key={item.id}
-                                    className="grid grid-cols-[2.3fr_90px_90px_100px_90px_90px_90px_90px] items-center px-5 py-2 hover:bg-gray-50"
-                                >
-                                    <div>
-                                        <h2 className="font-semibold hover:text-blue-600">
-                                            {item.name}
-                                        </h2>
 
-                                        <p className="text-[13px] text-gray-500">
-                                            {item.brand.name}
-                                        </p>
+                                            <div>
+                                                <h2 className="font-semibold hover:text-blue-600">
+                                                    {item.name}
+                                                </h2>
+
+                                                <p className="text-[13px] text-gray-500">
+                                                    {item.brand.name}
+                                                </p>
+                                            </div>
+
+                                        </div>
+
+                                        <div className="text-center">
+                                            {item.weight_g ?? "—"}g
+                                        </div>
+
+                                        <div className="text-center">
+                                            {item.capacity_l ?? "—"}L
+                                        </div>
+
+                                        <div className="text-center">
+                                            {item.frame_type ?? "—"}
+                                        </div>
+
+                                        <div className="text-center">
+                                            {item.waterproof === null || item.waterproof === undefined
+                                                ? "—"
+                                                : item.waterproof
+                                                    ? "Yes"
+                                                    : "No"}
+                                        </div>
+                                        <div className="text-center">
+                                            {averageRating
+                                                ? `★ ${averageRating}`
+                                                : "—"}
+                                        </div>
+                                        <div className="text-center">
+                                            ${item.price_cad ?? "—"}
+                                        </div>
+
+                                        <div className="flex justify-end">
+                                            <AddGearButton buildId={id} gearId={item.id} />
+                                        </div>
                                     </div>
-
-                                    <div className="text-center">
-                                        {item.weight_g ?? "—"}g
-                                    </div>
-
-                                    <div className="text-center">
-                                        {item.capacity_l ?? "—"}L
-                                    </div>
-
-                                    <div className="text-center">
-                                        {item.frame_type ?? "—"}
-                                    </div>
-
-                                    <div className="text-center">
-                                        {item.waterproof === null || item.waterproof === undefined
-                                            ? "—"
-                                            : item.waterproof
-                                                ? "Yes"
-                                                : "No"}
-                                    </div>
-                                    <div className="text-center">
-                                        {averageRating
-                                            ? `★ ${averageRating}`
-                                            : "—"}
-                                    </div>
-                                    <div className="text-center">
-                                        ${item.price_cad ?? "—"}
-                                    </div>
-
-                                    <div className="flex justify-end">
-                                        <AddGearButton buildId={id} gearId={item.id} />
-                                    </div>
-                                </div>
-                            );
-                        })}
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
     );
 }

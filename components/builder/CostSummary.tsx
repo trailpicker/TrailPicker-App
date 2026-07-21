@@ -13,6 +13,7 @@ export default function CostSummary({ totalCost }: Props) {
     border-gray-400
     px-3
     py-4
+    bg-gray-50
     "
         >
             <div className="col-span-3 text-right pr-5 text-lg font-medium text-gray-900">

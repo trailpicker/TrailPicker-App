@@ -27,6 +27,7 @@ export default async function BuildPage({
                         include: {
                             brand: true,
                             category: true,
+                            images: true
                         },
                     },
                 },
@@ -43,7 +44,7 @@ export default async function BuildPage({
     );
     const totalCost = calculateTotalCost(build.items);
     return (
-        <>
+        <div className="min-h-screen bg-gray-50">
             <BuildHeader
                 name={build.name}
                 weight={total}
@@ -56,7 +57,7 @@ export default async function BuildPage({
 
 
                     {/* Header */}
-                    <div className="grid grid-cols-[180px_minmax(0,1fr)_100px_100px_100px] p-3 text-xs font-light text-gray-600">
+                    <div className="grid grid-cols-[180px_minmax(0,1fr)_100px_100px_100px] p-3 text-xs bg-gray-50 font-light text-gray-600">
                         <div>Component</div>
                         <div>Selection</div>
                         <div className="text-center pr-5">Weight</div>
@@ -195,6 +196,6 @@ export default async function BuildPage({
 
 
             </main>
-        </>
+        </div>
     );
 }
