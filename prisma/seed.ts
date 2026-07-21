@@ -268,6 +268,15 @@ async function main() {
       brandId: durston.id,
       categoryId: shelter.id,
       subcategoryId: tent.id,
+
+      images: {
+        create: [
+          {
+            url: "https://durstongear.com/cdn/shop/files/Durston-X-Mid-1-2025-Ultralight-Backpacking-Tent-Main-Viewb_07dd109f-fff5-4c33-9a7d-b161ac0bbf19.jpg?v=1741358977&width=800",
+            isPrimary: true,
+          }
+        ],
+      },
     },
   });
 
@@ -286,6 +295,15 @@ async function main() {
       brandId: bigAgnes.id,
       categoryId: shelter.id,
       subcategoryId: tent.id,
+
+      images: {
+        create: [
+          {
+            url: "https://gearinstitute.com/wp-content/uploads/Copper_Spur_HV_UL_2_TentWithFly_HalfOpen-0-800x457.jpg",
+            isPrimary: true,
+          }
+        ],
+      },
     },
   });
 
@@ -303,6 +321,15 @@ async function main() {
       brandId: hmg.id,
       categoryId: packs.id,
       subcategoryId: frameless.id,
+
+      images: {
+        create: [
+          {
+            url: "https://hyperlitemountaingear.com/cdn/shop/files/hyperlite-mountain-gear-packs-southwest-40l-extra-sm-white-1190868899.jpg?v=1759479162&width=832",
+            isPrimary: true,
+          }
+        ],
+      },
     },
   });
 
@@ -318,6 +345,15 @@ async function main() {
       brandId: thermarest.id,
       categoryId: sleep.id,
       subcategoryId: sleepingPad.id,
+
+      images: {
+        create: [
+          {
+            url: "https://cascadedesigns.com/cdn/shop/files/11627_thermarest_neoair_xlite_nxt_solarflare_regular_angle.jpg?v=1724820257&width=493",
+            isPrimary: true,
+          }
+        ],
+      },
     },
   });
 

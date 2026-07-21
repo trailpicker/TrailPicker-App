@@ -1,17 +1,13 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import GearSelector from "@/components/builder/GearSelector";
-import RemoveGearButton from "@/components/builder/RemoveGearButton";
 import {
-    calculateBaseWeight,
-    gramsToPounds,
+    calculateWeightBreakdown,
     calculateTotalCost,
 } from "@/lib/calculations";
-import BuildSummary from "@/components/builder/BuildSummary";
+import WeightSummary from "@/components/builder/WeightSummary";
 import BuildRow from "@/components/builder/BuildRow";
 import BuildHeader from "@/components/builder/BuildHeader";
-
-
+import CostSummary from "@/components/builder/CostSummary";
 export default async function BuildPage({
     params,
 }: {
@@ -42,68 +38,20 @@ export default async function BuildPage({
     if (!build) {
         notFound();
     }
-    const baseWeight = calculateBaseWeight(
+    const { base, consumable, worn, total } = calculateWeightBreakdown(
         build.items
     );
-
-
-    const baseWeightLb = gramsToPounds(
-        baseWeight
-    );
-    const totalCost = calculateTotalCost(
-        build.items
-    );
-    const packs = await prisma.gear.findMany({
-        where: {
-            category: {
-                name: "Packs",
-            },
-        },
-        include: {
-            brand: true,
-        },
-    });
-
-
-
-
-    const shelter = await prisma.gear.findMany({
-        where: {
-            category: {
-                name: "Shelter",
-            },
-        },
-        include: {
-            brand: true,
-        },
-    });
-
-
-
-
-    const sleep = await prisma.gear.findMany({
-        where: {
-            category: {
-                name: "Sleep",
-            },
-        },
-        include: {
-            brand: true,
-        },
-    });
+    const totalCost = calculateTotalCost(build.items);
     return (
         <>
             <BuildHeader
                 name={build.name}
-                weight={baseWeight}
+                weight={total}
                 cost={totalCost}
                 items={build.items.length}
             />
 
-
             <main className="max-w-screen-2xl mx-auto p-2">
-
-
                 <div className="mt-10 overflow-hidden rounded-xl bg-white">
 
 
@@ -235,8 +183,17 @@ export default async function BuildPage({
                             )
                         }
                     />
-
+                    <CostSummary totalCost={totalCost} />
                 </div>
+                <WeightSummary
+                    base={base}
+                    consumable={consumable}
+                    worn={worn}
+                    total={total}
+                    totalCost={totalCost}
+                />
+
+
             </main>
         </>
     );

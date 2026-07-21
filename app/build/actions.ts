@@ -5,6 +5,21 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
+export async function setItemCategory(formData: FormData) {
+  const itemId = formData.get("itemId") as string;
+  const buildId = formData.get("buildId") as string;
+  const category = formData.get("category") as "base" | "worn" | "consumable";
+
+  await prisma.buildItem.update({
+    where: { id: itemId },
+    data: {
+      isWorn: category === "worn",
+      isConsumable: category === "consumable",
+    },
+  });
+
+  revalidatePath(`/build/${buildId}`);
+}
 export async function addCustomItem(formData: FormData) {
   const buildId = formData.get("buildId") as string;
   const category = formData.get("category") as string;

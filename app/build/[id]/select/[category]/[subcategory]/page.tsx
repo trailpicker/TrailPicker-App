@@ -41,8 +41,38 @@ export default async function SelectGearPage({
     const maxPrice = filters.maxPrice
         ? Number(filters.maxPrice)
         : undefined;
-    const { id, category, subcategory } = await params;
+    const {
+        id,
+        category,
+        subcategory: subcategorySlug,
+    } = await params;
 
+
+    const categoryData = await prisma.category.findUnique({
+        where: {
+            slug: category,
+        },
+    });
+
+
+    if (!categoryData) {
+        notFound();
+    }
+
+
+    const subcategoryData = await prisma.subcategory.findUnique({
+        where: {
+            categoryId_slug: {
+                categoryId: categoryData.id,
+                slug: subcategorySlug,
+            },
+        },
+    });
+
+
+    if (!subcategoryData) {
+        notFound();
+    }
 
     const build = await prisma.build.findUnique({
         where: {
@@ -59,7 +89,7 @@ export default async function SelectGearPage({
             gear: {
                 some: {
                     subcategory: {
-                        slug: subcategory,
+                        slug: subcategorySlug,
                     }
                 },
             },
@@ -73,7 +103,7 @@ export default async function SelectGearPage({
     const gear = await prisma.gear.findMany({
         where: {
             subcategory: {
-                slug: subcategory,
+                slug: subcategorySlug,
             },
 
             ...(brands.length > 0 && {
@@ -114,7 +144,7 @@ export default async function SelectGearPage({
         <main className="max-w-[110rem] mx-auto px-8 py-8">
 
             <h1 className="text-3xl font-bold mb-8">
-                Choose {subcategory.replace("-", " ")}
+                Choose {subcategoryData.name}
             </h1>
 
             <div className="grid grid-cols-[250px_1fr] gap-8">

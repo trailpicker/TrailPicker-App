@@ -2,6 +2,7 @@ import Link from "next/link";
 import RemoveGearButton from "./RemoveGearButton";
 import QuantityStepper from "./QuantityStepper";
 import AddCustomItemForm from "./AddCustomItemForm";
+import ItemFlagToggle from "./ItemCategoryToggle";
 
 type Props = {
     name: string;
@@ -13,6 +14,8 @@ type Props = {
     items: {
         id: string;
         quantity: number;
+        isConsumable: boolean;
+        isWorn: boolean;
         gearNameSnapshot: string | null;
         weightSnapshot: number | null;
         priceSnapshot: number | null;
@@ -85,7 +88,7 @@ export default function BuildRow({
                                         key={item.id}
                                         className="grid grid-cols-[minmax(0,1fr)_100px_100px_100px] items-center py-4 first:pt-0 last:pb-0"
                                     >
-                                        <div className="flex items-center gap-3 min-w-0">
+                                        <div className="flex flex-wrap items-center gap-2 min-w-0">
                                             {item.gear ? (
                                                 <Link
                                                     href={`/gear/${item.gear.id}`}
@@ -104,6 +107,13 @@ export default function BuildRow({
                                                 buildId={buildId}
                                                 quantity={item.quantity}
                                             />
+
+                                            <ItemFlagToggle
+                                                itemId={item.id}
+                                                buildId={buildId}
+                                                isConsumable={item.isConsumable}
+                                                isWorn={item.isWorn}
+                                            />
                                         </div>
 
                                         <div className="text-center pr-5">
@@ -117,12 +127,14 @@ export default function BuildRow({
                                         </div>
 
                                         <div className="flex items-center justify-end gap-1">
-                                            <Link
-                                                href="#"
-                                                className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700 transition"
-                                            >
-                                                Buy
-                                            </Link>
+                                            {item.gear && (
+                                                <Link
+                                                    href="#"
+                                                    className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700 transition"
+                                                >
+                                                    Buy
+                                                </Link>
+                                            )}
                                             <RemoveGearButton itemId={item.id} buildId={buildId} />
                                         </div>
                                     </div>

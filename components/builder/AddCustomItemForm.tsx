@@ -36,7 +36,7 @@ export default function AddCustomItemForm({
 
             <input
                 name="name"
-                placeholder="Item name (e.g. Toothpaste)"
+                placeholder="Item name"
                 required
                 className="flex-1 min-w-[140px] rounded-md border border-gray-300 px-2 py-1 text-sm outline-none focus:ring-2 focus:ring-blue-500"
             />
