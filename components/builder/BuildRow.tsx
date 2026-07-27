@@ -68,17 +68,28 @@ export default function BuildRow({
 
             <div className="col-span-4">
                 {items.length === 0 ? (
-                    <div className="space-y-2">
+                    <div className="flex items-center gap-4">
                         <Link
                             href={`/build/${buildId}/select/${selectCategory.toLowerCase()}`}
-                            className="inline-block rounded-lg bg-blue-500 px-3 py-1.5 text-white text-sm hover:bg-blue-700 transition"
+                            className="
+                inline-block
+                rounded-lg
+                bg-blue-500
+                px-3
+                py-1.5
+                text-white
+                text-sm
+                hover:bg-blue-700
+                transition
+            "
                         >
-                            Add
+                            Add Gear
                         </Link>
 
-                        <div>
-                            <AddCustomItemForm buildId={buildId} category={categoryName} />
-                        </div>
+                        <AddCustomItemForm
+                            buildId={buildId}
+                            category={categoryName}
+                        />
                     </div>
                 ) : (
                     <div>

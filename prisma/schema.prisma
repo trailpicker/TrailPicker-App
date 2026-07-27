@@ -162,9 +162,39 @@ model Build {
   user   User?   @relation(fields: [userId], references: [id])
 
   items BuildItem[]
+  days  TripDay[]
+
+  location    String?
+  locationLat Float?
+  locationLng Float?
+  startDate   DateTime?
+  endDate     DateTime?
+
+  people Int @default(1)
+
+  minTemperature Int?
+  conditions String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model TripDay {
+  id String @id @default(cuid())
+
+  buildId String
+  build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  date DateTime
+
+  minTemperature Int?
+  conditions     String?
+  notes          String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([buildId, date])
 }
 
 model BuildItem {

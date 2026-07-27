@@ -1,76 +1,45 @@
+import Link from "next/link";
+
 type Props = {
-    name: string;
-    weight: number;
-    cost: number;
-    items: number;
+  buildId: string;
+  name: string;
+  active: "gear" | "trip";
+  issueCount: number;
 };
 
-export default function BuildHeader({
-    name,
-    weight,
-    cost,
-    items,
-}: Props) {
-    return (
-        <div className="
-            w-full
-            bg-green-700
-            shadow-sm
-            py-8
-            text-center
-        ">
+export default function BuildHeader({ buildId, name, active, issueCount }: Props) {
+  const tabs = [
+    { key: "gear" as const, label: "Gear", href: `/build/${buildId}` },
+    { key: "trip" as const, label: "Trip Planner", href: `/build/${buildId}?tab=trip` },
+  ];
 
-            <h1 className="
-                text-3xl
-                font-bold
-                text-white
-            ">
-                {name}
-            </h1>
+  return (
+    <div className="w-full bg-green-700 shadow-sm">
+      <div className="max-w-screen-2xl mx-auto px-6 pt-6 pb-0">
+        <h1 className="text-3xl font-bold text-white text-center mb-5">{name}</h1>
 
-
-            <div className="
-                mt-5
-                flex
-                justify-center
-                gap-16
-                text-white
-            ">
-
-                <div>
-                    <p className="text-sm opacity-80">
-                        Weight
-                    </p>
-
-                    <p className="text-xl font-bold">
-                        {weight}g
-                    </p>
-                </div>
-
-
-                <div>
-                    <p className="text-sm opacity-80">
-                        Cost
-                    </p>
-
-                    <p className="text-xl font-bold">
-                        ${cost} CAD
-                    </p>
-                </div>
-
-
-                <div>
-                    <p className="text-sm opacity-80">
-                        Items
-                    </p>
-
-                    <p className="text-xl font-bold">
-                        {items}
-                    </p>
-                </div>
-
-            </div>
-
+        <div className="flex justify-center gap-2">
+          {tabs.map((t) => (
+            <Link
+              key={t.key}
+              href={t.href}
+              className={`
+                relative px-5 py-2.5 text-sm font-semibold rounded-t-lg transition
+                ${active === t.key
+                  ? "bg-gray-50 text-green-800"
+                  : "text-white/80 hover:text-white hover:bg-white/10"}
+              `}
+            >
+              {t.label}
+              {t.key === "gear" && issueCount > 0 && (
+                <span className="ml-2 rounded-full bg-amber-400 text-amber-950 text-[10px] font-bold px-1.5 py-0.5">
+                  {issueCount}
+                </span>
+              )}
+            </Link>
+          ))}
         </div>
-    );
+      </div>
+    </div>
+  );
 }
