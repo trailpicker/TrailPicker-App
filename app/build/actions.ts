@@ -5,7 +5,115 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { getDateRange } from "@/lib/trip";
+import { auth } from "@/auth";
 
+export async function getBuildExport(buildId: string) {
+    const build = await prisma.build.findUnique({
+        where: { id: buildId },
+        include: { items: { include: { gear: { select: { id: true, name: true } } } } },
+    });
+
+    if (!build) throw new Error("Build not found.");
+
+    return {
+        version: 1,
+        name: build.name,
+        location: build.location,
+        startDate: build.startDate,
+        endDate: build.endDate,
+        people: build.people,
+        minTemperature: build.minTemperature,
+        conditions: build.conditions,
+        items: build.items.map((item) => ({
+            gearId: item.gearId,
+            gearName: item.gear?.name ?? item.gearNameSnapshot,
+            quantity: item.quantity,
+            isConsumable: item.isConsumable,
+            isWorn: item.isWorn,
+            customCategory: item.customCategory,
+            gearNameSnapshot: item.gearNameSnapshot,
+            weightSnapshot: item.weightSnapshot,
+            priceSnapshot: item.priceSnapshot,
+        })),
+    };
+}
+
+export async function importBuildItems(formData: FormData) {
+    const buildId = formData.get("buildId") as string;
+    const payload = JSON.parse(formData.get("payload") as string);
+
+    if (!Array.isArray(payload.items)) {
+        throw new Error("Invalid import file.");
+    }
+
+    for (const item of payload.items) {
+        if (item.gearId) {
+            await prisma.buildItem.upsert({
+                where: { buildId_gearId: { buildId, gearId: item.gearId } },
+                update: { quantity: { increment: item.quantity ?? 1 } },
+                create: {
+                    buildId,
+                    gearId: item.gearId,
+                    quantity: item.quantity ?? 1,
+                    isConsumable: !!item.isConsumable,
+                    isWorn: !!item.isWorn,
+                },
+            });
+        } else {
+            await prisma.buildItem.create({
+                data: {
+                    buildId,
+                    customCategory: item.customCategory ?? null,
+                    gearNameSnapshot: item.gearNameSnapshot ?? item.gearName ?? "Imported item",
+                    weightSnapshot: item.weightSnapshot ?? null,
+                    priceSnapshot: item.priceSnapshot ?? null,
+                    quantity: item.quantity ?? 1,
+                    isConsumable: !!item.isConsumable,
+                    isWorn: !!item.isWorn,
+                },
+            });
+        }
+    }
+
+    revalidatePath(`/build/${buildId}`);
+}
+
+export async function duplicateBuild(formData: FormData) {
+    const buildId = formData.get("buildId") as string;
+
+    const original = await prisma.build.findUnique({
+        where: { id: buildId },
+        include: { items: true },
+    });
+
+    if (!original) throw new Error("Build not found.");
+
+    const copy = await prisma.build.create({
+        data: {
+            name: `${original.name} (copy)`,
+            location: original.location,
+            startDate: original.startDate,
+            endDate: original.endDate,
+            people: original.people,
+            minTemperature: original.minTemperature,
+            conditions: original.conditions,
+            items: {
+                create: original.items.map((item) => ({
+                    gearId: item.gearId,
+                    quantity: item.quantity,
+                    isConsumable: item.isConsumable,
+                    isWorn: item.isWorn,
+                    customCategory: item.customCategory,
+                    gearNameSnapshot: item.gearNameSnapshot,
+                    weightSnapshot: item.weightSnapshot,
+                    priceSnapshot: item.priceSnapshot,
+                })),
+            },
+        },
+    });
+
+    redirect(`/build/${copy.id}`);
+}
 export async function setItemCategory(formData: FormData) {
   const itemId = formData.get("itemId") as string;
   const buildId = formData.get("buildId") as string;
@@ -68,8 +176,21 @@ export async function updateQuantity(formData: FormData) {
 
   revalidatePath(`/build/${buildId}`);
 }
+export async function claimCurrentBuild() {
+  const session = await auth();
+  if (!session?.user) return;
 
+  const cookieStore = await cookies();
+  const buildId = cookieStore.get("currentBuild")?.value;
+  if (!buildId) return;
+
+  await prisma.build.updateMany({
+    where: { id: buildId, userId: null },
+    data: { userId: session.user.id },
+  });
+}
 export async function createBuild(formData: FormData) {
+  const session = await auth();
   const name = formData.get("name")?.toString().trim();
 
   if (!name) {
@@ -86,18 +207,20 @@ export async function createBuild(formData: FormData) {
   const conditions = formData.get("conditions")?.toString();
 
   const build = await prisma.build.create({
-    data: {
-      name,
-      location: location || null,
-      locationLat: locationLatRaw ? Number(locationLatRaw) : null,
-      locationLng: locationLngRaw ? Number(locationLngRaw) : null,
-      startDate: startDateRaw ? new Date(startDateRaw) : null,
-      endDate: endDateRaw ? new Date(endDateRaw) : null,
-      people: peopleRaw ? Number(peopleRaw) : 1,
-      minTemperature: minTemperatureRaw ? Number(minTemperatureRaw) : null,
-      conditions: conditions || null,
-    },
-  });
+  data: {
+    name,
+    location: location || null,
+    locationLat: locationLatRaw ? Number(locationLatRaw) : null,
+    locationLng: locationLngRaw ? Number(locationLngRaw) : null,
+    startDate: startDateRaw ? new Date(startDateRaw) : null,
+    endDate: endDateRaw ? new Date(endDateRaw) : null,
+    people: peopleRaw ? Number(peopleRaw) : 1,
+    minTemperature: minTemperatureRaw ? Number(minTemperatureRaw) : null,
+    conditions: conditions || null,
+
+    userId: session?.user?.id ?? null, // add this
+  },
+});
 
   if (build.startDate && build.endDate) {
     const range = getDateRange(build.startDate, build.endDate);
