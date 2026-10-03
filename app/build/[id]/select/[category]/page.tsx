@@ -1,3 +1,4 @@
+import { requireBuildPageAccess } from "@/lib/build-access";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -12,6 +13,7 @@ export default async function SelectCategoryPage({
 }) {
 
     const { id, category } = await params;
+    await requireBuildPageAccess(id);
 
 
     const categoryData = await prisma.category.findUnique({

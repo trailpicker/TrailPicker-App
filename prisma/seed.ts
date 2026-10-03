@@ -13,10 +13,11 @@ const prisma = new PrismaClient({
 
 
 async function main() {
+  await prisma.$transaction(async (tx) => {
 
   // Brands
 
-  const durston = await prisma.brand.create({
+  const durston = (await tx.brand.findFirst({ where: { name: "Durston" }, orderBy: { createdAt: "asc" } })) ?? await tx.brand.create({
     data: {
       name: "Durston",
       website: "https://durstongear.com",
@@ -24,7 +25,7 @@ async function main() {
   });
 
 
-  const bigAgnes = await prisma.brand.create({
+  const bigAgnes = (await tx.brand.findFirst({ where: { name: "Big Agnes" }, orderBy: { createdAt: "asc" } })) ?? await tx.brand.create({
     data: {
       name: "Big Agnes",
       website: "https://www.bigagnes.com",
@@ -32,7 +33,7 @@ async function main() {
   });
 
 
-  const hmg = await prisma.brand.create({
+  const hmg = (await tx.brand.findFirst({ where: { name: "Hyperlite Mountain Gear" }, orderBy: { createdAt: "asc" } })) ?? await tx.brand.create({
     data: {
       name: "Hyperlite Mountain Gear",
       website: "https://www.hyperlitemountaingear.com",
@@ -40,7 +41,7 @@ async function main() {
   });
 
 
-  const thermarest = await prisma.brand.create({
+  const thermarest = (await tx.brand.findFirst({ where: { name: "Therm-a-Rest" }, orderBy: { createdAt: "asc" } })) ?? await tx.brand.create({
     data: {
       name: "Therm-a-Rest",
     },
@@ -50,64 +51,80 @@ async function main() {
 
   // Categories
 
-  const packs = await prisma.category.create({
-    data: {
+  const packs = await tx.category.upsert({
+    where: { slug: "packs" },
+    update: {},
+    create: {
       name: "Packs",
       slug: "packs",
     },
   });
 
 
-  const shelter = await prisma.category.create({
-    data: {
+  const shelter = await tx.category.upsert({
+    where: { slug: "shelter" },
+    update: {},
+    create: {
       name: "Shelter",
       slug: "shelter",
     },
   });
 
 
-  const sleep = await prisma.category.create({
-    data: {
+  const sleep = await tx.category.upsert({
+    where: { slug: "sleep" },
+    update: {},
+    create: {
       name: "Sleep",
       slug: "sleep",
     },
   });
 
 
-  const cooking = await prisma.category.create({
-    data: {
+  const cooking = await tx.category.upsert({
+    where: { slug: "cooking" },
+    update: {},
+    create: {
       name: "Cooking",
       slug: "cooking",
     },
   });
 
 
-  const water = await prisma.category.create({
-    data: {
+  const water = await tx.category.upsert({
+    where: { slug: "water" },
+    update: {},
+    create: {
       name: "Water",
       slug: "water",
     },
   });
 
 
-  const clothing = await prisma.category.create({
-    data: {
+  const clothing = await tx.category.upsert({
+    where: { slug: "clothing" },
+    update: {},
+    create: {
       name: "Clothing",
       slug: "clothing",
     },
   });
 
 
-  const electronics = await prisma.category.create({
-    data: {
+  const electronics = await tx.category.upsert({
+    where: { slug: "electronics" },
+    update: {},
+    create: {
       name: "Electronics",
       slug: "electronics",
     },
   });
 
 
-  const misc = await prisma.category.create({
-    data: {
+  const misc = await tx.category.upsert({
+    where: { slug: "misc" },
+    update: {},
+    create: {
       name: "Misc",
       slug: "misc",
     },
@@ -117,8 +134,10 @@ async function main() {
 
   // Subcategories
 
-  const internalFrame = await prisma.subcategory.create({
-    data: {
+  await tx.subcategory.upsert({
+    where: { categoryId_slug: { categoryId: packs.id, slug: "internal-frame" } },
+    update: {},
+    create: {
       name: "Internal Frame",
       slug: "internal-frame",
       categoryId: packs.id,
@@ -126,8 +145,10 @@ async function main() {
   });
 
 
-  const frameless = await prisma.subcategory.create({
-    data: {
+  const frameless = await tx.subcategory.upsert({
+    where: { categoryId_slug: { categoryId: packs.id, slug: "frameless" } },
+    update: {},
+    create: {
       name: "Frameless",
       slug: "frameless",
       categoryId: packs.id,
@@ -135,8 +156,10 @@ async function main() {
   });
 
 
-  const tent = await prisma.subcategory.create({
-    data: {
+  const tent = await tx.subcategory.upsert({
+    where: { categoryId_slug: { categoryId: shelter.id, slug: "tent" } },
+    update: {},
+    create: {
       name: "Tent",
       slug: "tent",
       categoryId: shelter.id,
@@ -144,8 +167,10 @@ async function main() {
   });
 
 
-  const sleepingPad = await prisma.subcategory.create({
-    data: {
+  const sleepingPad = await tx.subcategory.upsert({
+    where: { categoryId_slug: { categoryId: sleep.id, slug: "sleeping-pad" } },
+    update: {},
+    create: {
       name: "Sleeping Pad",
       slug: "sleeping-pad",
       categoryId: sleep.id,
@@ -156,7 +181,8 @@ async function main() {
 
   // Remaining subcategories
 
-  await prisma.subcategory.createMany({
+  await tx.subcategory.createMany({
+    skipDuplicates: true,
     data: [
 
       {
@@ -255,7 +281,8 @@ async function main() {
   // Gear
 
 
-  await prisma.gear.create({
+  if (!(await tx.gear.findFirst({ where: { name: "Durston X-Mid 1", brand: { name: "Durston" } } }))) {
+  await tx.gear.create({
     data: {
       name: "Durston X-Mid 1",
       description:
@@ -279,10 +306,12 @@ async function main() {
       },
     },
   });
+  }
 
 
 
-  await prisma.gear.create({
+  if (!(await tx.gear.findFirst({ where: { name: "Big Agnes Copper Spur HV UL2", brand: { name: "Big Agnes" } } }))) {
+  await tx.gear.create({
     data: {
       name: "Big Agnes Copper Spur HV UL2",
       description:
@@ -306,10 +335,12 @@ async function main() {
       },
     },
   });
+  }
 
 
 
-  await prisma.gear.create({
+  if (!(await tx.gear.findFirst({ where: { name: "Hyperlite Mountain Gear Southwest 40", brand: { name: "Hyperlite Mountain Gear" } } }))) {
+  await tx.gear.create({
     data: {
       name: "Hyperlite Mountain Gear Southwest 40",
       description:
@@ -332,10 +363,12 @@ async function main() {
       },
     },
   });
+  }
 
 
 
-  await prisma.gear.create({
+  if (!(await tx.gear.findFirst({ where: { name: "Therm-a-Rest NeoAir XLite NXT", brand: { name: "Therm-a-Rest" } } }))) {
+  await tx.gear.create({
     data: {
       name: "Therm-a-Rest NeoAir XLite NXT",
       description:
@@ -356,7 +389,9 @@ async function main() {
       },
     },
   });
+  }
 
+  }, { maxWait: 10000, timeout: 30000 });
 }
 
 
@@ -366,7 +401,7 @@ main()
   })
   .catch((e) => {
     console.error(e);
-    process.exit(1);
+    process.exitCode = 1;
   })
   .finally(async () => {
     await prisma.$disconnect();

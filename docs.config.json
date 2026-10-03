@@ -4,7 +4,7 @@
     ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs",
     ".json", ".jsonc", ".md", ".mdx", ".css", ".scss", ".html",
     ".yaml", ".yml", ".toml", ".ini", ".txt",
-    ".env.example", ".gitignore", ".npmrc"
+    ".env.example", ".gitignore", ".npmrc", ".prisma"
   ],
   "ignoreDirs": [
     ".git", "node_modules", "dist", "coverage",

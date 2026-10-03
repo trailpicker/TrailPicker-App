@@ -2,12 +2,12 @@
 
 > Generated automatically. Treat source files as authoritative; summaries are derived metadata.
 
-- Generated: 2026-10-03T02:44:25.768Z
+- Generated: 2026-10-03T04:34:42.123Z
 - Root: `trailpicker`
-- Files scanned: 79
-- Files included with readable text: 79
-- Total included source lines: 8,362
-- Total scanned size: 272.2 KB
+- Files scanned: 97
+- Files included with readable text: 97
+- Total included source lines: 9,682
+- Total scanned size: 346.4 KB
 - Max file size: 293.0 KB
 
 
@@ -59,21 +59,29 @@
 │   ├── builder/
 │   │   ├── TripPlanner/
 │   │   │   ├── MapPreviewInner.tsx
+│   │   │   ├── PlannerFields.tsx
+│   │   │   ├── RouteMapInner.tsx
 │   │   │   ├── TripDayList.tsx
 │   │   │   ├── TripDayRow.tsx
 │   │   │   ├── TripEditForm.tsx
 │   │   │   ├── TripLocationPreview.tsx
+│   │   │   ├── TripLogistics.tsx
 │   │   │   ├── TripPlanner.tsx
+│   │   │   ├── TripRoute.tsx
 │   │   │   └── TripSummaryCard.tsx
 │   │   ├── AddCustomItemForm.tsx
 │   │   ├── AddGearButton.tsx
 │   │   ├── BuildHeader.tsx
 │   │   ├── BuildRow.tsx
+│   │   ├── BuildSettings.tsx
+│   │   ├── BuildVisibilityToggle.tsx
 │   │   ├── CompatibilityBar.tsx
 │   │   ├── CompatibilityDetails.tsx
 │   │   ├── CostSummary.tsx
 │   │   ├── GearTab.tsx
 │   │   ├── ItemCategoryToggle.tsx
+│   │   ├── PrivateBuildNotice.tsx
+│   │   ├── PublicBuildView.tsx
 │   │   ├── QuantityStepper.tsx
 │   │   ├── RemoveGearButton.tsx
 │   │   ├── ShareBar.tsx
@@ -98,16 +106,27 @@
 ├── data/
 │   └── destinations.json
 ├── lib/
+│   ├── build-access.ts
+│   ├── build-settings-actions.ts
+│   ├── build-visibility-actions.ts
+│   ├── build-visibility.ts
 │   ├── calculations.ts
 │   ├── compatibility.ts
 │   ├── destinations.ts
+│   ├── guest-build-token.ts
 │   ├── prisma.ts
 │   ├── profile.ts
+│   ├── trip-planner-actions.ts
+│   ├── trip-planner.ts
 │   └── trip.ts
 ├── prisma/
 │   ├── migrations/
 │   │   └── migration_lock.toml
+│   ├── schema.prisma
 │   └── seed.ts
+├── tests/
+│   ├── builder-ownership.test.cjs
+│   └── trip-planner.test.cjs
 ├── tools/
 │   └── generate-docs.ts
 ├── .gitignore
@@ -143,12 +162,18 @@
 - `components/builder/BuildRow.tsx` → `components/builder/QuantityStepper.tsx` (import: `./QuantityStepper`)
 - `components/builder/BuildRow.tsx` → `components/builder/AddCustomItemForm.tsx` (import: `./AddCustomItemForm`)
 - `components/builder/BuildRow.tsx` → `components/builder/ItemCategoryToggle.tsx` (import: `./ItemCategoryToggle`)
+- `components/builder/PublicBuildView.tsx` → `components/builder/TripPlanner/TripPlanner.tsx` (import: `./TripPlanner/TripPlanner`)
 - `components/builder/TripPlanner/TripDayList.tsx` → `components/builder/TripPlanner/TripDayRow.tsx` (import: `./TripDayRow`)
+- `components/builder/TripPlanner/TripDayRow.tsx` → `components/builder/TripPlanner/PlannerFields.tsx` (import: `./PlannerFields`)
 - `components/builder/TripPlanner/TripLocationPreview.tsx` → `components/builder/TripPlanner/MapPreviewInner.tsx` (import: `./MapPreviewInner`)
+- `components/builder/TripPlanner/TripLogistics.tsx` → `components/builder/TripPlanner/PlannerFields.tsx` (import: `./PlannerFields`)
 - `components/builder/TripPlanner/TripPlanner.tsx` → `components/builder/TripPlanner/TripSummaryCard.tsx` (import: `./TripSummaryCard`)
 - `components/builder/TripPlanner/TripPlanner.tsx` → `components/builder/TripPlanner/TripEditForm.tsx` (import: `./TripEditForm`)
 - `components/builder/TripPlanner/TripPlanner.tsx` → `components/builder/TripPlanner/TripDayList.tsx` (import: `./TripDayList`)
-- `components/builder/TripPlanner/TripSummaryCard.tsx` → `components/builder/TripPlanner/TripLocationPreview.tsx` (import: `./TripLocationPreview`)
+- `components/builder/TripPlanner/TripPlanner.tsx` → `components/builder/TripPlanner/TripRoute.tsx` (import: `./TripRoute`)
+- `components/builder/TripPlanner/TripPlanner.tsx` → `components/builder/TripPlanner/TripLogistics.tsx` (import: `./TripLogistics`)
+- `components/builder/TripPlanner/TripRoute.tsx` → `components/builder/TripPlanner/PlannerFields.tsx` (import: `./PlannerFields`)
+- `components/builder/TripPlanner/TripRoute.tsx` → `components/builder/TripPlanner/RouteMapInner.tsx` (import: `./RouteMapInner`)
 - `components/profile/BuildCard.tsx` → `components/profile/DeleteBuildButton.tsx` (import: `./DeleteBuildButton`)
 
 ## UNRESOLVED RELATIVE IMPORTS
@@ -167,17 +192,17 @@
 |---|---:|---:|---|
 | `.gitignore` | 503 B | 44 | Included |
 | `app/api/auth/[...nextauth]/route.ts` | 74 B | 2 | Included |
-| `app/build/[id]/page.tsx` | 7.3 KB | 193 | Included |
-| `app/build/[id]/select/[category]/[subcategory]/page.tsx` | 11.2 KB | 306 | Included |
-| `app/build/[id]/select/[category]/page.tsx` | 2.1 KB | 86 | Included |
-| `app/build/actions.ts` | 11.5 KB | 433 | Included |
+| `app/build/[id]/page.tsx` | 8.8 KB | 223 | Included |
+| `app/build/[id]/select/[category]/[subcategory]/page.tsx` | 11.3 KB | 309 | Included |
+| `app/build/[id]/select/[category]/page.tsx` | 2.2 KB | 88 | Included |
+| `app/build/actions.ts` | 10.4 KB | 331 | Included |
 | `app/build/page.tsx` | 4.3 KB | 117 | Included |
 | `app/gear/[id]/page.tsx` | 2.2 KB | 132 | Included |
 | `app/gear/page.tsx` | 3.0 KB | 189 | Included |
 | `app/globals.css` | 1.2 KB | 70 | Included |
 | `app/layout.tsx` | 910 B | 42 | Included |
 | `app/page.tsx` | 2.1 KB | 120 | Included |
-| `app/profile/actions.ts` | 3.4 KB | 90 | Included |
+| `app/profile/actions.ts` | 3.6 KB | 92 | Included |
 | `app/profile/builds/page.tsx` | 3.1 KB | 35 | Included |
 | `app/profile/edit/page.tsx` | 2.8 KB | 25 | Included |
 | `app/profile/favorites/page.tsx` | 3.0 KB | 39 | Included |
@@ -195,21 +220,29 @@
 | `components/builder/AddGearButton.tsx` | 914 B | 49 | Included |
 | `components/builder/BuildHeader.tsx` | 1.4 KB | 45 | Included |
 | `components/builder/BuildRow.tsx` | 8.6 KB | 204 | Included |
+| `components/builder/BuildSettings.tsx` | 5.9 KB | 118 | Included |
+| `components/builder/BuildVisibilityToggle.tsx` | 2.7 KB | 60 | Included |
 | `components/builder/CompatibilityBar.tsx` | 2.2 KB | 55 | Included |
 | `components/builder/CompatibilityDetails.tsx` | 1.9 KB | 52 | Included |
 | `components/builder/CostSummary.tsx` | 651 B | 30 | Included |
 | `components/builder/GearTab.tsx` | 4.3 KB | 156 | Included |
 | `components/builder/ItemCategoryToggle.tsx` | 2.5 KB | 87 | Included |
+| `components/builder/PrivateBuildNotice.tsx` | 1008 B | 17 | Included |
+| `components/builder/PublicBuildView.tsx` | 4.0 KB | 62 | Included |
 | `components/builder/QuantityStepper.tsx` | 2.4 KB | 87 | Included |
 | `components/builder/RemoveGearButton.tsx` | 677 B | 35 | Included |
-| `components/builder/ShareBar.tsx` | 6.7 KB | 158 | Included |
+| `components/builder/ShareBar.tsx` | 6.9 KB | 164 | Included |
 | `components/builder/TripPlanner/MapPreviewInner.tsx` | 1.0 KB | 33 | Included |
-| `components/builder/TripPlanner/TripDayList.tsx` | 2.4 KB | 87 | Included |
-| `components/builder/TripPlanner/TripDayRow.tsx` | 8.1 KB | 279 | Included |
-| `components/builder/TripPlanner/TripEditForm.tsx` | 4.4 KB | 139 | Included |
+| `components/builder/TripPlanner/PlannerFields.tsx` | 2.1 KB | 85 | Included |
+| `components/builder/TripPlanner/RouteMapInner.tsx` | 1.6 KB | 15 | Included |
+| `components/builder/TripPlanner/TripDayList.tsx` | 3.3 KB | 98 | Included |
+| `components/builder/TripPlanner/TripDayRow.tsx` | 15.9 KB | 511 | Included |
+| `components/builder/TripPlanner/TripEditForm.tsx` | 4.8 KB | 145 | Included |
 | `components/builder/TripPlanner/TripLocationPreview.tsx` | 342 B | 9 | Included |
-| `components/builder/TripPlanner/TripPlanner.tsx` | 2.0 KB | 82 | Included |
-| `components/builder/TripPlanner/TripSummaryCard.tsx` | 9.1 KB | 280 | Included |
+| `components/builder/TripPlanner/TripLogistics.tsx` | 2.0 KB | 13 | Included |
+| `components/builder/TripPlanner/TripPlanner.tsx` | 3.3 KB | 27 | Included |
+| `components/builder/TripPlanner/TripRoute.tsx` | 6.3 KB | 32 | Included |
+| `components/builder/TripPlanner/TripSummaryCard.tsx` | 7.5 KB | 246 | Included |
 | `components/builder/WeightSummary.tsx` | 2.7 KB | 85 | Included |
 | `components/filters/BrandFilter.tsx` | 2.6 KB | 99 | Included |
 | `components/filters/FilterSection.tsx` | 1.2 KB | 51 | Included |
@@ -219,29 +252,39 @@
 | `components/GearCard.tsx` | 1.1 KB | 61 | Included |
 | `components/GearFilters.tsx` | 2.6 KB | 149 | Included |
 | `components/GearSort.tsx` | 1.1 KB | 71 | Included |
-| `components/Navbar.tsx` | 2.3 KB | 52 | Included |
+| `components/Navbar.tsx` | 2.5 KB | 54 | Included |
 | `components/profile/BuildCard.tsx` | 3.4 KB | 33 | Included |
 | `components/profile/DeleteBuildButton.tsx` | 461 B | 19 | Included |
 | `components/profile/GearLibraryCard.tsx` | 4.2 KB | 88 | Included |
 | `components/ProfileDropdown.tsx` | 6.7 KB | 223 | Included |
 | `components/SearchBar.tsx` | 884 B | 52 | Included |
 | `data/destinations.json` | 9.0 KB | 275 | Included |
-| `docs.config.json` | 578 B | 20 | Included |
+| `docs.config.json` | 589 B | 20 | Included |
 | `eslint.config.mjs` | 465 B | 19 | Included |
+| `lib/build-access.ts` | 3.3 KB | 79 | Included |
+| `lib/build-settings-actions.ts` | 871 B | 22 | Included |
+| `lib/build-visibility-actions.ts` | 793 B | 20 | Included |
+| `lib/build-visibility.ts` | 822 B | 21 | Included |
 | `lib/calculations.ts` | 1.2 KB | 54 | Included |
 | `lib/compatibility.ts` | 12.9 KB | 374 | Included |
 | `lib/destinations.ts` | 1.3 KB | 57 | Included |
+| `lib/guest-build-token.ts` | 1.6 KB | 37 | Included |
 | `lib/prisma.ts` | 471 B | 20 | Included |
 | `lib/profile.ts` | 1.5 KB | 43 | Included |
+| `lib/trip-planner-actions.ts` | 4.6 KB | 51 | Included |
+| `lib/trip-planner.ts` | 4.0 KB | 38 | Included |
 | `lib/trip.ts` | 1.9 KB | 65 | Included |
 | `next-env.d.ts` | 251 B | 7 | Included |
 | `next.config.ts` | 259 B | 15 | Included |
 | `package.json` | 907 B | 39 | Included |
 | `postcss.config.mjs` | 94 B | 8 | Included |
 | `prisma/migrations/migration_lock.toml` | 128 B | 4 | Included |
-| `prisma/seed.ts` | 6.9 KB | 373 | Included |
+| `prisma/schema.prisma` | 6.2 KB | 328 | Included |
+| `prisma/seed.ts` | 8.2 KB | 408 | Included |
 | `prisma.config.ts` | 283 B | 15 | Included |
 | `README.md` | 1.4 KB | 37 | Included |
+| `tests/builder-ownership.test.cjs` | 11.0 KB | 166 | Included |
+| `tests/trip-planner.test.cjs` | 4.6 KB | 18 | Included |
 | `tools/generate-docs.ts` | 16.1 KB | 428 | Included |
 | `tsconfig.json` | 666 B | 35 | Included |
 
@@ -306,6 +349,12 @@ export const { GET, POST } = handlers;
 ### `app/build/[id]/page.tsx`
 
 ```typescript
+import { getBuildViewAccess } from "@/lib/build-visibility";
+import PrivateBuildNotice from "@/components/builder/PrivateBuildNotice";
+import PublicBuildView from "@/components/builder/PublicBuildView";
+import { claimCurrentBuild } from "@/app/build/actions";
+import { currentBuildUserId } from "@/lib/build-access";
+
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { calculateWeightBreakdown, calculateTotalCost } from "@/lib/calculations";
@@ -331,12 +380,17 @@ export default async function BuildPage({
   searchParams: Promise<{ tab?: string }>;
 }) {
   const { id } = await params;
+  const view = await getBuildViewAccess(id);
+  if (view.status === "missing") notFound();
+  if (view.status === "private") return <PrivateBuildNotice buildId={id} />;
+  const access = view.access;
+  const canClaim = view.canEdit && access?.userId === null && !!(await currentBuildUserId());
   const { tab } = await searchParams;
 
   const activeTab = tab === "trip" ? "trip" : "gear";
 
   const build = await prisma.build.findUnique({
-    where: { id },
+    where: view.canEdit && access ? { id, userId: access.userId } : { id, isPublic: true },
     include: {
       items: {
         include: {
@@ -350,7 +404,7 @@ export default async function BuildPage({
           },
         },
       },
-      days: true,
+      days: { orderBy: { date: "asc" } },
     },
   });
 
@@ -394,11 +448,24 @@ export default async function BuildPage({
       }
       : null,
   }));
-  const issues = evaluateCompatibility(compatBuild, compatItems);
+  const issues = evaluateCompatibility(compatBuild, compatItems, build.days);
   const summary = summarizeCompatibility(issues);
+
+  if (!view.canEdit) {
+    return <PublicBuildView build={{ ...build, tripLogistics: undefined, days: build.days.map(day => ({ ...day, reservation: null })) }} activeTab={activeTab}
+      compatBuild={compatBuild} compatItems={compatItems}
+      issueCount={summary.errors + summary.warnings} />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {canClaim && (
+        <form action={claimCurrentBuild} className="mx-5 mt-4 flex items-center justify-between gap-3 rounded-md border border-green-200 bg-green-50 p-3 text-sm">
+          <input type="hidden" name="buildId" value={build.id} />
+          <span>This guest build is saved in this browser for 30 days.</span>
+          <button type="submit" className="rounded-md bg-green-800 px-3 py-2 font-medium text-white">Save to my account</button>
+        </form>
+      )}
       <BuildHeader
         buildId={build.id}
         name={build.name}
@@ -412,6 +479,7 @@ export default async function BuildPage({
           <CompatibilityBar
             build={compatBuild}
             items={compatItems}
+            days={build.days}
             totalWeight={total}
           />
 
@@ -419,6 +487,7 @@ export default async function BuildPage({
             <ShareBar
               buildId={build.id}
               buildName={build.name}
+              isPublic={build.isPublic}
               createdAt={build.createdAt}
               updatedAt={build.updatedAt}
             />
@@ -442,6 +511,8 @@ export default async function BuildPage({
               minTemperature: build.minTemperature,
               conditions: build.conditions,
               days: build.days,
+              routeWaypoints: build.routeWaypoints,
+              tripLogistics: build.tripLogistics,
             }}
             issues={issues}
           />
@@ -489,6 +560,7 @@ export default async function BuildPage({
             <CompatibilityDetails
               build={compatBuild}
               items={compatItems}
+              days={build.days}
             />
           </>
 
@@ -499,11 +571,13 @@ export default async function BuildPage({
     </div>
   );
 }
+
 ```
 
 ### `app/build/[id]/select/[category]/[subcategory]/page.tsx`
 
 ```typescript
+import { requireBuildPageAccess } from "@/lib/build-access";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import AddGearButton from "@/components/builder/AddGearButton";
@@ -553,6 +627,7 @@ export default async function SelectGearPage({
         category,
         subcategory: subcategorySlug,
     } = await params;
+    const access = await requireBuildPageAccess(id);
 
 
     const categoryData = await prisma.category.findUnique({
@@ -584,6 +659,7 @@ export default async function SelectGearPage({
     const build = await prisma.build.findUnique({
         where: {
             id,
+            userId: access.userId,
         },
     });
 
@@ -815,6 +891,7 @@ export default async function SelectGearPage({
 ### `app/build/[id]/select/[category]/page.tsx`
 
 ```typescript
+import { requireBuildPageAccess } from "@/lib/build-access";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -829,6 +906,7 @@ export default async function SelectCategoryPage({
 }) {
 
     const { id, category } = await params;
+    await requireBuildPageAccess(id);
 
 
     const categoryData = await prisma.category.findUnique({
@@ -908,17 +986,21 @@ export default async function SelectCategoryPage({
 ```typescript
 "use server";
 
+import { saveTripDetails, saveTripDay } from "@/lib/trip-planner-actions";
+import { parseDates } from "@/lib/trip-planner";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { getDateRange } from "@/lib/trip";
-import { auth } from "@/auth";
+import { currentBuildUserId, hasGuestBuildAccess, requireBuildAccess, requireBuildItemAccess, setCurrentBuild } from "@/lib/build-access";
+import { guestBuildCookieName } from "@/lib/guest-build-token";
 import { getDestination } from "@/lib/destinations";
 
 export async function getBuildExport(buildId: string) {
+  const access = await requireBuildAccess(buildId);
   const build = await prisma.build.findUnique({
-    where: { id: buildId },
+    where: { id: buildId, userId: access.userId },
     include: { items: { include: { gear: { select: { id: true, name: true } } } } },
   });
 
@@ -949,6 +1031,7 @@ export async function getBuildExport(buildId: string) {
 
 export async function importBuildItems(formData: FormData) {
   const buildId = formData.get("buildId") as string;
+  const access = await requireBuildAccess(buildId);
   const payload = JSON.parse(formData.get("payload") as string);
 
   if (!Array.isArray(payload.items)) {
@@ -958,11 +1041,11 @@ export async function importBuildItems(formData: FormData) {
   for (const item of payload.items) {
     if (item.gearId) {
       await prisma.buildItem.upsert({
-        where: { buildId_gearId: { buildId, gearId: item.gearId } },
+        where: { buildId_gearId: { buildId, gearId: item.gearId }, build: { userId: access.userId } },
         update: { quantity: { increment: item.quantity ?? 1 } },
         create: {
-          buildId,
-          gearId: item.gearId,
+          build: { connect: { id: buildId, userId: access.userId } },
+          gear: { connect: { id: item.gearId } },
           quantity: item.quantity ?? 1,
           isConsumable: !!item.isConsumable,
           isWorn: !!item.isWorn,
@@ -971,7 +1054,7 @@ export async function importBuildItems(formData: FormData) {
     } else {
       await prisma.buildItem.create({
         data: {
-          buildId,
+          build: { connect: { id: buildId, userId: access.userId } },
           customCategory: item.customCategory ?? null,
           gearNameSnapshot: item.gearNameSnapshot ?? item.gearName ?? "Imported item",
           weightSnapshot: item.weightSnapshot ?? null,
@@ -990,9 +1073,11 @@ export async function importBuildItems(formData: FormData) {
 export async function duplicateBuild(formData: FormData) {
   const buildId = formData.get("buildId") as string;
 
+  const access = await requireBuildAccess(buildId);
+  const ownerId = await currentBuildUserId();
   const original = await prisma.build.findUnique({
-    where: { id: buildId },
-    include: { items: true },
+    where: { id: buildId, userId: access.userId },
+    include: { items: true, days: true },
   });
 
   if (!original) throw new Error("Build not found.");
@@ -1000,12 +1085,18 @@ export async function duplicateBuild(formData: FormData) {
   const copy = await prisma.build.create({
     data: {
       name: `${original.name} (copy)`,
+      userId: ownerId,
+      locationLat: original.locationLat,
+      locationLng: original.locationLng,
       location: original.location,
       startDate: original.startDate,
       endDate: original.endDate,
       people: original.people,
       minTemperature: original.minTemperature,
       conditions: original.conditions,
+      routeWaypoints: original.routeWaypoints ?? undefined,
+      tripLogistics: original.tripLogistics ?? undefined,
+      days: { create: original.days.map(({ id: _id, buildId: _buildId, createdAt: _createdAt, updatedAt: _updatedAt, ...day }) => day) },
       items: {
         create: original.items.map((item) => ({
           gearId: item.gearId,
@@ -1021,15 +1112,17 @@ export async function duplicateBuild(formData: FormData) {
     },
   });
 
+  await setCurrentBuild(copy.id, !ownerId);
   redirect(`/build/${copy.id}`);
 }
 export async function setItemCategory(formData: FormData) {
   const itemId = formData.get("itemId") as string;
   const buildId = formData.get("buildId") as string;
+  const item = await requireBuildItemAccess(buildId, itemId);
   const category = formData.get("category") as "base" | "worn" | "consumable";
 
   await prisma.buildItem.update({
-    where: { id: itemId },
+    where: { id: itemId, buildId, build: { userId: item.accessUserId } },
     data: {
       isWorn: category === "worn",
       isConsumable: category === "consumable",
@@ -1041,6 +1134,7 @@ export async function setItemCategory(formData: FormData) {
 
 export async function addCustomItem(formData: FormData) {
   const buildId = formData.get("buildId") as string;
+  const access = await requireBuildAccess(buildId);
   const category = formData.get("category") as string;
   const name = formData.get("name") as string;
   const weightRaw = formData.get("weight_g") as string;
@@ -1052,7 +1146,7 @@ export async function addCustomItem(formData: FormData) {
 
   await prisma.buildItem.create({
     data: {
-      buildId,
+      build: { connect: { id: buildId, userId: access.userId } },
       customCategory: category,
       gearNameSnapshot: name.trim(),
       weightSnapshot: weightRaw ? Number(weightRaw) : null,
@@ -1068,38 +1162,36 @@ export async function updateQuantity(formData: FormData) {
   const buildId = formData.get("buildId") as string;
   const delta = Number(formData.get("delta"));
 
-  const item = await prisma.buildItem.findUnique({
-    where: { id: itemId },
-  });
+  const item = await requireBuildItemAccess(buildId, itemId);
 
-  if (!item) {
-    throw new Error("Item not found.");
-  }
-
+  if (!Number.isInteger(delta) || Math.abs(delta) !== 1) throw new Error("Invalid quantity change.");
   const newQuantity = Math.max(1, item.quantity + delta);
 
   await prisma.buildItem.update({
-    where: { id: itemId },
+    where: { id: itemId, buildId, build: { userId: item.accessUserId } },
     data: { quantity: newQuantity },
   });
 
   revalidatePath(`/build/${buildId}`);
 }
-export async function claimCurrentBuild() {
-  const session = await auth();
-  if (!session?.user) return;
-
+export async function claimCurrentBuild(formData?: FormData) {
+  const userId = await currentBuildUserId();
+  if (!userId) return;
   const cookieStore = await cookies();
-  const buildId = cookieStore.get("currentBuild")?.value;
-  if (!buildId) return;
-
-  await prisma.build.updateMany({
-    where: { id: buildId, userId: null },
-    data: { userId: session.user.id },
+  const submittedId = formData?.get("buildId");
+  const buildId = typeof submittedId === "string" ? submittedId : cookieStore.get("currentBuild")?.value;
+  if (!buildId || !(await hasGuestBuildAccess(buildId))) return;
+  const result = await prisma.build.updateMany({
+    where: { id: buildId, userId: null }, data: { userId },
   });
+  if (result.count) {
+    cookieStore.delete(guestBuildCookieName(buildId));
+    revalidatePath(`/build/${buildId}`);
+    revalidatePath("/profile/builds");
+  }
 }
 export async function createBuild(formData: FormData) {
-  const session = await auth();
+  const ownerId = await currentBuildUserId();
 
   const name = formData.get("name")?.toString().trim();
 
@@ -1119,7 +1211,6 @@ export async function createBuild(formData: FormData) {
 
   const selectedDestination = getDestination(destinationIdRaw);
 
-  const destinationId = selectedDestination?.id ?? null;
 
   const submittedLocation =
     formData.get("location")?.toString().trim();
@@ -1146,24 +1237,21 @@ export async function createBuild(formData: FormData) {
       ? Number(submittedLng)
       : null;
 
+  const dates = parseDates(startDateRaw ?? "", endDateRaw ?? "");
   const build = await prisma.build.create({
     data: {
       name,
+      destinationId: selectedDestination?.id ?? null,
       location,
       locationLat,
       locationLng,
-      startDate: startDateRaw
-        ? new Date(startDateRaw)
-        : null,
-      endDate: endDateRaw
-        ? new Date(endDateRaw)
-        : null,
+      ...dates,
       people: peopleRaw ? Number(peopleRaw) : 1,
       minTemperature: minTemperatureRaw
         ? Number(minTemperatureRaw)
         : null,
       conditions: conditions || null,
-      userId: session?.user?.id ?? null,
+      userId: ownerId,
     },
   });
 
@@ -1182,25 +1270,26 @@ export async function createBuild(formData: FormData) {
     });
   }
 
-  const cookieStore = await cookies();
-  cookieStore.set("currentBuild", build.id);
+  await setCurrentBuild(build.id, !ownerId);
 
   redirect(`/build/${build.id}`);
 }
 export async function addGear(formData: FormData) {
   const buildId = formData.get("buildId") as string;
+  const access = await requireBuildAccess(buildId);
   const gearId = formData.get("gearId") as string;
 
   await prisma.buildItem.upsert({
     where: {
       buildId_gearId: { buildId, gearId },
+      build: { userId: access.userId },
     },
     update: {
       quantity: { increment: 1 },
     },
     create: {
-      buildId,
-      gearId,
+      build: { connect: { id: buildId, userId: access.userId } },
+      gear: { connect: { id: gearId } },
     },
   });
 
@@ -1210,135 +1299,22 @@ export async function addGear(formData: FormData) {
 export async function removeGear(formData: FormData) {
   const itemId = formData.get("itemId") as string;
   const buildId = formData.get("buildId") as string;
+  const item = await requireBuildItemAccess(buildId, itemId);
 
   await prisma.buildItem.delete({
     where: {
       id: itemId,
+      buildId,
+      build: { userId: item.accessUserId },
     },
   });
 
   redirect(`/build/${buildId}`);
 }
 
-export async function updateTripDetails(formData: FormData) {
-  const buildId = formData.get("buildId") as string;
+export async function updateTripDetails(formData: FormData) { return saveTripDetails(formData); }
+export async function updateTripDay(formData: FormData) { return saveTripDay(formData); }
 
-  const startDateRaw =
-    formData.get("startDate")?.toString() || "";
-
-  const endDateRaw =
-    formData.get("endDate")?.toString() || "";
-
-  const startDate = startDateRaw
-    ? new Date(startDateRaw)
-    : null;
-
-  const endDate = endDateRaw
-    ? new Date(endDateRaw)
-    : null;
-
-  const people = Number(formData.get("people")) || 1;
-
-  const minTemperature = formData.get("minTemperature")
-    ? Number(formData.get("minTemperature"))
-    : null;
-
-  const conditions =
-    formData.get("conditions")?.toString() || null;
-
-  const destinationIdRaw =
-    formData.get("destinationId")?.toString() || null;
-
-  const selectedDestination = getDestination(destinationIdRaw);
-
-  const destinationId = selectedDestination?.id ?? null;
-
-  const submittedLocation =
-    formData.get("location")?.toString().trim();
-
-  const submittedLat =
-    formData.get("locationLat")?.toString();
-
-  const submittedLng =
-    formData.get("locationLng")?.toString();
-
-  const location = selectedDestination
-    ? `${selectedDestination.name}, ${selectedDestination.park}`
-    : submittedLocation || null;
-
-  const locationLat = selectedDestination
-    ? selectedDestination.latitude
-    : submittedLat
-      ? Number(submittedLat)
-      : null;
-
-  const locationLng = selectedDestination
-    ? selectedDestination.longitude
-    : submittedLng
-      ? Number(submittedLng)
-      : null;
-
-  await prisma.build.update({
-    where: { id: buildId },
-    data: {
-      location,
-      locationLat,
-      locationLng,
-      startDate,
-      endDate,
-      people,
-      minTemperature,
-      conditions,
-    },
-  });
-
-  if (
-    startDate &&
-    endDate &&
-    startDate.getTime() <= endDate.getTime()
-  ) {
-    const range = getDateRange(startDate, endDate);
-
-    await prisma.tripDay.createMany({
-      data: range.map((date) => ({
-        buildId,
-        date,
-      })),
-      skipDuplicates: true,
-    });
-
-    await prisma.tripDay.deleteMany({
-      where: {
-        buildId,
-        date: { notIn: range },
-      },
-    });
-  } else {
-    await prisma.tripDay.deleteMany({
-      where: { buildId },
-    });
-  }
-
-  revalidatePath(`/build/${buildId}`);
-}
-
-export async function updateTripDay(formData: FormData) {
-  const dayId = formData.get("dayId") as string;
-  const buildId = formData.get("buildId") as string;
-
-  const minTemperature = formData.get("minTemperature")
-    ? Number(formData.get("minTemperature"))
-    : null;
-  const conditions = (formData.get("conditions") as string) || null;
-  const notes = (formData.get("notes") as string) || null;
-
-  await prisma.tripDay.update({
-    where: { id: dayId },
-    data: { minTemperature, conditions, notes },
-  });
-
-  revalidatePath(`/build/${buildId}`);
-}
 ```
 
 ### `app/build/page.tsx`
@@ -2046,6 +2022,7 @@ export default async function Home() {
 ```typescript
 "use server";
 
+import { setCurrentBuild } from "@/lib/build-access";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
@@ -2118,6 +2095,7 @@ export async function duplicateProfileBuild(formData: FormData) {
       },
     },
   });
+  await setCurrentBuild(copy.id);
   redirect(`/build/${copy.id}`);
 }
 
@@ -4110,6 +4088,194 @@ export default function BuildRow({
 }
 ```
 
+### `components/builder/BuildSettings.tsx`
+
+```typescript
+"use client";
+
+import { useRef, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { Settings2, X, LockKeyhole, Globe2 } from "lucide-react";
+import { setBuildVisibility } from "@/lib/build-visibility-actions";
+import { renameBuild } from "@/lib/build-settings-actions";
+
+export default function BuildSettings({ buildId, buildName, isPublic, buttonClassName }: {
+  buildId: string;
+  buildName: string;
+  isPublic: boolean;
+  buttonClassName: string;
+}) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  const [name, setName] = useState(buildName);
+  const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
+  const router = useRouter();
+  const cleanName = name.trim();
+
+  function open() {
+    setName(buildName);
+    setError(null);
+    setNotice(null);
+    dialog.current?.showModal();
+  }
+
+  function saveName(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!cleanName || cleanName.length > 100) {
+      setError("Enter a build name between 1 and 100 characters.");
+      return;
+    }
+    setError(null);
+    setNotice(null);
+    startTransition(async () => {
+      try {
+        await renameBuild(buildId, cleanName);
+        setNotice("Build name saved.");
+        router.refresh();
+      } catch {
+        setError("Couldn’t save the build name. Please try again.");
+      }
+    });
+  }
+
+  function changeVisibility(next: boolean) {
+    if (next === isPublic || pending) return;
+    setError(null);
+    setNotice(null);
+    startTransition(async () => {
+      try {
+        await setBuildVisibility(buildId, next);
+        setNotice(next ? "Build is now public." : "Build is now private.");
+        router.refresh();
+      } catch {
+        setError("Couldn’t save visibility. Please try again.");
+      }
+    });
+  }
+
+  return <>
+    <button type="button" onClick={open} className={buttonClassName} aria-haspopup="dialog">
+      <Settings2 className="h-4 w-4" aria-hidden="true" />
+      Settings
+    </button>
+    <dialog ref={dialog} aria-labelledby="build-settings-title"
+      className="fixed inset-0 m-auto max-h-[85vh] w-[calc(100%_-_2rem)] max-w-lg overflow-y-auto rounded-2xl border border-gray-200 bg-white p-0 text-gray-900 shadow-2xl backdrop:bg-gray-950/35"
+      onClick={e => { if (e.target === e.currentTarget) {
+        const rect = e.currentTarget.getBoundingClientRect();
+        if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) e.currentTarget.close();
+      } }}>
+      <header className="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+        <div>
+          <h2 id="build-settings-title" className="text-lg font-semibold">Build settings</h2>
+          <p className="mt-1 text-xs text-gray-500">Name and sharing</p>
+        </div>
+        <button type="button" autoFocus onClick={() => dialog.current?.close()} aria-label="Close settings"
+          className="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-700 focus-visible:outline-2 focus-visible:outline-green-700">
+          <X className="h-5 w-5" aria-hidden="true" />
+        </button>
+      </header>
+      <div className="space-y-7 px-6 py-6">
+        <form onSubmit={saveName}>
+          <label htmlFor="build-settings-name" className="text-sm font-semibold">Build name</label>
+          <div className="mt-2 flex gap-2">
+            <input id="build-settings-name" value={name} onChange={e => setName(e.target.value)} maxLength={100} required disabled={pending}
+              className="min-w-0 flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/10 disabled:opacity-50" />
+            <button type="submit" disabled={pending || !cleanName || cleanName === buildName}
+              className="rounded-lg bg-green-800 px-4 py-2 text-sm font-medium text-white hover:bg-green-900 disabled:cursor-not-allowed disabled:opacity-40">Save</button>
+          </div>
+        </form>
+        <section>
+          <h3 className="text-sm font-semibold">Visibility</h3>
+          <div role="group" aria-label="Build visibility" className="mt-3 grid grid-cols-2 gap-2 rounded-xl bg-gray-100 p-1">
+            {[{ value: false, label: "Private", Icon: LockKeyhole }, { value: true, label: "Public", Icon: Globe2 }].map(({ value, label, Icon }) =>
+              <button key={label} type="button" aria-pressed={isPublic === value} disabled={pending} onClick={() => changeVisibility(value)}
+                className={`flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition focus-visible:outline-2 focus-visible:outline-green-700 disabled:cursor-wait ${isPublic === value ? "bg-white text-green-900 shadow-sm" : "text-gray-500 hover:text-gray-800"}`}>
+                <Icon className="h-4 w-4" aria-hidden="true" />{label}
+              </button>)}
+          </div>
+          <p className="mt-3 text-sm leading-6 text-gray-500">
+            {isPublic ? "Anyone with the link can view this build. Only you can edit it." : "Only you can view and edit this build."}
+          </p>
+          <p className="mt-2 text-xs leading-5 text-gray-400">Public sharing includes gear, trip dates, location, and itinerary notes. Visibility changes save automatically.</p>
+        </section>
+        {error && <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+        <p role="status" aria-live="polite" className="text-sm text-green-800">{pending ? "Saving…" : notice}</p>
+      </div>
+      <footer className="flex justify-end border-t border-gray-100 px-6 py-4">
+        <button type="button" onClick={() => dialog.current?.close()} className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Done</button>
+      </footer>
+    </dialog>
+  </>;
+}
+
+```
+
+### `components/builder/BuildVisibilityToggle.tsx`
+
+```typescript
+"use client";
+
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { setBuildVisibility } from "@/lib/build-visibility-actions";
+
+export default function BuildVisibilityToggle({ buildId, isPublic }: { buildId: string; isPublic: boolean }) {
+  const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const router = useRouter();
+
+  function toggle() {
+    setError(null);
+    setNotice(null);
+    startTransition(async () => {
+      try {
+        await setBuildVisibility(buildId, !isPublic);
+        router.refresh();
+      } catch {
+        setError("Couldn’t save visibility. Please try again.");
+      }
+    });
+  }
+
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(`${window.location.origin}/build/${buildId}`);
+      setNotice("Link copied.");
+    } catch {
+      setError("Couldn’t copy the link. Copy this page’s address instead.");
+    }
+  }
+
+  return (
+    <section className="mx-auto max-w-screen-2xl px-4 py-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-gray-200 bg-white p-4">
+        <div>
+          <h2 className="font-semibold text-gray-900">Build visibility: {isPublic ? "Public" : "Private"}</h2>
+          <p className="mt-1 max-w-2xl text-sm text-gray-600">
+            {isPublic
+              ? "Anyone with the link can view your gear, trip dates, location, and notes. Only you can edit."
+              : "Only you can view this build. Making it public shares gear, trip dates, location, and notes with anyone who has the link."}
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          {isPublic && <button type="button" onClick={copyLink} className="rounded-lg border px-3 py-2 text-sm">Copy public link</button>}
+          <button type="button" role="switch" aria-checked={isPublic} aria-label="Public build" disabled={pending} onClick={toggle}
+            className={`relative h-7 w-12 rounded-full transition disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-green-700 ${isPublic ? "bg-green-700" : "bg-gray-300"}`}>
+            <span aria-hidden="true" className={`absolute top-1 h-5 w-5 rounded-full bg-white transition-all ${isPublic ? "left-6" : "left-1"}`} />
+          </button>
+          <span className="text-sm text-gray-600" aria-live="polite">{pending ? "Saving…" : isPublic ? "Public" : "Private"}</span>
+        </div>
+      </div>
+      {error && <p role="alert" className="mt-2 text-sm text-red-700">{error}</p>}
+      {notice && <p role="status" className="mt-2 text-sm text-green-800">{notice}</p>}
+    </section>
+  );
+}
+
+```
+
 ### `components/builder/CompatibilityBar.tsx`
 
 ```typescript
@@ -4515,6 +4681,95 @@ export default function ItemCategoryToggle({
 }
 ```
 
+### `components/builder/PrivateBuildNotice.tsx`
+
+```typescript
+import Link from "next/link";
+
+export default function PrivateBuildNotice({ buildId }: { buildId: string }) {
+  return (
+    <main className="flex min-h-[70vh] items-center justify-center bg-gray-50 px-4 py-12">
+      <section className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-sm">
+        <h1 className="text-2xl font-semibold text-gray-900">This build is private</h1>
+        <p className="mt-3 text-sm leading-6 text-gray-600">Only the owner can view this build. Sign in with the account that created it to continue.</p>
+        <div className="mt-6 flex flex-col gap-3">
+          <Link href={`/api/auth/signin?callbackUrl=${encodeURIComponent(`/build/${buildId}`)}`} className="rounded-lg bg-green-800 px-4 py-3 text-sm font-medium text-white">Sign in</Link>
+          <Link href="/build" className="rounded-lg border border-gray-300 px-4 py-3 text-sm font-medium text-gray-700">Create your own build</Link>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+```
+
+### `components/builder/PublicBuildView.tsx`
+
+```typescript
+import Link from "next/link";
+import TripPlanner from "./TripPlanner/TripPlanner";
+import type { PlannerBuild } from "@/lib/trip-planner";
+import { evaluateCompatibility } from "@/lib/compatibility";
+import BuildHeader from "@/components/builder/BuildHeader";
+import CompatibilityDetails from "@/components/builder/CompatibilityDetails";
+import WeightSummary from "@/components/builder/WeightSummary";
+import { calculateWeightBreakdown, calculateTotalCost } from "@/lib/calculations";
+import type { BuildForCompat, CompatItem } from "@/lib/compatibility";
+
+type Item = {
+  id: string; quantity: number; isWorn: boolean; isConsumable: boolean;
+  customCategory: string | null; gearNameSnapshot: string | null;
+  weightSnapshot: number | null; priceSnapshot: number | null;
+  gear: { id: string; name: string; weight_g: number | null; price_cad: number | null; category: { name: string } } | null;
+};
+type Build = PlannerBuild & { name: string; items: Item[] };
+
+// Server-rendered display only: no mutation forms or editing components.
+export default function PublicBuildView({ build, activeTab, compatBuild, compatItems, issueCount }: {
+  build: Build; activeTab: "gear" | "trip"; compatBuild: BuildForCompat; compatItems: CompatItem[]; issueCount: number;
+}) {
+  const weight = calculateWeightBreakdown(build.items);
+  const totalCost = calculateTotalCost(build.items);
+  const categories = [...new Set(build.items.map(item => item.gear?.category.name ?? item.customCategory ?? "Other"))];
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <BuildHeader buildId={build.id} name={build.name} active={activeTab} issueCount={issueCount} />
+      <main className="mx-auto max-w-6xl space-y-6 px-4 py-6">
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-900">
+          <p>Public build · Read-only · Only the owner can edit.</p>
+          <Link href="/build" className="font-semibold underline">Create your own build</Link>
+        </div>
+        {activeTab === "gear" ? <>
+          {categories.length === 0 && <p className="rounded-xl bg-white p-6 text-gray-500">No gear added yet.</p>}
+          {categories.map(category => <section key={category} className="rounded-xl border border-gray-200 bg-white p-5">
+            <h2 className="mb-3 text-lg font-semibold">{category}</h2>
+            <ul className="divide-y divide-gray-100">
+              {build.items.filter(item => (item.gear?.category.name ?? item.customCategory ?? "Other") === category).map(item => {
+                const name = item.gear?.name ?? item.gearNameSnapshot ?? "Custom item";
+                const grams = item.gear?.weight_g ?? item.weightSnapshot;
+                const price = item.gear?.price_cad ?? item.priceSnapshot;
+                return <li key={item.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
+                  <div>{item.gear ? <Link href={`/gear/${item.gear.id}`} className="font-semibold hover:underline">{name}</Link> : <span className="font-semibold">{name}</span>}
+                    <p className="mt-1 text-sm text-gray-500">Quantity: {item.quantity}{item.isWorn ? " · Worn" : ""}{item.isConsumable ? " · Consumable" : ""}</p>
+                  </div>
+                  <div className="text-sm text-gray-600">{grams == null ? "Weight unknown" : `${grams * item.quantity} g`}{" · "}{price == null ? "Price unknown" : `CAD $${(price * item.quantity).toFixed(2)}`}</div>
+                </li>;
+              })}
+            </ul>
+          </section>)}
+          <p className="text-lg font-semibold">Total cost: CAD ${totalCost.toFixed(2)}</p>
+          <WeightSummary {...weight} totalCost={totalCost} />
+          <CompatibilityDetails build={compatBuild} items={compatItems} days={build.days} />
+        </> : <TripPlanner build={{ ...build, tripLogistics: undefined, days: build.days.map(day=>({...day,reservation:null})) }} issues={evaluateCompatibility(compatBuild,compatItems,build.days)} readOnly />}
+
+      </main>
+    </div>
+  );
+}
+
+
+```
+
 ### `components/builder/QuantityStepper.tsx`
 
 ```typescript
@@ -4654,11 +4909,13 @@ export default function RemoveGearButton({
 //components/builder/ShareBar.tsx
 import { useRef, useState } from "react";
 import Link from "next/link";
+import BuildSettings from "@/components/builder/BuildSettings";
 import { duplicateBuild, getBuildExport, importBuildItems } from "@/app/build/actions";
 
 type Props = {
     buildId: string;
     buildName: string;
+    isPublic: boolean;
     createdAt: Date;
     updatedAt: Date;
 };
@@ -4666,7 +4923,7 @@ type Props = {
 const btnClass =
     "flex items-center gap-1.5 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer transition disabled:opacity-50 disabled:cursor-not-allowed";
 
-export default function ShareBar({ buildId, buildName, createdAt, updatedAt }: Props) {
+export default function ShareBar({ buildId, buildName, isPublic, createdAt, updatedAt }: Props) {
     const [copied, setCopied] = useState(false);
     const [showHistory, setShowHistory] = useState(false);
     const [importing, setImporting] = useState(false);
@@ -4727,7 +4984,7 @@ export default function ShareBar({ buildId, buildName, createdAt, updatedAt }: P
                 <button
                     type="button"
                     onClick={copyLink}
-                    title="Copy link"
+                    title={isPublic ? "Copy public link" : "Copy private link"}
                     className="shrink-0 text-gray-400 hover:text-gray-700 cursor-pointer"
                 >
                     {copied ? (
@@ -4747,6 +5004,8 @@ export default function ShareBar({ buildId, buildName, createdAt, updatedAt }: P
                     className="w-full bg-transparent text-sm text-gray-700 outline-none truncate"
                 />
             </div>
+
+            <span className="text-xs text-gray-500">{isPublic ? "Public build" : "Private build"}</span>
 
             <input
                 ref={fileInputRef}
@@ -4786,6 +5045,8 @@ export default function ShareBar({ buildId, buildName, createdAt, updatedAt }: P
                     </div>
                 )}
             </div>
+
+            <BuildSettings buildId={buildId} buildName={buildName} isPublic={isPublic} buttonClassName={btnClass} />
 
             <form action={duplicateBuild}>
                 <input type="hidden" name="buildId" value={buildId} />
@@ -4848,96 +5109,217 @@ export default function MapPreviewInner({ lat, lng }: { lat: number; lng: number
 }
 ```
 
+### `components/builder/TripPlanner/PlannerFields.tsx`
+
+```typescript
+import type { ReactNode } from "react";
+
+export const inputClass =
+  "w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-900 shadow-sm outline-none transition placeholder:text-gray-400 hover:border-gray-300 focus:border-green-700 focus:ring-4 focus:ring-green-700/10 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400";
+
+export function Field({
+  name,
+  label,
+  value,
+  type = "text",
+  min,
+  max,
+  step,
+}: {
+  name: string;
+  label: string;
+  value?: string | number | null;
+  type?: string;
+  min?: number;
+  max?: number;
+  step?: number | string;
+}) {
+  return (
+    <label className="block space-y-1.5 text-sm">
+      <span className="font-medium text-gray-700">{label}</span>
+      <input
+        className={inputClass}
+        name={name}
+        type={type}
+        defaultValue={value ?? ""}
+        min={min}
+        max={max}
+        step={step}
+        maxLength={type === "text" ? 5000 : undefined}
+      />
+    </label>
+  );
+}
+
+export function Group({
+  title,
+  children,
+}: {
+  title: string;
+  children: ReactNode;
+}) {
+  return (
+    <fieldset className="space-y-3">
+      <legend className="mb-3 text-xs font-bold uppercase tracking-wider text-green-800">
+        {title}
+      </legend>
+      <div className="grid gap-3 sm:grid-cols-2">{children}</div>
+    </fieldset>
+  );
+}
+
+export function SaveStatus({
+  pending,
+  error,
+  saved,
+}: {
+  pending: boolean;
+  error: string;
+  saved?: boolean;
+}) {
+  return (
+    <div aria-live="polite" className="flex flex-col items-start text-sm">
+      {error ? (
+        <p role="alert" className="mb-2 font-medium text-red-700">
+          {error}
+        </p>
+      ) : saved ? (
+        <p className="mb-2 font-medium text-green-700">Saved.</p>
+      ) : null}
+
+      <button
+        disabled={pending}
+        className="rounded-xl bg-green-900 px-5 py-2.5 font-semibold text-white shadow-sm transition hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-900/15 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        {pending ? "Saving…" : "Save changes"}
+      </button>
+    </div>
+  );
+}
+
+```
+
+### `components/builder/TripPlanner/RouteMapInner.tsx`
+
+```typescript
+"use client";
+import { useEffect } from "react";
+import { MapContainer, TileLayer, CircleMarker, Popup, Polyline, useMap, useMapEvents } from "react-leaflet";
+import type { Waypoint } from "@/lib/trip-planner";
+import "leaflet/dist/leaflet.css";
+function Controls({ points, onPick }: { points: Waypoint[]; onPick?: (lat: number,lng: number)=>void }) {
+  const map = useMap();
+  useMapEvents({ click(e) { onPick?.(e.latlng.lat,e.latlng.lng); } });
+  useEffect(()=>{if(points.length>1)map.fitBounds(points.map(p=>[p.lat,p.lng]),{padding:[32,32],maxZoom:14});else if(points.length===1)map.setView([points[0].lat,points[0].lng],12);},[map,points]);
+  return null;
+}
+export default function RouteMapInner({ points, fallback, onPick }: { points: Waypoint[]; fallback: [number,number] | null; onPick?: (lat: number,lng: number)=>void }) {
+  return <MapContainer center={fallback ?? [49.7,-123.1]} zoom={9} scrollWheelZoom={false} className="relative z-0 h-80 w-full"><TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' /><Controls points={points} onPick={onPick} />{points.length>1 && <Polyline positions={points.map(p=>[p.lat,p.lng])} pathOptions={{color:"#166534",dashArray:"6 8"}} />}{points.map((p,i)=><CircleMarker key={p.id} center={[p.lat,p.lng]} radius={8} pathOptions={{color:p.kind==="water"?"#0369a1":"#166534",fillOpacity:1}}><Popup>{i+1}. {p.name} · {p.kind}</Popup></CircleMarker>)}{!points.length && fallback && <CircleMarker center={fallback} radius={8}><Popup>Trip location</Popup></CircleMarker>}</MapContainer>;
+}
+
+```
+
 ### `components/builder/TripPlanner/TripDayList.tsx`
 
 ```typescript
-import { CalendarCheck2 } from "lucide-react";
+import { Route } from "lucide-react";
 import TripDayRow from "./TripDayRow";
-
-type TripDay = {
-  id: string;
-  date: Date;
-  minTemperature: number | null;
-  conditions: string | null;
-  notes: string | null;
-};
+import { plannedDay, type PlannerDay } from "@/lib/trip-planner";
 
 export default function TripDayList({
   buildId,
   days,
+  readOnly = false,
 }: {
   buildId: string;
-  days: TripDay[];
+  days: PlannerDay[];
+  readOnly?: boolean;
 }) {
-  const completedDays = days.filter(
-    (day) =>
-      day.notes?.trim() ||
-      day.conditions ||
-      day.minTemperature != null,
-  ).length;
+  const sorted = [...days].sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+  );
 
-  const progress =
-    days.length > 0
-      ? Math.round(
-          (completedDays / days.length) * 100,
-        )
-      : 0;
+  const completed = days.filter(plannedDay).length;
+  const progress = days.length ? Math.round((completed / days.length) * 100) : 0;
 
   return (
-    <section className="overflow-hidden rounded-3xl border border-gray-200 bg-gray-50 shadow-sm">
-      <div className="border-b border-gray-200 bg-white px-5 py-5 sm:px-8">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-          <div className="flex items-start gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-green-100 text-green-800">
-              <CalendarCheck2 className="h-5 w-5" />
-            </div>
+    <section
+      id="itinerary"
+      className="scroll-mt-20 rounded-[28px] border border-gray-200 bg-white p-4 shadow-sm sm:p-6"
+    >
+      <div className="mb-6 flex flex-col gap-5 border-b border-gray-100 pb-5 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex items-start gap-3">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-green-900 text-white">
+            <Route className="h-5 w-5" />
+          </span>
 
-            <div>
-              <h2 className="text-lg font-bold text-gray-950">
-                Day-by-day itinerary
-              </h2>
-
-              <p className="mt-1 text-sm text-gray-500">
-                Add your plan, expected low, and weather
-                for each day.
-              </p>
-            </div>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-green-700">
+              Daily plan
+            </p>
+            <h2 className="mt-1 text-xl font-bold tracking-tight text-gray-950 sm:text-2xl">
+              Itinerary
+            </h2>
+            <p className="mt-1 max-w-xl text-sm leading-6 text-gray-500">
+              Build the trip day by day with route, elevation, camp, water,
+              weather, and notes.
+            </p>
           </div>
+        </div>
 
-          <div className="min-w-40">
-            <div className="mb-1.5 flex items-center justify-between text-xs">
-              <span className="font-semibold text-gray-500">
-                {completedDays} of {days.length} planned
-              </span>
-
-              <span className="font-bold text-green-800">
-                {progress}%
+        {days.length > 0 && (
+          <div className="min-w-[190px] rounded-2xl bg-gray-50 px-4 py-3">
+            <div className="flex items-center justify-between gap-4 text-sm">
+              <span className="font-medium text-gray-500">Route progress</span>
+              <span className="font-bold text-green-900">
+                {completed}/{days.length}
               </span>
             </div>
 
-            <div className="h-2 overflow-hidden rounded-full bg-gray-100">
+            <div
+              role="progressbar"
+              aria-label="Days with start, end and distance"
+              aria-valuemin={0}
+              aria-valuemax={days.length}
+              aria-valuenow={completed}
+              className="mt-2 h-2 overflow-hidden rounded-full bg-gray-200"
+            >
               <div
-                className="h-full rounded-full bg-green-700 transition-all"
+                className="h-full rounded-full bg-green-800 transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
             </div>
           </div>
-        </div>
+        )}
       </div>
 
-      <div className="space-y-3 p-3 sm:p-5">
-        {days.map((day, index) => (
+      <div className="space-y-3">
+        {sorted.map((day, index) => (
           <TripDayRow
-            key={day.id}
+            key={`${day.id}-${new Date(day.date).toISOString()}`}
             buildId={buildId}
             day={day}
             dayNumber={index + 1}
+            readOnly={readOnly}
           />
         ))}
+
+        {!days.length && (
+          <div className="rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-6 py-12 text-center">
+            <Route className="mx-auto h-7 w-7 text-gray-300" />
+            <p className="mt-3 font-semibold text-gray-700">
+              No itinerary days yet
+            </p>
+            <p className="mt-1 text-sm text-gray-500">
+              Choose trip dates and TrailPicker will create the daily plan.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );
 }
+
 ```
 
 ### `components/builder/TripPlanner/TripDayRow.tsx`
@@ -4945,283 +5327,515 @@ export default function TripDayList({
 ```typescript
 "use client";
 
+import type { ReactNode } from "react";
+import { useState, useTransition } from "react";
 import {
   CalendarDays,
-  Check,
+  CheckCircle2,
   ChevronDown,
+  Clock3,
   CloudSun,
-  FileText,
-  Pencil,
-  Thermometer,
-  X,
+  Droplets,
+  Footprints,
+  MapPin,
+  Mountain,
+  NotebookPen,
+  Route,
+  TentTree,
+  ThermometerSun,
 } from "lucide-react";
 
-import {
-  useState,
-  useTransition,
-} from "react";
-
 import { updateTripDay } from "@/app/build/actions";
+import { plannedDay, type PlannerDay } from "@/lib/trip-planner";
+import { Field, SaveStatus, inputClass } from "./PlannerFields";
 
-type TripDay = {
-  id: string;
-  date: Date;
-  minTemperature: number | null;
-  conditions: string | null;
-  notes: string | null;
-};
+function formatDuration(minutes: number) {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
 
-const conditionMeta: Record<
-  string,
-  {
-    icon: string;
-    label: string;
-    className: string;
-  }
-> = {
-  dry: {
-    icon: "☀️",
-    label: "Dry",
-    className: "bg-amber-50 text-amber-800",
-  },
-  rain: {
-    icon: "🌧️",
-    label: "Rain",
-    className: "bg-blue-50 text-blue-800",
-  },
-  snow: {
-    icon: "❄️",
-    label: "Snow",
-    className: "bg-sky-50 text-sky-800",
-  },
-};
+  if (!hours) return `${mins}m`;
+  if (!mins) return `${hours}h`;
+  return `${hours}h ${mins}m`;
+}
+
+function weatherLabel(value: string | null) {
+  if (!value) return "Weather not set";
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+function Stat({
+  icon,
+  label,
+  value,
+}: {
+  icon: ReactNode;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex min-w-0 items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-2">
+      <span className="text-green-800">{icon}</span>
+      <div className="min-w-0">
+        <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-gray-400">
+          {label}
+        </p>
+        <p className="truncate text-sm font-semibold text-gray-800">{value}</p>
+      </div>
+    </div>
+  );
+}
+
+function MiniDetail({
+  icon,
+  children,
+}: {
+  icon: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <span className="inline-flex min-w-0 items-center gap-1.5 text-sm text-gray-600">
+      <span className="shrink-0 text-gray-400">{icon}</span>
+      <span className="truncate">{children}</span>
+    </span>
+  );
+}
+
+function FormSection({
+  icon,
+  title,
+  description,
+  children,
+}: {
+  icon: ReactNode;
+  title: string;
+  description?: string;
+  children: ReactNode;
+}) {
+  return (
+    <section className="rounded-2xl border border-gray-200 bg-white p-4 sm:p-5">
+      <div className="mb-4 flex items-start gap-3">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-800">
+          {icon}
+        </span>
+        <div>
+          <h4 className="font-bold text-gray-950">{title}</h4>
+          {description && (
+            <p className="mt-0.5 text-xs leading-5 text-gray-500">
+              {description}
+            </p>
+          )}
+        </div>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">{children}</div>
+    </section>
+  );
+}
+
+function ReadOnlyItem({
+  label,
+  value,
+}: {
+  label: string;
+  value: ReactNode;
+}) {
+  if (value === null || value === undefined || value === "") return null;
+
+  return (
+    <div className="rounded-xl bg-gray-50 px-4 py-3">
+      <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-gray-400">
+        {label}
+      </p>
+      <div className="mt-1 whitespace-pre-wrap text-sm leading-6 text-gray-700">
+        {value}
+      </div>
+    </div>
+  );
+}
 
 export default function TripDayRow({
   buildId,
   day,
   dayNumber,
+  readOnly = false,
 }: {
   buildId: string;
-  day: TripDay;
+  day: PlannerDay;
   dayNumber: number;
+  readOnly?: boolean;
 }) {
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
+  const [pending, start] = useTransition();
 
-  const [isPending, startTransition] =
-    useTransition();
+  function submit(formData: FormData) {
+    setError("");
 
-  function handleSubmit(formData: FormData) {
-    startTransition(async () => {
-      await updateTripDay(formData);
-      setOpen(false);
+    start(async () => {
+      try {
+        await updateTripDay(formData);
+        setOpen(false);
+      } catch (e) {
+        setError(
+          e instanceof Error ? e.message : "Could not save. Try again.",
+        );
+      }
     });
   }
 
-  const dateLabel = new Date(
-    day.date,
-  ).toLocaleDateString(undefined, {
-    weekday: "long",
-    month: "long",
+  const isPlanned = plannedDay(day);
+
+  const date = new Date(day.date).toLocaleDateString(undefined, {
+    month: "short",
     day: "numeric",
+    weekday: "short",
     timeZone: "UTC",
   });
 
-  const condition = day.conditions
-    ? conditionMeta[day.conditions]
-    : null;
+  const route =
+    day.startLocation || day.endLocation
+      ? `${day.startLocation || "Start not set"} → ${day.endLocation || "End not set"}`
+      : "Plan this day";
 
-  const hasPlan = Boolean(
-    day.notes?.trim() ||
-      day.conditions ||
-      day.minTemperature != null,
-  );
+  const hasStats =
+    day.distanceKm != null ||
+    day.elevationGainM != null ||
+    day.elevationLossM != null ||
+    day.durationMinutes != null;
 
   return (
     <article
-      className={`overflow-hidden rounded-2xl border bg-white transition ${
+      className={`overflow-hidden rounded-2xl border bg-white transition-all duration-200 ${
         open
-          ? "border-green-300 shadow-sm ring-2 ring-green-700/5"
-          : "border-gray-200 hover:border-gray-300"
+          ? "border-green-200 shadow-[0_12px_35px_rgba(0,0,0,0.07)]"
+          : "border-gray-200 shadow-sm hover:border-gray-300 hover:shadow-md"
       }`}
     >
       <button
         type="button"
+        aria-expanded={open}
+        aria-controls={`day-${day.id}`}
         onClick={() => setOpen(!open)}
-        className="flex w-full items-start gap-4 px-4 py-4 text-left sm:px-5"
+        className="group w-full p-4 text-left sm:p-5"
       >
-        <div
-          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-sm font-bold ${
-            hasPlan
-              ? "bg-green-900 text-white"
-              : "bg-gray-100 text-gray-500"
-          }`}
-        >
-          {hasPlan ? (
-            <Check className="h-5 w-5" />
-          ) : (
-            dayNumber
-          )}
-        </div>
+        <div className="flex items-start gap-4">
+          <div
+            className={`flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-2xl ${
+              isPlanned
+                ? "bg-green-900 text-white"
+                : "bg-gray-100 text-gray-500"
+            }`}
+          >
+            <span className="text-[9px] font-bold uppercase tracking-wider opacity-70">
+              Day
+            </span>
+            <span className="text-lg font-black leading-none">{dayNumber}</span>
+          </div>
 
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-green-700">
-                Day {dayNumber}
-              </p>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.12em] text-green-800">
+                <CalendarDays className="h-3.5 w-3.5" />
+                {date}
+              </span>
 
-              <p className="mt-0.5 font-bold text-gray-950">
-                {dateLabel}
-              </p>
+              <span
+                className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-[10px] font-bold ${
+                  isPlanned
+                    ? "bg-green-50 text-green-800"
+                    : "bg-amber-50 text-amber-700"
+                }`}
+              >
+                {isPlanned && <CheckCircle2 className="h-3 w-3" />}
+                {isPlanned ? "Routed" : "Needs route"}
+              </span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2">
-              {condition && (
-                <span
-                  className={`rounded-full px-2.5 py-1 text-xs font-semibold ${condition.className}`}
-                >
-                  {condition.icon} {condition.label}
-                </span>
+            <h3 className="mt-2 break-words text-base font-bold leading-snug text-gray-950 sm:text-lg">
+              {route}
+            </h3>
+
+            {hasStats ? (
+              <div className="mt-4 grid grid-cols-2 gap-2 lg:grid-cols-4">
+                {day.distanceKm != null && (
+                  <Stat
+                    icon={<Footprints className="h-4 w-4" />}
+                    label="Distance"
+                    value={`${day.distanceKm} km`}
+                  />
+                )}
+
+                {day.elevationGainM != null && (
+                  <Stat
+                    icon={<Mountain className="h-4 w-4" />}
+                    label="Gain"
+                    value={`+${day.elevationGainM.toLocaleString()} m`}
+                  />
+                )}
+
+                {day.elevationLossM != null && (
+                  <Stat
+                    icon={<Mountain className="h-4 w-4 rotate-180" />}
+                    label="Loss"
+                    value={`-${day.elevationLossM.toLocaleString()} m`}
+                  />
+                )}
+
+                {day.durationMinutes != null && (
+                  <Stat
+                    icon={<Clock3 className="h-4 w-4" />}
+                    label="Time"
+                    value={formatDuration(day.durationMinutes)}
+                  />
+                )}
+              </div>
+            ) : (
+              <div className="mt-3 rounded-xl border border-dashed border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-400">
+                Add distance, elevation and time to complete this day.
+              </div>
+            )}
+
+            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 border-t border-gray-100 pt-3">
+              {day.campsite && (
+                <MiniDetail icon={<TentTree className="h-4 w-4" />}>
+                  {day.campsite}
+                </MiniDetail>
               )}
+
+              {day.waterSource && (
+                <MiniDetail icon={<Droplets className="h-4 w-4" />}>
+                  {day.waterSource}
+                </MiniDetail>
+              )}
+
+              <MiniDetail icon={<CloudSun className="h-4 w-4" />}>
+                {weatherLabel(day.conditions)}
+              </MiniDetail>
 
               {day.minTemperature != null && (
-                <span className="rounded-full bg-gray-100 px-2.5 py-1 text-xs font-semibold text-gray-700">
-                  {day.minTemperature}°C low
-                </span>
+                <MiniDetail icon={<ThermometerSun className="h-4 w-4" />}>
+                  Low {day.minTemperature}°C
+                </MiniDetail>
               )}
-
-              <span className="inline-flex items-center gap-1 rounded-full border border-gray-200 px-2.5 py-1 text-xs font-semibold text-gray-500">
-                <Pencil className="h-3 w-3" />
-                {open ? "Close" : "Edit"}
-              </span>
             </div>
           </div>
 
-          {day.notes ? (
-            <p className="mt-3 line-clamp-2 text-sm leading-6 text-gray-600">
-              {day.notes}
-            </p>
-          ) : (
-            <p className="mt-3 text-sm text-gray-400">
-              No plan added yet.
-            </p>
-          )}
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 transition group-hover:border-green-200 group-hover:text-green-800">
+            <ChevronDown
+              className={`h-4 w-4 transition-transform duration-200 ${
+                open ? "rotate-180" : ""
+              }`}
+            />
+          </span>
         </div>
-
-        <ChevronDown
-          className={`mt-1 h-5 w-5 shrink-0 text-gray-300 transition-transform ${
-            open ? "rotate-180" : ""
-          }`}
-        />
       </button>
 
-      {open && (
-        <form
-          action={handleSubmit}
-          className="border-t border-gray-100 bg-gray-50 p-4 sm:p-5"
-        >
-          <input
-            type="hidden"
-            name="dayId"
-            value={day.id}
-          />
+      {open &&
+        (readOnly ? (
+          <div
+            id={`day-${day.id}`}
+            className="border-t border-gray-100 bg-gray-50/70 p-4 sm:p-5"
+          >
+            <div className="grid gap-3 sm:grid-cols-2">
+              <ReadOnlyItem label="Activities" value={day.activities} />
+              <ReadOnlyItem
+                label="Trail conditions"
+                value={day.trailConditions}
+              />
+              <ReadOnlyItem
+                label="Water carry"
+                value={
+                  day.waterCarryL != null ? `${day.waterCarryL} L` : null
+                }
+              />
+              <ReadOnlyItem label="Notes" value={day.notes} />
+            </div>
+          </div>
+        ) : (
+          <form
+            id={`day-${day.id}`}
+            action={submit}
+            className="space-y-4 border-t border-gray-100 bg-gray-50/70 p-4 sm:p-5"
+          >
+            <fieldset disabled={pending} className="space-y-4">
+              <input type="hidden" name="buildId" value={buildId} />
+              <input type="hidden" name="dayId" value={day.id} />
 
-          <input
-            type="hidden"
-            name="buildId"
-            value={buildId}
-          />
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="block">
-              <span className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-gray-500">
-                <Thermometer className="h-4 w-4" />
-                Expected low
-              </span>
-
-              <div className="flex items-center rounded-xl border border-gray-200 bg-white px-3 focus-within:border-green-700 focus-within:ring-2 focus-within:ring-green-700/10">
-                <input
-                  name="minTemperature"
+              <FormSection
+                icon={<Route className="h-4 w-4" />}
+                title="Route"
+                description="Where the day starts, ends, and how much ground you expect to cover."
+              >
+                <Field
+                  name="startLocation"
+                  label="Start"
+                  value={day.startLocation}
+                />
+                <Field
+                  name="endLocation"
+                  label="End"
+                  value={day.endLocation}
+                />
+                <Field
+                  name="distanceKm"
+                  label="Distance (km)"
                   type="number"
-                  defaultValue={
-                    day.minTemperature ?? undefined
-                  }
-                  placeholder="-5"
-                  className="w-full py-2.5 text-sm outline-none"
+                  min={0}
+                  max={1000}
+                  step="any"
+                  value={day.distanceKm}
+                />
+                <Field
+                  name="durationMinutes"
+                  label="Estimated time (minutes)"
+                  type="number"
+                  min={0}
+                  max={1440}
+                  value={day.durationMinutes}
+                />
+                <Field
+                  name="elevationGainM"
+                  label="Elevation gain (m)"
+                  type="number"
+                  min={0}
+                  max={20000}
+                  value={day.elevationGainM}
+                />
+                <Field
+                  name="elevationLossM"
+                  label="Elevation loss (m)"
+                  type="number"
+                  min={0}
+                  max={20000}
+                  value={day.elevationLossM}
+                />
+              </FormSection>
+
+              <FormSection
+                icon={<TentTree className="h-4 w-4" />}
+                title="Overnight"
+                description="Camp, hut, hotel, or wherever civilization permits you to collapse."
+              >
+                <Field
+                  name="campsite"
+                  label="Campsite / accommodation"
+                  value={day.campsite}
+                />
+                <Field
+                  name="reservation"
+                  label="Reservation / tent pad (private)"
+                  value={day.reservation}
+                />
+              </FormSection>
+
+              <FormSection
+                icon={<CloudSun className="h-4 w-4" />}
+                title="Conditions"
+                description="Expected weather and trail conditions for this specific day."
+              >
+                <Field
+                  name="minTemperature"
+                  label="Expected low (°C)"
+                  type="number"
+                  min={-100}
+                  max={60}
+                  value={day.minTemperature}
                 />
 
-                <span className="text-sm text-gray-400">
-                  °C
-                </span>
-              </div>
-            </label>
+                <label className="block space-y-1.5 text-sm">
+                  <span className="font-medium text-gray-700">Weather</span>
+                  <select
+                    name="conditions"
+                    defaultValue={day.conditions ?? ""}
+                    className={inputClass}
+                  >
+                    <option value="">Unknown</option>
+                    <option value="dry">Dry</option>
+                    <option value="rain">Rain</option>
+                    <option value="snow">Snow</option>
+                  </select>
+                </label>
 
-            <label className="block">
-              <span className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-gray-500">
-                <CloudSun className="h-4 w-4" />
-                Conditions
-              </span>
+                <div className="sm:col-span-2">
+                  <Field
+                    name="trailConditions"
+                    label="Trail conditions / warnings"
+                    value={day.trailConditions}
+                  />
+                </div>
+              </FormSection>
 
-              <select
-                name="conditions"
-                defaultValue={
-                  day.conditions ?? ""
-                }
-                className="w-full cursor-pointer rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/10"
+              <FormSection
+                icon={<Droplets className="h-4 w-4" />}
+                title="Water & activities"
+                description="Water planning plus anything you actually intend to do besides walk."
               >
-                <option value="">Unknown</option>
-                <option value="dry">
-                  ☀️ Dry
-                </option>
-                <option value="rain">
-                  🌧️ Rain
-                </option>
-                <option value="snow">
-                  ❄️ Snow
-                </option>
-              </select>
-            </label>
-          </div>
+                <Field
+                  name="waterSource"
+                  label="Water source"
+                  value={day.waterSource}
+                />
+                <Field
+                  name="waterCarryL"
+                  label="Water to carry (L)"
+                  type="number"
+                  min={0}
+                  max={100}
+                  step="any"
+                  value={day.waterCarryL}
+                />
+                <div className="sm:col-span-2">
+                  <Field
+                    name="activities"
+                    label="Planned activities"
+                    value={day.activities}
+                  />
+                </div>
+              </FormSection>
 
-          <label className="mt-4 block">
-            <span className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-gray-500">
-              <FileText className="h-4 w-4" />
-              Plan for this day
-            </span>
+              <section className="rounded-2xl border border-gray-200 bg-white p-4 sm:p-5">
+                <div className="mb-4 flex items-start gap-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-800">
+                    <NotebookPen className="h-4 w-4" />
+                  </span>
+                  <div>
+                    <h4 className="font-bold text-gray-950">Notes</h4>
+                    <p className="mt-0.5 text-xs leading-5 text-gray-500">
+                      Anything important that does not fit neatly into a box,
+                      as human plans tend to do.
+                    </p>
+                  </div>
+                </div>
 
-            <textarea
-              name="notes"
-              defaultValue={day.notes ?? ""}
-              placeholder="Example: Leave at 8:00 AM, hike to camp, set up the tent, collect water and cook dinner..."
-              rows={4}
-              className="w-full resize-y rounded-xl border border-gray-200 bg-white px-3 py-3 text-sm leading-6 outline-none placeholder:text-gray-300 focus:border-green-700 focus:ring-2 focus:ring-green-700/10"
-            />
-          </label>
+                <textarea
+                  name="notes"
+                  rows={4}
+                  maxLength={5000}
+                  defaultValue={day.notes ?? ""}
+                  className={inputClass}
+                  placeholder="Optional notes for this day..."
+                />
+              </section>
+            </fieldset>
 
-          <div className="mt-4 flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-600 transition hover:bg-gray-50"
-            >
-              <X className="h-4 w-4" />
-              Cancel
-            </button>
+            <div className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+              <SaveStatus pending={pending} error={error} />
 
-            <button
-              type="submit"
-              disabled={isPending}
-              className="inline-flex items-center gap-2 rounded-xl bg-green-900 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-green-800 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              <Check className="h-4 w-4" />
-              {isPending ? "Saving..." : "Save day"}
-            </button>
-          </div>
-        </form>
-      )}
+              <button
+                type="button"
+                disabled={pending}
+                onClick={() => setOpen(false)}
+                className="rounded-xl px-4 py-2.5 text-sm font-semibold text-gray-500 transition hover:bg-gray-100 hover:text-gray-800 disabled:opacity-50"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        ))}
     </article>
   );
 }
+
 ```
 
 ### `components/builder/TripPlanner/TripEditForm.tsx`
@@ -5229,7 +5843,7 @@ export default function TripDayRow({
 ```typescript
 "use client";
 //components/builder/TripPlanner/TripEditForm.tsx
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import DestinationPicker from "@/components/build/DestinationPicker";
 import DateRangePicker from "@/components/build/DateRangePicker";
 import { updateTripDetails } from "@/app/build/actions";
@@ -5251,12 +5865,13 @@ type Props = {
 };
 
 export default function TripEditForm({ build, onSaved, onCancel }: Props) {
+  const [error, setError] = useState("");
   const [isPending, startTransition] = useTransition();
 
   function handleSubmit(formData: FormData) {
     startTransition(async () => {
-      await updateTripDetails(formData);
-      onSaved();
+      setError("");
+      try { await updateTripDetails(formData); onSaved(); } catch(e) { setError(e instanceof Error ? e.message : "Could not save trip."); }
     });
   }
 
@@ -5283,6 +5898,7 @@ export default function TripEditForm({ build, onSaved, onCancel }: Props) {
       </div>
 
       <form action={handleSubmit} className="space-y-4">
+        <fieldset disabled={isPending} className="space-y-4">
         <input type="hidden" name="buildId" value={build.id} />
 
         <div className="rounded-lg border p-3">
@@ -5355,6 +5971,8 @@ export default function TripEditForm({ build, onSaved, onCancel }: Props) {
           </select>
         </div>
 
+        <label className="flex items-start gap-2 text-xs text-gray-500"><input type="checkbox" name="confirmDateChange" value="yes" />I understand that days outside the new date range will be removed. Keep days within the range.</label>
+        {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
         <button
           type="submit"
           disabled={isPending}
@@ -5362,10 +5980,12 @@ export default function TripEditForm({ build, onSaved, onCancel }: Props) {
         >
           {isPending ? "Saving..." : "Save Trip Details"}
         </button>
+        </fieldset>
       </form>
     </div>
   );
 }
+
 ```
 
 ### `components/builder/TripPlanner/TripLocationPreview.tsx`
@@ -5382,91 +6002,91 @@ export default function TripLocationPreview({ lat, lng }: { lat: number; lng: nu
 }
 ```
 
+### `components/builder/TripPlanner/TripLogistics.tsx`
+
+```typescript
+"use client";
+import { useState, useTransition } from "react";
+import { saveTripLogistics } from "@/lib/trip-planner-actions";
+import { readLogistics, type Logistics } from "@/lib/trip-planner";
+import { inputClass, SaveStatus } from "./PlannerFields";
+const labels: Record<keyof Logistics,string> = { permits:"Permits",reservations:"Reservations",transportation:"Transportation",parking:"Parking / trailhead access",emergencyContact:"Emergency contact",emergencyPlan:"Emergency plan / exit routes",notes:"Other logistics" };
+export default function TripLogistics({ buildId, value }: { buildId: string; value: unknown }) {
+  const [pending,start] = useTransition(),[error,setError]=useState(""),[saved,setSaved]=useState(false);
+  const logistics = readLogistics(value);
+  function submit(f: FormData) { setError("");setSaved(false);start(async()=>{try{await saveTripLogistics(f);setSaved(true);}catch(e){setError(e instanceof Error?e.message:"Could not save logistics.");}}); }
+  return <section id="logistics" className="scroll-mt-20 rounded-3xl border border-gray-200 bg-white p-5 sm:p-8"><h2 className="text-xl font-bold">Logistics</h2><p className="mt-1 text-sm text-gray-500">Arrange the practical details. This section and daily reservation references stay private when sharing.</p><form action={submit} onChange={()=>setSaved(false)} className="mt-5 space-y-4"><input type="hidden" name="buildId" value={buildId} /><fieldset disabled={pending} className="space-y-3">{(Object.keys(labels) as (keyof Logistics)[]).map(key=><details key={key} className="rounded-xl border border-gray-200 p-4"><summary className="cursor-pointer text-sm font-semibold">{labels[key]} <span className="ml-2 font-normal text-gray-400">{logistics[key] ? "Added" : "Not set"}</span></summary><label className="mt-3 block"><span className="sr-only">{labels[key]}</span><textarea name={key} defaultValue={logistics[key]} maxLength={5000} rows={3} className={inputClass} /></label></details>)}</fieldset><SaveStatus pending={pending} error={error} saved={saved} /></form></section>;
+}
+
+```
+
 ### `components/builder/TripPlanner/TripPlanner.tsx`
 
 ```typescript
 "use client";
-
 import { useState } from "react";
 import TripSummaryCard from "./TripSummaryCard";
 import TripEditForm from "./TripEditForm";
 import TripDayList from "./TripDayList";
+import TripRoute from "./TripRoute";
+import TripLogistics from "./TripLogistics";
+import { tripTotals, type PlannerBuild } from "@/lib/trip-planner";
 import type { CompatibilityIssue } from "@/lib/compatibility";
-
-type TripDay = {
-  id: string;
-  date: Date;
-  minTemperature: number | null;
-  conditions: string | null;
-  notes: string | null;
-};
-
-type Props = {
-  build: {
-    id: string;
-    location: string | null;
-    locationLat: number | null;
-    locationLng: number | null;
-    startDate: Date | null;
-    endDate: Date | null;
-    people: number;
-    minTemperature: number | null;
-    conditions: string | null;
-    days: TripDay[];
-  };
-  issues: CompatibilityIssue[];
-};
-
-export default function TripPlanner({
-  build,
-  issues,
-}: Props) {
-  const [editing, setEditing] = useState(
-    !build.startDate,
-  );
-
-  return (
-    <div className="mx-auto mt-6 max-w-6xl space-y-6 px-3 pb-20 sm:mt-8 sm:px-6">
-      {editing ? (
-        <TripEditForm
-          build={build}
-          onSaved={() => setEditing(false)}
-          onCancel={
-            build.startDate
-              ? () => setEditing(false)
-              : undefined
-          }
-        />
-      ) : (
-        <>
-          <TripSummaryCard
-            build={build}
-            issues={issues}
-            onEdit={() => setEditing(true)}
-          />
-
-          {build.days.length > 0 ? (
-            <TripDayList
-              buildId={build.id}
-              days={build.days}
-            />
-          ) : (
-            <div className="rounded-2xl border border-dashed border-gray-300 bg-white px-6 py-12 text-center">
-              <p className="font-semibold text-gray-700">
-                No itinerary days yet
-              </p>
-
-              <p className="mt-1 text-sm text-gray-400">
-                Edit your trip and choose a start and end
-                date.
-              </p>
-            </div>
-          )}
-        </>
-      )}
-    </div>
-  );
+export default function TripPlanner({ build, issues, readOnly = false }: { build: PlannerBuild; issues: CompatibilityIssue[]; readOnly?: boolean }) {
+  const [editing,setEditing]=useState(!readOnly&&!build.startDate);
+  const totals=tripTotals(build.days);
+  const temperatures=[build.minTemperature,...build.days.map(d=>d.minTemperature)].filter((x):x is number=>x!=null);
+  const conditions=[...new Set([build.conditions,...build.days.map(d=>d.conditions)].filter(Boolean))];
+  const displayBuild={...build,minTemperature:temperatures.length?Math.min(...temperatures):null};
+  return <div className="mx-auto mt-6 max-w-6xl space-y-6 px-3 pb-20 sm:px-6">
+    <nav aria-label="Trip sections" className="flex flex-wrap gap-2">{["overview","route","itinerary",...(!readOnly?["logistics"]:[])].map(section=><a key={section} href={`#${section}`} className="rounded-full border bg-white px-4 py-2 text-sm font-semibold capitalize text-green-900 hover:bg-green-50">{section}</a>)}</nav>
+    <div id="overview" className="scroll-mt-20">{editing ? <TripEditForm build={build} onSaved={()=>setEditing(false)} onCancel={build.startDate?()=>setEditing(false):undefined} /> : <TripSummaryCard build={displayBuild} issues={issues} onEdit={readOnly?undefined:()=>setEditing(true)} />}</div>
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">{[["Distance",totals.measuredDays?`${totals.distanceKm.toFixed(1)} km`:"Not set"],["Elevation gain",build.days.some(d=>d.elevationGainM!=null)?`↑ ${totals.gainM.toLocaleString()} m`:"Not set"],["Elevation loss",build.days.some(d=>d.elevationLossM!=null)?`↓ ${totals.lossM.toLocaleString()} m`:"Not set"],["Walking time",build.days.some(d=>d.durationMinutes!=null)?`${Math.floor(totals.minutes/60)}h ${totals.minutes%60}m`:"Not set"]].map(([label,value])=><div key={label} className="rounded-2xl border bg-white p-4"><p className="text-xs text-gray-500">{label}</p><p className="mt-1 font-bold text-green-950">{value}</p></div>)}</div>
+    <p className="text-xs text-gray-500">Totals include entered values only · Distance entered for {totals.measuredDays}/{build.days.length} days · {conditions.length>1?"Mixed weather across itinerary":conditions[0]||"Weather not set"}</p>
+    {issues.length > 0 && <details id="compatibility-details" className="scroll-mt-20 rounded-2xl border border-amber-200 bg-amber-50 p-4"><summary className="cursor-pointer text-sm font-semibold text-amber-900">Gear checks for these trip conditions</summary><ul className="mt-3 space-y-2 text-sm text-amber-950">{issues.map(issue=><li key={issue.id}>{issue.message}</li>)}</ul></details>}
+    <TripRoute key={JSON.stringify(build.routeWaypoints)} buildId={build.id} value={build.routeWaypoints} lat={build.locationLat} lng={build.locationLng} readOnly={readOnly} />
+    <TripDayList buildId={build.id} days={build.days} readOnly={readOnly} />
+    {!readOnly && <TripLogistics buildId={build.id} value={build.tripLogistics} />}
+  </div>;
 }
+
+```
+
+### `components/builder/TripPlanner/TripRoute.tsx`
+
+```typescript
+"use client";
+import dynamic from "next/dynamic";
+import { useState, useTransition } from "react";
+import { readWaypoints, type Waypoint } from "@/lib/trip-planner";
+import { saveTripRoute } from "@/lib/trip-planner-actions";
+import { inputClass, SaveStatus } from "./PlannerFields";
+const RouteMap = dynamic(()=>import("./RouteMapInner"),{ssr:false,loading:()=> <div className="h-80 animate-pulse bg-gray-100" />});
+export default function TripRoute({ buildId, value, lat, lng, readOnly = false }: { buildId: string; value: unknown; lat: number | null; lng: number | null; readOnly?: boolean }) {
+  const [points,setPoints]=useState(()=>readWaypoints(value)),[editing,setEditing]=useState(false),[error,setError]=useState(""),[saved,setSaved]=useState(false),[pending,start]=useTransition();
+  const [name,setName]=useState(""),[latitude,setLatitude]=useState(""),[longitude,setLongitude]=useState(""),[height,setHeight]=useState(""),[kind,setKind]=useState<Waypoint["kind"]>("waypoint");
+  function add() {
+    const lat=Number(latitude),lng=Number(longitude), elevationM=height===""?null:Number(height);
+    if(!name.trim() || !latitude.trim() || !longitude.trim() || !Number.isFinite(lat) || !Number.isFinite(lng) || Math.abs(lat)>90 || Math.abs(lng)>180 || (elevationM!=null && (!Number.isFinite(elevationM) || elevationM < -500 || elevationM>9000))) {setError("Enter a name and valid coordinates. Optional elevation must be between -500 and 9000 m.");return;}
+    if(points.length>=200){setError("Maximum 200 waypoints.");return;}
+    setPoints([...points,{id:crypto.randomUUID(),name:name.trim(),lat,lng,elevationM,kind}]);setName("");setHeight("");setError("");setSaved(false);
+  }
+  function move(i:number,delta:number){const next=[...points];[next[i],next[i+delta]]=[next[i+delta],next[i]];setPoints(next);setSaved(false);}
+  function submit(f:FormData){setError("");start(async()=>{try{await saveTripRoute(f);setSaved(true);setEditing(false);}catch(e){setError(e instanceof Error?e.message:"Could not save route.");}});}
+  const elevations=points.filter(p=>p.elevationM!=null);
+  const profileReady=points.length>=2 && elevations.length===points.length;
+  const min=Math.min(...elevations.map(p=>p.elevationM!)),max=Math.max(...elevations.map(p=>p.elevationM!));
+  return <section id="route" className="scroll-mt-20 overflow-hidden rounded-3xl border border-gray-200 bg-white"><div className="flex flex-wrap items-center justify-between gap-3 p-5 sm:px-8"><div><h2 className="text-xl font-bold">Route</h2><p className="mt-1 text-sm text-gray-500">Trailheads, camps, water stops, and waypoints in travel order.</p></div>{!readOnly && <button type="button" disabled={pending} onClick={()=>{if(editing){setPoints(readWaypoints(value));setError("");}setEditing(!editing);setSaved(false);}} className="rounded-xl border px-4 py-2 text-sm font-semibold">{editing?"Cancel editing":"Edit route"}</button>}</div>
+    <RouteMap points={points} fallback={lat!=null&&lng!=null?[lat,lng]:null} onPick={editing&&!pending ? (a,b)=>{setLatitude(a.toFixed(6));setLongitude(b.toFixed(6));}:undefined} />
+    <div className="space-y-4 p-5 sm:px-8"><p className="text-xs text-gray-500">Dashed lines connect waypoints directly; they do not follow trails. Enter daily walking distances in the itinerary.</p>
+      {profileReady ? <div><p className="text-xs font-semibold text-gray-600">Waypoint elevations · {min}–{max} m · evenly spaced stops</p><svg viewBox="0 0 600 100" role="img" aria-label="Elevation at each waypoint, ordered by travel, not distance" className="mt-2 h-24 w-full"><polyline fill="none" stroke="#166534" strokeWidth="3" points={points.map((p,i)=>`${10+i*580/(points.length-1)},${85-((p.elevationM!-min)/Math.max(1,max-min))*70}`).join(" ")} /></svg></div> : <p className="text-xs text-gray-400">Add elevation to every waypoint (at least two) to see an elevation sketch.</p>}
+      {!points.length && <p className="text-sm text-gray-500">No route waypoints yet.</p>}
+      <ol className="space-y-2">{points.map((p,i)=><li key={p.id} className="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-gray-50 px-3 py-2 text-sm"><div><strong>{i+1}. {p.name}</strong><span className="ml-2 text-gray-500">{p.kind} · {p.lat.toFixed(4)}, {p.lng.toFixed(4)}{p.elevationM!=null?` · ${p.elevationM} m`:""}</span></div>{editing && <div className="flex gap-3"><button type="button" disabled={pending||i===0} aria-label={`Move ${p.name} earlier`} onClick={()=>move(i,-1)} className="disabled:opacity-30">↑</button><button type="button" disabled={pending||i===points.length-1} aria-label={`Move ${p.name} later`} onClick={()=>move(i,1)} className="disabled:opacity-30">↓</button><button type="button" disabled={pending} onClick={()=>{setPoints(points.filter(x=>x.id!==p.id));setSaved(false);}} className="text-red-700">Remove</button></div>}</li>)}</ol>
+      {editing && <form action={submit} className="space-y-4 border-t pt-4"><input type="hidden" name="buildId" value={buildId} /><input type="hidden" name="waypoints" value={JSON.stringify(points)} /><fieldset disabled={pending} className="grid gap-3 sm:grid-cols-2"><label className="text-sm">Stop name<input value={name} maxLength={200} onChange={e=>setName(e.target.value)} className={inputClass} /></label><label className="text-sm">Type<select value={kind} onChange={e=>setKind(e.target.value as Waypoint["kind"])} className={inputClass}>{["trailhead","camp","water","waypoint"].map(k=><option key={k}>{k}</option>)}</select></label><label className="text-sm">Latitude<input value={latitude} onChange={e=>setLatitude(e.target.value)} className={inputClass} /></label><label className="text-sm">Longitude<input value={longitude} onChange={e=>setLongitude(e.target.value)} className={inputClass} /></label><label className="text-sm">Elevation (m, optional)<input value={height} onChange={e=>setHeight(e.target.value)} className={inputClass} /></label><button type="button" onClick={add} className="self-end rounded-xl border border-green-700 px-4 py-2.5 text-sm font-semibold text-green-800">Add waypoint</button></fieldset><p className="text-xs text-gray-500">Click the map to fill coordinates. Add the stop, then save your route.</p><SaveStatus pending={pending} error={error} saved={saved} /></form>}
+      {!editing&&saved&&<p aria-live="polite" className="text-sm text-green-700">Route saved.</p>}
+    </div></section>;
+}
+
 ```
 
 ### `components/builder/TripPlanner/TripSummaryCard.tsx`
@@ -5474,13 +6094,11 @@ export default function TripPlanner({
 ```typescript
 "use client";
 
-import dynamic from "next/dynamic";
 import {
     AlertTriangle,
     CalendarDays,
     CloudSun,
     MapPin,
-    Navigation,
     Pencil,
     Thermometer,
     Users,
@@ -5493,11 +6111,6 @@ import {
 } from "@/lib/trip";
 
 import type { CompatibilityIssue } from "@/lib/compatibility";
-
-const TripLocationPreview = dynamic(
-    () => import("./TripLocationPreview"),
-    { ssr: false },
-);
 
 const conditionMeta: Record<
     string,
@@ -5537,7 +6150,7 @@ type Props = {
         conditions: string | null;
     };
     issues: CompatibilityIssue[];
-    onEdit: () => void;
+    onEdit?: () => void;
 };
 
 export default function TripSummaryCard({
@@ -5575,12 +6188,6 @@ export default function TripSummaryCard({
                     : daysUntil === 0
                         ? "Starts today"
                         : "Trip date passed";
-
-    const directionsUrl =
-        build.locationLat != null &&
-            build.locationLng != null
-            ? `https://www.google.com/maps/search/?api=1&query=${build.locationLat},${build.locationLng}`
-            : null;
 
     return (
         <section className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
@@ -5625,38 +6232,16 @@ export default function TripSummaryCard({
                         </p>
                     </div>
 
-                    <button
+                    {onEdit && <button
                         type="button"
                         onClick={onEdit}
                         className="inline-flex w-fit items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-green-950 shadow-sm transition hover:bg-green-50"
                     >
                         <Pencil className="h-4 w-4" />
                         Edit trip
-                    </button>
+                    </button>}
                 </div>
             </div>
-
-            {build.locationLat != null &&
-                build.locationLng != null && (
-                    <div className="relative border-b border-gray-200">
-                        <TripLocationPreview
-                            lat={build.locationLat}
-                            lng={build.locationLng}
-                        />
-
-                        {directionsUrl && (
-                            <a
-                                href={directionsUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-xs font-bold text-gray-800 shadow-md transition hover:bg-gray-50"
-                            >
-                                <Navigation className="h-3.5 w-3.5" />
-                                Open map
-                            </a>
-                        )}
-                    </div>
-                )}
 
             <div className="grid grid-cols-2 divide-x divide-y border-b border-gray-200 sm:grid-cols-4 sm:divide-y-0">
                 <StatCard
@@ -5752,6 +6337,7 @@ function StatCard({
         </div>
     );
 }
+
 ```
 
 ### `components/builder/WeightSummary.tsx`
@@ -6527,6 +7113,7 @@ export default function GearSort() {
 ### `components/Navbar.tsx`
 
 ```typescript
+import { findAccessibleBuild } from "@/lib/build-access";
 // components/Navbar.tsx
 import Link from "next/link";
 import { cookies } from "next/headers";
@@ -6534,7 +7121,8 @@ import { auth, signIn } from "@/auth";
 import ProfileDropdown from "@/components/ProfileDropdown";
 export default async function Navbar() {
     const cookieStore = await cookies();
-    const buildId = cookieStore.get("currentBuild")?.value;
+    const currentId = cookieStore.get("currentBuild")?.value;
+    const buildId = currentId ? (await findAccessibleBuild(currentId))?.id : undefined;
     const session = await auth();
 
     return (
@@ -7310,7 +7898,7 @@ export default function SearchBar() {
     ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs",
     ".json", ".jsonc", ".md", ".mdx", ".css", ".scss", ".html",
     ".yaml", ".yml", ".toml", ".ini", ".txt",
-    ".env.example", ".gitignore", ".npmrc"
+    ".env.example", ".gitignore", ".npmrc", ".prisma"
   ],
   "ignoreDirs": [
     ".git", "node_modules", "dist", "coverage",
@@ -7347,6 +7935,168 @@ const eslintConfig = defineConfig([
 ]);
 
 export default eslintConfig;
+
+```
+
+### `lib/build-access.ts`
+
+```typescript
+import "server-only";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
+import { createGuestBuildToken, guestBuildCookieName, GUEST_BUILD_MAX_AGE, verifyGuestBuildToken } from "@/lib/guest-build-token";
+
+export async function currentBuildUserId(): Promise<string | null> {
+  const session = await auth();
+  // Resolve through the DB, consistent with existing profile actions. Default
+  // Auth.js sessions need not expose the adapter user ID without a callback.
+  if (!session?.user?.email) return null;
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email }, select: { id: true },
+  });
+  return user?.id ?? null;
+}
+
+export async function hasGuestBuildAccess(buildId: string) {
+  if (typeof buildId !== "string" || !buildId || buildId.length > 200) return false;
+  const cookieStore = await cookies();
+  return verifyGuestBuildToken(buildId, cookieStore.get(guestBuildCookieName(buildId))?.value);
+}
+
+export async function findAccessibleBuild(buildId: string) {
+  if (typeof buildId !== "string" || !buildId || buildId.length > 200) return null;
+  const userId = await currentBuildUserId();
+  const guest = await hasGuestBuildAccess(buildId);
+  // currentBuild is navigation state, never authorization.
+  if (!userId && !guest) return null;
+  return prisma.build.findFirst({
+    where: { id: buildId, OR: [
+      ...(userId ? [{ userId }] : []),
+      ...(guest ? [{ userId: null }] : []),
+    ] },
+    select: { id: true, userId: true },
+  });
+}
+
+export async function requireBuildAccess(buildId: string) {
+  const build = await findAccessibleBuild(buildId);
+  if (!build) throw new Error("Build not found.");
+  return build;
+}
+
+export async function requireBuildPageAccess(buildId: string) {
+  const build = await findAccessibleBuild(buildId);
+  if (!build) notFound();
+  return build;
+}
+
+export async function requireBuildItemAccess(buildId: string, itemId: string) {
+  if (typeof itemId !== "string" || !itemId || itemId.length > 200) throw new Error("Item not found.");
+  const build = await requireBuildAccess(buildId);
+  const item = await prisma.buildItem.findFirst({
+    where: { id: itemId, buildId: build.id, build: { userId: build.userId } },
+  });
+  if (!item) throw new Error("Item not found.");
+  return { ...item, accessUserId: build.userId };
+}
+
+export async function requireTripDayAccess(buildId: string, dayId: string) {
+  if (typeof dayId !== "string" || !dayId || dayId.length > 200) throw new Error("Day not found.");
+  const build = await requireBuildAccess(buildId);
+  const day = await prisma.tripDay.findFirst({
+    where: { id: dayId, buildId: build.id, build: { userId: build.userId } },
+  });
+  if (!day) throw new Error("Day not found.");
+  return { ...day, accessUserId: build.userId };
+}
+
+export async function setCurrentBuild(buildId: string, guest = false) {
+  const cookieStore = await cookies();
+  const options = { httpOnly: true, sameSite: "lax" as const,
+    secure: process.env.NODE_ENV === "production", path: "/", maxAge: GUEST_BUILD_MAX_AGE };
+  if (guest) cookieStore.set(guestBuildCookieName(buildId), createGuestBuildToken(buildId), options);
+  cookieStore.set("currentBuild", buildId, options);
+}
+
+```
+
+### `lib/build-settings-actions.ts`
+
+```typescript
+"use server";
+
+import { prisma } from "@/lib/prisma";
+import { requireBuildAccess } from "@/lib/build-access";
+import { revalidatePath } from "next/cache";
+
+export async function renameBuild(buildId: string, name: string) {
+  if (typeof buildId !== "string" || !buildId || buildId.length > 200 || typeof name !== "string") {
+    throw new Error("Invalid build name.");
+  }
+  const trimmed = name.trim();
+  if (!trimmed || trimmed.length > 100) throw new Error("Use a build name between 1 and 100 characters.");
+  const access = await requireBuildAccess(buildId);
+  const result = await prisma.build.updateMany({
+    where: { id: access.id, userId: access.userId },
+    data: { name: trimmed },
+  });
+  if (result.count !== 1) throw new Error("Build access changed. Refresh and try again.");
+  revalidatePath(`/build/${access.id}`);
+  revalidatePath("/profile/builds");
+}
+
+```
+
+### `lib/build-visibility-actions.ts`
+
+```typescript
+"use server";
+
+import { prisma } from "@/lib/prisma";
+import { requireBuildAccess } from "@/lib/build-access";
+import { revalidatePath } from "next/cache";
+
+export async function setBuildVisibility(buildId: string, isPublic: boolean) {
+  if (typeof buildId !== "string" || !buildId || buildId.length > 200 || typeof isPublic !== "boolean") {
+    throw new Error("Invalid visibility request.");
+  }
+  const access = await requireBuildAccess(buildId);
+  // Repeat the owner condition in the write to prevent a stale guest claim.
+  const result = await prisma.build.updateMany({
+    where: { id: access.id, userId: access.userId },
+    data: { isPublic },
+  });
+  if (result.count !== 1) throw new Error("Build access changed. Refresh and try again.");
+  revalidatePath(`/build/${access.id}`);
+}
+
+```
+
+### `lib/build-visibility.ts`
+
+```typescript
+import "server-only";
+import { findAccessibleBuild } from "@/lib/build-access";
+import { prisma } from "@/lib/prisma";
+
+// Public access is only for rendering. Mutations keep requireBuildAccess.
+export async function getBuildViewAccess(buildId: string) {
+  if (typeof buildId !== "string" || !buildId || buildId.length > 200) {
+    return { status: "missing" as const };
+  }
+  const owned = await findAccessibleBuild(buildId);
+  if (owned) return { status: "allowed" as const, canEdit: true, access: owned };
+
+  const build = await prisma.build.findUnique({
+    where: { id: buildId },
+    select: { id: true, isPublic: true },
+  });
+  if (!build) return { status: "missing" as const };
+  if (!build.isPublic) return { status: "private" as const };
+  return { status: "allowed" as const, canEdit: false, access: null };
+}
 
 ```
 
@@ -7850,6 +8600,48 @@ export function getDestinationRegions() {
 }
 ```
 
+### `lib/guest-build-token.ts`
+
+```typescript
+import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
+
+export const GUEST_BUILD_MAX_AGE = 60 * 60 * 24 * 30;
+
+function secret() {
+  const value = process.env.AUTH_SECRET;
+  if (!value) throw new Error("AUTH_SECRET is required for guest build access.");
+  return value;
+}
+
+export function guestBuildCookieName(buildId: string) {
+  // Hash IDs so cookie names contain only safe characters and have bounded length.
+  return `guestBuild_${createHmac("sha256", secret()).update(buildId).digest("hex").slice(0, 32)}`;
+}
+
+function signature(buildId: string, payload: string) {
+  return createHmac("sha256", secret())
+    .update(JSON.stringify(["trailpicker-guest-build-v1", buildId, payload]))
+    .digest("base64url");
+}
+
+export function createGuestBuildToken(buildId: string, now = Date.now()) {
+  const payload = `${Math.floor(now / 1000) + GUEST_BUILD_MAX_AGE}:${randomBytes(32).toString("base64url")}`;
+  return `${payload}.${signature(buildId, payload)}`;
+}
+
+export function verifyGuestBuildToken(buildId: string, token: string | undefined, now = Date.now()) {
+  if (!token || token.length > 200) return false;
+  const match = /^(\d+):([A-Za-z0-9_-]{43})\.([A-Za-z0-9_-]{43})$/.exec(token);
+  if (!match) return false;
+  const expiry = Number(match[1]);
+  if (!Number.isSafeInteger(expiry) || expiry <= Math.floor(now / 1000)) return false;
+  const actual = Buffer.from(match[3]);
+  const expected = Buffer.from(signature(buildId, `${match[1]}:${match[2]}`));
+  return actual.length === expected.length && timingSafeEqual(actual, expected);
+}
+
+```
+
 ### `lib/prisma.ts`
 
 ```typescript
@@ -7919,6 +8711,105 @@ export function dateRange(start: Date | null, end: Date | null) {
 
 export function weightLabel(grams: number) {
   return grams >= 1000 ? `${(grams / 1000).toFixed(2)} kg` : `${Math.round(grams)} g`;
+}
+
+```
+
+### `lib/trip-planner-actions.ts`
+
+```typescript
+"use server";
+import { prisma } from "@/lib/prisma";
+import { requireBuildAccess, requireTripDayAccess } from "@/lib/build-access";
+import { revalidatePath } from "next/cache";
+import { getDestination } from "@/lib/destinations";
+import { getDateRange } from "@/lib/trip";
+import { dayTextFields, emptyLogistics, nullableNumber, parseDates, readWaypoints } from "@/lib/trip-planner";
+const text = (f: FormData, key: string, max = 5000) => { const v = f.get(key); if (v != null && typeof v !== "string") throw new Error(`Invalid ${key}.`); const s = (v ?? "").trim(); if (s.length > max) throw new Error(`${key} is too long (maximum ${max} characters).`); return s || null; };
+const number = (f: FormData, key: string, min: number, max: number, integer = false) => nullableNumber(f.get(key),key,min,max,integer);
+const condition = (f: FormData) => { const v = text(f,"conditions",20); if (v && !["dry","rain","snow"].includes(v)) throw new Error("Choose a valid weather condition."); return v; };
+export async function saveTripDetails(f: FormData) {
+  const buildId = text(f,"buildId",200)!;
+  const access = await requireBuildAccess(buildId);
+  const dates = parseDates(text(f,"startDate",10) ?? "", text(f,"endDate",10) ?? "");
+  const selected = getDestination(text(f,"destinationId",200));
+  const lat = selected?.latitude ?? number(f,"locationLat",-90,90), lng = selected?.longitude ?? number(f,"locationLng",-180,180);
+  if ((lat == null) !== (lng == null)) throw new Error("Provide both location coordinates.");
+  const data = { ...dates, destinationId: selected?.id ?? null, location: selected ? `${selected.name}, ${selected.park}` : text(f,"location",500), locationLat: lat, locationLng: lng, people: number(f,"people",1,100,true) ?? 1, minTemperature: number(f,"minTemperature",-100,60,true), conditions: condition(f) };
+  await prisma.$transaction(async tx => {
+    const old = await tx.tripDay.findMany({ where: { buildId }, select: { date: true } });
+    const range = dates.startDate && dates.endDate ? getDateRange(dates.startDate,dates.endDate) : [];
+    const keys = new Set(range.map(d => d.getTime()));
+    if (old.some(d => !keys.has(d.date.getTime())) && f.get("confirmDateChange") !== "yes") throw new Error("The new dates remove itinerary days. Tick the confirmation box to discard those days. Days still within the range will be kept.");
+    await tx.build.update({ where: { id: buildId, userId: access.userId }, data });
+    if (range.length) await tx.tripDay.createMany({ data: range.map(date => ({ buildId,date })), skipDuplicates: true });
+    await tx.tripDay.deleteMany({ where: { buildId, date: { notIn: range } } });
+  });
+  revalidatePath(`/build/${buildId}`);
+}
+export async function saveTripDay(f: FormData) {
+  const buildId = text(f,"buildId",200)!, dayId = text(f,"dayId",200)!;
+  const day = await requireTripDayAccess(buildId,dayId);
+  const strings = Object.fromEntries(dayTextFields.map(key => [key,text(f,key)]));
+  await prisma.tripDay.update({ where: { id: dayId, buildId, build: { userId: day.accessUserId } }, data: { ...strings, conditions: condition(f), minTemperature: number(f,"minTemperature",-100,60,true), distanceKm: number(f,"distanceKm",0,1000), elevationGainM: number(f,"elevationGainM",0,20000,true), elevationLossM: number(f,"elevationLossM",0,20000,true), durationMinutes: number(f,"durationMinutes",0,1440,true), waterCarryL: number(f,"waterCarryL",0,100) } });
+  revalidatePath(`/build/${buildId}`);
+}
+export async function saveTripRoute(f: FormData) {
+  const buildId = text(f,"buildId",200)!, access = await requireBuildAccess(buildId);
+  const raw: unknown = JSON.parse(text(f,"waypoints",100000) ?? "[]");
+  const points = readWaypoints(raw);
+  if (!Array.isArray(raw) || points.length !== raw.length || points.length > 200 || new Set(points.map(p=>p.id)).size !== points.length || points.some(p=>!p.name.trim() || p.name.length>200 || p.id.length>200 || (p.elevationM != null && (p.elevationM < -500 || p.elevationM > 9000)))) throw new Error("Check waypoint names, coordinates, elevations, and unique IDs. Maximum 200 waypoints.");
+  await prisma.build.update({ where: { id: buildId,userId: access.userId }, data: { routeWaypoints: points.map(p=>({...p,name:p.name.trim()})) } });
+  revalidatePath(`/build/${buildId}`);
+}
+export async function saveTripLogistics(f: FormData) {
+  const buildId = text(f,"buildId",200)!, access = await requireBuildAccess(buildId);
+  const value = Object.fromEntries(Object.keys(emptyLogistics).map(key=>[key,text(f,key) ?? ""]));
+  await prisma.build.update({ where: { id: buildId, userId: access.userId }, data: { tripLogistics: value } });
+  revalidatePath(`/build/${buildId}`);
+}
+
+```
+
+### `lib/trip-planner.ts`
+
+```typescript
+export type Waypoint = { id: string; name: string; lat: number; lng: number; elevationM: number | null; kind: "trailhead" | "camp" | "water" | "waypoint" };
+export type Logistics = { permits: string; reservations: string; transportation: string; parking: string; emergencyContact: string; emergencyPlan: string; notes: string };
+export const emptyLogistics: Logistics = { permits: "", reservations: "", transportation: "", parking: "", emergencyContact: "", emergencyPlan: "", notes: "" };
+export type PlannerDay = { id: string; date: Date; minTemperature: number | null; conditions: string | null; notes: string | null; startLocation: string | null; endLocation: string | null; distanceKm: number | null; elevationGainM: number | null; elevationLossM: number | null; durationMinutes: number | null; campsite: string | null; reservation: string | null; waterSource: string | null; waterCarryL: number | null; trailConditions: string | null; activities: string | null };
+export type PlannerBuild = { id: string; location: string | null; locationLat: number | null; locationLng: number | null; startDate: Date | null; endDate: Date | null; people: number; minTemperature: number | null; conditions: string | null; days: PlannerDay[]; routeWaypoints?: unknown; tripLogistics?: unknown };
+export const dayTextFields = ["startLocation", "endLocation", "campsite", "reservation", "waterSource", "trailConditions", "activities", "notes"] as const;
+export const dayNumberFields = ["distanceKm", "elevationGainM", "elevationLossM", "durationMinutes", "waterCarryL", "minTemperature"] as const;
+export function plannedDay(day: PlannerDay) { return !!(day.startLocation?.trim() && day.endLocation?.trim() && day.distanceKm != null); }
+export function tripTotals(days: PlannerDay[]) {
+  const sum = (key: "distanceKm" | "elevationGainM" | "elevationLossM" | "durationMinutes") => days.reduce((n,d) => n + (d[key] ?? 0), 0);
+  return { distanceKm: sum("distanceKm"), gainM: sum("elevationGainM"), lossM: sum("elevationLossM"), minutes: sum("durationMinutes"), measuredDays: days.filter(d => d.distanceKm != null).length, plannedDays: days.filter(plannedDay).length };
+}
+export function readWaypoints(value: unknown): Waypoint[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((p): p is Waypoint => !!p && typeof p === "object" && typeof p.id === "string" && typeof p.name === "string" && Number.isFinite(p.lat) && Number.isFinite(p.lng) && Math.abs(p.lat) <= 90 && Math.abs(p.lng) <= 180 && ["trailhead","camp","water","waypoint"].includes(p.kind) && (p.elevationM === null || Number.isFinite(p.elevationM)));
+}
+export function readLogistics(value: unknown): Logistics {
+  const result = { ...emptyLogistics };
+  if (value && typeof value === "object") for (const key of Object.keys(result) as (keyof Logistics)[]) { const v = (value as Record<string, unknown>)[key]; if (typeof v === "string") result[key] = v; }
+  return result;
+}
+export function nullableNumber(raw: unknown, label: string, min: number, max: number, integer = false): number | null {
+  if (raw == null || raw === "") return null;
+  if (typeof raw !== "string" && typeof raw !== "number") throw new Error(`${label} must be a number.`);
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n < min || n > max || (integer && !Number.isInteger(n))) throw new Error(`${label} must be ${integer ? "a whole number " : ""}between ${min} and ${max}.`);
+  return n;
+}
+export function parseDates(startRaw: string, endRaw: string) {
+  if (!startRaw && !endRaw) return { startDate: null, endDate: null };
+  const valid = (raw: string) => /^\d{4}-\d{2}-\d{2}$/.test(raw) && Number.isFinite(new Date(raw).getTime()) && new Date(raw).toISOString().slice(0,10) === raw;
+  if (!valid(startRaw) || !valid(endRaw)) throw new Error("Choose both a valid start and end date.");
+  const startDate = new Date(startRaw), endDate = new Date(endRaw);
+  if (endDate < startDate) throw new Error("End date must be on or after start date.");
+  if ((endDate.getTime()-startDate.getTime())/86400000 > 365) throw new Error("Trips can span up to 366 days.");
+  return { startDate, endDate };
 }
 
 ```
@@ -8091,6 +8982,339 @@ provider = "postgresql"
 
 ```
 
+### `prisma/schema.prisma`
+
+```text
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Brand {
+  id      String  @id @default(cuid())
+  name    String
+  website String?
+  logo    String?
+
+  gear Gear[]
+
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  gear Gear[]
+  subcategories Subcategory[]
+  createdAt DateTime @default(now())
+}
+model Subcategory {
+  id         String   @id @default(cuid())
+  name       String
+  slug String
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  gear        Gear[]
+
+  createdAt  DateTime @default(now())
+  @@unique([categoryId, slug])
+}
+model Gear {
+  id String @id @default(cuid())
+
+  name        String
+  description String?
+  
+  weight_g Int?
+
+  price_cad Float?
+
+  capacity_l Float?
+
+  frame_type String?
+
+  waterproof Boolean?
+
+  temperature_rating Int?
+
+  season String?
+
+  material String?
+
+  brandId String
+  brand   Brand  @relation(fields: [brandId], references: [id])
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  subcategoryId String?
+  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+
+  images GearImage[]
+  specifications GearSpecification[]
+  prices Price[]
+  reviews Review[]
+  buildItems BuildItem[]
+  favorites Favorite[]
+  ownedGear OwnedGear[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model OwnedGear {
+  id String @id @default(cuid())
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  gearId String
+  gear Gear @relation(fields: [gearId], references: [id], onDelete: Cascade)
+
+  purchasedPrice Float?
+  purchasedAt DateTime?
+  notes String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, gearId])
+}
+model GearImage {
+  id String @id @default(cuid())
+
+  url String
+
+  isPrimary Boolean @default(false)
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id], onDelete: Cascade)
+}
+
+model GearSpecification {
+  id String @id @default(cuid())
+
+  key   String
+  value String
+  unit  String?
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id], onDelete: Cascade)
+}
+
+model Retailer {
+  id String @id @default(cuid())
+
+  name    String
+  website String?
+  logo    String?
+
+  prices Price[]
+}
+
+model Price {
+  id String @id @default(cuid())
+
+  price Float
+
+  currency String @default("CAD")
+
+  url String?
+
+  inStock Boolean @default(true)
+
+  lastUpdated DateTime @default(now())
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  retailerId String
+  retailer   Retailer @relation(fields: [retailerId], references: [id])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  username      String?    @unique
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+
+  bio             String?
+  location        String?
+  isProfilePublic Boolean  @default(false)
+
+  accounts Account[]
+  sessions Session[]
+  builds    Build[]
+  reviews   Review[]
+  favorites Favorite[]
+  ownedGear OwnedGear[]
+
+  createdAt DateTime @default(now())
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  @@unique([identifier, token])
+}
+
+model Build {
+  isPublic Boolean @default(false)
+  id String @id @default(cuid())
+
+  name String
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  items BuildItem[]
+  days  TripDay[]
+
+  routeWaypoints Json?
+  tripLogistics Json?
+
+  destinationId String?
+
+  location    String?
+  locationLat Float?
+  locationLng Float?
+  startDate   DateTime?
+  endDate     DateTime?
+
+  people Int @default(1)
+
+  minTemperature Int?
+  conditions String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TripDay {
+  id String @id @default(cuid())
+
+  buildId String
+  build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  date DateTime
+
+  minTemperature Int?
+  conditions     String?
+  notes          String?
+  startLocation String?
+  endLocation String?
+  distanceKm Float?
+  elevationGainM Int?
+  elevationLossM Int?
+  durationMinutes Int?
+  campsite String?
+  reservation String?
+  waterSource String?
+  waterCarryL Float?
+  trailConditions String?
+  activities String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([buildId, date])
+}
+
+model BuildItem {
+  id String @id @default(cuid())
+
+  quantity Int @default(1)
+
+  customWeight Int?
+
+  isConsumable Boolean @default(false)
+
+  isWorn Boolean @default(false)
+
+  gearNameSnapshot String?
+
+  weightSnapshot Int?
+
+  priceSnapshot Float?
+
+  customCategory String?
+
+  buildId String
+  build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  gearId String?
+  gear   Gear?   @relation(fields: [gearId], references: [id])
+
+  @@unique([buildId, gearId])
+}
+
+model Review {
+  id String @id @default(cuid())
+
+  rating Int
+
+  title String?
+  body  String?
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Favorite {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, gearId])
+}
+
+
+```
+
 ### `prisma/seed.ts`
 
 ```typescript
@@ -8109,10 +9333,11 @@ const prisma = new PrismaClient({
 
 
 async function main() {
+  await prisma.$transaction(async (tx) => {
 
   // Brands
 
-  const durston = await prisma.brand.create({
+  const durston = (await tx.brand.findFirst({ where: { name: "Durston" }, orderBy: { createdAt: "asc" } })) ?? await tx.brand.create({
     data: {
       name: "Durston",
       website: "https://durstongear.com",
@@ -8120,7 +9345,7 @@ async function main() {
   });
 
 
-  const bigAgnes = await prisma.brand.create({
+  const bigAgnes = (await tx.brand.findFirst({ where: { name: "Big Agnes" }, orderBy: { createdAt: "asc" } })) ?? await tx.brand.create({
     data: {
       name: "Big Agnes",
       website: "https://www.bigagnes.com",
@@ -8128,7 +9353,7 @@ async function main() {
   });
 
 
-  const hmg = await prisma.brand.create({
+  const hmg = (await tx.brand.findFirst({ where: { name: "Hyperlite Mountain Gear" }, orderBy: { createdAt: "asc" } })) ?? await tx.brand.create({
     data: {
       name: "Hyperlite Mountain Gear",
       website: "https://www.hyperlitemountaingear.com",
@@ -8136,7 +9361,7 @@ async function main() {
   });
 
 
-  const thermarest = await prisma.brand.create({
+  const thermarest = (await tx.brand.findFirst({ where: { name: "Therm-a-Rest" }, orderBy: { createdAt: "asc" } })) ?? await tx.brand.create({
     data: {
       name: "Therm-a-Rest",
     },
@@ -8146,64 +9371,80 @@ async function main() {
 
   // Categories
 
-  const packs = await prisma.category.create({
-    data: {
+  const packs = await tx.category.upsert({
+    where: { slug: "packs" },
+    update: {},
+    create: {
       name: "Packs",
       slug: "packs",
     },
   });
 
 
-  const shelter = await prisma.category.create({
-    data: {
+  const shelter = await tx.category.upsert({
+    where: { slug: "shelter" },
+    update: {},
+    create: {
       name: "Shelter",
       slug: "shelter",
     },
   });
 
 
-  const sleep = await prisma.category.create({
-    data: {
+  const sleep = await tx.category.upsert({
+    where: { slug: "sleep" },
+    update: {},
+    create: {
       name: "Sleep",
       slug: "sleep",
     },
   });
 
 
-  const cooking = await prisma.category.create({
-    data: {
+  const cooking = await tx.category.upsert({
+    where: { slug: "cooking" },
+    update: {},
+    create: {
       name: "Cooking",
       slug: "cooking",
     },
   });
 
 
-  const water = await prisma.category.create({
-    data: {
+  const water = await tx.category.upsert({
+    where: { slug: "water" },
+    update: {},
+    create: {
       name: "Water",
       slug: "water",
     },
   });
 
 
-  const clothing = await prisma.category.create({
-    data: {
+  const clothing = await tx.category.upsert({
+    where: { slug: "clothing" },
+    update: {},
+    create: {
       name: "Clothing",
       slug: "clothing",
     },
   });
 
 
-  const electronics = await prisma.category.create({
-    data: {
+  const electronics = await tx.category.upsert({
+    where: { slug: "electronics" },
+    update: {},
+    create: {
       name: "Electronics",
       slug: "electronics",
     },
   });
 
 
-  const misc = await prisma.category.create({
-    data: {
+  const misc = await tx.category.upsert({
+    where: { slug: "misc" },
+    update: {},
+    create: {
       name: "Misc",
       slug: "misc",
     },
@@ -8213,8 +9454,10 @@ async function main() {
 
   // Subcategories
 
-  const internalFrame = await prisma.subcategory.create({
-    data: {
+  await tx.subcategory.upsert({
+    where: { categoryId_slug: { categoryId: packs.id, slug: "internal-frame" } },
+    update: {},
+    create: {
       name: "Internal Frame",
       slug: "internal-frame",
       categoryId: packs.id,
@@ -8222,8 +9465,10 @@ async function main() {
   });
 
 
-  const frameless = await prisma.subcategory.create({
-    data: {
+  const frameless = await tx.subcategory.upsert({
+    where: { categoryId_slug: { categoryId: packs.id, slug: "frameless" } },
+    update: {},
+    create: {
       name: "Frameless",
       slug: "frameless",
       categoryId: packs.id,
@@ -8231,8 +9476,10 @@ async function main() {
   });
 
 
-  const tent = await prisma.subcategory.create({
-    data: {
+  const tent = await tx.subcategory.upsert({
+    where: { categoryId_slug: { categoryId: shelter.id, slug: "tent" } },
+    update: {},
+    create: {
       name: "Tent",
       slug: "tent",
       categoryId: shelter.id,
@@ -8240,8 +9487,10 @@ async function main() {
   });
 
 
-  const sleepingPad = await prisma.subcategory.create({
-    data: {
+  const sleepingPad = await tx.subcategory.upsert({
+    where: { categoryId_slug: { categoryId: sleep.id, slug: "sleeping-pad" } },
+    update: {},
+    create: {
       name: "Sleeping Pad",
       slug: "sleeping-pad",
       categoryId: sleep.id,
@@ -8252,7 +9501,8 @@ async function main() {
 
   // Remaining subcategories
 
-  await prisma.subcategory.createMany({
+  await tx.subcategory.createMany({
+    skipDuplicates: true,
     data: [
 
       {
@@ -8351,7 +9601,8 @@ async function main() {
   // Gear
 
 
-  await prisma.gear.create({
+  if (!(await tx.gear.findFirst({ where: { name: "Durston X-Mid 1", brand: { name: "Durston" } } }))) {
+  await tx.gear.create({
     data: {
       name: "Durston X-Mid 1",
       description:
@@ -8375,10 +9626,12 @@ async function main() {
       },
     },
   });
+  }
 
 
 
-  await prisma.gear.create({
+  if (!(await tx.gear.findFirst({ where: { name: "Big Agnes Copper Spur HV UL2", brand: { name: "Big Agnes" } } }))) {
+  await tx.gear.create({
     data: {
       name: "Big Agnes Copper Spur HV UL2",
       description:
@@ -8402,10 +9655,12 @@ async function main() {
       },
     },
   });
+  }
 
 
 
-  await prisma.gear.create({
+  if (!(await tx.gear.findFirst({ where: { name: "Hyperlite Mountain Gear Southwest 40", brand: { name: "Hyperlite Mountain Gear" } } }))) {
+  await tx.gear.create({
     data: {
       name: "Hyperlite Mountain Gear Southwest 40",
       description:
@@ -8428,10 +9683,12 @@ async function main() {
       },
     },
   });
+  }
 
 
 
-  await prisma.gear.create({
+  if (!(await tx.gear.findFirst({ where: { name: "Therm-a-Rest NeoAir XLite NXT", brand: { name: "Therm-a-Rest" } } }))) {
+  await tx.gear.create({
     data: {
       name: "Therm-a-Rest NeoAir XLite NXT",
       description:
@@ -8452,7 +9709,9 @@ async function main() {
       },
     },
   });
+  }
 
+  }, { maxWait: 10000, timeout: 30000 });
 }
 
 
@@ -8462,7 +9721,7 @@ main()
   })
   .catch((e) => {
     console.error(e);
-    process.exit(1);
+    process.exitCode = 1;
   })
   .finally(async () => {
     await prisma.$disconnect();
@@ -8530,6 +9789,200 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 ````
+
+### `tests/builder-ownership.test.cjs`
+
+```typescript
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const { stripTypeScriptTypes } = require('node:module');
+const root = path.resolve(__dirname, '..');
+process.env.AUTH_SECRET = 'ownership-test-secret-not-for-production';
+
+// Execute the actual TS helpers/actions, with Auth.js, Next and Prisma replaced
+// by deterministic boundary mocks. No network or database is needed.
+function load(relative, dependencies = {}) {
+  let js = stripTypeScriptTypes(fs.readFileSync(path.join(root, relative), 'utf8'));
+  const names = [...js.matchAll(/export (?:async )?function (\w+)|export const (\w+)/g)].map(m => m[1] || m[2]);
+  js = js.replace(/import\s+\{([^}]+)\}\s+from\s+["']([^"']+)["'];/g, (_, names, spec) => `const {${names}} = require(${JSON.stringify(spec)});`)
+    .replace(/import ["']server-only["'];/g, '')
+    .replace(/export /g, '');
+  const requireMock = spec => spec in dependencies ? dependencies[spec] : require(spec);
+  return new Function('require', 'process', 'Buffer', js + `\nreturn {${names.join(',')}};`)(requireMock, process, Buffer);
+}
+const token = load('lib/guest-build-token.ts');
+function harness() {
+  const state = { email: 'a@test', cookies: new Map(), writes: [], builds: [
+    { id: 'a', userId: 'user-a', name: 'A', items: [], days: [] },
+    { id: 'b', userId: 'user-b', name: 'B', items: [], days: [] },
+    { id: 'guest', userId: null, name: 'Guest', items: [], days: [] },
+  ] };
+  const matches = (b, where) => b.id === where.id && (!('userId' in where) || b.userId === where.userId) && (!where.OR || where.OR.some(p => b.userId === p.userId));
+  const cookieStore = { get: name => state.cookies.has(name) ? { value: state.cookies.get(name) } : undefined,
+    set: (name, value, options) => { state.cookies.set(name, value); state.lastCookieOptions = options; },
+    delete: name => state.cookies.delete(name) };
+  const write = type => async args => { state.writes.push({ type, args }); return { id: 'copy', ...args.data }; };
+  const prisma = {
+    user: { findUnique: async ({ where }) => where.email ? { id: `user-${where.email[0]}` } : null },
+    build: { findFirst: async ({ where }) => state.builds.find(b => matches(b, where)) || null,
+      findUnique: async ({ where }) => state.builds.find(b => matches(b, where)) || null,
+      create: write('build.create'), update: write('build.update'),
+      updateMany: async ({ where, data }) => { const b = state.builds.find(b => matches(b, where)); if (!b) return {count:0}; state.writes.push({type:'claim'}); Object.assign(b, data); return {count:1}; } },
+    buildItem: { findFirst: async ({ where }) => {
+      const buildId = where.id === 'item-a' ? 'a' : where.id === 'item-b' ? 'b' : null;
+      return buildId === where.buildId ? { id: where.id, buildId, quantity: 2 } : null;
+    }, update: write('item.update'), delete: write('item.delete'), create: write('item.create'), upsert: write('item.upsert') },
+    tripDay: { findFirst: async ({ where }) => where.id === 'day-a' && where.buildId === 'a' ? { id: 'day-a', buildId: 'a' } : null,
+      update: write('day.update'), createMany: write('day.createMany'), deleteMany: write('day.deleteMany') },
+  };
+  const navigation = { notFound: () => { throw new Error('404'); }, redirect: url => { throw new Error(`REDIRECT:${url}`); } };
+  const access = load('lib/build-access.ts', { '@/auth': {auth: async () => state.email ? {user:{email:state.email}} : null},
+    '@/lib/prisma': { prisma }, 'next/headers': {cookies:async()=>cookieStore}, 'next/navigation': navigation, '@/lib/guest-build-token': token });
+  const planner = load('lib/trip-planner.ts');
+  const plannerActions = load('lib/trip-planner-actions.ts', { '@/lib/prisma':{prisma}, '@/lib/build-access':access, 'next/cache':{revalidatePath:()=>{}}, '@/lib/destinations':{getDestination:()=>null}, '@/lib/trip':{getDateRange:()=>[]}, '@/lib/trip-planner':planner });
+  const actions = load('app/build/actions.ts', {'@/lib/prisma':{prisma}, '@/lib/trip-planner-actions':plannerActions, '@/lib/trip-planner':planner, 'next/navigation': navigation,
+    'next/headers':{cookies:async()=>cookieStore}, 'next/cache':{revalidatePath:()=>{}}, '@/lib/trip':{getDateRange:()=>[]},
+    '@/lib/build-access':access, '@/lib/guest-build-token':token, '@/lib/destinations':{getDestination:()=>null} });
+  return { state, access, actions };
+}
+function form(values) { const f = new FormData(); for (const [key,value] of Object.entries(values)) f.set(key, String(value)); return f; }
+
+test('guest tokens are bound to build, expire, and reject tampering', () => {
+  const t = token.createGuestBuildToken('guest', 1000000);
+  assert.equal(token.verifyGuestBuildToken('guest', t, 1000000), true);
+  assert.equal(token.verifyGuestBuildToken('other', t, 1000000), false);
+  assert.equal(token.verifyGuestBuildToken('guest', t.slice(0,-1)+'!', 1000000), false);
+  assert.equal(token.verifyGuestBuildToken('guest', t, 1000000 + token.GUEST_BUILD_MAX_AGE*1000), false);
+  for (const invalid of [undefined, '', 'guest', 'x'.repeat(201), '1:x.y']) assert.equal(token.verifyGuestBuildToken('guest', invalid), false);
+});
+for (const email of ['a@test', null]) {
+  test(`access matrix for ${email || 'anonymous'}`, async () => {
+    const {state, access} = harness(); state.email=email;
+    assert.equal((await access.findAccessibleBuild('a'))?.id, email ? 'a' : undefined);
+    assert.equal(await access.findAccessibleBuild('b'), null);
+    state.cookies.set('currentBuild','guest');
+    assert.equal(await access.findAccessibleBuild('guest'), null);
+    state.cookies.set(token.guestBuildCookieName('guest'), token.createGuestBuildToken('guest'));
+    assert.equal((await access.findAccessibleBuild('guest')).id, 'guest');
+    state.cookies.set(token.guestBuildCookieName('b'), token.createGuestBuildToken('b'));
+    assert.equal(await access.findAccessibleBuild('b'), null); // capability cannot override account owner
+    assert.equal(await access.findAccessibleBuild('missing'), null);
+    await assert.rejects(access.requireBuildPageAccess('b'), /404/);
+  });
+}
+for (const name of ['importBuildItems','duplicateBuild','addCustomItem','addGear','updateTripDetails','setItemCategory','updateQuantity','removeGear','updateTripDay']) {
+  test(`${name} rejects another user's build before any write`, async () => {
+    const {state,actions}=harness();
+    await assert.rejects(actions[name](form({buildId:'b', itemId:'item-b', dayId:'day-b', payload:'invalid JSON', delta:1})), /Build not found/);
+    assert.deepEqual(state.writes, []);
+  });
+}
+for (const name of ['setItemCategory','updateQuantity','removeGear']) {
+  test(`${name} rejects another build's item paired with owned build`, async () => {
+    const {state,actions}=harness();
+    await assert.rejects(actions[name](form({buildId:'a',itemId:'item-b',delta:1})), /Item not found/);
+    assert.deepEqual(state.writes,[]);
+  });
+}
+test('trip day must belong to the authorized build', async () => {
+  const {state,actions}=harness();
+  await assert.rejects(actions.updateTripDay(form({buildId:'a',dayId:'day-b'})),/Day not found/);
+  assert.deepEqual(state.writes,[]);
+  await actions.updateTripDay(form({buildId:'a',dayId:'day-a',notes:'Hello'}));
+  assert.equal(state.writes[0].type,'day.update');
+});
+test('export is private', async () => {
+  const {actions}=harness();
+  assert.equal((await actions.getBuildExport('a')).name,'A');
+  await assert.rejects(actions.getBuildExport('b'), /Build not found/);
+});
+test('claim ignores forged currentBuild cookie and accepts signed guest proof', async () => {
+  const {state,actions,access}=harness(); state.cookies.set('currentBuild','guest');
+  await actions.claimCurrentBuild(); assert.deepEqual(state.writes,[]);
+  state.cookies.set(token.guestBuildCookieName('guest'),token.createGuestBuildToken('guest'));
+  await actions.claimCurrentBuild();
+  assert.equal(state.builds[2].userId,'user-a');
+  assert.equal(state.cookies.has(token.guestBuildCookieName('guest')),false);
+  state.email=null; assert.equal(await access.findAccessibleBuild('guest'),null);
+});
+test('guest proof cannot claim someone else\'s account build', async () => {
+  const {state,actions}=harness(); state.cookies.set('currentBuild','b');
+  state.cookies.set(token.guestBuildCookieName('b'),token.createGuestBuildToken('b'));
+  await actions.claimCurrentBuild(); assert.deepEqual(state.writes,[]);
+});
+for (const email of ['a@test',null]) {
+  test(`duplicate preserves ownership and navigation for ${email || 'guest'}`, async () => {
+    const {state,actions}=harness();state.email=email;
+    if (!email) state.cookies.set(token.guestBuildCookieName('guest'),token.createGuestBuildToken('guest'));
+    await assert.rejects(actions.duplicateBuild(form({buildId:email?'a':'guest'})),/REDIRECT:\/build\/copy/);
+    assert.equal(state.writes[0].args.data.userId,email?'user-a':null);
+    assert.equal(state.cookies.get('currentBuild'),'copy');
+    if (!email) assert.equal(token.verifyGuestBuildToken('copy',state.cookies.get(token.guestBuildCookieName('copy'))),true);
+    assert.equal(state.lastCookieOptions.httpOnly,true);
+    assert.equal(state.lastCookieOptions.sameSite,'lax');
+  });
+}
+test('owner can mutate own item', async () => {
+  const {state,actions}=harness(); await actions.updateQuantity(form({buildId:'a',itemId:'item-a',delta:1}));
+  assert.equal(state.writes[0].args.data.quantity,3);
+});
+for (const name of ['getBuildExport','importBuildItems','duplicateBuild','addCustomItem','addGear','updateTripDetails','setItemCategory','updateQuantity','removeGear','updateTripDay']) {
+  test(`${name} rejects anonymous access to account build`, async () => {
+    const {state,actions}=harness();state.email=null;state.cookies.set('currentBuild','a');
+    const input = name === 'getBuildExport' ? 'a' : form({buildId:'a',itemId:'item-a',dayId:'day-a',payload:'{}',delta:1});
+    await assert.rejects(actions[name](input), /Build not found/);
+    assert.deepEqual(state.writes,[]);
+  });
+}
+test('missing child IDs are rejected instead of becoming unfiltered Prisma queries',async()=>{
+  const {access}=harness();
+  await assert.rejects(access.requireBuildItemAccess('a',undefined),/Item not found/);
+  await assert.rejects(access.requireTripDayAccess('a',undefined),/Day not found/);
+});
+for (const email of ['a@test',null]) {
+  test(`new build ownership for ${email || 'guest'}`,async()=>{
+    const {state,actions}=harness();state.email=email;
+    await assert.rejects(actions.createBuild(form({name:'Trip'})),/REDIRECT:\/build\/copy/);
+    assert.equal(state.writes[0].args.data.userId,email?'user-a':null);
+    assert.equal(state.cookies.get('currentBuild'),'copy');
+    assert.equal(state.cookies.has(token.guestBuildCookieName('copy')),!email);
+  });
+}
+test('claim uses the submitted authorized build even when currentBuild points elsewhere',async()=>{
+  const {state,actions}=harness();state.cookies.set('currentBuild','b');
+  state.cookies.set(token.guestBuildCookieName('guest'),token.createGuestBuildToken('guest'));
+  await actions.claimCurrentBuild(form({buildId:'guest'}));
+  assert.equal(state.builds[2].userId,'user-a');
+  assert.equal(state.builds[1].userId,'user-b');
+});
+
+
+```
+
+### `tests/trip-planner.test.cjs`
+
+```typescript
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const {stripTypeScriptTypes}=require('node:module');
+function load(file,deps={}){let js=stripTypeScriptTypes(fs.readFileSync(path.join(__dirname,'..',file),'utf8'));const names=[...js.matchAll(/export (?:async )?function (\w+)|export const (\w+)/g)].map(m=>m[1]||m[2]);js=js.replace(/import\s+\{([^}]+)\}\s+from\s+["']([^"']+)["'];/g,(_,n,s)=>`const {${n}}=require(${JSON.stringify(s)});`).replace(/export /g,'');return new Function('require',js+`\nreturn {${names.join(',')}};`)(s=>s in deps?deps[s]:require(s));}
+const p=load('lib/trip-planner.ts'),trip=load('lib/trip.ts');
+const form=o=>{const f=new FormData();Object.entries(o).forEach(([k,v])=>f.set(k,String(v)));return f;};
+function harness(){const writes=[], old=[{date:new Date('2026-07-01')},{date:new Date('2026-07-02')}];const tx={build:{update:async x=>writes.push(['build',x])},tripDay:{findMany:async()=>old,createMany:async x=>writes.push(['create',x]),deleteMany:async x=>writes.push(['delete',x]),update:async x=>writes.push(['day',x])}};const prisma={...tx,$transaction:async fn=>fn(tx)};const a=load('lib/trip-planner-actions.ts',{'@/lib/prisma':{prisma},'@/lib/build-access':{requireBuildAccess:async id=>{if(id!=='owned')throw Error('Build not found.');return {userId:'owner'};},requireTripDayAccess:async(id,day)=>{if(id!=='owned'||day!=='day')throw Error('Day not found.');return {accessUserId:'owner'};}},'next/cache':{revalidatePath:()=>{}},'@/lib/destinations':{getDestination:()=>null},'@/lib/trip':trip,'@/lib/trip-planner':p});return {a,writes};}
+test('rejects reversed, incomplete, impossible and excessive dates',()=>{for(const [s,e] of [['2026-07-02','2026-07-01'],['2026-07-01',''],['2026-02-30','2026-03-01'],['2026-01-01','2028-01-01']])assert.throws(()=>p.parseDates(s,e));assert.equal(trip.getDateRange(...Object.values(p.parseDates('2026-03-07','2026-03-09'))).length,3);});
+test('totals preserve zero and indicate partial distance coverage',()=>{const days=[{startLocation:'A',endLocation:'B',distanceKm:0,elevationGainM:10},{startLocation:'B',endLocation:'C',distanceKm:12.4,elevationLossM:5},{notes:'weather only'}];assert.deepEqual(p.tripTotals(days),{distanceKm:12.4,gainM:10,lossM:5,minutes:0,measuredDays:2,plannedDays:2});});
+test('invalid numeric values rejected',()=>{for(const v of ['NaN','Infinity','abc',-1])assert.throws(()=>p.nullableNumber(v,'distance',0,1000));assert.equal(p.nullableNumber('0','distance',0,1000),0);assert.throws(()=>p.nullableNumber('1.5','minutes',0,1440,true));});
+test('date shortening requires explicit confirmation before writes',async()=>{const {a,writes}=harness();await assert.rejects(a.saveTripDetails(form({buildId:'owned',startDate:'2026-07-02',endDate:'2026-07-03'})),/confirmation/);assert.equal(writes.length,0);await a.saveTripDetails(form({buildId:'owned',startDate:'2026-07-02',endDate:'2026-07-03',confirmDateChange:'yes'}));assert.equal(writes.length,3);assert.equal(writes[2][1].where.date.notIn.length,2);});
+test('invalid day and unowned route never write',async()=>{const {a,writes}=harness();await assert.rejects(a.saveTripDay(form({buildId:'owned',dayId:'day',distanceKm:'NaN'})),/distanceKm/);await assert.rejects(a.saveTripRoute(form({buildId:'other',waypoints:'[]'})),/Build not found/);assert.equal(writes.length,0);});
+test('day writes preserve zeros, nullable fields and ownership scope',async()=>{const {a,writes}=harness();await a.saveTripDay(form({buildId:'owned',dayId:'day',distanceKm:0,minTemperature:0,startLocation:' A '}));assert.equal(writes[0][1].data.distanceKm,0);assert.equal(writes[0][1].data.minTemperature,0);assert.equal(writes[0][1].data.startLocation,'A');assert.equal(writes[0][1].where.build.userId,'owner');});
+test('route validation rejects out of range coordinates and duplicate IDs',async()=>{const {a,writes}=harness(),point={id:'one',name:'Camp',kind:'camp',lat:49,lng:-123,elevationM:900};for(const points of [[{...point,lat:91}],[point,point]])await assert.rejects(a.saveTripRoute(form({buildId:'owned',waypoints:JSON.stringify(points)})),/waypoint/);assert.equal(writes.length,0);await a.saveTripRoute(form({buildId:'owned',waypoints:JSON.stringify([point])}));assert.deepEqual(writes[0][1].data.routeWaypoints,[point]);});
+test('logistics are bounded and stored on owned build',async()=>{const {a,writes}=harness();await assert.rejects(a.saveTripLogistics(form({buildId:'owned',emergencyContact:'x'.repeat(5001)})),/too long/);await a.saveTripLogistics(form({buildId:'owned',parking:'Lot A'}));assert.equal(writes[0][1].data.tripLogistics.parking,'Lot A');assert.equal(writes[0][1].where.userId,'owner');});
+
+```
 
 ### `tools/generate-docs.ts`
 

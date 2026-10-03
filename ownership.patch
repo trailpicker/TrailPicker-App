@@ -1,0 +1,514 @@
+--- a/app/build/[id]/page.tsx
++++ b/app/build/[id]/page.tsx
+@@ -1,3 +1,5 @@
++import { claimCurrentBuild } from "@/app/build/actions";
++import { currentBuildUserId, requireBuildPageAccess } from "@/lib/build-access";
+ import { prisma } from "@/lib/prisma";
+ import { notFound } from "next/navigation";
+ import { calculateWeightBreakdown, calculateTotalCost } from "@/lib/calculations";
+@@ -23,12 +25,14 @@
+   searchParams: Promise<{ tab?: string }>;
+ }) {
+   const { id } = await params;
++  const access = await requireBuildPageAccess(id);
++  const canClaim = access.userId === null && !!(await currentBuildUserId());
+   const { tab } = await searchParams;
+ 
+   const activeTab = tab === "trip" ? "trip" : "gear";
+ 
+   const build = await prisma.build.findUnique({
+-    where: { id },
++    where: { id, userId: access.userId },
+     include: {
+       items: {
+         include: {
+@@ -91,6 +95,13 @@
+ 
+   return (
+     <div className="min-h-screen bg-gray-50">
++      {canClaim && (
++        <form action={claimCurrentBuild} className="mx-5 mt-4 flex items-center justify-between gap-3 rounded-md border border-green-200 bg-green-50 p-3 text-sm">
++          <input type="hidden" name="buildId" value={build.id} />
++          <span>This guest build is saved in this browser for 30 days.</span>
++          <button type="submit" className="rounded-md bg-green-800 px-3 py-2 font-medium text-white">Save to my account</button>
++        </form>
++      )}
+       <BuildHeader
+         buildId={build.id}
+         name={build.name}
+--- a/app/build/[id]/select/[category]/[subcategory]/page.tsx
++++ b/app/build/[id]/select/[category]/[subcategory]/page.tsx
+@@ -1,3 +1,4 @@
++import { requireBuildPageAccess } from "@/lib/build-access";
+ import { prisma } from "@/lib/prisma";
+ import { notFound } from "next/navigation";
+ import AddGearButton from "@/components/builder/AddGearButton";
+@@ -47,6 +48,7 @@
+         category,
+         subcategory: subcategorySlug,
+     } = await params;
++    const access = await requireBuildPageAccess(id);
+ 
+ 
+     const categoryData = await prisma.category.findUnique({
+@@ -78,6 +80,7 @@
+     const build = await prisma.build.findUnique({
+         where: {
+             id,
++            userId: access.userId,
+         },
+     });
+ 
+--- a/app/build/[id]/select/[category]/page.tsx
++++ b/app/build/[id]/select/[category]/page.tsx
+@@ -1,3 +1,4 @@
++import { requireBuildPageAccess } from "@/lib/build-access";
+ import { prisma } from "@/lib/prisma";
+ import Link from "next/link";
+ import { notFound } from "next/navigation";
+@@ -12,6 +13,7 @@
+ }) {
+ 
+     const { id, category } = await params;
++    await requireBuildPageAccess(id);
+ 
+ 
+     const categoryData = await prisma.category.findUnique({
+--- a/app/build/actions.ts
++++ b/app/build/actions.ts
+@@ -5,12 +5,14 @@
+ import { cookies } from "next/headers";
+ import { revalidatePath } from "next/cache";
+ import { getDateRange } from "@/lib/trip";
+-import { auth } from "@/auth";
++import { currentBuildUserId, hasGuestBuildAccess, requireBuildAccess, requireBuildItemAccess, requireTripDayAccess, setCurrentBuild } from "@/lib/build-access";
++import { guestBuildCookieName } from "@/lib/guest-build-token";
+ import { getDestination } from "@/lib/destinations";
+ 
+ export async function getBuildExport(buildId: string) {
++  const access = await requireBuildAccess(buildId);
+   const build = await prisma.build.findUnique({
+-    where: { id: buildId },
++    where: { id: buildId, userId: access.userId },
+     include: { items: { include: { gear: { select: { id: true, name: true } } } } },
+   });
+ 
+@@ -41,6 +43,7 @@
+ 
+ export async function importBuildItems(formData: FormData) {
+   const buildId = formData.get("buildId") as string;
++  const access = await requireBuildAccess(buildId);
+   const payload = JSON.parse(formData.get("payload") as string);
+ 
+   if (!Array.isArray(payload.items)) {
+@@ -50,11 +53,11 @@
+   for (const item of payload.items) {
+     if (item.gearId) {
+       await prisma.buildItem.upsert({
+-        where: { buildId_gearId: { buildId, gearId: item.gearId } },
++        where: { buildId_gearId: { buildId, gearId: item.gearId }, build: { userId: access.userId } },
+         update: { quantity: { increment: item.quantity ?? 1 } },
+         create: {
+-          buildId,
+-          gearId: item.gearId,
++          build: { connect: { id: buildId, userId: access.userId } },
++          gear: { connect: { id: item.gearId } },
+           quantity: item.quantity ?? 1,
+           isConsumable: !!item.isConsumable,
+           isWorn: !!item.isWorn,
+@@ -63,7 +66,7 @@
+     } else {
+       await prisma.buildItem.create({
+         data: {
+-          buildId,
++          build: { connect: { id: buildId, userId: access.userId } },
+           customCategory: item.customCategory ?? null,
+           gearNameSnapshot: item.gearNameSnapshot ?? item.gearName ?? "Imported item",
+           weightSnapshot: item.weightSnapshot ?? null,
+@@ -82,9 +85,11 @@
+ export async function duplicateBuild(formData: FormData) {
+   const buildId = formData.get("buildId") as string;
+ 
++  const access = await requireBuildAccess(buildId);
++  const ownerId = await currentBuildUserId();
+   const original = await prisma.build.findUnique({
+-    where: { id: buildId },
+-    include: { items: true },
++    where: { id: buildId, userId: access.userId },
++    include: { items: true, days: true },
+   });
+ 
+   if (!original) throw new Error("Build not found.");
+@@ -92,12 +97,16 @@
+   const copy = await prisma.build.create({
+     data: {
+       name: `${original.name} (copy)`,
++      userId: ownerId,
++      locationLat: original.locationLat,
++      locationLng: original.locationLng,
+       location: original.location,
+       startDate: original.startDate,
+       endDate: original.endDate,
+       people: original.people,
+       minTemperature: original.minTemperature,
+       conditions: original.conditions,
++      days: { create: original.days.map(({ date, minTemperature, conditions, notes }) => ({ date, minTemperature, conditions, notes })) },
+       items: {
+         create: original.items.map((item) => ({
+           gearId: item.gearId,
+@@ -113,15 +122,17 @@
+     },
+   });
+ 
++  await setCurrentBuild(copy.id, !ownerId);
+   redirect(`/build/${copy.id}`);
+ }
+ export async function setItemCategory(formData: FormData) {
+   const itemId = formData.get("itemId") as string;
+   const buildId = formData.get("buildId") as string;
++  const item = await requireBuildItemAccess(buildId, itemId);
+   const category = formData.get("category") as "base" | "worn" | "consumable";
+ 
+   await prisma.buildItem.update({
+-    where: { id: itemId },
++    where: { id: itemId, buildId, build: { userId: item.accessUserId } },
+     data: {
+       isWorn: category === "worn",
+       isConsumable: category === "consumable",
+@@ -133,6 +144,7 @@
+ 
+ export async function addCustomItem(formData: FormData) {
+   const buildId = formData.get("buildId") as string;
++  const access = await requireBuildAccess(buildId);
+   const category = formData.get("category") as string;
+   const name = formData.get("name") as string;
+   const weightRaw = formData.get("weight_g") as string;
+@@ -144,7 +156,7 @@
+ 
+   await prisma.buildItem.create({
+     data: {
+-      buildId,
++      build: { connect: { id: buildId, userId: access.userId } },
+       customCategory: category,
+       gearNameSnapshot: name.trim(),
+       weightSnapshot: weightRaw ? Number(weightRaw) : null,
+@@ -160,38 +172,36 @@
+   const buildId = formData.get("buildId") as string;
+   const delta = Number(formData.get("delta"));
+ 
+-  const item = await prisma.buildItem.findUnique({
+-    where: { id: itemId },
+-  });
+-
+-  if (!item) {
+-    throw new Error("Item not found.");
+-  }
+-
++  const item = await requireBuildItemAccess(buildId, itemId);
++
++  if (!Number.isInteger(delta) || Math.abs(delta) !== 1) throw new Error("Invalid quantity change.");
+   const newQuantity = Math.max(1, item.quantity + delta);
+ 
+   await prisma.buildItem.update({
+-    where: { id: itemId },
++    where: { id: itemId, buildId, build: { userId: item.accessUserId } },
+     data: { quantity: newQuantity },
+   });
+ 
+   revalidatePath(`/build/${buildId}`);
+ }
+-export async function claimCurrentBuild() {
+-  const session = await auth();
+-  if (!session?.user) return;
+-
++export async function claimCurrentBuild(formData?: FormData) {
++  const userId = await currentBuildUserId();
++  if (!userId) return;
+   const cookieStore = await cookies();
+-  const buildId = cookieStore.get("currentBuild")?.value;
+-  if (!buildId) return;
+-
+-  await prisma.build.updateMany({
+-    where: { id: buildId, userId: null },
+-    data: { userId: session.user.id },
+-  });
++  const submittedId = formData?.get("buildId");
++  const buildId = typeof submittedId === "string" ? submittedId : cookieStore.get("currentBuild")?.value;
++  if (!buildId || !(await hasGuestBuildAccess(buildId))) return;
++  const result = await prisma.build.updateMany({
++    where: { id: buildId, userId: null }, data: { userId },
++  });
++  if (result.count) {
++    cookieStore.delete(guestBuildCookieName(buildId));
++    revalidatePath(`/build/${buildId}`);
++    revalidatePath("/profile/builds");
++  }
+ }
+ export async function createBuild(formData: FormData) {
+-  const session = await auth();
++  const ownerId = await currentBuildUserId();
+ 
+   const name = formData.get("name")?.toString().trim();
+ 
+@@ -255,7 +265,7 @@
+         ? Number(minTemperatureRaw)
+         : null,
+       conditions: conditions || null,
+-      userId: session?.user?.id ?? null,
++      userId: ownerId,
+     },
+   });
+ 
+@@ -274,25 +284,26 @@
+     });
+   }
+ 
+-  const cookieStore = await cookies();
+-  cookieStore.set("currentBuild", build.id);
++  await setCurrentBuild(build.id, !ownerId);
+ 
+   redirect(`/build/${build.id}`);
+ }
+ export async function addGear(formData: FormData) {
+   const buildId = formData.get("buildId") as string;
++  const access = await requireBuildAccess(buildId);
+   const gearId = formData.get("gearId") as string;
+ 
+   await prisma.buildItem.upsert({
+     where: {
+       buildId_gearId: { buildId, gearId },
++      build: { userId: access.userId },
+     },
+     update: {
+       quantity: { increment: 1 },
+     },
+     create: {
+-      buildId,
+-      gearId,
++      build: { connect: { id: buildId, userId: access.userId } },
++      gear: { connect: { id: gearId } },
+     },
+   });
+ 
+@@ -302,10 +313,13 @@
+ export async function removeGear(formData: FormData) {
+   const itemId = formData.get("itemId") as string;
+   const buildId = formData.get("buildId") as string;
++  const item = await requireBuildItemAccess(buildId, itemId);
+ 
+   await prisma.buildItem.delete({
+     where: {
+       id: itemId,
++      buildId,
++      build: { userId: item.accessUserId },
+     },
+   });
+ 
+@@ -314,6 +328,7 @@
+ 
+ export async function updateTripDetails(formData: FormData) {
+   const buildId = formData.get("buildId") as string;
++  const access = await requireBuildAccess(buildId);
+ 
+   const startDateRaw =
+     formData.get("startDate")?.toString() || "";
+@@ -371,7 +386,7 @@
+       : null;
+ 
+   await prisma.build.update({
+-    where: { id: buildId },
++    where: { id: buildId, userId: access.userId },
+     data: {
+       location,
+       locationLat,
+@@ -417,6 +432,7 @@
+ export async function updateTripDay(formData: FormData) {
+   const dayId = formData.get("dayId") as string;
+   const buildId = formData.get("buildId") as string;
++  const day = await requireTripDayAccess(buildId, dayId);
+ 
+   const minTemperature = formData.get("minTemperature")
+     ? Number(formData.get("minTemperature"))
+@@ -425,7 +441,7 @@
+   const notes = (formData.get("notes") as string) || null;
+ 
+   await prisma.tripDay.update({
+-    where: { id: dayId },
++    where: { id: dayId, buildId, build: { userId: day.accessUserId } },
+     data: { minTemperature, conditions, notes },
+   });
+ 
+--- a/app/profile/actions.ts
++++ b/app/profile/actions.ts
+@@ -1,5 +1,6 @@
+ "use server";
+ 
++import { setCurrentBuild } from "@/lib/build-access";
+ import { auth } from "@/auth";
+ import { prisma } from "@/lib/prisma";
+ import { revalidatePath } from "next/cache";
+@@ -72,6 +73,7 @@
+       },
+     },
+   });
++  await setCurrentBuild(copy.id);
+   redirect(`/build/${copy.id}`);
+ }
+ 
+--- a/components/Navbar.tsx
++++ b/components/Navbar.tsx
+@@ -1,3 +1,4 @@
++import { findAccessibleBuild } from "@/lib/build-access";
+ // components/Navbar.tsx
+ import Link from "next/link";
+ import { cookies } from "next/headers";
+@@ -5,7 +6,8 @@
+ import ProfileDropdown from "@/components/ProfileDropdown";
+ export default async function Navbar() {
+     const cookieStore = await cookies();
+-    const buildId = cookieStore.get("currentBuild")?.value;
++    const currentId = cookieStore.get("currentBuild")?.value;
++    const buildId = currentId ? (await findAccessibleBuild(currentId))?.id : undefined;
+     const session = await auth();
+ 
+     return (
+--- a/components/builder/ShareBar.tsx
++++ b/components/builder/ShareBar.tsx
+@@ -75,7 +75,7 @@
+                 <button
+                     type="button"
+                     onClick={copyLink}
+-                    title="Copy link"
++                    title="Copy private link (only you can open it)"
+                     className="shrink-0 text-gray-400 hover:text-gray-700 cursor-pointer"
+                 >
+                     {copied ? (
+@@ -95,6 +95,8 @@
+                     className="w-full bg-transparent text-sm text-gray-700 outline-none truncate"
+                 />
+             </div>
++
++            <span className="text-xs text-gray-500">Private build · this link only works for you</span>
+ 
+             <input
+                 ref={fileInputRef}
+--- /dev/null
++++ b/lib/build-access.ts
+@@ -0,0 +1,78 @@
++import "server-only";
++import { auth } from "@/auth";
++import { prisma } from "@/lib/prisma";
++import { cookies } from "next/headers";
++import { notFound } from "next/navigation";
++import { createGuestBuildToken, guestBuildCookieName, GUEST_BUILD_MAX_AGE, verifyGuestBuildToken } from "@/lib/guest-build-token";
++
++export async function currentBuildUserId(): Promise<string | null> {
++  const session = await auth();
++  // Resolve through the DB, consistent with existing profile actions. Default
++  // Auth.js sessions need not expose the adapter user ID without a callback.
++  if (!session?.user?.email) return null;
++  const user = await prisma.user.findUnique({
++    where: { email: session.user.email }, select: { id: true },
++  });
++  return user?.id ?? null;
++}
++
++export async function hasGuestBuildAccess(buildId: string) {
++  if (typeof buildId !== "string" || !buildId || buildId.length > 200) return false;
++  const cookieStore = await cookies();
++  return verifyGuestBuildToken(buildId, cookieStore.get(guestBuildCookieName(buildId))?.value);
++}
++
++export async function findAccessibleBuild(buildId: string) {
++  if (typeof buildId !== "string" || !buildId || buildId.length > 200) return null;
++  const userId = await currentBuildUserId();
++  const guest = await hasGuestBuildAccess(buildId);
++  // currentBuild is navigation state, never authorization.
++  if (!userId && !guest) return null;
++  return prisma.build.findFirst({
++    where: { id: buildId, OR: [
++      ...(userId ? [{ userId }] : []),
++      ...(guest ? [{ userId: null }] : []),
++    ] },
++    select: { id: true, userId: true },
++  });
++}
++
++export async function requireBuildAccess(buildId: string) {
++  const build = await findAccessibleBuild(buildId);
++  if (!build) throw new Error("Build not found.");
++  return build;
++}
++
++export async function requireBuildPageAccess(buildId: string) {
++  const build = await findAccessibleBuild(buildId);
++  if (!build) notFound();
++  return build;
++}
++
++export async function requireBuildItemAccess(buildId: string, itemId: string) {
++  if (typeof itemId !== "string" || !itemId || itemId.length > 200) throw new Error("Item not found.");
++  const build = await requireBuildAccess(buildId);
++  const item = await prisma.buildItem.findFirst({
++    where: { id: itemId, buildId: build.id, build: { userId: build.userId } },
++  });
++  if (!item) throw new Error("Item not found.");
++  return { ...item, accessUserId: build.userId };
++}
++
++export async function requireTripDayAccess(buildId: string, dayId: string) {
++  if (typeof dayId !== "string" || !dayId || dayId.length > 200) throw new Error("Day not found.");
++  const build = await requireBuildAccess(buildId);
++  const day = await prisma.tripDay.findFirst({
++    where: { id: dayId, buildId: build.id, build: { userId: build.userId } },
++  });
++  if (!day) throw new Error("Day not found.");
++  return { ...day, accessUserId: build.userId };
++}
++
++export async function setCurrentBuild(buildId: string, guest = false) {
++  const cookieStore = await cookies();
++  const options = { httpOnly: true, sameSite: "lax" as const,
++    secure: process.env.NODE_ENV === "production", path: "/", maxAge: GUEST_BUILD_MAX_AGE };
++  if (guest) cookieStore.set(guestBuildCookieName(buildId), createGuestBuildToken(buildId), options);
++  cookieStore.set("currentBuild", buildId, options);
++}
+--- /dev/null
++++ b/lib/guest-build-token.ts
+@@ -0,0 +1,36 @@
++import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
++
++export const GUEST_BUILD_MAX_AGE = 60 * 60 * 24 * 30;
++
++function secret() {
++  const value = process.env.AUTH_SECRET;
++  if (!value) throw new Error("AUTH_SECRET is required for guest build access.");
++  return value;
++}
++
++export function guestBuildCookieName(buildId: string) {
++  // Hash IDs so cookie names contain only safe characters and have bounded length.
++  return `guestBuild_${createHmac("sha256", secret()).update(buildId).digest("hex").slice(0, 32)}`;
++}
++
++function signature(buildId: string, payload: string) {
++  return createHmac("sha256", secret())
++    .update(JSON.stringify(["trailpicker-guest-build-v1", buildId, payload]))
++    .digest("base64url");
++}
++
++export function createGuestBuildToken(buildId: string, now = Date.now()) {
++  const payload = `${Math.floor(now / 1000) + GUEST_BUILD_MAX_AGE}:${randomBytes(32).toString("base64url")}`;
++  return `${payload}.${signature(buildId, payload)}`;
++}
++
++export function verifyGuestBuildToken(buildId: string, token: string | undefined, now = Date.now()) {
++  if (!token || token.length > 200) return false;
++  const match = /^(\d+):([A-Za-z0-9_-]{43})\.([A-Za-z0-9_-]{43})$/.exec(token);
++  if (!match) return false;
++  const expiry = Number(match[1]);
++  if (!Number.isSafeInteger(expiry) || expiry <= Math.floor(now / 1000)) return false;
++  const actual = Buffer.from(match[3]);
++  const expected = Buffer.from(signature(buildId, `${match[1]}:${match[2]}`));
++  return actual.length === expected.length && timingSafeEqual(actual, expected);
++}

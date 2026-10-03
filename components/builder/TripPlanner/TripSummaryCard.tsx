@@ -1,12 +1,10 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import {
     AlertTriangle,
     CalendarDays,
     CloudSun,
     MapPin,
-    Navigation,
     Pencil,
     Thermometer,
     Users,
@@ -19,11 +17,6 @@ import {
 } from "@/lib/trip";
 
 import type { CompatibilityIssue } from "@/lib/compatibility";
-
-const TripLocationPreview = dynamic(
-    () => import("./TripLocationPreview"),
-    { ssr: false },
-);
 
 const conditionMeta: Record<
     string,
@@ -63,7 +56,7 @@ type Props = {
         conditions: string | null;
     };
     issues: CompatibilityIssue[];
-    onEdit: () => void;
+    onEdit?: () => void;
 };
 
 export default function TripSummaryCard({
@@ -101,12 +94,6 @@ export default function TripSummaryCard({
                     : daysUntil === 0
                         ? "Starts today"
                         : "Trip date passed";
-
-    const directionsUrl =
-        build.locationLat != null &&
-            build.locationLng != null
-            ? `https://www.google.com/maps/search/?api=1&query=${build.locationLat},${build.locationLng}`
-            : null;
 
     return (
         <section className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
@@ -151,38 +138,16 @@ export default function TripSummaryCard({
                         </p>
                     </div>
 
-                    <button
+                    {onEdit && <button
                         type="button"
                         onClick={onEdit}
                         className="inline-flex w-fit items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-green-950 shadow-sm transition hover:bg-green-50"
                     >
                         <Pencil className="h-4 w-4" />
                         Edit trip
-                    </button>
+                    </button>}
                 </div>
             </div>
-
-            {build.locationLat != null &&
-                build.locationLng != null && (
-                    <div className="relative border-b border-gray-200">
-                        <TripLocationPreview
-                            lat={build.locationLat}
-                            lng={build.locationLng}
-                        />
-
-                        {directionsUrl && (
-                            <a
-                                href={directionsUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-xs font-bold text-gray-800 shadow-md transition hover:bg-gray-50"
-                            >
-                                <Navigation className="h-3.5 w-3.5" />
-                                Open map
-                            </a>
-                        )}
-                    </div>
-                )}
 
             <div className="grid grid-cols-2 divide-x divide-y border-b border-gray-200 sm:grid-cols-4 sm:divide-y-0">
                 <StatCard

@@ -1,3 +1,4 @@
+import { findAccessibleBuild } from "@/lib/build-access";
 // components/Navbar.tsx
 import Link from "next/link";
 import { cookies } from "next/headers";
@@ -5,7 +6,8 @@ import { auth, signIn } from "@/auth";
 import ProfileDropdown from "@/components/ProfileDropdown";
 export default async function Navbar() {
     const cookieStore = await cookies();
-    const buildId = cookieStore.get("currentBuild")?.value;
+    const currentId = cookieStore.get("currentBuild")?.value;
+    const buildId = currentId ? (await findAccessibleBuild(currentId))?.id : undefined;
     const session = await auth();
 
     return (

@@ -1,3 +1,4 @@
+import { requireBuildPageAccess } from "@/lib/build-access";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import AddGearButton from "@/components/builder/AddGearButton";
@@ -47,6 +48,7 @@ export default async function SelectGearPage({
         category,
         subcategory: subcategorySlug,
     } = await params;
+    const access = await requireBuildPageAccess(id);
 
 
     const categoryData = await prisma.category.findUnique({
@@ -78,6 +80,7 @@ export default async function SelectGearPage({
     const build = await prisma.build.findUnique({
         where: {
             id,
+            userId: access.userId,
         },
     });
 

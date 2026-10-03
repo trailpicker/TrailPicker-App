@@ -1,3 +1,9 @@
+import { getBuildViewAccess } from "@/lib/build-visibility";
+import PrivateBuildNotice from "@/components/builder/PrivateBuildNotice";
+import PublicBuildView from "@/components/builder/PublicBuildView";
+import { claimCurrentBuild } from "@/app/build/actions";
+import { currentBuildUserId } from "@/lib/build-access";
+
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { calculateWeightBreakdown, calculateTotalCost } from "@/lib/calculations";
@@ -23,12 +29,17 @@ export default async function BuildPage({
   searchParams: Promise<{ tab?: string }>;
 }) {
   const { id } = await params;
+  const view = await getBuildViewAccess(id);
+  if (view.status === "missing") notFound();
+  if (view.status === "private") return <PrivateBuildNotice buildId={id} />;
+  const access = view.access;
+  const canClaim = view.canEdit && access?.userId === null && !!(await currentBuildUserId());
   const { tab } = await searchParams;
 
   const activeTab = tab === "trip" ? "trip" : "gear";
 
   const build = await prisma.build.findUnique({
-    where: { id },
+    where: view.canEdit && access ? { id, userId: access.userId } : { id, isPublic: true },
     include: {
       items: {
         include: {
@@ -42,7 +53,7 @@ export default async function BuildPage({
           },
         },
       },
-      days: true,
+      days: { orderBy: { date: "asc" } },
     },
   });
 
@@ -86,11 +97,24 @@ export default async function BuildPage({
       }
       : null,
   }));
-  const issues = evaluateCompatibility(compatBuild, compatItems);
+  const issues = evaluateCompatibility(compatBuild, compatItems, build.days);
   const summary = summarizeCompatibility(issues);
+
+  if (!view.canEdit) {
+    return <PublicBuildView build={{ ...build, tripLogistics: undefined, days: build.days.map(day => ({ ...day, reservation: null })) }} activeTab={activeTab}
+      compatBuild={compatBuild} compatItems={compatItems}
+      issueCount={summary.errors + summary.warnings} />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {canClaim && (
+        <form action={claimCurrentBuild} className="mx-5 mt-4 flex items-center justify-between gap-3 rounded-md border border-green-200 bg-green-50 p-3 text-sm">
+          <input type="hidden" name="buildId" value={build.id} />
+          <span>This guest build is saved in this browser for 30 days.</span>
+          <button type="submit" className="rounded-md bg-green-800 px-3 py-2 font-medium text-white">Save to my account</button>
+        </form>
+      )}
       <BuildHeader
         buildId={build.id}
         name={build.name}
@@ -104,6 +128,7 @@ export default async function BuildPage({
           <CompatibilityBar
             build={compatBuild}
             items={compatItems}
+            days={build.days}
             totalWeight={total}
           />
 
@@ -111,6 +136,7 @@ export default async function BuildPage({
             <ShareBar
               buildId={build.id}
               buildName={build.name}
+              isPublic={build.isPublic}
               createdAt={build.createdAt}
               updatedAt={build.updatedAt}
             />
@@ -134,6 +160,8 @@ export default async function BuildPage({
               minTemperature: build.minTemperature,
               conditions: build.conditions,
               days: build.days,
+              routeWaypoints: build.routeWaypoints,
+              tripLogistics: build.tripLogistics,
             }}
             issues={issues}
           />
@@ -181,6 +209,7 @@ export default async function BuildPage({
             <CompatibilityDetails
               build={compatBuild}
               items={compatItems}
+              days={build.days}
             />
           </>
 

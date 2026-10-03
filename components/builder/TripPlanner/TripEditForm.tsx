@@ -1,6 +1,6 @@
 "use client";
 //components/builder/TripPlanner/TripEditForm.tsx
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import DestinationPicker from "@/components/build/DestinationPicker";
 import DateRangePicker from "@/components/build/DateRangePicker";
 import { updateTripDetails } from "@/app/build/actions";
@@ -22,12 +22,13 @@ type Props = {
 };
 
 export default function TripEditForm({ build, onSaved, onCancel }: Props) {
+  const [error, setError] = useState("");
   const [isPending, startTransition] = useTransition();
 
   function handleSubmit(formData: FormData) {
     startTransition(async () => {
-      await updateTripDetails(formData);
-      onSaved();
+      setError("");
+      try { await updateTripDetails(formData); onSaved(); } catch(e) { setError(e instanceof Error ? e.message : "Could not save trip."); }
     });
   }
 
@@ -54,6 +55,7 @@ export default function TripEditForm({ build, onSaved, onCancel }: Props) {
       </div>
 
       <form action={handleSubmit} className="space-y-4">
+        <fieldset disabled={isPending} className="space-y-4">
         <input type="hidden" name="buildId" value={build.id} />
 
         <div className="rounded-lg border p-3">
@@ -126,6 +128,8 @@ export default function TripEditForm({ build, onSaved, onCancel }: Props) {
           </select>
         </div>
 
+        <label className="flex items-start gap-2 text-xs text-gray-500"><input type="checkbox" name="confirmDateChange" value="yes" />I understand that days outside the new date range will be removed. Keep days within the range.</label>
+        {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
         <button
           type="submit"
           disabled={isPending}
@@ -133,6 +137,7 @@ export default function TripEditForm({ build, onSaved, onCancel }: Props) {
         >
           {isPending ? "Saving..." : "Save Trip Details"}
         </button>
+        </fieldset>
       </form>
     </div>
   );

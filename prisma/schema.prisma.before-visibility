@@ -1,0 +1,310 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Brand {
+  id      String  @id @default(cuid())
+  name    String
+  website String?
+  logo    String?
+
+  gear Gear[]
+
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  gear Gear[]
+  subcategories Subcategory[]
+  createdAt DateTime @default(now())
+}
+model Subcategory {
+  id         String   @id @default(cuid())
+  name       String
+  slug String
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  gear        Gear[]
+
+  createdAt  DateTime @default(now())
+  @@unique([categoryId, slug])
+}
+model Gear {
+  id String @id @default(cuid())
+
+  name        String
+  description String?
+  
+  weight_g Int?
+
+  price_cad Float?
+
+  capacity_l Float?
+
+  frame_type String?
+
+  waterproof Boolean?
+
+  temperature_rating Int?
+
+  season String?
+
+  material String?
+
+  brandId String
+  brand   Brand  @relation(fields: [brandId], references: [id])
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  subcategoryId String?
+  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+
+  images GearImage[]
+  specifications GearSpecification[]
+  prices Price[]
+  reviews Review[]
+  buildItems BuildItem[]
+  favorites Favorite[]
+  ownedGear OwnedGear[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model OwnedGear {
+  id String @id @default(cuid())
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  gearId String
+  gear Gear @relation(fields: [gearId], references: [id], onDelete: Cascade)
+
+  purchasedPrice Float?
+  purchasedAt DateTime?
+  notes String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, gearId])
+}
+model GearImage {
+  id String @id @default(cuid())
+
+  url String
+
+  isPrimary Boolean @default(false)
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id], onDelete: Cascade)
+}
+
+model GearSpecification {
+  id String @id @default(cuid())
+
+  key   String
+  value String
+  unit  String?
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id], onDelete: Cascade)
+}
+
+model Retailer {
+  id String @id @default(cuid())
+
+  name    String
+  website String?
+  logo    String?
+
+  prices Price[]
+}
+
+model Price {
+  id String @id @default(cuid())
+
+  price Float
+
+  currency String @default("CAD")
+
+  url String?
+
+  inStock Boolean @default(true)
+
+  lastUpdated DateTime @default(now())
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  retailerId String
+  retailer   Retailer @relation(fields: [retailerId], references: [id])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  username      String?    @unique
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+
+  bio             String?
+  location        String?
+  isProfilePublic Boolean  @default(false)
+
+  accounts Account[]
+  sessions Session[]
+  builds    Build[]
+  reviews   Review[]
+  favorites Favorite[]
+  ownedGear OwnedGear[]
+
+  createdAt DateTime @default(now())
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  @@unique([identifier, token])
+}
+
+model Build {
+  id String @id @default(cuid())
+
+  name String
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  items BuildItem[]
+  days  TripDay[]
+
+  destinationId String?
+
+  location    String?
+  locationLat Float?
+  locationLng Float?
+  startDate   DateTime?
+  endDate     DateTime?
+
+  people Int @default(1)
+
+  minTemperature Int?
+  conditions String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TripDay {
+  id String @id @default(cuid())
+
+  buildId String
+  build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  date DateTime
+
+  minTemperature Int?
+  conditions     String?
+  notes          String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([buildId, date])
+}
+
+model BuildItem {
+  id String @id @default(cuid())
+
+  quantity Int @default(1)
+
+  customWeight Int?
+
+  isConsumable Boolean @default(false)
+
+  isWorn Boolean @default(false)
+
+  gearNameSnapshot String?
+
+  weightSnapshot Int?
+
+  priceSnapshot Float?
+
+  customCategory String?
+
+  buildId String
+  build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  gearId String?
+  gear   Gear?   @relation(fields: [gearId], references: [id])
+
+  @@unique([buildId, gearId])
+}
+
+model Review {
+  id String @id @default(cuid())
+
+  rating Int
+
+  title String?
+  body  String?
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Favorite {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, gearId])
+}
