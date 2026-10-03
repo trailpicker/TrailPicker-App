@@ -3,6 +3,73 @@
 > Generated automatically by Project Context Generator.
 
 ```text
+├── .trailpicker-backups/
+│   ├── import-export-history-2026-10-03T04-51-48-435Z/
+│   │   ├── app/
+│   │   │   ├── build/
+│   │   │   │   └── actions.ts
+│   │   │   └── profile/
+│   │   │       ├── gear/
+│   │   │       │   └── actions.ts
+│   │   │       └── actions.ts
+│   │   ├── components/
+│   │   │   └── builder/
+│   │   │       └── ShareBar.tsx
+│   │   ├── lib/
+│   │   │   ├── build-settings-actions.ts
+│   │   │   ├── build-visibility-actions.ts
+│   │   │   └── trip-planner-actions.ts
+│   │   ├── prisma/
+│   │   │   └── schema.prisma
+│   │   └── tests/
+│   │       ├── builder-ownership.test.cjs
+│   │       └── trip-planner.test.cjs
+│   ├── import-export-history-2026-10-03T04-58-20-601Z/
+│   │   ├── app/
+│   │   │   ├── build/
+│   │   │   │   └── actions.ts
+│   │   │   └── profile/
+│   │   │       ├── gear/
+│   │   │       │   └── actions.ts
+│   │   │       └── actions.ts
+│   │   ├── components/
+│   │   │   └── builder/
+│   │   │       ├── BuildDataTools.tsx
+│   │   │       └── ShareBar.tsx
+│   │   ├── lib/
+│   │   │   ├── build-history-actions.ts
+│   │   │   ├── build-history.ts
+│   │   │   ├── build-settings-actions.ts
+│   │   │   ├── build-visibility-actions.ts
+│   │   │   └── trip-planner-actions.ts
+│   │   ├── prisma/
+│   │   │   └── schema.prisma
+│   │   └── tests/
+│   │       ├── builder-ownership.test.cjs
+│   │       └── trip-planner.test.cjs
+│   └── import-export-history-2026-10-03T05-05-59-627Z/
+│       ├── app/
+│       │   ├── build/
+│       │   │   └── actions.ts
+│       │   └── profile/
+│       │       ├── gear/
+│       │       │   └── actions.ts
+│       │       └── actions.ts
+│       ├── components/
+│       │   └── builder/
+│       │       ├── BuildDataTools.tsx
+│       │       └── ShareBar.tsx
+│       ├── lib/
+│       │   ├── build-history-actions.ts
+│       │   ├── build-history.ts
+│       │   ├── build-settings-actions.ts
+│       │   ├── build-visibility-actions.ts
+│       │   └── trip-planner-actions.ts
+│       ├── prisma/
+│       │   └── schema.prisma
+│       └── tests/
+│           ├── builder-ownership.test.cjs
+│           └── trip-planner.test.cjs
 ├── app/
 │   ├── api/
 │   │   └── auth/
@@ -60,6 +127,7 @@
 │   │   │   └── TripSummaryCard.tsx
 │   │   ├── AddCustomItemForm.tsx
 │   │   ├── AddGearButton.tsx
+│   │   ├── BuildDataTools.tsx
 │   │   ├── BuildHeader.tsx
 │   │   ├── BuildRow.tsx
 │   │   ├── BuildSettings.tsx
@@ -96,6 +164,8 @@
 │   └── destinations.json
 ├── lib/
 │   ├── build-access.ts
+│   ├── build-history-actions.ts
+│   ├── build-history.ts
 │   ├── build-settings-actions.ts
 │   ├── build-visibility-actions.ts
 │   ├── build-visibility.ts
@@ -134,22 +204,58 @@
 ## Files
 
 - `.gitignore` (503 B, 44 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/app/build/actions.ts` (10.4 KB, 331 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/app/profile/actions.ts` (3.6 KB, 92 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/app/profile/gear/actions.ts` (3.1 KB, 91 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/components/builder/ShareBar.tsx` (6.9 KB, 164 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/lib/build-settings-actions.ts` (871 B, 22 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/lib/build-visibility-actions.ts` (793 B, 20 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/lib/trip-planner-actions.ts` (4.6 KB, 51 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/prisma/schema.prisma` (6.2 KB, 328 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/tests/builder-ownership.test.cjs` (11.0 KB, 166 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/tests/trip-planner.test.cjs` (4.6 KB, 18 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/app/build/actions.ts` (17.2 KB, 475 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/app/profile/actions.ts` (3.8 KB, 96 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/app/profile/gear/actions.ts` (3.3 KB, 94 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/components/builder/BuildDataTools.tsx` (27.4 KB, 559 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/components/builder/ShareBar.tsx` (2.9 KB, 82 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/build-history-actions.ts` (6.4 KB, 162 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/build-history.ts` (4.1 KB, 145 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/build-settings-actions.ts` (1.1 KB, 25 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/build-visibility-actions.ts` (1.0 KB, 23 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/trip-planner-actions.ts` (5.2 KB, 60 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/prisma/schema.prisma` (6.5 KB, 344 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/tests/builder-ownership.test.cjs` (11.6 KB, 171 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/tests/trip-planner.test.cjs` (4.7 KB, 18 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/app/build/actions.ts` (17.2 KB, 475 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/app/profile/actions.ts` (3.8 KB, 96 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/app/profile/gear/actions.ts` (3.3 KB, 94 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/components/builder/BuildDataTools.tsx` (21.9 KB, 500 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/components/builder/ShareBar.tsx` (2.9 KB, 82 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/build-history-actions.ts` (6.4 KB, 162 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/build-history.ts` (4.1 KB, 145 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/build-settings-actions.ts` (1.1 KB, 25 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/build-visibility-actions.ts` (1.0 KB, 23 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/trip-planner-actions.ts` (5.2 KB, 60 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/prisma/schema.prisma` (6.5 KB, 344 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/tests/builder-ownership.test.cjs` (11.6 KB, 171 lines)
+- `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/tests/trip-planner.test.cjs` (4.7 KB, 18 lines)
 - `app/api/auth/[...nextauth]/route.ts` (74 B, 2 lines)
 - `app/build/[id]/page.tsx` (8.8 KB, 223 lines)
 - `app/build/[id]/select/[category]/[subcategory]/page.tsx` (11.3 KB, 309 lines)
 - `app/build/[id]/select/[category]/page.tsx` (2.2 KB, 88 lines)
-- `app/build/actions.ts` (10.4 KB, 331 lines)
+- `app/build/actions.ts` (17.2 KB, 475 lines)
 - `app/build/page.tsx` (4.3 KB, 117 lines)
 - `app/gear/[id]/page.tsx` (2.2 KB, 132 lines)
 - `app/gear/page.tsx` (3.0 KB, 189 lines)
 - `app/globals.css` (1.2 KB, 70 lines)
 - `app/layout.tsx` (910 B, 42 lines)
 - `app/page.tsx` (2.1 KB, 120 lines)
-- `app/profile/actions.ts` (3.6 KB, 92 lines)
+- `app/profile/actions.ts` (3.8 KB, 96 lines)
 - `app/profile/builds/page.tsx` (3.1 KB, 35 lines)
 - `app/profile/edit/page.tsx` (2.8 KB, 25 lines)
 - `app/profile/favorites/page.tsx` (3.0 KB, 39 lines)
-- `app/profile/gear/actions.ts` (3.1 KB, 91 lines)
+- `app/profile/gear/actions.ts` (3.3 KB, 94 lines)
 - `app/profile/gear/page.tsx` (5.1 KB, 73 lines)
 - `app/profile/layout.tsx` (4.7 KB, 100 lines)
 - `app/profile/page.tsx` (5.3 KB, 39 lines)
@@ -161,6 +267,7 @@
 - `components/build/LocationPicker.tsx` (8.5 KB, 240 lines)
 - `components/builder/AddCustomItemForm.tsx` (2.4 KB, 77 lines)
 - `components/builder/AddGearButton.tsx` (914 B, 49 lines)
+- `components/builder/BuildDataTools.tsx` (27.4 KB, 628 lines)
 - `components/builder/BuildHeader.tsx` (1.4 KB, 45 lines)
 - `components/builder/BuildRow.tsx` (8.6 KB, 204 lines)
 - `components/builder/BuildSettings.tsx` (5.9 KB, 118 lines)
@@ -174,7 +281,7 @@
 - `components/builder/PublicBuildView.tsx` (4.0 KB, 62 lines)
 - `components/builder/QuantityStepper.tsx` (2.4 KB, 87 lines)
 - `components/builder/RemoveGearButton.tsx` (677 B, 35 lines)
-- `components/builder/ShareBar.tsx` (6.9 KB, 164 lines)
+- `components/builder/ShareBar.tsx` (2.9 KB, 82 lines)
 - `components/builder/TripPlanner/MapPreviewInner.tsx` (1.0 KB, 33 lines)
 - `components/builder/TripPlanner/PlannerFields.tsx` (2.1 KB, 85 lines)
 - `components/builder/TripPlanner/RouteMapInner.tsx` (1.6 KB, 15 lines)
@@ -205,8 +312,10 @@
 - `docs.config.json` (589 B, 20 lines)
 - `eslint.config.mjs` (465 B, 19 lines)
 - `lib/build-access.ts` (3.3 KB, 79 lines)
-- `lib/build-settings-actions.ts` (871 B, 22 lines)
-- `lib/build-visibility-actions.ts` (793 B, 20 lines)
+- `lib/build-history-actions.ts` (7.9 KB, 204 lines)
+- `lib/build-history.ts` (9.6 KB, 263 lines)
+- `lib/build-settings-actions.ts` (1.1 KB, 25 lines)
+- `lib/build-visibility-actions.ts` (1.0 KB, 23 lines)
 - `lib/build-visibility.ts` (822 B, 21 lines)
 - `lib/calculations.ts` (1.2 KB, 54 lines)
 - `lib/compatibility.ts` (12.9 KB, 374 lines)
@@ -214,7 +323,7 @@
 - `lib/guest-build-token.ts` (1.6 KB, 37 lines)
 - `lib/prisma.ts` (471 B, 20 lines)
 - `lib/profile.ts` (1.5 KB, 43 lines)
-- `lib/trip-planner-actions.ts` (4.6 KB, 51 lines)
+- `lib/trip-planner-actions.ts` (5.2 KB, 60 lines)
 - `lib/trip-planner.ts` (4.0 KB, 38 lines)
 - `lib/trip.ts` (1.9 KB, 65 lines)
 - `next-env.d.ts` (251 B, 7 lines)
@@ -222,11 +331,11 @@
 - `package.json` (907 B, 39 lines)
 - `postcss.config.mjs` (94 B, 8 lines)
 - `prisma/migrations/migration_lock.toml` (128 B, 4 lines)
-- `prisma/schema.prisma` (6.2 KB, 328 lines)
+- `prisma/schema.prisma` (6.5 KB, 344 lines)
 - `prisma/seed.ts` (8.2 KB, 408 lines)
 - `prisma.config.ts` (283 B, 15 lines)
 - `README.md` (1.4 KB, 37 lines)
-- `tests/builder-ownership.test.cjs` (11.0 KB, 166 lines)
-- `tests/trip-planner.test.cjs` (4.6 KB, 18 lines)
+- `tests/builder-ownership.test.cjs` (11.6 KB, 171 lines)
+- `tests/trip-planner.test.cjs` (4.7 KB, 18 lines)
 - `tools/generate-docs.ts` (16.1 KB, 428 lines)
 - `tsconfig.json` (666 B, 35 lines)

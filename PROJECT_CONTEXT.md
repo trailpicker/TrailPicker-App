@@ -2,18 +2,85 @@
 
 > Generated automatically. Treat source files as authoritative; summaries are derived metadata.
 
-- Generated: 2026-10-03T04:34:42.123Z
+- Generated: 2026-10-03T05:13:37.684Z
 - Root: `trailpicker`
-- Files scanned: 97
-- Files included with readable text: 97
-- Total included source lines: 9,682
-- Total scanned size: 346.4 KB
+- Files scanned: 136
+- Files included with readable text: 136
+- Total included source lines: 16,614
+- Total scanned size: 634.1 KB
 - Max file size: 293.0 KB
 
 
 ## PROJECT STRUCTURE
 
 ```text
+├── .trailpicker-backups/
+│   ├── import-export-history-2026-10-03T04-51-48-435Z/
+│   │   ├── app/
+│   │   │   ├── build/
+│   │   │   │   └── actions.ts
+│   │   │   └── profile/
+│   │   │       ├── gear/
+│   │   │       │   └── actions.ts
+│   │   │       └── actions.ts
+│   │   ├── components/
+│   │   │   └── builder/
+│   │   │       └── ShareBar.tsx
+│   │   ├── lib/
+│   │   │   ├── build-settings-actions.ts
+│   │   │   ├── build-visibility-actions.ts
+│   │   │   └── trip-planner-actions.ts
+│   │   ├── prisma/
+│   │   │   └── schema.prisma
+│   │   └── tests/
+│   │       ├── builder-ownership.test.cjs
+│   │       └── trip-planner.test.cjs
+│   ├── import-export-history-2026-10-03T04-58-20-601Z/
+│   │   ├── app/
+│   │   │   ├── build/
+│   │   │   │   └── actions.ts
+│   │   │   └── profile/
+│   │   │       ├── gear/
+│   │   │       │   └── actions.ts
+│   │   │       └── actions.ts
+│   │   ├── components/
+│   │   │   └── builder/
+│   │   │       ├── BuildDataTools.tsx
+│   │   │       └── ShareBar.tsx
+│   │   ├── lib/
+│   │   │   ├── build-history-actions.ts
+│   │   │   ├── build-history.ts
+│   │   │   ├── build-settings-actions.ts
+│   │   │   ├── build-visibility-actions.ts
+│   │   │   └── trip-planner-actions.ts
+│   │   ├── prisma/
+│   │   │   └── schema.prisma
+│   │   └── tests/
+│   │       ├── builder-ownership.test.cjs
+│   │       └── trip-planner.test.cjs
+│   └── import-export-history-2026-10-03T05-05-59-627Z/
+│       ├── app/
+│       │   ├── build/
+│       │   │   └── actions.ts
+│       │   └── profile/
+│       │       ├── gear/
+│       │       │   └── actions.ts
+│       │       └── actions.ts
+│       ├── components/
+│       │   └── builder/
+│       │       ├── BuildDataTools.tsx
+│       │       └── ShareBar.tsx
+│       ├── lib/
+│       │   ├── build-history-actions.ts
+│       │   ├── build-history.ts
+│       │   ├── build-settings-actions.ts
+│       │   ├── build-visibility-actions.ts
+│       │   └── trip-planner-actions.ts
+│       ├── prisma/
+│       │   └── schema.prisma
+│       └── tests/
+│           ├── builder-ownership.test.cjs
+│           └── trip-planner.test.cjs
 ├── app/
 │   ├── api/
 │   │   └── auth/
@@ -71,6 +138,7 @@
 │   │   │   └── TripSummaryCard.tsx
 │   │   ├── AddCustomItemForm.tsx
 │   │   ├── AddGearButton.tsx
+│   │   ├── BuildDataTools.tsx
 │   │   ├── BuildHeader.tsx
 │   │   ├── BuildRow.tsx
 │   │   ├── BuildSettings.tsx
@@ -107,6 +175,8 @@
 │   └── destinations.json
 ├── lib/
 │   ├── build-access.ts
+│   ├── build-history-actions.ts
+│   ├── build-history.ts
 │   ├── build-settings-actions.ts
 │   ├── build-visibility-actions.ts
 │   ├── build-visibility.ts
@@ -191,22 +261,58 @@
 | File | Size | Lines | Status |
 |---|---:|---:|---|
 | `.gitignore` | 503 B | 44 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/app/build/actions.ts` | 10.4 KB | 331 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/app/profile/actions.ts` | 3.6 KB | 92 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/app/profile/gear/actions.ts` | 3.1 KB | 91 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/components/builder/ShareBar.tsx` | 6.9 KB | 164 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/lib/build-settings-actions.ts` | 871 B | 22 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/lib/build-visibility-actions.ts` | 793 B | 20 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/lib/trip-planner-actions.ts` | 4.6 KB | 51 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/prisma/schema.prisma` | 6.2 KB | 328 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/tests/builder-ownership.test.cjs` | 11.0 KB | 166 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/tests/trip-planner.test.cjs` | 4.6 KB | 18 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/app/build/actions.ts` | 17.2 KB | 475 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/app/profile/actions.ts` | 3.8 KB | 96 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/app/profile/gear/actions.ts` | 3.3 KB | 94 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/components/builder/BuildDataTools.tsx` | 27.4 KB | 559 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/components/builder/ShareBar.tsx` | 2.9 KB | 82 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/build-history-actions.ts` | 6.4 KB | 162 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/build-history.ts` | 4.1 KB | 145 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/build-settings-actions.ts` | 1.1 KB | 25 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/build-visibility-actions.ts` | 1.0 KB | 23 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/trip-planner-actions.ts` | 5.2 KB | 60 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/prisma/schema.prisma` | 6.5 KB | 344 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/tests/builder-ownership.test.cjs` | 11.6 KB | 171 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/tests/trip-planner.test.cjs` | 4.7 KB | 18 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/app/build/actions.ts` | 17.2 KB | 475 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/app/profile/actions.ts` | 3.8 KB | 96 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/app/profile/gear/actions.ts` | 3.3 KB | 94 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/components/builder/BuildDataTools.tsx` | 21.9 KB | 500 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/components/builder/ShareBar.tsx` | 2.9 KB | 82 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/build-history-actions.ts` | 6.4 KB | 162 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/build-history.ts` | 4.1 KB | 145 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/build-settings-actions.ts` | 1.1 KB | 25 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/build-visibility-actions.ts` | 1.0 KB | 23 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/trip-planner-actions.ts` | 5.2 KB | 60 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/prisma/schema.prisma` | 6.5 KB | 344 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/tests/builder-ownership.test.cjs` | 11.6 KB | 171 | Included |
+| `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/tests/trip-planner.test.cjs` | 4.7 KB | 18 | Included |
 | `app/api/auth/[...nextauth]/route.ts` | 74 B | 2 | Included |
 | `app/build/[id]/page.tsx` | 8.8 KB | 223 | Included |
 | `app/build/[id]/select/[category]/[subcategory]/page.tsx` | 11.3 KB | 309 | Included |
 | `app/build/[id]/select/[category]/page.tsx` | 2.2 KB | 88 | Included |
-| `app/build/actions.ts` | 10.4 KB | 331 | Included |
+| `app/build/actions.ts` | 17.2 KB | 475 | Included |
 | `app/build/page.tsx` | 4.3 KB | 117 | Included |
 | `app/gear/[id]/page.tsx` | 2.2 KB | 132 | Included |
 | `app/gear/page.tsx` | 3.0 KB | 189 | Included |
 | `app/globals.css` | 1.2 KB | 70 | Included |
 | `app/layout.tsx` | 910 B | 42 | Included |
 | `app/page.tsx` | 2.1 KB | 120 | Included |
-| `app/profile/actions.ts` | 3.6 KB | 92 | Included |
+| `app/profile/actions.ts` | 3.8 KB | 96 | Included |
 | `app/profile/builds/page.tsx` | 3.1 KB | 35 | Included |
 | `app/profile/edit/page.tsx` | 2.8 KB | 25 | Included |
 | `app/profile/favorites/page.tsx` | 3.0 KB | 39 | Included |
-| `app/profile/gear/actions.ts` | 3.1 KB | 91 | Included |
+| `app/profile/gear/actions.ts` | 3.3 KB | 94 | Included |
 | `app/profile/gear/page.tsx` | 5.1 KB | 73 | Included |
 | `app/profile/layout.tsx` | 4.7 KB | 100 | Included |
 | `app/profile/page.tsx` | 5.3 KB | 39 | Included |
@@ -218,6 +324,7 @@
 | `components/build/LocationPicker.tsx` | 8.5 KB | 240 | Included |
 | `components/builder/AddCustomItemForm.tsx` | 2.4 KB | 77 | Included |
 | `components/builder/AddGearButton.tsx` | 914 B | 49 | Included |
+| `components/builder/BuildDataTools.tsx` | 27.4 KB | 628 | Included |
 | `components/builder/BuildHeader.tsx` | 1.4 KB | 45 | Included |
 | `components/builder/BuildRow.tsx` | 8.6 KB | 204 | Included |
 | `components/builder/BuildSettings.tsx` | 5.9 KB | 118 | Included |
@@ -231,7 +338,7 @@
 | `components/builder/PublicBuildView.tsx` | 4.0 KB | 62 | Included |
 | `components/builder/QuantityStepper.tsx` | 2.4 KB | 87 | Included |
 | `components/builder/RemoveGearButton.tsx` | 677 B | 35 | Included |
-| `components/builder/ShareBar.tsx` | 6.9 KB | 164 | Included |
+| `components/builder/ShareBar.tsx` | 2.9 KB | 82 | Included |
 | `components/builder/TripPlanner/MapPreviewInner.tsx` | 1.0 KB | 33 | Included |
 | `components/builder/TripPlanner/PlannerFields.tsx` | 2.1 KB | 85 | Included |
 | `components/builder/TripPlanner/RouteMapInner.tsx` | 1.6 KB | 15 | Included |
@@ -262,8 +369,10 @@
 | `docs.config.json` | 589 B | 20 | Included |
 | `eslint.config.mjs` | 465 B | 19 | Included |
 | `lib/build-access.ts` | 3.3 KB | 79 | Included |
-| `lib/build-settings-actions.ts` | 871 B | 22 | Included |
-| `lib/build-visibility-actions.ts` | 793 B | 20 | Included |
+| `lib/build-history-actions.ts` | 7.9 KB | 204 | Included |
+| `lib/build-history.ts` | 9.6 KB | 263 | Included |
+| `lib/build-settings-actions.ts` | 1.1 KB | 25 | Included |
+| `lib/build-visibility-actions.ts` | 1.0 KB | 23 | Included |
 | `lib/build-visibility.ts` | 822 B | 21 | Included |
 | `lib/calculations.ts` | 1.2 KB | 54 | Included |
 | `lib/compatibility.ts` | 12.9 KB | 374 | Included |
@@ -271,7 +380,7 @@
 | `lib/guest-build-token.ts` | 1.6 KB | 37 | Included |
 | `lib/prisma.ts` | 471 B | 20 | Included |
 | `lib/profile.ts` | 1.5 KB | 43 | Included |
-| `lib/trip-planner-actions.ts` | 4.6 KB | 51 | Included |
+| `lib/trip-planner-actions.ts` | 5.2 KB | 60 | Included |
 | `lib/trip-planner.ts` | 4.0 KB | 38 | Included |
 | `lib/trip.ts` | 1.9 KB | 65 | Included |
 | `next-env.d.ts` | 251 B | 7 | Included |
@@ -279,12 +388,12 @@
 | `package.json` | 907 B | 39 | Included |
 | `postcss.config.mjs` | 94 B | 8 | Included |
 | `prisma/migrations/migration_lock.toml` | 128 B | 4 | Included |
-| `prisma/schema.prisma` | 6.2 KB | 328 | Included |
+| `prisma/schema.prisma` | 6.5 KB | 344 | Included |
 | `prisma/seed.ts` | 8.2 KB | 408 | Included |
 | `prisma.config.ts` | 283 B | 15 | Included |
 | `README.md` | 1.4 KB | 37 | Included |
-| `tests/builder-ownership.test.cjs` | 11.0 KB | 166 | Included |
-| `tests/trip-planner.test.cjs` | 4.6 KB | 18 | Included |
+| `tests/builder-ownership.test.cjs` | 11.6 KB | 171 | Included |
+| `tests/trip-planner.test.cjs` | 4.7 KB | 18 | Included |
 | `tools/generate-docs.ts` | 16.1 KB | 428 | Included |
 | `tsconfig.json` | 666 B | 35 | Included |
 
@@ -336,6 +445,5918 @@ yarn-error.log*
 next-env.d.ts
 
 /app/generated/prisma
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/app/build/actions.ts`
+
+```typescript
+"use server";
+
+import { saveTripDetails, saveTripDay } from "@/lib/trip-planner-actions";
+import { parseDates } from "@/lib/trip-planner";
+import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
+import { getDateRange } from "@/lib/trip";
+import { currentBuildUserId, hasGuestBuildAccess, requireBuildAccess, requireBuildItemAccess, setCurrentBuild } from "@/lib/build-access";
+import { guestBuildCookieName } from "@/lib/guest-build-token";
+import { getDestination } from "@/lib/destinations";
+
+export async function getBuildExport(buildId: string) {
+  const access = await requireBuildAccess(buildId);
+  const build = await prisma.build.findUnique({
+    where: { id: buildId, userId: access.userId },
+    include: { items: { include: { gear: { select: { id: true, name: true } } } } },
+  });
+
+  if (!build) throw new Error("Build not found.");
+
+  return {
+    version: 1,
+    name: build.name,
+    location: build.location,
+    startDate: build.startDate,
+    endDate: build.endDate,
+    people: build.people,
+    minTemperature: build.minTemperature,
+    conditions: build.conditions,
+    items: build.items.map((item) => ({
+      gearId: item.gearId,
+      gearName: item.gear?.name ?? item.gearNameSnapshot,
+      quantity: item.quantity,
+      isConsumable: item.isConsumable,
+      isWorn: item.isWorn,
+      customCategory: item.customCategory,
+      gearNameSnapshot: item.gearNameSnapshot,
+      weightSnapshot: item.weightSnapshot,
+      priceSnapshot: item.priceSnapshot,
+    })),
+  };
+}
+
+export async function importBuildItems(formData: FormData) {
+  const buildId = formData.get("buildId") as string;
+  const access = await requireBuildAccess(buildId);
+  const payload = JSON.parse(formData.get("payload") as string);
+
+  if (!Array.isArray(payload.items)) {
+    throw new Error("Invalid import file.");
+  }
+
+  for (const item of payload.items) {
+    if (item.gearId) {
+      await prisma.buildItem.upsert({
+        where: { buildId_gearId: { buildId, gearId: item.gearId }, build: { userId: access.userId } },
+        update: { quantity: { increment: item.quantity ?? 1 } },
+        create: {
+          build: { connect: { id: buildId, userId: access.userId } },
+          gear: { connect: { id: item.gearId } },
+          quantity: item.quantity ?? 1,
+          isConsumable: !!item.isConsumable,
+          isWorn: !!item.isWorn,
+        },
+      });
+    } else {
+      await prisma.buildItem.create({
+        data: {
+          build: { connect: { id: buildId, userId: access.userId } },
+          customCategory: item.customCategory ?? null,
+          gearNameSnapshot: item.gearNameSnapshot ?? item.gearName ?? "Imported item",
+          weightSnapshot: item.weightSnapshot ?? null,
+          priceSnapshot: item.priceSnapshot ?? null,
+          quantity: item.quantity ?? 1,
+          isConsumable: !!item.isConsumable,
+          isWorn: !!item.isWorn,
+        },
+      });
+    }
+  }
+
+  revalidatePath(`/build/${buildId}`);
+}
+
+export async function duplicateBuild(formData: FormData) {
+  const buildId = formData.get("buildId") as string;
+
+  const access = await requireBuildAccess(buildId);
+  const ownerId = await currentBuildUserId();
+  const original = await prisma.build.findUnique({
+    where: { id: buildId, userId: access.userId },
+    include: { items: true, days: true },
+  });
+
+  if (!original) throw new Error("Build not found.");
+
+  const copy = await prisma.build.create({
+    data: {
+      name: `${original.name} (copy)`,
+      userId: ownerId,
+      locationLat: original.locationLat,
+      locationLng: original.locationLng,
+      location: original.location,
+      startDate: original.startDate,
+      endDate: original.endDate,
+      people: original.people,
+      minTemperature: original.minTemperature,
+      conditions: original.conditions,
+      routeWaypoints: original.routeWaypoints ?? undefined,
+      tripLogistics: original.tripLogistics ?? undefined,
+      days: { create: original.days.map(({ id: _id, buildId: _buildId, createdAt: _createdAt, updatedAt: _updatedAt, ...day }) => day) },
+      items: {
+        create: original.items.map((item) => ({
+          gearId: item.gearId,
+          quantity: item.quantity,
+          isConsumable: item.isConsumable,
+          isWorn: item.isWorn,
+          customCategory: item.customCategory,
+          gearNameSnapshot: item.gearNameSnapshot,
+          weightSnapshot: item.weightSnapshot,
+          priceSnapshot: item.priceSnapshot,
+        })),
+      },
+    },
+  });
+
+  await setCurrentBuild(copy.id, !ownerId);
+  redirect(`/build/${copy.id}`);
+}
+export async function setItemCategory(formData: FormData) {
+  const itemId = formData.get("itemId") as string;
+  const buildId = formData.get("buildId") as string;
+  const item = await requireBuildItemAccess(buildId, itemId);
+  const category = formData.get("category") as "base" | "worn" | "consumable";
+
+  await prisma.buildItem.update({
+    where: { id: itemId, buildId, build: { userId: item.accessUserId } },
+    data: {
+      isWorn: category === "worn",
+      isConsumable: category === "consumable",
+    },
+  });
+
+  revalidatePath(`/build/${buildId}`);
+}
+
+export async function addCustomItem(formData: FormData) {
+  const buildId = formData.get("buildId") as string;
+  const access = await requireBuildAccess(buildId);
+  const category = formData.get("category") as string;
+  const name = formData.get("name") as string;
+  const weightRaw = formData.get("weight_g") as string;
+  const priceRaw = formData.get("price_cad") as string;
+
+  if (!name?.trim()) {
+    throw new Error("Item name is required.");
+  }
+
+  await prisma.buildItem.create({
+    data: {
+      build: { connect: { id: buildId, userId: access.userId } },
+      customCategory: category,
+      gearNameSnapshot: name.trim(),
+      weightSnapshot: weightRaw ? Number(weightRaw) : null,
+      priceSnapshot: priceRaw ? Number(priceRaw) : null,
+    },
+  });
+
+  redirect(`/build/${buildId}`);
+}
+
+export async function updateQuantity(formData: FormData) {
+  const itemId = formData.get("itemId") as string;
+  const buildId = formData.get("buildId") as string;
+  const delta = Number(formData.get("delta"));
+
+  const item = await requireBuildItemAccess(buildId, itemId);
+
+  if (!Number.isInteger(delta) || Math.abs(delta) !== 1) throw new Error("Invalid quantity change.");
+  const newQuantity = Math.max(1, item.quantity + delta);
+
+  await prisma.buildItem.update({
+    where: { id: itemId, buildId, build: { userId: item.accessUserId } },
+    data: { quantity: newQuantity },
+  });
+
+  revalidatePath(`/build/${buildId}`);
+}
+export async function claimCurrentBuild(formData?: FormData) {
+  const userId = await currentBuildUserId();
+  if (!userId) return;
+  const cookieStore = await cookies();
+  const submittedId = formData?.get("buildId");
+  const buildId = typeof submittedId === "string" ? submittedId : cookieStore.get("currentBuild")?.value;
+  if (!buildId || !(await hasGuestBuildAccess(buildId))) return;
+  const result = await prisma.build.updateMany({
+    where: { id: buildId, userId: null }, data: { userId },
+  });
+  if (result.count) {
+    cookieStore.delete(guestBuildCookieName(buildId));
+    revalidatePath(`/build/${buildId}`);
+    revalidatePath("/profile/builds");
+  }
+}
+export async function createBuild(formData: FormData) {
+  const ownerId = await currentBuildUserId();
+
+  const name = formData.get("name")?.toString().trim();
+
+  if (!name) {
+    throw new Error("Build name is required.");
+  }
+
+  const startDateRaw = formData.get("startDate")?.toString();
+  const endDateRaw = formData.get("endDate")?.toString();
+  const peopleRaw = formData.get("people")?.toString();
+  const minTemperatureRaw =
+    formData.get("minTemperature")?.toString();
+  const conditions = formData.get("conditions")?.toString();
+
+  const destinationIdRaw =
+    formData.get("destinationId")?.toString() || null;
+
+  const selectedDestination = getDestination(destinationIdRaw);
+
+
+  const submittedLocation =
+    formData.get("location")?.toString().trim();
+
+  const submittedLat =
+    formData.get("locationLat")?.toString();
+
+  const submittedLng =
+    formData.get("locationLng")?.toString();
+
+  const location = selectedDestination
+    ? `${selectedDestination.name}, ${selectedDestination.park}`
+    : submittedLocation || null;
+
+  const locationLat = selectedDestination
+    ? selectedDestination.latitude
+    : submittedLat
+      ? Number(submittedLat)
+      : null;
+
+  const locationLng = selectedDestination
+    ? selectedDestination.longitude
+    : submittedLng
+      ? Number(submittedLng)
+      : null;
+
+  const dates = parseDates(startDateRaw ?? "", endDateRaw ?? "");
+  const build = await prisma.build.create({
+    data: {
+      name,
+      destinationId: selectedDestination?.id ?? null,
+      location,
+      locationLat,
+      locationLng,
+      ...dates,
+      people: peopleRaw ? Number(peopleRaw) : 1,
+      minTemperature: minTemperatureRaw
+        ? Number(minTemperatureRaw)
+        : null,
+      conditions: conditions || null,
+      userId: ownerId,
+    },
+  });
+
+  if (build.startDate && build.endDate) {
+    const range = getDateRange(
+      build.startDate,
+      build.endDate,
+    );
+
+    await prisma.tripDay.createMany({
+      data: range.map((date) => ({
+        buildId: build.id,
+        date,
+      })),
+      skipDuplicates: true,
+    });
+  }
+
+  await setCurrentBuild(build.id, !ownerId);
+
+  redirect(`/build/${build.id}`);
+}
+export async function addGear(formData: FormData) {
+  const buildId = formData.get("buildId") as string;
+  const access = await requireBuildAccess(buildId);
+  const gearId = formData.get("gearId") as string;
+
+  await prisma.buildItem.upsert({
+    where: {
+      buildId_gearId: { buildId, gearId },
+      build: { userId: access.userId },
+    },
+    update: {
+      quantity: { increment: 1 },
+    },
+    create: {
+      build: { connect: { id: buildId, userId: access.userId } },
+      gear: { connect: { id: gearId } },
+    },
+  });
+
+  redirect(`/build/${buildId}`);
+}
+
+export async function removeGear(formData: FormData) {
+  const itemId = formData.get("itemId") as string;
+  const buildId = formData.get("buildId") as string;
+  const item = await requireBuildItemAccess(buildId, itemId);
+
+  await prisma.buildItem.delete({
+    where: {
+      id: itemId,
+      buildId,
+      build: { userId: item.accessUserId },
+    },
+  });
+
+  redirect(`/build/${buildId}`);
+}
+
+export async function updateTripDetails(formData: FormData) { return saveTripDetails(formData); }
+export async function updateTripDay(formData: FormData) { return saveTripDay(formData); }
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/app/profile/actions.ts`
+
+```typescript
+"use server";
+
+import { setCurrentBuild } from "@/lib/build-access";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+
+async function currentUser() {
+  const session = await auth();
+  if (!session?.user?.email) throw new Error("You must be signed in.");
+  const user = await prisma.user.findUnique({ where: { email: session.user.email }, select: { id: true } });
+  if (!user) throw new Error("User not found.");
+  return user;
+}
+
+export async function deleteBuild(formData: FormData) {
+  const user = await currentUser();
+  const buildId = String(formData.get("buildId") || "");
+  await prisma.build.deleteMany({ where: { id: buildId, userId: user.id } });
+  revalidatePath("/profile");
+  revalidatePath("/profile/builds");
+}
+
+export async function renameBuild(formData: FormData) {
+  const user = await currentUser();
+  const buildId = String(formData.get("buildId") || "");
+  const name = String(formData.get("name") || "").trim();
+  if (!name) throw new Error("Build name is required.");
+  await prisma.build.updateMany({ where: { id: buildId, userId: user.id }, data: { name: name.slice(0, 80) } });
+  revalidatePath("/profile");
+  revalidatePath("/profile/builds");
+}
+
+export async function duplicateProfileBuild(formData: FormData) {
+  const user = await currentUser();
+  const buildId = String(formData.get("buildId") || "");
+  const original = await prisma.build.findFirst({ where: { id: buildId, userId: user.id }, include: { items: true, days: true } });
+  if (!original) throw new Error("Build not found.");
+  const copy = await prisma.build.create({
+    data: {
+      name: `${original.name} (copy)`,
+      userId: user.id,
+      location: original.location,
+      locationLat: original.locationLat,
+      locationLng: original.locationLng,
+      startDate: original.startDate,
+      endDate: original.endDate,
+      people: original.people,
+      minTemperature: original.minTemperature,
+      conditions: original.conditions,
+      items: {
+        create: original.items.map(
+          ({ gearId, quantity, isConsumable, isWorn, customCategory, gearNameSnapshot, weightSnapshot, priceSnapshot }) => ({
+            gearId,
+            quantity,
+            isConsumable,
+            isWorn,
+            customCategory,
+            gearNameSnapshot,
+            weightSnapshot,
+            priceSnapshot,
+          }),
+        ),
+      },
+      days: {
+        create: original.days.map(({ date, minTemperature, conditions, notes }) => ({
+          date,
+          minTemperature,
+          conditions,
+          notes,
+        })),
+      },
+    },
+  });
+  await setCurrentBuild(copy.id);
+  redirect(`/build/${copy.id}`);
+}
+
+export async function updateProfile(formData: FormData) {
+  const user = await currentUser();
+  const name = String(formData.get("name") || "").trim();
+  const username = String(formData.get("username") || "").trim().toLowerCase();
+  const bio = String(formData.get("bio") || "").trim();
+  const location = String(formData.get("location") || "").trim();
+  if (!name) throw new Error("Display name is required.");
+  if (username && !/^[a-z0-9_]{3,24}$/.test(username)) throw new Error("Username must be 3–24 letters, numbers, or underscores.");
+  await prisma.user.update({ where: { id: user.id }, data: { name, username: username || null, bio: bio || null, location: location || null, isProfilePublic: formData.get("isProfilePublic") === "on" } });
+  revalidatePath("/profile", "layout");
+  redirect("/profile");
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/app/profile/gear/actions.ts`
+
+```typescript
+"use server";
+
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+
+async function userId() {
+  const session = await auth();
+  if (!session?.user?.email) throw new Error("You must be signed in.");
+  const user = await prisma.user.findUnique({ where: { email: session.user.email }, select: { id: true } });
+  if (!user) throw new Error("User not found.");
+  return user.id;
+}
+
+function gearIdFrom(formData: FormData) {
+  const gearId = String(formData.get("gearId") || "");
+  if (!gearId) throw new Error("Gear item is required.");
+  return gearId;
+}
+
+function refreshGearPages(gearId: string) {
+  revalidatePath("/profile", "layout");
+  revalidatePath("/profile/gear");
+  revalidatePath("/profile/favorites");
+  revalidatePath(`/gear/${gearId}`);
+}
+
+export async function addOwnedGear(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.ownedGear.upsert({
+    where: { userId_gearId: { userId: userIdValue, gearId } },
+    update: {},
+    create: { userId: userIdValue, gearId },
+  });
+  refreshGearPages(gearId);
+}
+
+export async function removeOwnedGear(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.ownedGear.deleteMany({ where: { userId: userIdValue, gearId } });
+  refreshGearPages(gearId);
+}
+
+export async function addFavorite(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.favorite.upsert({
+    where: { userId_gearId: { userId: userIdValue, gearId } },
+    update: {},
+    create: { userId: userIdValue, gearId },
+  });
+  refreshGearPages(gearId);
+}
+
+export async function removeFavorite(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.favorite.deleteMany({ where: { userId: userIdValue, gearId } });
+  refreshGearPages(gearId);
+}
+
+export async function moveFavoriteToGear(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.$transaction([
+    prisma.ownedGear.upsert({ where: { userId_gearId: { userId: userIdValue, gearId } }, update: {}, create: { userId: userIdValue, gearId } }),
+    prisma.favorite.deleteMany({ where: { userId: userIdValue, gearId } }),
+  ]);
+  refreshGearPages(gearId);
+}
+
+export async function addGearToCurrentBuild(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  const buildId = (await cookies()).get("currentBuild")?.value;
+  if (!buildId) redirect("/profile/builds");
+  const build = await prisma.build.findFirst({ where: { id: buildId, userId: userIdValue }, select: { id: true } });
+  if (!build) redirect("/profile/builds");
+  await prisma.buildItem.upsert({
+    where: { buildId_gearId: { buildId: build.id, gearId } },
+    update: { quantity: { increment: 1 } },
+    create: { buildId: build.id, gearId },
+  });
+  revalidatePath(`/build/${build.id}`);
+  redirect(`/build/${build.id}`);
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/components/builder/ShareBar.tsx`
+
+```typescript
+"use client";
+//components/builder/ShareBar.tsx
+import { useRef, useState } from "react";
+import Link from "next/link";
+import BuildSettings from "@/components/builder/BuildSettings";
+import { duplicateBuild, getBuildExport, importBuildItems } from "@/app/build/actions";
+
+type Props = {
+    buildId: string;
+    buildName: string;
+    isPublic: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+};
+
+const btnClass =
+    "flex items-center gap-1.5 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer transition disabled:opacity-50 disabled:cursor-not-allowed";
+
+export default function ShareBar({ buildId, buildName, isPublic, createdAt, updatedAt }: Props) {
+    const [copied, setCopied] = useState(false);
+    const [showHistory, setShowHistory] = useState(false);
+    const [importing, setImporting] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const shareUrl =
+        typeof window !== "undefined" ? `${window.location.origin}/build/${buildId}` : `/build/${buildId}`;
+
+    async function copyLink() {
+        try {
+            await navigator.clipboard.writeText(shareUrl);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1500);
+        } catch {
+            // clipboard blocked — user can still select the text manually
+        }
+    }
+
+    async function exportBuild() {
+        const data = await getBuildExport(buildId);
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${buildName.replace(/\s+/g, "-").toLowerCase()}.json`;
+        a.click();
+
+        URL.revokeObjectURL(url);
+    }
+
+    async function handleImportFile(e: React.ChangeEvent<HTMLInputElement>) {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setImporting(true);
+        try {
+            const text = await file.text();
+            JSON.parse(text);
+
+            const formData = new FormData();
+            formData.append("buildId", buildId);
+            formData.append("payload", text);
+            await importBuildItems(formData);
+
+            window.location.reload();
+        } catch {
+            alert("Couldn't read that file — check it's a TrailPicker export.");
+        } finally {
+            setImporting(false);
+            e.target.value = "";
+        }
+    }
+
+    return (
+        <div className="flex flex-wrap items-center gap-3 px-5 py-4">
+            <div className="flex flex-1 min-w-[280px] items-center gap-2 rounded-md border border-gray-300 bg-gray-50 px-3 py-2">
+                <button
+                    type="button"
+                    onClick={copyLink}
+                    title={isPublic ? "Copy public link" : "Copy private link"}
+                    className="shrink-0 text-gray-400 hover:text-gray-700 cursor-pointer"
+                >
+                    {copied ? (
+                        <span className="text-xs font-semibold text-green-700 whitespace-nowrap">Copied!</span>
+                    ) : (
+                        <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
+                            <rect x="9" y="9" width="13" height="13" rx="2" />
+                            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                        </svg>
+                    )}
+                </button>
+
+                <input
+                    readOnly
+                    value={shareUrl}
+                    onFocus={(e) => e.currentTarget.select()}
+                    className="w-full bg-transparent text-sm text-gray-700 outline-none truncate"
+                />
+            </div>
+
+            <span className="text-xs text-gray-500">{isPublic ? "Public build" : "Private build"}</span>
+
+            <input
+                ref={fileInputRef}
+                type="file"
+                accept="application/json"
+                onChange={handleImportFile}
+                className="hidden"
+            />
+
+            <button type="button" onClick={() => fileInputRef.current?.click()} disabled={importing} className={btnClass}>
+                <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+                </svg>
+                {importing ? "Importing…" : "Import"}
+            </button>
+
+            <button type="button" onClick={exportBuild} className={btnClass}>
+                <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15V3m0 0l-4 4m4-4l4 4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+                </svg>
+                Export
+            </button>
+
+            <div className="relative">
+                <button type="button" onClick={() => setShowHistory(!showHistory)} className={btnClass}>
+                    <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
+                        <circle cx="12" cy="12" r="9" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 3" />
+                    </svg>
+                    History
+                </button>
+
+                {showHistory && (
+                    <div className="absolute right-0 top-full mt-2 w-56 rounded-lg border bg-white p-3 text-xs text-gray-600 shadow-lg z-20">
+                        <p><span className="font-semibold">Created:</span> {createdAt.toLocaleDateString()}</p>
+                        <p className="mt-1"><span className="font-semibold">Last updated:</span> {updatedAt.toLocaleDateString()}</p>
+                    </div>
+                )}
+            </div>
+
+            <BuildSettings buildId={buildId} buildName={buildName} isPublic={isPublic} buttonClassName={btnClass} />
+
+            <form action={duplicateBuild}>
+                <input type="hidden" name="buildId" value={buildId} />
+                <button type="submit" className={btnClass}>
+                    <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
+                        <rect x="8" y="8" width="12" height="12" rx="2" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16V5a1 1 0 011-1h11" />
+                    </svg>
+                    Save As
+                </button>
+            </form>
+
+            <Link href="/build" className={btnClass}>
+                <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                </svg>
+                New Build
+            </Link>
+        </div>
+
+    );
+}
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/lib/build-settings-actions.ts`
+
+```typescript
+"use server";
+
+import { prisma } from "@/lib/prisma";
+import { requireBuildAccess } from "@/lib/build-access";
+import { revalidatePath } from "next/cache";
+
+export async function renameBuild(buildId: string, name: string) {
+  if (typeof buildId !== "string" || !buildId || buildId.length > 200 || typeof name !== "string") {
+    throw new Error("Invalid build name.");
+  }
+  const trimmed = name.trim();
+  if (!trimmed || trimmed.length > 100) throw new Error("Use a build name between 1 and 100 characters.");
+  const access = await requireBuildAccess(buildId);
+  const result = await prisma.build.updateMany({
+    where: { id: access.id, userId: access.userId },
+    data: { name: trimmed },
+  });
+  if (result.count !== 1) throw new Error("Build access changed. Refresh and try again.");
+  revalidatePath(`/build/${access.id}`);
+  revalidatePath("/profile/builds");
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/lib/build-visibility-actions.ts`
+
+```typescript
+"use server";
+
+import { prisma } from "@/lib/prisma";
+import { requireBuildAccess } from "@/lib/build-access";
+import { revalidatePath } from "next/cache";
+
+export async function setBuildVisibility(buildId: string, isPublic: boolean) {
+  if (typeof buildId !== "string" || !buildId || buildId.length > 200 || typeof isPublic !== "boolean") {
+    throw new Error("Invalid visibility request.");
+  }
+  const access = await requireBuildAccess(buildId);
+  // Repeat the owner condition in the write to prevent a stale guest claim.
+  const result = await prisma.build.updateMany({
+    where: { id: access.id, userId: access.userId },
+    data: { isPublic },
+  });
+  if (result.count !== 1) throw new Error("Build access changed. Refresh and try again.");
+  revalidatePath(`/build/${access.id}`);
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/lib/trip-planner-actions.ts`
+
+```typescript
+"use server";
+import { prisma } from "@/lib/prisma";
+import { requireBuildAccess, requireTripDayAccess } from "@/lib/build-access";
+import { revalidatePath } from "next/cache";
+import { getDestination } from "@/lib/destinations";
+import { getDateRange } from "@/lib/trip";
+import { dayTextFields, emptyLogistics, nullableNumber, parseDates, readWaypoints } from "@/lib/trip-planner";
+const text = (f: FormData, key: string, max = 5000) => { const v = f.get(key); if (v != null && typeof v !== "string") throw new Error(`Invalid ${key}.`); const s = (v ?? "").trim(); if (s.length > max) throw new Error(`${key} is too long (maximum ${max} characters).`); return s || null; };
+const number = (f: FormData, key: string, min: number, max: number, integer = false) => nullableNumber(f.get(key),key,min,max,integer);
+const condition = (f: FormData) => { const v = text(f,"conditions",20); if (v && !["dry","rain","snow"].includes(v)) throw new Error("Choose a valid weather condition."); return v; };
+export async function saveTripDetails(f: FormData) {
+  const buildId = text(f,"buildId",200)!;
+  const access = await requireBuildAccess(buildId);
+  const dates = parseDates(text(f,"startDate",10) ?? "", text(f,"endDate",10) ?? "");
+  const selected = getDestination(text(f,"destinationId",200));
+  const lat = selected?.latitude ?? number(f,"locationLat",-90,90), lng = selected?.longitude ?? number(f,"locationLng",-180,180);
+  if ((lat == null) !== (lng == null)) throw new Error("Provide both location coordinates.");
+  const data = { ...dates, destinationId: selected?.id ?? null, location: selected ? `${selected.name}, ${selected.park}` : text(f,"location",500), locationLat: lat, locationLng: lng, people: number(f,"people",1,100,true) ?? 1, minTemperature: number(f,"minTemperature",-100,60,true), conditions: condition(f) };
+  await prisma.$transaction(async tx => {
+    const old = await tx.tripDay.findMany({ where: { buildId }, select: { date: true } });
+    const range = dates.startDate && dates.endDate ? getDateRange(dates.startDate,dates.endDate) : [];
+    const keys = new Set(range.map(d => d.getTime()));
+    if (old.some(d => !keys.has(d.date.getTime())) && f.get("confirmDateChange") !== "yes") throw new Error("The new dates remove itinerary days. Tick the confirmation box to discard those days. Days still within the range will be kept.");
+    await tx.build.update({ where: { id: buildId, userId: access.userId }, data });
+    if (range.length) await tx.tripDay.createMany({ data: range.map(date => ({ buildId,date })), skipDuplicates: true });
+    await tx.tripDay.deleteMany({ where: { buildId, date: { notIn: range } } });
+  });
+  revalidatePath(`/build/${buildId}`);
+}
+export async function saveTripDay(f: FormData) {
+  const buildId = text(f,"buildId",200)!, dayId = text(f,"dayId",200)!;
+  const day = await requireTripDayAccess(buildId,dayId);
+  const strings = Object.fromEntries(dayTextFields.map(key => [key,text(f,key)]));
+  await prisma.tripDay.update({ where: { id: dayId, buildId, build: { userId: day.accessUserId } }, data: { ...strings, conditions: condition(f), minTemperature: number(f,"minTemperature",-100,60,true), distanceKm: number(f,"distanceKm",0,1000), elevationGainM: number(f,"elevationGainM",0,20000,true), elevationLossM: number(f,"elevationLossM",0,20000,true), durationMinutes: number(f,"durationMinutes",0,1440,true), waterCarryL: number(f,"waterCarryL",0,100) } });
+  revalidatePath(`/build/${buildId}`);
+}
+export async function saveTripRoute(f: FormData) {
+  const buildId = text(f,"buildId",200)!, access = await requireBuildAccess(buildId);
+  const raw: unknown = JSON.parse(text(f,"waypoints",100000) ?? "[]");
+  const points = readWaypoints(raw);
+  if (!Array.isArray(raw) || points.length !== raw.length || points.length > 200 || new Set(points.map(p=>p.id)).size !== points.length || points.some(p=>!p.name.trim() || p.name.length>200 || p.id.length>200 || (p.elevationM != null && (p.elevationM < -500 || p.elevationM > 9000)))) throw new Error("Check waypoint names, coordinates, elevations, and unique IDs. Maximum 200 waypoints.");
+  await prisma.build.update({ where: { id: buildId,userId: access.userId }, data: { routeWaypoints: points.map(p=>({...p,name:p.name.trim()})) } });
+  revalidatePath(`/build/${buildId}`);
+}
+export async function saveTripLogistics(f: FormData) {
+  const buildId = text(f,"buildId",200)!, access = await requireBuildAccess(buildId);
+  const value = Object.fromEntries(Object.keys(emptyLogistics).map(key=>[key,text(f,key) ?? ""]));
+  await prisma.build.update({ where: { id: buildId, userId: access.userId }, data: { tripLogistics: value } });
+  revalidatePath(`/build/${buildId}`);
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/prisma/schema.prisma`
+
+```text
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Brand {
+  id      String  @id @default(cuid())
+  name    String
+  website String?
+  logo    String?
+
+  gear Gear[]
+
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  gear Gear[]
+  subcategories Subcategory[]
+  createdAt DateTime @default(now())
+}
+model Subcategory {
+  id         String   @id @default(cuid())
+  name       String
+  slug String
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  gear        Gear[]
+
+  createdAt  DateTime @default(now())
+  @@unique([categoryId, slug])
+}
+model Gear {
+  id String @id @default(cuid())
+
+  name        String
+  description String?
+  
+  weight_g Int?
+
+  price_cad Float?
+
+  capacity_l Float?
+
+  frame_type String?
+
+  waterproof Boolean?
+
+  temperature_rating Int?
+
+  season String?
+
+  material String?
+
+  brandId String
+  brand   Brand  @relation(fields: [brandId], references: [id])
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  subcategoryId String?
+  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+
+  images GearImage[]
+  specifications GearSpecification[]
+  prices Price[]
+  reviews Review[]
+  buildItems BuildItem[]
+  favorites Favorite[]
+  ownedGear OwnedGear[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model OwnedGear {
+  id String @id @default(cuid())
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  gearId String
+  gear Gear @relation(fields: [gearId], references: [id], onDelete: Cascade)
+
+  purchasedPrice Float?
+  purchasedAt DateTime?
+  notes String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, gearId])
+}
+model GearImage {
+  id String @id @default(cuid())
+
+  url String
+
+  isPrimary Boolean @default(false)
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id], onDelete: Cascade)
+}
+
+model GearSpecification {
+  id String @id @default(cuid())
+
+  key   String
+  value String
+  unit  String?
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id], onDelete: Cascade)
+}
+
+model Retailer {
+  id String @id @default(cuid())
+
+  name    String
+  website String?
+  logo    String?
+
+  prices Price[]
+}
+
+model Price {
+  id String @id @default(cuid())
+
+  price Float
+
+  currency String @default("CAD")
+
+  url String?
+
+  inStock Boolean @default(true)
+
+  lastUpdated DateTime @default(now())
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  retailerId String
+  retailer   Retailer @relation(fields: [retailerId], references: [id])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  username      String?    @unique
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+
+  bio             String?
+  location        String?
+  isProfilePublic Boolean  @default(false)
+
+  accounts Account[]
+  sessions Session[]
+  builds    Build[]
+  reviews   Review[]
+  favorites Favorite[]
+  ownedGear OwnedGear[]
+
+  createdAt DateTime @default(now())
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  @@unique([identifier, token])
+}
+
+model Build {
+  isPublic Boolean @default(false)
+  id String @id @default(cuid())
+
+  name String
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  items BuildItem[]
+  days  TripDay[]
+
+  routeWaypoints Json?
+  tripLogistics Json?
+
+  destinationId String?
+
+  location    String?
+  locationLat Float?
+  locationLng Float?
+  startDate   DateTime?
+  endDate     DateTime?
+
+  people Int @default(1)
+
+  minTemperature Int?
+  conditions String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TripDay {
+  id String @id @default(cuid())
+
+  buildId String
+  build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  date DateTime
+
+  minTemperature Int?
+  conditions     String?
+  notes          String?
+  startLocation String?
+  endLocation String?
+  distanceKm Float?
+  elevationGainM Int?
+  elevationLossM Int?
+  durationMinutes Int?
+  campsite String?
+  reservation String?
+  waterSource String?
+  waterCarryL Float?
+  trailConditions String?
+  activities String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([buildId, date])
+}
+
+model BuildItem {
+  id String @id @default(cuid())
+
+  quantity Int @default(1)
+
+  customWeight Int?
+
+  isConsumable Boolean @default(false)
+
+  isWorn Boolean @default(false)
+
+  gearNameSnapshot String?
+
+  weightSnapshot Int?
+
+  priceSnapshot Float?
+
+  customCategory String?
+
+  buildId String
+  build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  gearId String?
+  gear   Gear?   @relation(fields: [gearId], references: [id])
+
+  @@unique([buildId, gearId])
+}
+
+model Review {
+  id String @id @default(cuid())
+
+  rating Int
+
+  title String?
+  body  String?
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Favorite {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, gearId])
+}
+
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/tests/builder-ownership.test.cjs`
+
+```typescript
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const { stripTypeScriptTypes } = require('node:module');
+const root = path.resolve(__dirname, '..');
+process.env.AUTH_SECRET = 'ownership-test-secret-not-for-production';
+
+// Execute the actual TS helpers/actions, with Auth.js, Next and Prisma replaced
+// by deterministic boundary mocks. No network or database is needed.
+function load(relative, dependencies = {}) {
+  let js = stripTypeScriptTypes(fs.readFileSync(path.join(root, relative), 'utf8'));
+  const names = [...js.matchAll(/export (?:async )?function (\w+)|export const (\w+)/g)].map(m => m[1] || m[2]);
+  js = js.replace(/import\s+\{([^}]+)\}\s+from\s+["']([^"']+)["'];/g, (_, names, spec) => `const {${names}} = require(${JSON.stringify(spec)});`)
+    .replace(/import ["']server-only["'];/g, '')
+    .replace(/export /g, '');
+  const requireMock = spec => spec in dependencies ? dependencies[spec] : require(spec);
+  return new Function('require', 'process', 'Buffer', js + `\nreturn {${names.join(',')}};`)(requireMock, process, Buffer);
+}
+const token = load('lib/guest-build-token.ts');
+function harness() {
+  const state = { email: 'a@test', cookies: new Map(), writes: [], builds: [
+    { id: 'a', userId: 'user-a', name: 'A', items: [], days: [] },
+    { id: 'b', userId: 'user-b', name: 'B', items: [], days: [] },
+    { id: 'guest', userId: null, name: 'Guest', items: [], days: [] },
+  ] };
+  const matches = (b, where) => b.id === where.id && (!('userId' in where) || b.userId === where.userId) && (!where.OR || where.OR.some(p => b.userId === p.userId));
+  const cookieStore = { get: name => state.cookies.has(name) ? { value: state.cookies.get(name) } : undefined,
+    set: (name, value, options) => { state.cookies.set(name, value); state.lastCookieOptions = options; },
+    delete: name => state.cookies.delete(name) };
+  const write = type => async args => { state.writes.push({ type, args }); return { id: 'copy', ...args.data }; };
+  const prisma = {
+    user: { findUnique: async ({ where }) => where.email ? { id: `user-${where.email[0]}` } : null },
+    build: { findFirst: async ({ where }) => state.builds.find(b => matches(b, where)) || null,
+      findUnique: async ({ where }) => state.builds.find(b => matches(b, where)) || null,
+      create: write('build.create'), update: write('build.update'),
+      updateMany: async ({ where, data }) => { const b = state.builds.find(b => matches(b, where)); if (!b) return {count:0}; state.writes.push({type:'claim'}); Object.assign(b, data); return {count:1}; } },
+    buildItem: { findFirst: async ({ where }) => {
+      const buildId = where.id === 'item-a' ? 'a' : where.id === 'item-b' ? 'b' : null;
+      return buildId === where.buildId ? { id: where.id, buildId, quantity: 2 } : null;
+    }, update: write('item.update'), delete: write('item.delete'), create: write('item.create'), upsert: write('item.upsert') },
+    tripDay: { findFirst: async ({ where }) => where.id === 'day-a' && where.buildId === 'a' ? { id: 'day-a', buildId: 'a' } : null,
+      update: write('day.update'), createMany: write('day.createMany'), deleteMany: write('day.deleteMany') },
+  };
+  const navigation = { notFound: () => { throw new Error('404'); }, redirect: url => { throw new Error(`REDIRECT:${url}`); } };
+  const access = load('lib/build-access.ts', { '@/auth': {auth: async () => state.email ? {user:{email:state.email}} : null},
+    '@/lib/prisma': { prisma }, 'next/headers': {cookies:async()=>cookieStore}, 'next/navigation': navigation, '@/lib/guest-build-token': token });
+  const planner = load('lib/trip-planner.ts');
+  const plannerActions = load('lib/trip-planner-actions.ts', { '@/lib/prisma':{prisma}, '@/lib/build-access':access, 'next/cache':{revalidatePath:()=>{}}, '@/lib/destinations':{getDestination:()=>null}, '@/lib/trip':{getDateRange:()=>[]}, '@/lib/trip-planner':planner });
+  const actions = load('app/build/actions.ts', {'@/lib/prisma':{prisma}, '@/lib/trip-planner-actions':plannerActions, '@/lib/trip-planner':planner, 'next/navigation': navigation,
+    'next/headers':{cookies:async()=>cookieStore}, 'next/cache':{revalidatePath:()=>{}}, '@/lib/trip':{getDateRange:()=>[]},
+    '@/lib/build-access':access, '@/lib/guest-build-token':token, '@/lib/destinations':{getDestination:()=>null} });
+  return { state, access, actions };
+}
+function form(values) { const f = new FormData(); for (const [key,value] of Object.entries(values)) f.set(key, String(value)); return f; }
+
+test('guest tokens are bound to build, expire, and reject tampering', () => {
+  const t = token.createGuestBuildToken('guest', 1000000);
+  assert.equal(token.verifyGuestBuildToken('guest', t, 1000000), true);
+  assert.equal(token.verifyGuestBuildToken('other', t, 1000000), false);
+  assert.equal(token.verifyGuestBuildToken('guest', t.slice(0,-1)+'!', 1000000), false);
+  assert.equal(token.verifyGuestBuildToken('guest', t, 1000000 + token.GUEST_BUILD_MAX_AGE*1000), false);
+  for (const invalid of [undefined, '', 'guest', 'x'.repeat(201), '1:x.y']) assert.equal(token.verifyGuestBuildToken('guest', invalid), false);
+});
+for (const email of ['a@test', null]) {
+  test(`access matrix for ${email || 'anonymous'}`, async () => {
+    const {state, access} = harness(); state.email=email;
+    assert.equal((await access.findAccessibleBuild('a'))?.id, email ? 'a' : undefined);
+    assert.equal(await access.findAccessibleBuild('b'), null);
+    state.cookies.set('currentBuild','guest');
+    assert.equal(await access.findAccessibleBuild('guest'), null);
+    state.cookies.set(token.guestBuildCookieName('guest'), token.createGuestBuildToken('guest'));
+    assert.equal((await access.findAccessibleBuild('guest')).id, 'guest');
+    state.cookies.set(token.guestBuildCookieName('b'), token.createGuestBuildToken('b'));
+    assert.equal(await access.findAccessibleBuild('b'), null); // capability cannot override account owner
+    assert.equal(await access.findAccessibleBuild('missing'), null);
+    await assert.rejects(access.requireBuildPageAccess('b'), /404/);
+  });
+}
+for (const name of ['importBuildItems','duplicateBuild','addCustomItem','addGear','updateTripDetails','setItemCategory','updateQuantity','removeGear','updateTripDay']) {
+  test(`${name} rejects another user's build before any write`, async () => {
+    const {state,actions}=harness();
+    await assert.rejects(actions[name](form({buildId:'b', itemId:'item-b', dayId:'day-b', payload:'invalid JSON', delta:1})), /Build not found/);
+    assert.deepEqual(state.writes, []);
+  });
+}
+for (const name of ['setItemCategory','updateQuantity','removeGear']) {
+  test(`${name} rejects another build's item paired with owned build`, async () => {
+    const {state,actions}=harness();
+    await assert.rejects(actions[name](form({buildId:'a',itemId:'item-b',delta:1})), /Item not found/);
+    assert.deepEqual(state.writes,[]);
+  });
+}
+test('trip day must belong to the authorized build', async () => {
+  const {state,actions}=harness();
+  await assert.rejects(actions.updateTripDay(form({buildId:'a',dayId:'day-b'})),/Day not found/);
+  assert.deepEqual(state.writes,[]);
+  await actions.updateTripDay(form({buildId:'a',dayId:'day-a',notes:'Hello'}));
+  assert.equal(state.writes[0].type,'day.update');
+});
+test('export is private', async () => {
+  const {actions}=harness();
+  assert.equal((await actions.getBuildExport('a')).name,'A');
+  await assert.rejects(actions.getBuildExport('b'), /Build not found/);
+});
+test('claim ignores forged currentBuild cookie and accepts signed guest proof', async () => {
+  const {state,actions,access}=harness(); state.cookies.set('currentBuild','guest');
+  await actions.claimCurrentBuild(); assert.deepEqual(state.writes,[]);
+  state.cookies.set(token.guestBuildCookieName('guest'),token.createGuestBuildToken('guest'));
+  await actions.claimCurrentBuild();
+  assert.equal(state.builds[2].userId,'user-a');
+  assert.equal(state.cookies.has(token.guestBuildCookieName('guest')),false);
+  state.email=null; assert.equal(await access.findAccessibleBuild('guest'),null);
+});
+test('guest proof cannot claim someone else\'s account build', async () => {
+  const {state,actions}=harness(); state.cookies.set('currentBuild','b');
+  state.cookies.set(token.guestBuildCookieName('b'),token.createGuestBuildToken('b'));
+  await actions.claimCurrentBuild(); assert.deepEqual(state.writes,[]);
+});
+for (const email of ['a@test',null]) {
+  test(`duplicate preserves ownership and navigation for ${email || 'guest'}`, async () => {
+    const {state,actions}=harness();state.email=email;
+    if (!email) state.cookies.set(token.guestBuildCookieName('guest'),token.createGuestBuildToken('guest'));
+    await assert.rejects(actions.duplicateBuild(form({buildId:email?'a':'guest'})),/REDIRECT:\/build\/copy/);
+    assert.equal(state.writes[0].args.data.userId,email?'user-a':null);
+    assert.equal(state.cookies.get('currentBuild'),'copy');
+    if (!email) assert.equal(token.verifyGuestBuildToken('copy',state.cookies.get(token.guestBuildCookieName('copy'))),true);
+    assert.equal(state.lastCookieOptions.httpOnly,true);
+    assert.equal(state.lastCookieOptions.sameSite,'lax');
+  });
+}
+test('owner can mutate own item', async () => {
+  const {state,actions}=harness(); await actions.updateQuantity(form({buildId:'a',itemId:'item-a',delta:1}));
+  assert.equal(state.writes[0].args.data.quantity,3);
+});
+for (const name of ['getBuildExport','importBuildItems','duplicateBuild','addCustomItem','addGear','updateTripDetails','setItemCategory','updateQuantity','removeGear','updateTripDay']) {
+  test(`${name} rejects anonymous access to account build`, async () => {
+    const {state,actions}=harness();state.email=null;state.cookies.set('currentBuild','a');
+    const input = name === 'getBuildExport' ? 'a' : form({buildId:'a',itemId:'item-a',dayId:'day-a',payload:'{}',delta:1});
+    await assert.rejects(actions[name](input), /Build not found/);
+    assert.deepEqual(state.writes,[]);
+  });
+}
+test('missing child IDs are rejected instead of becoming unfiltered Prisma queries',async()=>{
+  const {access}=harness();
+  await assert.rejects(access.requireBuildItemAccess('a',undefined),/Item not found/);
+  await assert.rejects(access.requireTripDayAccess('a',undefined),/Day not found/);
+});
+for (const email of ['a@test',null]) {
+  test(`new build ownership for ${email || 'guest'}`,async()=>{
+    const {state,actions}=harness();state.email=email;
+    await assert.rejects(actions.createBuild(form({name:'Trip'})),/REDIRECT:\/build\/copy/);
+    assert.equal(state.writes[0].args.data.userId,email?'user-a':null);
+    assert.equal(state.cookies.get('currentBuild'),'copy');
+    assert.equal(state.cookies.has(token.guestBuildCookieName('copy')),!email);
+  });
+}
+test('claim uses the submitted authorized build even when currentBuild points elsewhere',async()=>{
+  const {state,actions}=harness();state.cookies.set('currentBuild','b');
+  state.cookies.set(token.guestBuildCookieName('guest'),token.createGuestBuildToken('guest'));
+  await actions.claimCurrentBuild(form({buildId:'guest'}));
+  assert.equal(state.builds[2].userId,'user-a');
+  assert.equal(state.builds[1].userId,'user-b');
+});
+
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-51-48-435Z/tests/trip-planner.test.cjs`
+
+```typescript
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const {stripTypeScriptTypes}=require('node:module');
+function load(file,deps={}){let js=stripTypeScriptTypes(fs.readFileSync(path.join(__dirname,'..',file),'utf8'));const names=[...js.matchAll(/export (?:async )?function (\w+)|export const (\w+)/g)].map(m=>m[1]||m[2]);js=js.replace(/import\s+\{([^}]+)\}\s+from\s+["']([^"']+)["'];/g,(_,n,s)=>`const {${n}}=require(${JSON.stringify(s)});`).replace(/export /g,'');return new Function('require',js+`\nreturn {${names.join(',')}};`)(s=>s in deps?deps[s]:require(s));}
+const p=load('lib/trip-planner.ts'),trip=load('lib/trip.ts');
+const form=o=>{const f=new FormData();Object.entries(o).forEach(([k,v])=>f.set(k,String(v)));return f;};
+function harness(){const writes=[], old=[{date:new Date('2026-07-01')},{date:new Date('2026-07-02')}];const tx={build:{update:async x=>writes.push(['build',x])},tripDay:{findMany:async()=>old,createMany:async x=>writes.push(['create',x]),deleteMany:async x=>writes.push(['delete',x]),update:async x=>writes.push(['day',x])}};const prisma={...tx,$transaction:async fn=>fn(tx)};const a=load('lib/trip-planner-actions.ts',{'@/lib/prisma':{prisma},'@/lib/build-access':{requireBuildAccess:async id=>{if(id!=='owned')throw Error('Build not found.');return {userId:'owner'};},requireTripDayAccess:async(id,day)=>{if(id!=='owned'||day!=='day')throw Error('Day not found.');return {accessUserId:'owner'};}},'next/cache':{revalidatePath:()=>{}},'@/lib/destinations':{getDestination:()=>null},'@/lib/trip':trip,'@/lib/trip-planner':p});return {a,writes};}
+test('rejects reversed, incomplete, impossible and excessive dates',()=>{for(const [s,e] of [['2026-07-02','2026-07-01'],['2026-07-01',''],['2026-02-30','2026-03-01'],['2026-01-01','2028-01-01']])assert.throws(()=>p.parseDates(s,e));assert.equal(trip.getDateRange(...Object.values(p.parseDates('2026-03-07','2026-03-09'))).length,3);});
+test('totals preserve zero and indicate partial distance coverage',()=>{const days=[{startLocation:'A',endLocation:'B',distanceKm:0,elevationGainM:10},{startLocation:'B',endLocation:'C',distanceKm:12.4,elevationLossM:5},{notes:'weather only'}];assert.deepEqual(p.tripTotals(days),{distanceKm:12.4,gainM:10,lossM:5,minutes:0,measuredDays:2,plannedDays:2});});
+test('invalid numeric values rejected',()=>{for(const v of ['NaN','Infinity','abc',-1])assert.throws(()=>p.nullableNumber(v,'distance',0,1000));assert.equal(p.nullableNumber('0','distance',0,1000),0);assert.throws(()=>p.nullableNumber('1.5','minutes',0,1440,true));});
+test('date shortening requires explicit confirmation before writes',async()=>{const {a,writes}=harness();await assert.rejects(a.saveTripDetails(form({buildId:'owned',startDate:'2026-07-02',endDate:'2026-07-03'})),/confirmation/);assert.equal(writes.length,0);await a.saveTripDetails(form({buildId:'owned',startDate:'2026-07-02',endDate:'2026-07-03',confirmDateChange:'yes'}));assert.equal(writes.length,3);assert.equal(writes[2][1].where.date.notIn.length,2);});
+test('invalid day and unowned route never write',async()=>{const {a,writes}=harness();await assert.rejects(a.saveTripDay(form({buildId:'owned',dayId:'day',distanceKm:'NaN'})),/distanceKm/);await assert.rejects(a.saveTripRoute(form({buildId:'other',waypoints:'[]'})),/Build not found/);assert.equal(writes.length,0);});
+test('day writes preserve zeros, nullable fields and ownership scope',async()=>{const {a,writes}=harness();await a.saveTripDay(form({buildId:'owned',dayId:'day',distanceKm:0,minTemperature:0,startLocation:' A '}));assert.equal(writes[0][1].data.distanceKm,0);assert.equal(writes[0][1].data.minTemperature,0);assert.equal(writes[0][1].data.startLocation,'A');assert.equal(writes[0][1].where.build.userId,'owner');});
+test('route validation rejects out of range coordinates and duplicate IDs',async()=>{const {a,writes}=harness(),point={id:'one',name:'Camp',kind:'camp',lat:49,lng:-123,elevationM:900};for(const points of [[{...point,lat:91}],[point,point]])await assert.rejects(a.saveTripRoute(form({buildId:'owned',waypoints:JSON.stringify(points)})),/waypoint/);assert.equal(writes.length,0);await a.saveTripRoute(form({buildId:'owned',waypoints:JSON.stringify([point])}));assert.deepEqual(writes[0][1].data.routeWaypoints,[point]);});
+test('logistics are bounded and stored on owned build',async()=>{const {a,writes}=harness();await assert.rejects(a.saveTripLogistics(form({buildId:'owned',emergencyContact:'x'.repeat(5001)})),/too long/);await a.saveTripLogistics(form({buildId:'owned',parking:'Lot A'}));assert.equal(writes[0][1].data.tripLogistics.parking,'Lot A');assert.equal(writes[0][1].where.userId,'owner');});
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/app/build/actions.ts`
+
+```typescript
+"use server";
+
+import { saveTripDetails, saveTripDay } from "@/lib/trip-planner-actions";
+import { parseDates } from "@/lib/trip-planner";
+import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
+import { getDateRange } from "@/lib/trip";
+import { currentBuildUserId, hasGuestBuildAccess, requireBuildAccess, requireBuildItemAccess, setCurrentBuild } from "@/lib/build-access";
+import { guestBuildCookieName } from "@/lib/guest-build-token";
+import { getDestination } from "@/lib/destinations";
+import { Prisma } from "@/app/generated/prisma/client";
+import { ensureBuildRevisionBaseline, getBuildSnapshot, recordBuildRevision } from "@/lib/build-history";
+
+function asRecord(value: unknown): Record<string, unknown> {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) throw new Error("Invalid TrailPicker import file.");
+  return value as Record<string, unknown>;
+}
+
+function optionalText(value: unknown, max: number) {
+  if (value == null || value === "") return null;
+  if (typeof value !== "string" || value.length > max) throw new Error("Invalid TrailPicker import file.");
+  return value;
+}
+
+function optionalNumber(value: unknown, min: number, max: number, integer = false) {
+  if (value == null || value === "") return null;
+  if (typeof value !== "number" || !Number.isFinite(value) || value < min || value > max || (integer && !Number.isInteger(value))) {
+    throw new Error("Invalid TrailPicker import file.");
+  }
+  return value;
+}
+
+function importDate(value: unknown) {
+  if (value == null || value === "") return null;
+  if (typeof value !== "string") throw new Error("Invalid TrailPicker import file.");
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) throw new Error("Invalid TrailPicker import date.");
+  return date;
+}
+
+function importItem(value: unknown) {
+  const item = asRecord(value);
+  const quantity = optionalNumber(item.quantity, 1, 999, true) ?? 1;
+  const gearId = optionalText(item.gearId, 200);
+  const gearName = optionalText(item.gearName, 200);
+  const gearNameSnapshot = optionalText(item.gearNameSnapshot, 200);
+  return {
+    gearId,
+    gearName,
+    quantity,
+    isConsumable: item.isConsumable === true,
+    isWorn: item.isWorn === true,
+    customCategory: optionalText(item.customCategory, 100),
+    gearNameSnapshot,
+    weightSnapshot: optionalNumber(item.weightSnapshot, 0, 1_000_000, true),
+    priceSnapshot: optionalNumber(item.priceSnapshot, 0, 1_000_000),
+  };
+}
+
+function importDay(value: unknown) {
+  const day = asRecord(value);
+  const date = importDate(day.date);
+  if (!date) throw new Error("Imported itinerary day is missing a date.");
+  const text = (key: string, max = 5000) => optionalText(day[key], max);
+  return {
+    date,
+    minTemperature: optionalNumber(day.minTemperature, -100, 60, true),
+    conditions: text("conditions", 20),
+    notes: text("notes"),
+    startLocation: text("startLocation", 500),
+    endLocation: text("endLocation", 500),
+    distanceKm: optionalNumber(day.distanceKm, 0, 1000),
+    elevationGainM: optionalNumber(day.elevationGainM, 0, 20000, true),
+    elevationLossM: optionalNumber(day.elevationLossM, 0, 20000, true),
+    durationMinutes: optionalNumber(day.durationMinutes, 0, 1440, true),
+    campsite: text("campsite"),
+    reservation: text("reservation"),
+    waterSource: text("waterSource"),
+    waterCarryL: optionalNumber(day.waterCarryL, 0, 100),
+    trailConditions: text("trailConditions"),
+    activities: text("activities"),
+  };
+}
+
+export async function getBuildExport(buildId: string) {
+  const access = await requireBuildAccess(buildId);
+  const snapshot = await getBuildSnapshot(access.id, access.userId);
+
+  return {
+    format: "trailpicker-build",
+    version: 2,
+    exportedAt: new Date().toISOString(),
+    ...snapshot,
+  };
+}
+
+export async function importBuildItems(formData: FormData) {
+  const buildId = formData.get("buildId")?.toString() ?? "";
+  const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(access.id, access.userId);
+  const raw = formData.get("payload");
+  const mode = formData.get("mode") === "replace" ? "replace" : "merge";
+
+  if (typeof raw !== "string" || raw.length > 2_000_000) throw new Error("Import file is missing or too large.");
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    throw new Error("That file is not valid JSON.");
+  }
+  const payload = asRecord(parsed);
+  if (payload.format != null && payload.format !== "trailpicker-build") throw new Error("That JSON file is not a TrailPicker build export.");
+  if (!Array.isArray(payload.items) || payload.items.length > 1000) throw new Error("Import must contain no more than 1,000 gear items.");
+  if (payload.days != null && (!Array.isArray(payload.days) || payload.days.length > 366)) throw new Error("Import must contain no more than 366 itinerary days.");
+
+  const items = payload.items.map(importItem);
+  const days = Array.isArray(payload.days) ? payload.days.map(importDay) : null;
+  const requestedGearIds = [...new Set(items.map((item) => item.gearId).filter((id): id is string => Boolean(id)))];
+  const existingGear = requestedGearIds.length
+    ? await prisma.gear.findMany({ where: { id: { in: requestedGearIds } }, select: { id: true } })
+    : [];
+  const existingGearIds = new Set(existingGear.map((gear) => gear.id));
+
+  await prisma.$transaction(async (tx) => {
+    if (mode === "replace") {
+      const startDate = importDate(payload.startDate);
+      const endDate = importDate(payload.endDate);
+      if ((startDate == null) !== (endDate == null) || (startDate && endDate && endDate < startDate)) {
+        throw new Error("Imported trip dates are invalid.");
+      }
+
+      const name = optionalText(payload.name, 100) ?? "Imported build";
+      const people = optionalNumber(payload.people, 1, 100, true) ?? 1;
+      const location = optionalText(payload.location, 500);
+      const locationLat = optionalNumber(payload.locationLat, -90, 90);
+      const locationLng = optionalNumber(payload.locationLng, -180, 180);
+      if ((locationLat == null) !== (locationLng == null)) throw new Error("Imported coordinates must include latitude and longitude.");
+
+      await tx.build.update({
+        where: { id: access.id, userId: access.userId },
+        data: {
+          name,
+          destinationId: optionalText(payload.destinationId, 200),
+          location,
+          locationLat,
+          locationLng,
+          startDate,
+          endDate,
+          people,
+          minTemperature: optionalNumber(payload.minTemperature, -100, 60, true),
+          conditions: optionalText(payload.conditions, 50),
+          routeWaypoints: payload.routeWaypoints == null ? Prisma.DbNull : JSON.parse(JSON.stringify(payload.routeWaypoints)),
+          tripLogistics: payload.tripLogistics == null ? Prisma.DbNull : JSON.parse(JSON.stringify(payload.tripLogistics)),
+        },
+      });
+
+      await tx.buildItem.deleteMany({ where: { buildId: access.id } });
+      await tx.tripDay.deleteMany({ where: { buildId: access.id } });
+
+      if (days) {
+        if (days.length) await tx.tripDay.createMany({ data: days.map((day) => ({ ...day, buildId: access.id })) });
+      } else if (startDate && endDate) {
+        const range = getDateRange(startDate, endDate);
+        if (range.length) await tx.tripDay.createMany({ data: range.map((date) => ({ buildId: access.id, date })) });
+      }
+    }
+
+    for (const item of items) {
+      const gearId = item.gearId && existingGearIds.has(item.gearId) ? item.gearId : null;
+      if (mode === "merge" && gearId) {
+        await tx.buildItem.upsert({
+          where: { buildId_gearId: { buildId: access.id, gearId } },
+          update: {
+            quantity: { increment: item.quantity },
+            isConsumable: item.isConsumable,
+            isWorn: item.isWorn,
+          },
+          create: {
+            buildId: access.id,
+            gearId,
+            quantity: item.quantity,
+            isConsumable: item.isConsumable,
+            isWorn: item.isWorn,
+          },
+        });
+      } else {
+        await tx.buildItem.create({
+          data: {
+            buildId: access.id,
+            gearId,
+            quantity: item.quantity,
+            isConsumable: item.isConsumable,
+            isWorn: item.isWorn,
+            customCategory: item.customCategory,
+            gearNameSnapshot: gearId ? item.gearNameSnapshot : item.gearNameSnapshot ?? item.gearName ?? "Imported item",
+            weightSnapshot: item.weightSnapshot,
+            priceSnapshot: item.priceSnapshot,
+          },
+        });
+      }
+    }
+  });
+
+  await recordBuildRevision(
+    access.id,
+    access.userId,
+    "import",
+    mode === "replace" ? `Imported and replaced build with ${items.length} gear item${items.length === 1 ? "" : "s"}` : `Imported ${items.length} gear item${items.length === 1 ? "" : "s"}`,
+  );
+  revalidatePath(`/build/${access.id}`);
+  revalidatePath("/profile/builds");
+
+  return { mode, itemCount: items.length, dayCount: days?.length ?? 0 };
+}
+
+export async function duplicateBuild(formData: FormData) {
+  const buildId = formData.get("buildId") as string;
+
+  const access = await requireBuildAccess(buildId);
+  const ownerId = await currentBuildUserId();
+  const original = await prisma.build.findUnique({
+    where: { id: buildId, userId: access.userId },
+    include: { items: true, days: true },
+  });
+
+  if (!original) throw new Error("Build not found.");
+
+  const copy = await prisma.build.create({
+    data: {
+      name: `${original.name} (copy)`,
+      userId: ownerId,
+      locationLat: original.locationLat,
+      locationLng: original.locationLng,
+      location: original.location,
+      startDate: original.startDate,
+      endDate: original.endDate,
+      people: original.people,
+      minTemperature: original.minTemperature,
+      conditions: original.conditions,
+      routeWaypoints: original.routeWaypoints ?? undefined,
+      tripLogistics: original.tripLogistics ?? undefined,
+      days: { create: original.days.map(({ id: _id, buildId: _buildId, createdAt: _createdAt, updatedAt: _updatedAt, ...day }) => day) },
+      items: {
+        create: original.items.map((item) => ({
+          gearId: item.gearId,
+          quantity: item.quantity,
+          isConsumable: item.isConsumable,
+          isWorn: item.isWorn,
+          customCategory: item.customCategory,
+          gearNameSnapshot: item.gearNameSnapshot,
+          weightSnapshot: item.weightSnapshot,
+          priceSnapshot: item.priceSnapshot,
+        })),
+      },
+    },
+  });
+
+  await recordBuildRevision(copy.id, ownerId, "copy", `Created from ${original.name}`);
+  await setCurrentBuild(copy.id, !ownerId);
+  redirect(`/build/${copy.id}`);
+}
+export async function setItemCategory(formData: FormData) {
+  const itemId = formData.get("itemId") as string;
+  const buildId = formData.get("buildId") as string;
+  const item = await requireBuildItemAccess(buildId, itemId);
+  await ensureBuildRevisionBaseline(buildId, item.accessUserId);
+  const category = formData.get("category") as "base" | "worn" | "consumable";
+
+  await prisma.buildItem.update({
+    where: { id: itemId, buildId, build: { userId: item.accessUserId } },
+    data: {
+      isWorn: category === "worn",
+      isConsumable: category === "consumable",
+    },
+  });
+
+  await recordBuildRevision(buildId, item.accessUserId, "gear", "Changed gear category");
+  revalidatePath(`/build/${buildId}`);
+}
+
+export async function addCustomItem(formData: FormData) {
+  const buildId = formData.get("buildId") as string;
+  const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
+  const category = formData.get("category") as string;
+  const name = formData.get("name") as string;
+  const weightRaw = formData.get("weight_g") as string;
+  const priceRaw = formData.get("price_cad") as string;
+
+  if (!name?.trim()) {
+    throw new Error("Item name is required.");
+  }
+
+  await prisma.buildItem.create({
+    data: {
+      build: { connect: { id: buildId, userId: access.userId } },
+      customCategory: category,
+      gearNameSnapshot: name.trim(),
+      weightSnapshot: weightRaw ? Number(weightRaw) : null,
+      priceSnapshot: priceRaw ? Number(priceRaw) : null,
+    },
+  });
+
+  await recordBuildRevision(buildId, access.userId, "gear", `Added custom item: ${name.trim()}`);
+  redirect(`/build/${buildId}`);
+}
+
+export async function updateQuantity(formData: FormData) {
+  const itemId = formData.get("itemId") as string;
+  const buildId = formData.get("buildId") as string;
+  const delta = Number(formData.get("delta"));
+
+  const item = await requireBuildItemAccess(buildId, itemId);
+  await ensureBuildRevisionBaseline(buildId, item.accessUserId);
+
+  if (!Number.isInteger(delta) || Math.abs(delta) !== 1) throw new Error("Invalid quantity change.");
+  const newQuantity = Math.max(1, item.quantity + delta);
+
+  await prisma.buildItem.update({
+    where: { id: itemId, buildId, build: { userId: item.accessUserId } },
+    data: { quantity: newQuantity },
+  });
+
+  await recordBuildRevision(buildId, item.accessUserId, "gear", "Changed gear quantity");
+  revalidatePath(`/build/${buildId}`);
+}
+export async function claimCurrentBuild(formData?: FormData) {
+  const userId = await currentBuildUserId();
+  if (!userId) return;
+  const cookieStore = await cookies();
+  const submittedId = formData?.get("buildId");
+  const buildId = typeof submittedId === "string" ? submittedId : cookieStore.get("currentBuild")?.value;
+  if (!buildId || !(await hasGuestBuildAccess(buildId))) return;
+  const result = await prisma.build.updateMany({
+    where: { id: buildId, userId: null }, data: { userId },
+  });
+  if (result.count) {
+    cookieStore.delete(guestBuildCookieName(buildId));
+    revalidatePath(`/build/${buildId}`);
+    revalidatePath("/profile/builds");
+  }
+}
+export async function createBuild(formData: FormData) {
+  const ownerId = await currentBuildUserId();
+
+  const name = formData.get("name")?.toString().trim();
+
+  if (!name) {
+    throw new Error("Build name is required.");
+  }
+
+  const startDateRaw = formData.get("startDate")?.toString();
+  const endDateRaw = formData.get("endDate")?.toString();
+  const peopleRaw = formData.get("people")?.toString();
+  const minTemperatureRaw =
+    formData.get("minTemperature")?.toString();
+  const conditions = formData.get("conditions")?.toString();
+
+  const destinationIdRaw =
+    formData.get("destinationId")?.toString() || null;
+
+  const selectedDestination = getDestination(destinationIdRaw);
+
+
+  const submittedLocation =
+    formData.get("location")?.toString().trim();
+
+  const submittedLat =
+    formData.get("locationLat")?.toString();
+
+  const submittedLng =
+    formData.get("locationLng")?.toString();
+
+  const location = selectedDestination
+    ? `${selectedDestination.name}, ${selectedDestination.park}`
+    : submittedLocation || null;
+
+  const locationLat = selectedDestination
+    ? selectedDestination.latitude
+    : submittedLat
+      ? Number(submittedLat)
+      : null;
+
+  const locationLng = selectedDestination
+    ? selectedDestination.longitude
+    : submittedLng
+      ? Number(submittedLng)
+      : null;
+
+  const dates = parseDates(startDateRaw ?? "", endDateRaw ?? "");
+  const build = await prisma.build.create({
+    data: {
+      name,
+      destinationId: selectedDestination?.id ?? null,
+      location,
+      locationLat,
+      locationLng,
+      ...dates,
+      people: peopleRaw ? Number(peopleRaw) : 1,
+      minTemperature: minTemperatureRaw
+        ? Number(minTemperatureRaw)
+        : null,
+      conditions: conditions || null,
+      userId: ownerId,
+    },
+  });
+
+  if (build.startDate && build.endDate) {
+    const range = getDateRange(
+      build.startDate,
+      build.endDate,
+    );
+
+    await prisma.tripDay.createMany({
+      data: range.map((date) => ({
+        buildId: build.id,
+        date,
+      })),
+      skipDuplicates: true,
+    });
+  }
+
+  await recordBuildRevision(build.id, ownerId, "create", "Created build");
+  await setCurrentBuild(build.id, !ownerId);
+
+  redirect(`/build/${build.id}`);
+}
+export async function addGear(formData: FormData) {
+  const buildId = formData.get("buildId") as string;
+  const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
+  const gearId = formData.get("gearId") as string;
+
+  await prisma.buildItem.upsert({
+    where: {
+      buildId_gearId: { buildId, gearId },
+      build: { userId: access.userId },
+    },
+    update: {
+      quantity: { increment: 1 },
+    },
+    create: {
+      build: { connect: { id: buildId, userId: access.userId } },
+      gear: { connect: { id: gearId } },
+    },
+  });
+
+  await recordBuildRevision(buildId, access.userId, "gear", "Added gear");
+  redirect(`/build/${buildId}`);
+}
+
+export async function removeGear(formData: FormData) {
+  const itemId = formData.get("itemId") as string;
+  const buildId = formData.get("buildId") as string;
+  const item = await requireBuildItemAccess(buildId, itemId);
+  await ensureBuildRevisionBaseline(buildId, item.accessUserId);
+
+  await prisma.buildItem.delete({
+    where: {
+      id: itemId,
+      buildId,
+      build: { userId: item.accessUserId },
+    },
+  });
+
+  await recordBuildRevision(buildId, item.accessUserId, "gear", "Removed gear");
+  redirect(`/build/${buildId}`);
+}
+
+export async function updateTripDetails(formData: FormData) { return saveTripDetails(formData); }
+export async function updateTripDay(formData: FormData) { return saveTripDay(formData); }
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/app/profile/actions.ts`
+
+```typescript
+"use server";
+
+import { setCurrentBuild } from "@/lib/build-access";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
+
+async function currentUser() {
+  const session = await auth();
+  if (!session?.user?.email) throw new Error("You must be signed in.");
+  const user = await prisma.user.findUnique({ where: { email: session.user.email }, select: { id: true } });
+  if (!user) throw new Error("User not found.");
+  return user;
+}
+
+export async function deleteBuild(formData: FormData) {
+  const user = await currentUser();
+  const buildId = String(formData.get("buildId") || "");
+  await prisma.build.deleteMany({ where: { id: buildId, userId: user.id } });
+  revalidatePath("/profile");
+  revalidatePath("/profile/builds");
+}
+
+export async function renameBuild(formData: FormData) {
+  const user = await currentUser();
+  const buildId = String(formData.get("buildId") || "");
+  const name = String(formData.get("name") || "").trim();
+  if (!name) throw new Error("Build name is required.");
+  await ensureBuildRevisionBaseline(buildId, user.id);
+  await prisma.build.updateMany({ where: { id: buildId, userId: user.id }, data: { name: name.slice(0, 80) } });
+  await recordBuildRevision(buildId, user.id, "settings", "Renamed build");
+  revalidatePath("/profile");
+  revalidatePath("/profile/builds");
+}
+
+export async function duplicateProfileBuild(formData: FormData) {
+  const user = await currentUser();
+  const buildId = String(formData.get("buildId") || "");
+  const original = await prisma.build.findFirst({ where: { id: buildId, userId: user.id }, include: { items: true, days: true } });
+  if (!original) throw new Error("Build not found.");
+  const copy = await prisma.build.create({
+    data: {
+      name: `${original.name} (copy)`,
+      userId: user.id,
+      location: original.location,
+      locationLat: original.locationLat,
+      locationLng: original.locationLng,
+      startDate: original.startDate,
+      endDate: original.endDate,
+      people: original.people,
+      minTemperature: original.minTemperature,
+      conditions: original.conditions,
+      items: {
+        create: original.items.map(
+          ({ gearId, quantity, isConsumable, isWorn, customCategory, gearNameSnapshot, weightSnapshot, priceSnapshot }) => ({
+            gearId,
+            quantity,
+            isConsumable,
+            isWorn,
+            customCategory,
+            gearNameSnapshot,
+            weightSnapshot,
+            priceSnapshot,
+          }),
+        ),
+      },
+      days: {
+        create: original.days.map(({ date, minTemperature, conditions, notes }) => ({
+          date,
+          minTemperature,
+          conditions,
+          notes,
+        })),
+      },
+    },
+  });
+  await recordBuildRevision(copy.id, user.id, "copy", `Created from ${original.name}`);
+  await setCurrentBuild(copy.id);
+  redirect(`/build/${copy.id}`);
+}
+
+export async function updateProfile(formData: FormData) {
+  const user = await currentUser();
+  const name = String(formData.get("name") || "").trim();
+  const username = String(formData.get("username") || "").trim().toLowerCase();
+  const bio = String(formData.get("bio") || "").trim();
+  const location = String(formData.get("location") || "").trim();
+  if (!name) throw new Error("Display name is required.");
+  if (username && !/^[a-z0-9_]{3,24}$/.test(username)) throw new Error("Username must be 3–24 letters, numbers, or underscores.");
+  await prisma.user.update({ where: { id: user.id }, data: { name, username: username || null, bio: bio || null, location: location || null, isProfilePublic: formData.get("isProfilePublic") === "on" } });
+  revalidatePath("/profile", "layout");
+  redirect("/profile");
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/app/profile/gear/actions.ts`
+
+```typescript
+"use server";
+
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
+
+async function userId() {
+  const session = await auth();
+  if (!session?.user?.email) throw new Error("You must be signed in.");
+  const user = await prisma.user.findUnique({ where: { email: session.user.email }, select: { id: true } });
+  if (!user) throw new Error("User not found.");
+  return user.id;
+}
+
+function gearIdFrom(formData: FormData) {
+  const gearId = String(formData.get("gearId") || "");
+  if (!gearId) throw new Error("Gear item is required.");
+  return gearId;
+}
+
+function refreshGearPages(gearId: string) {
+  revalidatePath("/profile", "layout");
+  revalidatePath("/profile/gear");
+  revalidatePath("/profile/favorites");
+  revalidatePath(`/gear/${gearId}`);
+}
+
+export async function addOwnedGear(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.ownedGear.upsert({
+    where: { userId_gearId: { userId: userIdValue, gearId } },
+    update: {},
+    create: { userId: userIdValue, gearId },
+  });
+  refreshGearPages(gearId);
+}
+
+export async function removeOwnedGear(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.ownedGear.deleteMany({ where: { userId: userIdValue, gearId } });
+  refreshGearPages(gearId);
+}
+
+export async function addFavorite(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.favorite.upsert({
+    where: { userId_gearId: { userId: userIdValue, gearId } },
+    update: {},
+    create: { userId: userIdValue, gearId },
+  });
+  refreshGearPages(gearId);
+}
+
+export async function removeFavorite(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.favorite.deleteMany({ where: { userId: userIdValue, gearId } });
+  refreshGearPages(gearId);
+}
+
+export async function moveFavoriteToGear(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.$transaction([
+    prisma.ownedGear.upsert({ where: { userId_gearId: { userId: userIdValue, gearId } }, update: {}, create: { userId: userIdValue, gearId } }),
+    prisma.favorite.deleteMany({ where: { userId: userIdValue, gearId } }),
+  ]);
+  refreshGearPages(gearId);
+}
+
+export async function addGearToCurrentBuild(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  const buildId = (await cookies()).get("currentBuild")?.value;
+  if (!buildId) redirect("/profile/builds");
+  const build = await prisma.build.findFirst({ where: { id: buildId, userId: userIdValue }, select: { id: true } });
+  if (!build) redirect("/profile/builds");
+  await ensureBuildRevisionBaseline(build.id, userIdValue);
+  await prisma.buildItem.upsert({
+    where: { buildId_gearId: { buildId: build.id, gearId } },
+    update: { quantity: { increment: 1 } },
+    create: { buildId: build.id, gearId },
+  });
+  await recordBuildRevision(build.id, userIdValue, "gear", "Added gear from library");
+  revalidatePath(`/build/${build.id}`);
+  redirect(`/build/${build.id}`);
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/components/builder/BuildDataTools.tsx`
+
+```typescript
+"use client";
+
+import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  AlertTriangle,
+  Backpack,
+  CheckCircle2,
+  Clock3,
+  Download,
+  FileDown,
+  FileJson2,
+  FileUp,
+  History,
+  Loader2,
+  MapPinned,
+  PackageOpen,
+  RotateCcw,
+  UploadCloud,
+  X,
+  type LucideIcon,
+} from "lucide-react";
+import { getBuildExport, importBuildItems } from "@/app/build/actions";
+import { getBuildHistory, restoreBuildRevision } from "@/lib/build-history-actions";
+
+type Tab = "import" | "export" | "history";
+type ImportMode = "merge" | "replace";
+
+type ImportPreview = {
+  name: string;
+  itemCount: number;
+  dayCount: number;
+  version: number | null;
+  fullBuild: boolean;
+};
+
+type SelectedImport = {
+  fileName: string;
+  size: number;
+  text: string;
+  preview: ImportPreview;
+};
+
+type HistoryEntry = {
+  id: string;
+  action: string;
+  summary: string;
+  createdAt: string;
+  itemCount: number;
+  dayCount: number;
+  name: string;
+  isCurrent: boolean;
+};
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function inspectImport(text: string): ImportPreview {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    throw new Error("That file is not valid JSON.");
+  }
+
+  if (!isRecord(parsed) || !Array.isArray(parsed.items)) {
+    throw new Error("This doesn’t look like a TrailPicker build export.");
+  }
+  if (parsed.format != null && parsed.format !== "trailpicker-build") {
+    throw new Error("This JSON file was not exported by TrailPicker.");
+  }
+
+  const version = typeof parsed.version === "number" ? parsed.version : null;
+  return {
+    name: typeof parsed.name === "string" && parsed.name.trim() ? parsed.name.trim() : "Imported build",
+    itemCount: parsed.items.length,
+    dayCount: Array.isArray(parsed.days) ? parsed.days.length : 0,
+    version,
+    fullBuild: version === 2 || Array.isArray(parsed.days) || "routeWaypoints" in parsed || "tripLogistics" in parsed,
+  };
+}
+
+function bytes(size: number) {
+  if (size < 1024) return `${size} B`;
+  if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+  return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function safeFileName(name: string) {
+  const base = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return `${base || "trailpicker-build"}.json`;
+}
+
+function historyIcon(action: string) {
+  if (action === "import") return FileUp;
+  if (action === "restore") return RotateCcw;
+  if (action === "route" || action === "trip" || action === "itinerary" || action === "logistics") return MapPinned;
+  if (action === "gear") return Backpack;
+  return Clock3;
+}
+
+export default function BuildDataTools({
+  buildId,
+  buildName,
+  createdAt,
+  updatedAt,
+  buttonClassName,
+}: {
+  buildId: string;
+  buildName: string;
+  createdAt: Date;
+  updatedAt: Date;
+  buttonClassName: string;
+}) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  const fileInput = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  const [tab, setTab] = useState<Tab>("import");
+  const [selectedImport, setSelectedImport] = useState<SelectedImport | null>(null);
+  const [importMode, setImportMode] = useState<ImportMode>("merge");
+  const [importError, setImportError] = useState<string | null>(null);
+  const [importNotice, setImportNotice] = useState<string | null>(null);
+  const [importing, setImporting] = useState(false);
+  const [exporting, setExporting] = useState(false);
+  const [exportNotice, setExportNotice] = useState<string | null>(null);
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [historyError, setHistoryError] = useState<string | null>(null);
+  const [confirmRestore, setConfirmRestore] = useState<string | null>(null);
+  const [restoring, setRestoring] = useState<string | null>(null);
+
+  async function loadHistory() {
+    setHistoryLoading(true);
+    setHistoryError(null);
+    try {
+      const entries = await getBuildHistory(buildId);
+      setHistory(entries);
+    } catch {
+      setHistoryError("Couldn’t load version history. Make sure the history database migration has been applied.");
+    } finally {
+      setHistoryLoading(false);
+    }
+  }
+
+  function open(nextTab: Tab) {
+    setTab(nextTab);
+    setImportError(null);
+    setExportNotice(null);
+    setHistoryError(null);
+    setConfirmRestore(null);
+    dialog.current?.showModal();
+    if (nextTab === "history") void loadHistory();
+  }
+
+  function chooseTab(nextTab: Tab) {
+    setTab(nextTab);
+    setConfirmRestore(null);
+    if (nextTab === "history" && history.length === 0 && !historyLoading) void loadHistory();
+  }
+
+  async function readImportFile(file: File) {
+    setImportError(null);
+    setImportNotice(null);
+    if (file.size > 2_000_000) {
+      setSelectedImport(null);
+      setImportError("That file is over 2 MB. TrailPicker exports should be much smaller than that.");
+      return;
+    }
+    try {
+      const text = await file.text();
+      const preview = inspectImport(text);
+      setSelectedImport({ fileName: file.name, size: file.size, text, preview });
+    } catch (error) {
+      setSelectedImport(null);
+      setImportError(error instanceof Error ? error.message : "Couldn’t read that import file.");
+    }
+  }
+
+  async function runImport() {
+    if (!selectedImport || importing) return;
+    setImporting(true);
+    setImportError(null);
+    setImportNotice(null);
+    try {
+      const formData = new FormData();
+      formData.set("buildId", buildId);
+      formData.set("payload", selectedImport.text);
+      formData.set("mode", importMode);
+      const result = await importBuildItems(formData);
+      setImportNotice(
+        result.mode === "replace"
+          ? `Build replaced successfully. Imported ${result.itemCount} gear item${result.itemCount === 1 ? "" : "s"}.`
+          : `Added ${result.itemCount} gear item${result.itemCount === 1 ? "" : "s"} to this build.`,
+      );
+      setSelectedImport(null);
+      if (fileInput.current) fileInput.current.value = "";
+      setHistory([]);
+      router.refresh();
+    } catch (error) {
+      setImportError(error instanceof Error ? error.message : "Import failed. The current build was left unchanged.");
+    } finally {
+      setImporting(false);
+    }
+  }
+
+  async function runExport() {
+    if (exporting) return;
+    setExporting(true);
+    setExportNotice(null);
+    try {
+      const data = await getBuildExport(buildId);
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = safeFileName(buildName);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setExportNotice("Export downloaded. It includes gear, trip details, route, logistics, and itinerary days.");
+    } catch {
+      setExportNotice("Couldn’t create the export. Refresh the page and try again.");
+    } finally {
+      setExporting(false);
+    }
+  }
+
+  async function restore(entry: HistoryEntry) {
+    if (restoring || entry.isCurrent) return;
+    setRestoring(entry.id);
+    setHistoryError(null);
+    try {
+      await restoreBuildRevision(buildId, entry.id);
+      setConfirmRestore(null);
+      await loadHistory();
+      router.refresh();
+    } catch {
+      setHistoryError("Couldn’t restore that version. The current build was left unchanged.");
+    } finally {
+      setRestoring(null);
+    }
+  }
+
+  const tabs: { id: Tab; label: string; icon: LucideIcon }[] = [
+    { id: "import", label: "Import", icon: FileUp },
+    { id: "export", label: "Export", icon: FileDown },
+    { id: "history", label: "History", icon: History },
+  ];
+
+  return (
+    <>
+      <button type="button" onClick={() => open("import")} className={buttonClassName}>
+        <FileUp className="h-4 w-4" aria-hidden="true" />
+        Import
+      </button>
+      <button type="button" onClick={() => open("export")} className={buttonClassName}>
+        <FileDown className="h-4 w-4" aria-hidden="true" />
+        Export
+      </button>
+      <button type="button" onClick={() => open("history")} className={buttonClassName}>
+        <History className="h-4 w-4" aria-hidden="true" />
+        History
+      </button>
+
+      <dialog
+        ref={dialog}
+        aria-labelledby="build-data-title"
+        className="fixed inset-0 m-auto max-h-[88vh] w-[calc(100%_-_2rem)] max-w-2xl overflow-hidden rounded-3xl border border-gray-200 bg-white p-0 text-gray-900 shadow-2xl backdrop:bg-gray-950/45"
+        onClick={(event) => {
+          if (event.target !== event.currentTarget) return;
+          const rect = event.currentTarget.getBoundingClientRect();
+          const outside = event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom;
+          if (outside) event.currentTarget.close();
+        }}
+      >
+        <div className="flex max-h-[88vh] flex-col">
+          <header className="border-b border-gray-100 bg-gradient-to-b from-white to-gray-50/70 px-6 pt-5">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-green-700">Build tools</p>
+                <h2 id="build-data-title" className="mt-1 text-xl font-semibold tracking-tight text-gray-950">Import, export & history</h2>
+                <p className="mt-1 text-sm text-gray-500">Move your build around safely or roll it back when human decision-making does what it does.</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => dialog.current?.close()}
+                aria-label="Close build tools"
+                className="rounded-xl p-2 text-gray-400 transition hover:bg-gray-100 hover:text-gray-700 focus-visible:outline-2 focus-visible:outline-green-700"
+              >
+                <X className="h-5 w-5" aria-hidden="true" />
+              </button>
+            </div>
+
+            <div className="mt-5 flex gap-1" role="tablist" aria-label="Build data tools">
+              {tabs.map(({ id, label, icon: Icon }) => (
+                <button
+                  key={id}
+                  type="button"
+                  role="tab"
+                  aria-selected={tab === id}
+                  onClick={() => chooseTab(id)}
+                  className={`relative flex items-center gap-2 rounded-t-xl px-4 py-3 text-sm font-medium transition ${
+                    tab === id ? "bg-white text-green-900 shadow-[0_-1px_0_0_#e5e7eb,1px_0_0_0_#e5e7eb,-1px_0_0_0_#e5e7eb]" : "text-gray-500 hover:bg-white/60 hover:text-gray-800"
+                  }`}
+                >
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                  {label}
+                  {tab === id && <span className="absolute inset-x-3 -bottom-px h-0.5 rounded-full bg-green-700" />}
+                </button>
+              ))}
+            </div>
+          </header>
+
+          <div className="overflow-y-auto px-6 py-6">
+            {tab === "import" && (
+              <div className="space-y-5">
+                <section>
+                  <h3 className="text-base font-semibold text-gray-950">Import a TrailPicker build</h3>
+                  <p className="mt-1 text-sm leading-6 text-gray-500">Drop in a JSON export. You’ll see what’s inside before anything is changed.</p>
+                </section>
+
+                <input
+                  ref={fileInput}
+                  type="file"
+                  accept="application/json,.json"
+                  className="hidden"
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (file) void readImportFile(file);
+                  }}
+                />
+
+                <button
+                  type="button"
+                  onClick={() => fileInput.current?.click()}
+                  onDragOver={(event) => event.preventDefault()}
+                  onDrop={(event) => {
+                    event.preventDefault();
+                    const file = event.dataTransfer.files?.[0];
+                    if (file) void readImportFile(file);
+                  }}
+                  className="group flex w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50/70 px-6 py-9 text-center transition hover:border-green-500 hover:bg-green-50/40 focus-visible:outline-2 focus-visible:outline-green-700"
+                >
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-green-800 shadow-sm ring-1 ring-gray-200 transition group-hover:-translate-y-0.5">
+                    <UploadCloud className="h-6 w-6" aria-hidden="true" />
+                  </span>
+                  <span className="mt-4 text-sm font-semibold text-gray-900">Choose a JSON file or drop it here</span>
+                  <span className="mt-1 text-xs text-gray-500">TrailPicker export, up to 2 MB</span>
+                </button>
+
+                {selectedImport && (
+                  <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+                    <div className="flex items-center gap-3 border-b border-gray-100 bg-gray-50/70 px-4 py-3">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-green-800 ring-1 ring-gray-200">
+                        <FileJson2 className="h-5 w-5" aria-hidden="true" />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-semibold text-gray-900">{selectedImport.fileName}</p>
+                        <p className="text-xs text-gray-500">{bytes(selectedImport.size)} · {selectedImport.preview.version ? `export v${selectedImport.preview.version}` : "legacy export"}</p>
+                      </div>
+                      <button type="button" onClick={() => setSelectedImport(null)} className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-700" aria-label="Remove import file">
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                    <div className="grid gap-3 p-4 sm:grid-cols-3">
+                      <div className="rounded-xl bg-gray-50 p-3">
+                        <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-400">Build</p>
+                        <p className="mt-1 truncate text-sm font-semibold text-gray-800">{selectedImport.preview.name}</p>
+                      </div>
+                      <div className="rounded-xl bg-gray-50 p-3">
+                        <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-400">Gear</p>
+                        <p className="mt-1 text-sm font-semibold text-gray-800">{selectedImport.preview.itemCount} item{selectedImport.preview.itemCount === 1 ? "" : "s"}</p>
+                      </div>
+                      <div className="rounded-xl bg-gray-50 p-3">
+                        <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-400">Itinerary</p>
+                        <p className="mt-1 text-sm font-semibold text-gray-800">{selectedImport.preview.fullBuild ? `${selectedImport.preview.dayCount} day${selectedImport.preview.dayCount === 1 ? "" : "s"}` : "Gear-only export"}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {selectedImport && (
+                  <section>
+                    <p className="text-sm font-semibold text-gray-900">How should it be imported?</p>
+                    <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                      <button
+                        type="button"
+                        onClick={() => setImportMode("merge")}
+                        className={`rounded-2xl border p-4 text-left transition ${importMode === "merge" ? "border-green-700 bg-green-50 ring-1 ring-green-700/10" : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"}`}
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-green-800 shadow-sm"><PackageOpen className="h-5 w-5" /></span>
+                          {importMode === "merge" && <CheckCircle2 className="h-5 w-5 text-green-700" />}
+                        </div>
+                        <p className="mt-3 text-sm font-semibold text-gray-900">Add gear to this build</p>
+                        <p className="mt-1 text-xs leading-5 text-gray-500">Keeps your current trip and adds imported gear. Matching catalog gear increases quantity.</p>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setImportMode("replace")}
+                        className={`rounded-2xl border p-4 text-left transition ${importMode === "replace" ? "border-amber-500 bg-amber-50 ring-1 ring-amber-500/10" : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"}`}
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-amber-700 shadow-sm"><RotateCcw className="h-5 w-5" /></span>
+                          {importMode === "replace" && <CheckCircle2 className="h-5 w-5 text-amber-600" />}
+                        </div>
+                        <p className="mt-3 text-sm font-semibold text-gray-900">Replace current build</p>
+                        <p className="mt-1 text-xs leading-5 text-gray-500">Replaces gear and trip data with the file. A history snapshot is kept after the import.</p>
+                      </button>
+                    </div>
+                  </section>
+                )}
+
+                {importError && <p role="alert" className="flex items-start gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />{importError}</p>}
+                {importNotice && <p role="status" className="flex items-start gap-2 rounded-xl bg-green-50 px-4 py-3 text-sm text-green-800"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />{importNotice}</p>}
+
+                <div className="flex justify-end border-t border-gray-100 pt-5">
+                  <button
+                    type="button"
+                    onClick={runImport}
+                    disabled={!selectedImport || importing}
+                    className="inline-flex min-w-32 items-center justify-center gap-2 rounded-xl bg-green-800 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-green-900 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    {importing ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileUp className="h-4 w-4" />}
+                    {importing ? "Importing…" : importMode === "replace" ? "Replace build" : "Import gear"}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {tab === "export" && (
+              <div className="space-y-5">
+                <div className="overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-green-950 to-green-800 p-6 text-white shadow-sm">
+                  <div className="flex items-start justify-between gap-5">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-green-200">Portable backup</p>
+                      <h3 className="mt-2 text-xl font-semibold">{buildName}</h3>
+                      <p className="mt-2 max-w-lg text-sm leading-6 text-green-50/80">One JSON file with the build’s gear, trip details, route, logistics, and day-by-day itinerary.</p>
+                    </div>
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/15"><Download className="h-6 w-6" /></span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={runExport}
+                    disabled={exporting}
+                    className="mt-6 inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-green-950 shadow-sm transition hover:bg-green-50 disabled:opacity-60"
+                  >
+                    {exporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileDown className="h-4 w-4" />}
+                    {exporting ? "Preparing…" : "Download JSON export"}
+                  </button>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-3">
+                  <div className="rounded-2xl border border-gray-200 p-4">
+                    <Backpack className="h-5 w-5 text-green-700" />
+                    <p className="mt-3 text-sm font-semibold text-gray-900">Gear & quantities</p>
+                    <p className="mt-1 text-xs leading-5 text-gray-500">Catalog and custom items, weight snapshots, prices, worn and consumable flags.</p>
+                  </div>
+                  <div className="rounded-2xl border border-gray-200 p-4">
+                    <MapPinned className="h-5 w-5 text-green-700" />
+                    <p className="mt-3 text-sm font-semibold text-gray-900">Trip & route</p>
+                    <p className="mt-1 text-xs leading-5 text-gray-500">Dates, destination, party size, route waypoints, and logistics.</p>
+                  </div>
+                  <div className="rounded-2xl border border-gray-200 p-4">
+                    <History className="h-5 w-5 text-green-700" />
+                    <p className="mt-3 text-sm font-semibold text-gray-900">Portable, not public</p>
+                    <p className="mt-1 text-xs leading-5 text-gray-500">The file contains build data, not account credentials or ownership permissions.</p>
+                  </div>
+                </div>
+
+                <div className="rounded-xl bg-gray-50 px-4 py-3 text-xs leading-5 text-gray-500">
+                  Created {createdAt.toLocaleString()} · Last build update {updatedAt.toLocaleString()}
+                </div>
+
+                {exportNotice && <p role="status" className="rounded-xl bg-green-50 px-4 py-3 text-sm text-green-800">{exportNotice}</p>}
+              </div>
+            )}
+
+            {tab === "history" && (
+              <div className="space-y-5">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="text-base font-semibold text-gray-950">Version history</h3>
+                    <p className="mt-1 text-sm leading-6 text-gray-500">TrailPicker saves snapshots after build changes. Restore an older version without deleting the newer history.</p>
+                  </div>
+                  <button type="button" onClick={() => void loadHistory()} disabled={historyLoading} className="rounded-xl border border-gray-200 px-3 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50">
+                    Refresh
+                  </button>
+                </div>
+
+                {historyLoading && history.length === 0 && (
+                  <div className="flex items-center justify-center gap-2 rounded-2xl border border-gray-200 py-12 text-sm text-gray-500"><Loader2 className="h-4 w-4 animate-spin" />Loading history…</div>
+                )}
+                {historyError && <p role="alert" className="flex items-start gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />{historyError}</p>}
+
+                {!historyLoading && !historyError && history.length === 0 && (
+                  <div className="rounded-2xl border border-dashed border-gray-300 px-6 py-10 text-center">
+                    <History className="mx-auto h-7 w-7 text-gray-400" />
+                    <p className="mt-3 text-sm font-semibold text-gray-800">No saved versions yet</p>
+                    <p className="mt-1 text-xs text-gray-500">Your first snapshot will appear here automatically.</p>
+                  </div>
+                )}
+
+                <div className="space-y-3">
+                  {history.map((entry) => {
+                    const Icon = historyIcon(entry.action);
+                    const confirming = confirmRestore === entry.id;
+                    return (
+                      <div key={entry.id} className={`rounded-2xl border p-4 transition ${entry.isCurrent ? "border-green-200 bg-green-50/45" : "border-gray-200 bg-white hover:border-gray-300"}`}>
+                        <div className="flex items-start gap-3">
+                          <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${entry.isCurrent ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}>
+                            <Icon className="h-5 w-5" />
+                          </span>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <p className="text-sm font-semibold text-gray-900">{entry.summary}</p>
+                              {entry.isCurrent && <span className="rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-green-800">Current</span>}
+                            </div>
+                            <p className="mt-1 text-xs text-gray-500">{new Date(entry.createdAt).toLocaleString()} · {entry.itemCount} gear · {entry.dayCount} day{entry.dayCount === 1 ? "" : "s"}</p>
+                          </div>
+                          {!entry.isCurrent && !confirming && (
+                            <button type="button" onClick={() => setConfirmRestore(entry.id)} className="shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600 transition hover:bg-gray-50 hover:text-gray-900">
+                              Restore
+                            </button>
+                          )}
+                        </div>
+
+                        {confirming && (
+                          <div className="mt-4 flex flex-col gap-3 rounded-xl bg-amber-50 p-3 sm:flex-row sm:items-center sm:justify-between">
+                            <div className="flex items-start gap-2 text-xs leading-5 text-amber-900">
+                              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+                              <span>Restore this snapshot? Your current version will remain in history so you can come back to it.</span>
+                            </div>
+                            <div className="flex shrink-0 gap-2">
+                              <button type="button" onClick={() => setConfirmRestore(null)} className="rounded-lg px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-white/70">Cancel</button>
+                              <button type="button" onClick={() => void restore(entry)} disabled={Boolean(restoring)} className="inline-flex items-center gap-1.5 rounded-lg bg-amber-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-700 disabled:opacity-50">
+                                {restoring === entry.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RotateCcw className="h-3.5 w-3.5" />}
+                                Restore version
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </dialog>
+    </>
+  );
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/components/builder/ShareBar.tsx`
+
+```typescript
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { Copy, CopyCheck, Plus, Save } from "lucide-react";
+import BuildSettings from "@/components/builder/BuildSettings";
+import BuildDataTools from "@/components/builder/BuildDataTools";
+import { duplicateBuild } from "@/app/build/actions";
+
+type Props = {
+  buildId: string;
+  buildName: string;
+  isPublic: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+const btnClass =
+  "flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:border-gray-400 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50";
+
+export default function ShareBar({ buildId, buildName, isPublic, createdAt, updatedAt }: Props) {
+  const [copied, setCopied] = useState(false);
+  const shareUrl = typeof window !== "undefined" ? `${window.location.origin}/build/${buildId}` : `/build/${buildId}`;
+
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    } catch {
+      // The URL remains selectable if clipboard permission is blocked.
+    }
+  }
+
+  return (
+    <div className="flex flex-wrap items-center gap-2.5 px-5 py-4">
+      <div className="flex min-w-[280px] flex-1 items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 shadow-inner shadow-gray-100/70">
+        <button
+          type="button"
+          onClick={copyLink}
+          title={isPublic ? "Copy public link" : "Copy private link"}
+          className="shrink-0 rounded-md p-1 text-gray-400 transition hover:bg-white hover:text-green-800"
+        >
+          {copied ? <CopyCheck className="h-4 w-4 text-green-700" /> : <Copy className="h-4 w-4" />}
+        </button>
+        <input
+          readOnly
+          value={shareUrl}
+          onFocus={(event) => event.currentTarget.select()}
+          className="w-full truncate bg-transparent text-sm text-gray-700 outline-none"
+        />
+        <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${isPublic ? "bg-green-100 text-green-800" : "bg-gray-200 text-gray-600"}`}>
+          {isPublic ? "Public" : "Private"}
+        </span>
+      </div>
+
+      <BuildDataTools
+        buildId={buildId}
+        buildName={buildName}
+        createdAt={createdAt}
+        updatedAt={updatedAt}
+        buttonClassName={btnClass}
+      />
+
+      <BuildSettings buildId={buildId} buildName={buildName} isPublic={isPublic} buttonClassName={btnClass} />
+
+      <form action={duplicateBuild}>
+        <input type="hidden" name="buildId" value={buildId} />
+        <button type="submit" className={btnClass}>
+          <Save className="h-4 w-4" aria-hidden="true" />
+          Save As
+        </button>
+      </form>
+
+      <Link href="/build" className={btnClass}>
+        <Plus className="h-4 w-4" aria-hidden="true" />
+        New Build
+      </Link>
+    </div>
+  );
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/build-history-actions.ts`
+
+```typescript
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/app/generated/prisma/client";
+import { requireBuildAccess } from "@/lib/build-access";
+import {
+  ensureBuildRevisionBaseline,
+  recordBuildRevision,
+  type BuildSnapshot,
+  type BuildSnapshotDay,
+  type BuildSnapshotItem,
+} from "@/lib/build-history";
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function parseSnapshot(value: unknown): BuildSnapshot {
+  if (!isRecord(value) || typeof value.name !== "string" || !Array.isArray(value.items) || !Array.isArray(value.days)) {
+    throw new Error("This history entry can’t be restored.");
+  }
+  return value as unknown as BuildSnapshot;
+}
+
+function dateOrNull(value: string | null) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) throw new Error("This history entry contains an invalid date.");
+  return date;
+}
+
+function safeItem(item: BuildSnapshotItem) {
+  return {
+    gearId: typeof item.gearId === "string" ? item.gearId : null,
+    gearName: typeof item.gearName === "string" ? item.gearName : null,
+    quantity: Number.isInteger(item.quantity) && item.quantity > 0 ? Math.min(item.quantity, 999) : 1,
+    isConsumable: Boolean(item.isConsumable),
+    isWorn: Boolean(item.isWorn),
+    customCategory: typeof item.customCategory === "string" ? item.customCategory.slice(0, 100) : null,
+    gearNameSnapshot: typeof item.gearNameSnapshot === "string" ? item.gearNameSnapshot.slice(0, 200) : null,
+    weightSnapshot: Number.isFinite(item.weightSnapshot) ? item.weightSnapshot : null,
+    priceSnapshot: Number.isFinite(item.priceSnapshot) ? item.priceSnapshot : null,
+  };
+}
+
+function safeDay(day: BuildSnapshotDay) {
+  const date = new Date(day.date);
+  if (Number.isNaN(date.getTime())) throw new Error("This history entry contains an invalid itinerary date.");
+  return { ...day, date };
+}
+
+export async function getBuildHistory(buildId: string) {
+  const access = await requireBuildAccess(buildId);
+
+  await ensureBuildRevisionBaseline(access.id, access.userId);
+
+  const revisions = await prisma.buildRevision.findMany({
+    where: { buildId: access.id },
+    orderBy: { createdAt: "desc" },
+    take: 30,
+    select: { id: true, action: true, summary: true, snapshot: true, createdAt: true },
+  });
+
+  return revisions.map((revision, index) => {
+    const snapshot = isRecord(revision.snapshot) ? revision.snapshot : null;
+    const itemCount = snapshot && Array.isArray(snapshot.items) ? snapshot.items.length : 0;
+    const dayCount = snapshot && Array.isArray(snapshot.days) ? snapshot.days.length : 0;
+    const name = snapshot && typeof snapshot.name === "string" ? snapshot.name : "Build";
+
+    return {
+      id: revision.id,
+      action: revision.action,
+      summary: revision.summary,
+      createdAt: revision.createdAt.toISOString(),
+      itemCount,
+      dayCount,
+      name,
+      isCurrent: index === 0,
+    };
+  });
+}
+
+export async function restoreBuildRevision(buildId: string, revisionId: string) {
+  const access = await requireBuildAccess(buildId);
+  if (typeof revisionId !== "string" || !revisionId || revisionId.length > 200) {
+    throw new Error("Invalid history entry.");
+  }
+
+  const revision = await prisma.buildRevision.findFirst({
+    where: { id: revisionId, buildId: access.id },
+    select: { snapshot: true, createdAt: true },
+  });
+  if (!revision) throw new Error("History entry not found.");
+
+  const snapshot = parseSnapshot(revision.snapshot);
+  await recordBuildRevision(access.id, access.userId, "history", "Saved before restore");
+  if (snapshot.items.length > 1000 || snapshot.days.length > 366) {
+    throw new Error("This history entry is too large to restore.");
+  }
+
+  const items = snapshot.items.map(safeItem);
+  const days = snapshot.days.map(safeDay);
+  const requestedGearIds = [...new Set(items.map((item) => item.gearId).filter((id): id is string => Boolean(id)))];
+  const existingGear = requestedGearIds.length
+    ? await prisma.gear.findMany({ where: { id: { in: requestedGearIds } }, select: { id: true } })
+    : [];
+  const existingGearIds = new Set(existingGear.map((gear) => gear.id));
+
+  await prisma.$transaction(async (tx) => {
+    await tx.build.update({
+      where: { id: access.id, userId: access.userId },
+      data: {
+        name: snapshot.name.slice(0, 100) || "Restored build",
+        destinationId: snapshot.destinationId ?? null,
+        location: snapshot.location ?? null,
+        locationLat: snapshot.locationLat ?? null,
+        locationLng: snapshot.locationLng ?? null,
+        startDate: dateOrNull(snapshot.startDate),
+        endDate: dateOrNull(snapshot.endDate),
+        people: Number.isInteger(snapshot.people) && snapshot.people > 0 ? Math.min(snapshot.people, 100) : 1,
+        minTemperature: Number.isFinite(snapshot.minTemperature) ? snapshot.minTemperature : null,
+        conditions: snapshot.conditions ?? null,
+        routeWaypoints: snapshot.routeWaypoints == null ? Prisma.DbNull : JSON.parse(JSON.stringify(snapshot.routeWaypoints)),
+        tripLogistics: snapshot.tripLogistics == null ? Prisma.DbNull : JSON.parse(JSON.stringify(snapshot.tripLogistics)),
+      },
+    });
+
+    await tx.buildItem.deleteMany({ where: { buildId: access.id } });
+    for (const item of items) {
+      const gearId = item.gearId && existingGearIds.has(item.gearId) ? item.gearId : null;
+      await tx.buildItem.create({
+        data: {
+          buildId: access.id,
+          gearId,
+          quantity: item.quantity,
+          isConsumable: item.isConsumable,
+          isWorn: item.isWorn,
+          customCategory: item.customCategory,
+          gearNameSnapshot: gearId ? item.gearNameSnapshot : item.gearNameSnapshot ?? item.gearName ?? "Restored item",
+          weightSnapshot: item.weightSnapshot,
+          priceSnapshot: item.priceSnapshot,
+        },
+      });
+    }
+
+    await tx.tripDay.deleteMany({ where: { buildId: access.id } });
+    if (days.length) {
+      await tx.tripDay.createMany({
+        data: days.map((day) => ({ ...day, buildId: access.id })),
+      });
+    }
+  });
+
+  const restoredDate = revision.createdAt.toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" });
+  await recordBuildRevision(access.id, access.userId, "restore", `Restored version from ${restoredDate}`);
+  revalidatePath(`/build/${access.id}`);
+  revalidatePath("/profile/builds");
+
+  return { ok: true };
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/build-history.ts`
+
+```typescript
+import "server-only";
+
+import { prisma } from "@/lib/prisma";
+
+export type BuildSnapshotItem = {
+  gearId: string | null;
+  gearName: string | null;
+  quantity: number;
+  isConsumable: boolean;
+  isWorn: boolean;
+  customCategory: string | null;
+  gearNameSnapshot: string | null;
+  weightSnapshot: number | null;
+  priceSnapshot: number | null;
+};
+
+export type BuildSnapshotDay = {
+  date: string;
+  minTemperature: number | null;
+  conditions: string | null;
+  notes: string | null;
+  startLocation: string | null;
+  endLocation: string | null;
+  distanceKm: number | null;
+  elevationGainM: number | null;
+  elevationLossM: number | null;
+  durationMinutes: number | null;
+  campsite: string | null;
+  reservation: string | null;
+  waterSource: string | null;
+  waterCarryL: number | null;
+  trailConditions: string | null;
+  activities: string | null;
+};
+
+export type BuildSnapshot = {
+  name: string;
+  destinationId: string | null;
+  location: string | null;
+  locationLat: number | null;
+  locationLng: number | null;
+  startDate: string | null;
+  endDate: string | null;
+  people: number;
+  minTemperature: number | null;
+  conditions: string | null;
+  routeWaypoints: unknown;
+  tripLogistics: unknown;
+  items: BuildSnapshotItem[];
+  days: BuildSnapshotDay[];
+};
+
+export async function getBuildSnapshot(buildId: string, userId: string | null): Promise<BuildSnapshot> {
+  const build = await prisma.build.findUnique({
+    where: { id: buildId, userId },
+    include: {
+      items: {
+        orderBy: { id: "asc" },
+        include: { gear: { select: { name: true } } },
+      },
+      days: { orderBy: { date: "asc" } },
+    },
+  });
+
+  if (!build) throw new Error("Build not found.");
+
+  return {
+    name: build.name,
+    destinationId: build.destinationId,
+    location: build.location,
+    locationLat: build.locationLat,
+    locationLng: build.locationLng,
+    startDate: build.startDate?.toISOString() ?? null,
+    endDate: build.endDate?.toISOString() ?? null,
+    people: build.people,
+    minTemperature: build.minTemperature,
+    conditions: build.conditions,
+    routeWaypoints: build.routeWaypoints ?? null,
+    tripLogistics: build.tripLogistics ?? null,
+    items: build.items.map((item) => ({
+      gearId: item.gearId,
+      gearName: item.gear?.name ?? item.gearNameSnapshot,
+      quantity: item.quantity,
+      isConsumable: item.isConsumable,
+      isWorn: item.isWorn,
+      customCategory: item.customCategory,
+      gearNameSnapshot: item.gearNameSnapshot,
+      weightSnapshot: item.weightSnapshot,
+      priceSnapshot: item.priceSnapshot,
+    })),
+    days: build.days.map((day) => ({
+      date: day.date.toISOString(),
+      minTemperature: day.minTemperature,
+      conditions: day.conditions,
+      notes: day.notes,
+      startLocation: day.startLocation,
+      endLocation: day.endLocation,
+      distanceKm: day.distanceKm,
+      elevationGainM: day.elevationGainM,
+      elevationLossM: day.elevationLossM,
+      durationMinutes: day.durationMinutes,
+      campsite: day.campsite,
+      reservation: day.reservation,
+      waterSource: day.waterSource,
+      waterCarryL: day.waterCarryL,
+      trailConditions: day.trailConditions,
+      activities: day.activities,
+    })),
+  };
+}
+
+
+export async function ensureBuildRevisionBaseline(buildId: string, userId: string | null) {
+  const count = await prisma.buildRevision.count({ where: { buildId } });
+  if (count > 0) return;
+  const snapshot = await getBuildSnapshot(buildId, userId);
+  await prisma.buildRevision.create({
+    data: {
+      buildId,
+      action: "history",
+      summary: "Version history started",
+      snapshot: JSON.parse(JSON.stringify(snapshot)),
+    },
+  });
+}
+
+export async function recordBuildRevision(
+  buildId: string,
+  userId: string | null,
+  action: string,
+  summary: string,
+) {
+  await prisma.build.update({ where: { id: buildId, userId }, data: { updatedAt: new Date() } });
+  const snapshot = await getBuildSnapshot(buildId, userId);
+
+  await prisma.buildRevision.create({
+    data: {
+      buildId,
+      action: action.slice(0, 50),
+      summary: summary.slice(0, 240),
+      snapshot: JSON.parse(JSON.stringify(snapshot)),
+    },
+  });
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/build-settings-actions.ts`
+
+```typescript
+"use server";
+
+import { prisma } from "@/lib/prisma";
+import { requireBuildAccess } from "@/lib/build-access";
+import { revalidatePath } from "next/cache";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
+
+export async function renameBuild(buildId: string, name: string) {
+  if (typeof buildId !== "string" || !buildId || buildId.length > 200 || typeof name !== "string") {
+    throw new Error("Invalid build name.");
+  }
+  const trimmed = name.trim();
+  if (!trimmed || trimmed.length > 100) throw new Error("Use a build name between 1 and 100 characters.");
+  const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(access.id, access.userId);
+  const result = await prisma.build.updateMany({
+    where: { id: access.id, userId: access.userId },
+    data: { name: trimmed },
+  });
+  if (result.count !== 1) throw new Error("Build access changed. Refresh and try again.");
+  await recordBuildRevision(access.id, access.userId, "settings", "Renamed build");
+  revalidatePath(`/build/${access.id}`);
+  revalidatePath("/profile/builds");
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/build-visibility-actions.ts`
+
+```typescript
+"use server";
+
+import { prisma } from "@/lib/prisma";
+import { requireBuildAccess } from "@/lib/build-access";
+import { revalidatePath } from "next/cache";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
+
+export async function setBuildVisibility(buildId: string, isPublic: boolean) {
+  if (typeof buildId !== "string" || !buildId || buildId.length > 200 || typeof isPublic !== "boolean") {
+    throw new Error("Invalid visibility request.");
+  }
+  const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(access.id, access.userId);
+  // Repeat the owner condition in the write to prevent a stale guest claim.
+  const result = await prisma.build.updateMany({
+    where: { id: access.id, userId: access.userId },
+    data: { isPublic },
+  });
+  if (result.count !== 1) throw new Error("Build access changed. Refresh and try again.");
+  await recordBuildRevision(access.id, access.userId, "settings", "Changed build visibility");
+  revalidatePath(`/build/${access.id}`);
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/lib/trip-planner-actions.ts`
+
+```typescript
+"use server";
+import { prisma } from "@/lib/prisma";
+import { requireBuildAccess, requireTripDayAccess } from "@/lib/build-access";
+import { revalidatePath } from "next/cache";
+import { getDestination } from "@/lib/destinations";
+import { getDateRange } from "@/lib/trip";
+import { dayTextFields, emptyLogistics, nullableNumber, parseDates, readWaypoints } from "@/lib/trip-planner";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
+const text = (f: FormData, key: string, max = 5000) => { const v = f.get(key); if (v != null && typeof v !== "string") throw new Error(`Invalid ${key}.`); const s = (v ?? "").trim(); if (s.length > max) throw new Error(`${key} is too long (maximum ${max} characters).`); return s || null; };
+const number = (f: FormData, key: string, min: number, max: number, integer = false) => nullableNumber(f.get(key),key,min,max,integer);
+const condition = (f: FormData) => { const v = text(f,"conditions",20); if (v && !["dry","rain","snow"].includes(v)) throw new Error("Choose a valid weather condition."); return v; };
+export async function saveTripDetails(f: FormData) {
+  const buildId = text(f,"buildId",200)!;
+  const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
+  const dates = parseDates(text(f,"startDate",10) ?? "", text(f,"endDate",10) ?? "");
+  const selected = getDestination(text(f,"destinationId",200));
+  const lat = selected?.latitude ?? number(f,"locationLat",-90,90), lng = selected?.longitude ?? number(f,"locationLng",-180,180);
+  if ((lat == null) !== (lng == null)) throw new Error("Provide both location coordinates.");
+  const data = { ...dates, destinationId: selected?.id ?? null, location: selected ? `${selected.name}, ${selected.park}` : text(f,"location",500), locationLat: lat, locationLng: lng, people: number(f,"people",1,100,true) ?? 1, minTemperature: number(f,"minTemperature",-100,60,true), conditions: condition(f) };
+  await prisma.$transaction(async tx => {
+    const old = await tx.tripDay.findMany({ where: { buildId }, select: { date: true } });
+    const range = dates.startDate && dates.endDate ? getDateRange(dates.startDate,dates.endDate) : [];
+    const keys = new Set(range.map(d => d.getTime()));
+    if (old.some(d => !keys.has(d.date.getTime())) && f.get("confirmDateChange") !== "yes") throw new Error("The new dates remove itinerary days. Tick the confirmation box to discard those days. Days still within the range will be kept.");
+    await tx.build.update({ where: { id: buildId, userId: access.userId }, data });
+    if (range.length) await tx.tripDay.createMany({ data: range.map(date => ({ buildId,date })), skipDuplicates: true });
+    await tx.tripDay.deleteMany({ where: { buildId, date: { notIn: range } } });
+  });
+  await recordBuildRevision(buildId, access.userId, "trip", "Updated trip details");
+  revalidatePath(`/build/${buildId}`);
+}
+export async function saveTripDay(f: FormData) {
+  const buildId = text(f,"buildId",200)!, dayId = text(f,"dayId",200)!;
+  const day = await requireTripDayAccess(buildId,dayId);
+  await ensureBuildRevisionBaseline(buildId, day.accessUserId);
+  const strings = Object.fromEntries(dayTextFields.map(key => [key,text(f,key)]));
+  await prisma.tripDay.update({ where: { id: dayId, buildId, build: { userId: day.accessUserId } }, data: { ...strings, conditions: condition(f), minTemperature: number(f,"minTemperature",-100,60,true), distanceKm: number(f,"distanceKm",0,1000), elevationGainM: number(f,"elevationGainM",0,20000,true), elevationLossM: number(f,"elevationLossM",0,20000,true), durationMinutes: number(f,"durationMinutes",0,1440,true), waterCarryL: number(f,"waterCarryL",0,100) } });
+  await recordBuildRevision(buildId, day.accessUserId, "itinerary", "Updated itinerary day");
+  revalidatePath(`/build/${buildId}`);
+}
+export async function saveTripRoute(f: FormData) {
+  const buildId = text(f,"buildId",200)!, access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
+  const raw: unknown = JSON.parse(text(f,"waypoints",100000) ?? "[]");
+  const points = readWaypoints(raw);
+  if (!Array.isArray(raw) || points.length !== raw.length || points.length > 200 || new Set(points.map(p=>p.id)).size !== points.length || points.some(p=>!p.name.trim() || p.name.length>200 || p.id.length>200 || (p.elevationM != null && (p.elevationM < -500 || p.elevationM > 9000)))) throw new Error("Check waypoint names, coordinates, elevations, and unique IDs. Maximum 200 waypoints.");
+  await prisma.build.update({ where: { id: buildId,userId: access.userId }, data: { routeWaypoints: points.map(p=>({...p,name:p.name.trim()})) } });
+  await recordBuildRevision(buildId, access.userId, "route", "Updated trip route");
+  revalidatePath(`/build/${buildId}`);
+}
+export async function saveTripLogistics(f: FormData) {
+  const buildId = text(f,"buildId",200)!, access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
+  const value = Object.fromEntries(Object.keys(emptyLogistics).map(key=>[key,text(f,key) ?? ""]));
+  await prisma.build.update({ where: { id: buildId, userId: access.userId }, data: { tripLogistics: value } });
+  await recordBuildRevision(buildId, access.userId, "logistics", "Updated trip logistics");
+  revalidatePath(`/build/${buildId}`);
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/prisma/schema.prisma`
+
+```text
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Brand {
+  id      String  @id @default(cuid())
+  name    String
+  website String?
+  logo    String?
+
+  gear Gear[]
+
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  gear Gear[]
+  subcategories Subcategory[]
+  createdAt DateTime @default(now())
+}
+model Subcategory {
+  id         String   @id @default(cuid())
+  name       String
+  slug String
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  gear        Gear[]
+
+  createdAt  DateTime @default(now())
+  @@unique([categoryId, slug])
+}
+model Gear {
+  id String @id @default(cuid())
+
+  name        String
+  description String?
+  
+  weight_g Int?
+
+  price_cad Float?
+
+  capacity_l Float?
+
+  frame_type String?
+
+  waterproof Boolean?
+
+  temperature_rating Int?
+
+  season String?
+
+  material String?
+
+  brandId String
+  brand   Brand  @relation(fields: [brandId], references: [id])
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  subcategoryId String?
+  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+
+  images GearImage[]
+  specifications GearSpecification[]
+  prices Price[]
+  reviews Review[]
+  buildItems BuildItem[]
+  favorites Favorite[]
+  ownedGear OwnedGear[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model OwnedGear {
+  id String @id @default(cuid())
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  gearId String
+  gear Gear @relation(fields: [gearId], references: [id], onDelete: Cascade)
+
+  purchasedPrice Float?
+  purchasedAt DateTime?
+  notes String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, gearId])
+}
+model GearImage {
+  id String @id @default(cuid())
+
+  url String
+
+  isPrimary Boolean @default(false)
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id], onDelete: Cascade)
+}
+
+model GearSpecification {
+  id String @id @default(cuid())
+
+  key   String
+  value String
+  unit  String?
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id], onDelete: Cascade)
+}
+
+model Retailer {
+  id String @id @default(cuid())
+
+  name    String
+  website String?
+  logo    String?
+
+  prices Price[]
+}
+
+model Price {
+  id String @id @default(cuid())
+
+  price Float
+
+  currency String @default("CAD")
+
+  url String?
+
+  inStock Boolean @default(true)
+
+  lastUpdated DateTime @default(now())
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  retailerId String
+  retailer   Retailer @relation(fields: [retailerId], references: [id])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  username      String?    @unique
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+
+  bio             String?
+  location        String?
+  isProfilePublic Boolean  @default(false)
+
+  accounts Account[]
+  sessions Session[]
+  builds    Build[]
+  reviews   Review[]
+  favorites Favorite[]
+  ownedGear OwnedGear[]
+
+  createdAt DateTime @default(now())
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  @@unique([identifier, token])
+}
+
+model Build {
+  isPublic Boolean @default(false)
+  id String @id @default(cuid())
+
+  name String
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  items     BuildItem[]
+  days      TripDay[]
+  revisions BuildRevision[]
+
+  routeWaypoints Json?
+  tripLogistics Json?
+
+  destinationId String?
+
+  location    String?
+  locationLat Float?
+  locationLng Float?
+  startDate   DateTime?
+  endDate     DateTime?
+
+  people Int @default(1)
+
+  minTemperature Int?
+  conditions String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BuildRevision {
+  id String @id @default(cuid())
+
+  buildId String
+  build   Build @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  action   String
+  summary  String
+  snapshot Json
+
+  createdAt DateTime @default(now())
+
+  @@index([buildId, createdAt])
+}
+
+model TripDay {
+  id String @id @default(cuid())
+
+  buildId String
+  build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  date DateTime
+
+  minTemperature Int?
+  conditions     String?
+  notes          String?
+  startLocation String?
+  endLocation String?
+  distanceKm Float?
+  elevationGainM Int?
+  elevationLossM Int?
+  durationMinutes Int?
+  campsite String?
+  reservation String?
+  waterSource String?
+  waterCarryL Float?
+  trailConditions String?
+  activities String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([buildId, date])
+}
+
+model BuildItem {
+  id String @id @default(cuid())
+
+  quantity Int @default(1)
+
+  customWeight Int?
+
+  isConsumable Boolean @default(false)
+
+  isWorn Boolean @default(false)
+
+  gearNameSnapshot String?
+
+  weightSnapshot Int?
+
+  priceSnapshot Float?
+
+  customCategory String?
+
+  buildId String
+  build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  gearId String?
+  gear   Gear?   @relation(fields: [gearId], references: [id])
+
+  @@unique([buildId, gearId])
+}
+
+model Review {
+  id String @id @default(cuid())
+
+  rating Int
+
+  title String?
+  body  String?
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Favorite {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, gearId])
+}
+
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/tests/builder-ownership.test.cjs`
+
+```typescript
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const { stripTypeScriptTypes } = require('node:module');
+const root = path.resolve(__dirname, '..');
+process.env.AUTH_SECRET = 'ownership-test-secret-not-for-production';
+
+// Execute the actual TS helpers/actions, with Auth.js, Next and Prisma replaced
+// by deterministic boundary mocks. No network or database is needed.
+function load(relative, dependencies = {}) {
+  let js = stripTypeScriptTypes(fs.readFileSync(path.join(root, relative), 'utf8'));
+  const names = [...js.matchAll(/export (?:async )?function (\w+)|export const (\w+)/g)].map(m => m[1] || m[2]);
+  js = js.replace(/import\s+\{([^}]+)\}\s+from\s+["']([^"']+)["'];/g, (_, names, spec) => `const {${names}} = require(${JSON.stringify(spec)});`)
+    .replace(/import ["']server-only["'];/g, '')
+    .replace(/export /g, '');
+  const requireMock = spec => spec in dependencies ? dependencies[spec] : require(spec);
+  return new Function('require', 'process', 'Buffer', js + `\nreturn {${names.join(',')}};`)(requireMock, process, Buffer);
+}
+const token = load('lib/guest-build-token.ts');
+function harness() {
+  const state = { email: 'a@test', cookies: new Map(), writes: [], builds: [
+    { id: 'a', userId: 'user-a', name: 'A', items: [], days: [] },
+    { id: 'b', userId: 'user-b', name: 'B', items: [], days: [] },
+    { id: 'guest', userId: null, name: 'Guest', items: [], days: [] },
+  ] };
+  const matches = (b, where) => b.id === where.id && (!('userId' in where) || b.userId === where.userId) && (!where.OR || where.OR.some(p => b.userId === p.userId));
+  const cookieStore = { get: name => state.cookies.has(name) ? { value: state.cookies.get(name) } : undefined,
+    set: (name, value, options) => { state.cookies.set(name, value); state.lastCookieOptions = options; },
+    delete: name => state.cookies.delete(name) };
+  const write = type => async args => { state.writes.push({ type, args }); return { id: 'copy', ...args.data }; };
+  const prisma = {
+    user: { findUnique: async ({ where }) => where.email ? { id: `user-${where.email[0]}` } : null },
+    build: { findFirst: async ({ where }) => state.builds.find(b => matches(b, where)) || null,
+      findUnique: async ({ where }) => state.builds.find(b => matches(b, where)) || null,
+      create: write('build.create'), update: write('build.update'),
+      updateMany: async ({ where, data }) => { const b = state.builds.find(b => matches(b, where)); if (!b) return {count:0}; state.writes.push({type:'claim'}); Object.assign(b, data); return {count:1}; } },
+    buildItem: { findFirst: async ({ where }) => {
+      const buildId = where.id === 'item-a' ? 'a' : where.id === 'item-b' ? 'b' : null;
+      return buildId === where.buildId ? { id: where.id, buildId, quantity: 2 } : null;
+    }, update: write('item.update'), delete: write('item.delete'), create: write('item.create'), upsert: write('item.upsert') },
+    tripDay: { findFirst: async ({ where }) => where.id === 'day-a' && where.buildId === 'a' ? { id: 'day-a', buildId: 'a' } : null,
+      update: write('day.update'), createMany: write('day.createMany'), deleteMany: write('day.deleteMany') },
+  };
+  const navigation = { notFound: () => { throw new Error('404'); }, redirect: url => { throw new Error(`REDIRECT:${url}`); } };
+  const access = load('lib/build-access.ts', { '@/auth': {auth: async () => state.email ? {user:{email:state.email}} : null},
+    '@/lib/prisma': { prisma }, 'next/headers': {cookies:async()=>cookieStore}, 'next/navigation': navigation, '@/lib/guest-build-token': token });
+  const planner = load('lib/trip-planner.ts');
+  const history = { ensureBuildRevisionBaseline: async () => {}, recordBuildRevision: async () => {}, getBuildSnapshot: async (buildId, userId) => {
+    const b = state.builds.find(build => build.id === buildId && build.userId === userId);
+    if (!b) throw new Error('Build not found.');
+    return { name:b.name, destinationId:null, location:null, locationLat:null, locationLng:null, startDate:null, endDate:null, people:1, minTemperature:null, conditions:null, routeWaypoints:null, tripLogistics:null, items:b.items || [], days:b.days || [] };
+  } };
+  const plannerActions = load('lib/trip-planner-actions.ts', { '@/lib/prisma':{prisma}, '@/lib/build-access':access, 'next/cache':{revalidatePath:()=>{}}, '@/lib/destinations':{getDestination:()=>null}, '@/lib/trip':{getDateRange:()=>[]}, '@/lib/trip-planner':planner, '@/lib/build-history':history });
+  const actions = load('app/build/actions.ts', {'@/lib/prisma':{prisma}, '@/lib/trip-planner-actions':plannerActions, '@/lib/trip-planner':planner, 'next/navigation': navigation,
+    'next/headers':{cookies:async()=>cookieStore}, 'next/cache':{revalidatePath:()=>{}}, '@/lib/trip':{getDateRange:()=>[]},
+    '@/lib/build-access':access, '@/lib/guest-build-token':token, '@/lib/destinations':{getDestination:()=>null}, '@/lib/build-history':history, '@/app/generated/prisma/client':{Prisma:{DbNull:null}} });
+  return { state, access, actions };
+}
+function form(values) { const f = new FormData(); for (const [key,value] of Object.entries(values)) f.set(key, String(value)); return f; }
+
+test('guest tokens are bound to build, expire, and reject tampering', () => {
+  const t = token.createGuestBuildToken('guest', 1000000);
+  assert.equal(token.verifyGuestBuildToken('guest', t, 1000000), true);
+  assert.equal(token.verifyGuestBuildToken('other', t, 1000000), false);
+  assert.equal(token.verifyGuestBuildToken('guest', t.slice(0,-1)+'!', 1000000), false);
+  assert.equal(token.verifyGuestBuildToken('guest', t, 1000000 + token.GUEST_BUILD_MAX_AGE*1000), false);
+  for (const invalid of [undefined, '', 'guest', 'x'.repeat(201), '1:x.y']) assert.equal(token.verifyGuestBuildToken('guest', invalid), false);
+});
+for (const email of ['a@test', null]) {
+  test(`access matrix for ${email || 'anonymous'}`, async () => {
+    const {state, access} = harness(); state.email=email;
+    assert.equal((await access.findAccessibleBuild('a'))?.id, email ? 'a' : undefined);
+    assert.equal(await access.findAccessibleBuild('b'), null);
+    state.cookies.set('currentBuild','guest');
+    assert.equal(await access.findAccessibleBuild('guest'), null);
+    state.cookies.set(token.guestBuildCookieName('guest'), token.createGuestBuildToken('guest'));
+    assert.equal((await access.findAccessibleBuild('guest')).id, 'guest');
+    state.cookies.set(token.guestBuildCookieName('b'), token.createGuestBuildToken('b'));
+    assert.equal(await access.findAccessibleBuild('b'), null); // capability cannot override account owner
+    assert.equal(await access.findAccessibleBuild('missing'), null);
+    await assert.rejects(access.requireBuildPageAccess('b'), /404/);
+  });
+}
+for (const name of ['importBuildItems','duplicateBuild','addCustomItem','addGear','updateTripDetails','setItemCategory','updateQuantity','removeGear','updateTripDay']) {
+  test(`${name} rejects another user's build before any write`, async () => {
+    const {state,actions}=harness();
+    await assert.rejects(actions[name](form({buildId:'b', itemId:'item-b', dayId:'day-b', payload:'invalid JSON', delta:1})), /Build not found/);
+    assert.deepEqual(state.writes, []);
+  });
+}
+for (const name of ['setItemCategory','updateQuantity','removeGear']) {
+  test(`${name} rejects another build's item paired with owned build`, async () => {
+    const {state,actions}=harness();
+    await assert.rejects(actions[name](form({buildId:'a',itemId:'item-b',delta:1})), /Item not found/);
+    assert.deepEqual(state.writes,[]);
+  });
+}
+test('trip day must belong to the authorized build', async () => {
+  const {state,actions}=harness();
+  await assert.rejects(actions.updateTripDay(form({buildId:'a',dayId:'day-b'})),/Day not found/);
+  assert.deepEqual(state.writes,[]);
+  await actions.updateTripDay(form({buildId:'a',dayId:'day-a',notes:'Hello'}));
+  assert.equal(state.writes[0].type,'day.update');
+});
+test('export is private', async () => {
+  const {actions}=harness();
+  assert.equal((await actions.getBuildExport('a')).name,'A');
+  await assert.rejects(actions.getBuildExport('b'), /Build not found/);
+});
+test('claim ignores forged currentBuild cookie and accepts signed guest proof', async () => {
+  const {state,actions,access}=harness(); state.cookies.set('currentBuild','guest');
+  await actions.claimCurrentBuild(); assert.deepEqual(state.writes,[]);
+  state.cookies.set(token.guestBuildCookieName('guest'),token.createGuestBuildToken('guest'));
+  await actions.claimCurrentBuild();
+  assert.equal(state.builds[2].userId,'user-a');
+  assert.equal(state.cookies.has(token.guestBuildCookieName('guest')),false);
+  state.email=null; assert.equal(await access.findAccessibleBuild('guest'),null);
+});
+test('guest proof cannot claim someone else\'s account build', async () => {
+  const {state,actions}=harness(); state.cookies.set('currentBuild','b');
+  state.cookies.set(token.guestBuildCookieName('b'),token.createGuestBuildToken('b'));
+  await actions.claimCurrentBuild(); assert.deepEqual(state.writes,[]);
+});
+for (const email of ['a@test',null]) {
+  test(`duplicate preserves ownership and navigation for ${email || 'guest'}`, async () => {
+    const {state,actions}=harness();state.email=email;
+    if (!email) state.cookies.set(token.guestBuildCookieName('guest'),token.createGuestBuildToken('guest'));
+    await assert.rejects(actions.duplicateBuild(form({buildId:email?'a':'guest'})),/REDIRECT:\/build\/copy/);
+    assert.equal(state.writes[0].args.data.userId,email?'user-a':null);
+    assert.equal(state.cookies.get('currentBuild'),'copy');
+    if (!email) assert.equal(token.verifyGuestBuildToken('copy',state.cookies.get(token.guestBuildCookieName('copy'))),true);
+    assert.equal(state.lastCookieOptions.httpOnly,true);
+    assert.equal(state.lastCookieOptions.sameSite,'lax');
+  });
+}
+test('owner can mutate own item', async () => {
+  const {state,actions}=harness(); await actions.updateQuantity(form({buildId:'a',itemId:'item-a',delta:1}));
+  assert.equal(state.writes[0].args.data.quantity,3);
+});
+for (const name of ['getBuildExport','importBuildItems','duplicateBuild','addCustomItem','addGear','updateTripDetails','setItemCategory','updateQuantity','removeGear','updateTripDay']) {
+  test(`${name} rejects anonymous access to account build`, async () => {
+    const {state,actions}=harness();state.email=null;state.cookies.set('currentBuild','a');
+    const input = name === 'getBuildExport' ? 'a' : form({buildId:'a',itemId:'item-a',dayId:'day-a',payload:'{}',delta:1});
+    await assert.rejects(actions[name](input), /Build not found/);
+    assert.deepEqual(state.writes,[]);
+  });
+}
+test('missing child IDs are rejected instead of becoming unfiltered Prisma queries',async()=>{
+  const {access}=harness();
+  await assert.rejects(access.requireBuildItemAccess('a',undefined),/Item not found/);
+  await assert.rejects(access.requireTripDayAccess('a',undefined),/Day not found/);
+});
+for (const email of ['a@test',null]) {
+  test(`new build ownership for ${email || 'guest'}`,async()=>{
+    const {state,actions}=harness();state.email=email;
+    await assert.rejects(actions.createBuild(form({name:'Trip'})),/REDIRECT:\/build\/copy/);
+    assert.equal(state.writes[0].args.data.userId,email?'user-a':null);
+    assert.equal(state.cookies.get('currentBuild'),'copy');
+    assert.equal(state.cookies.has(token.guestBuildCookieName('copy')),!email);
+  });
+}
+test('claim uses the submitted authorized build even when currentBuild points elsewhere',async()=>{
+  const {state,actions}=harness();state.cookies.set('currentBuild','b');
+  state.cookies.set(token.guestBuildCookieName('guest'),token.createGuestBuildToken('guest'));
+  await actions.claimCurrentBuild(form({buildId:'guest'}));
+  assert.equal(state.builds[2].userId,'user-a');
+  assert.equal(state.builds[1].userId,'user-b');
+});
+
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T04-58-20-601Z/tests/trip-planner.test.cjs`
+
+```typescript
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const {stripTypeScriptTypes}=require('node:module');
+function load(file,deps={}){let js=stripTypeScriptTypes(fs.readFileSync(path.join(__dirname,'..',file),'utf8'));const names=[...js.matchAll(/export (?:async )?function (\w+)|export const (\w+)/g)].map(m=>m[1]||m[2]);js=js.replace(/import\s+\{([^}]+)\}\s+from\s+["']([^"']+)["'];/g,(_,n,s)=>`const {${n}}=require(${JSON.stringify(s)});`).replace(/export /g,'');return new Function('require',js+`\nreturn {${names.join(',')}};`)(s=>s in deps?deps[s]:require(s));}
+const p=load('lib/trip-planner.ts'),trip=load('lib/trip.ts');
+const form=o=>{const f=new FormData();Object.entries(o).forEach(([k,v])=>f.set(k,String(v)));return f;};
+function harness(){const writes=[], old=[{date:new Date('2026-07-01')},{date:new Date('2026-07-02')}];const tx={build:{update:async x=>writes.push(['build',x])},tripDay:{findMany:async()=>old,createMany:async x=>writes.push(['create',x]),deleteMany:async x=>writes.push(['delete',x]),update:async x=>writes.push(['day',x])}};const prisma={...tx,$transaction:async fn=>fn(tx)};const a=load('lib/trip-planner-actions.ts',{'@/lib/prisma':{prisma},'@/lib/build-access':{requireBuildAccess:async id=>{if(id!=='owned')throw Error('Build not found.');return {userId:'owner'};},requireTripDayAccess:async(id,day)=>{if(id!=='owned'||day!=='day')throw Error('Day not found.');return {accessUserId:'owner'};}},'next/cache':{revalidatePath:()=>{}},'@/lib/destinations':{getDestination:()=>null},'@/lib/trip':trip,'@/lib/trip-planner':p,'@/lib/build-history':{ensureBuildRevisionBaseline:async()=>{},recordBuildRevision:async()=>{}}});return {a,writes};}
+test('rejects reversed, incomplete, impossible and excessive dates',()=>{for(const [s,e] of [['2026-07-02','2026-07-01'],['2026-07-01',''],['2026-02-30','2026-03-01'],['2026-01-01','2028-01-01']])assert.throws(()=>p.parseDates(s,e));assert.equal(trip.getDateRange(...Object.values(p.parseDates('2026-03-07','2026-03-09'))).length,3);});
+test('totals preserve zero and indicate partial distance coverage',()=>{const days=[{startLocation:'A',endLocation:'B',distanceKm:0,elevationGainM:10},{startLocation:'B',endLocation:'C',distanceKm:12.4,elevationLossM:5},{notes:'weather only'}];assert.deepEqual(p.tripTotals(days),{distanceKm:12.4,gainM:10,lossM:5,minutes:0,measuredDays:2,plannedDays:2});});
+test('invalid numeric values rejected',()=>{for(const v of ['NaN','Infinity','abc',-1])assert.throws(()=>p.nullableNumber(v,'distance',0,1000));assert.equal(p.nullableNumber('0','distance',0,1000),0);assert.throws(()=>p.nullableNumber('1.5','minutes',0,1440,true));});
+test('date shortening requires explicit confirmation before writes',async()=>{const {a,writes}=harness();await assert.rejects(a.saveTripDetails(form({buildId:'owned',startDate:'2026-07-02',endDate:'2026-07-03'})),/confirmation/);assert.equal(writes.length,0);await a.saveTripDetails(form({buildId:'owned',startDate:'2026-07-02',endDate:'2026-07-03',confirmDateChange:'yes'}));assert.equal(writes.length,3);assert.equal(writes[2][1].where.date.notIn.length,2);});
+test('invalid day and unowned route never write',async()=>{const {a,writes}=harness();await assert.rejects(a.saveTripDay(form({buildId:'owned',dayId:'day',distanceKm:'NaN'})),/distanceKm/);await assert.rejects(a.saveTripRoute(form({buildId:'other',waypoints:'[]'})),/Build not found/);assert.equal(writes.length,0);});
+test('day writes preserve zeros, nullable fields and ownership scope',async()=>{const {a,writes}=harness();await a.saveTripDay(form({buildId:'owned',dayId:'day',distanceKm:0,minTemperature:0,startLocation:' A '}));assert.equal(writes[0][1].data.distanceKm,0);assert.equal(writes[0][1].data.minTemperature,0);assert.equal(writes[0][1].data.startLocation,'A');assert.equal(writes[0][1].where.build.userId,'owner');});
+test('route validation rejects out of range coordinates and duplicate IDs',async()=>{const {a,writes}=harness(),point={id:'one',name:'Camp',kind:'camp',lat:49,lng:-123,elevationM:900};for(const points of [[{...point,lat:91}],[point,point]])await assert.rejects(a.saveTripRoute(form({buildId:'owned',waypoints:JSON.stringify(points)})),/waypoint/);assert.equal(writes.length,0);await a.saveTripRoute(form({buildId:'owned',waypoints:JSON.stringify([point])}));assert.deepEqual(writes[0][1].data.routeWaypoints,[point]);});
+test('logistics are bounded and stored on owned build',async()=>{const {a,writes}=harness();await assert.rejects(a.saveTripLogistics(form({buildId:'owned',emergencyContact:'x'.repeat(5001)})),/too long/);await a.saveTripLogistics(form({buildId:'owned',parking:'Lot A'}));assert.equal(writes[0][1].data.tripLogistics.parking,'Lot A');assert.equal(writes[0][1].where.userId,'owner');});
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/app/build/actions.ts`
+
+```typescript
+"use server";
+
+import { saveTripDetails, saveTripDay } from "@/lib/trip-planner-actions";
+import { parseDates } from "@/lib/trip-planner";
+import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
+import { getDateRange } from "@/lib/trip";
+import { currentBuildUserId, hasGuestBuildAccess, requireBuildAccess, requireBuildItemAccess, setCurrentBuild } from "@/lib/build-access";
+import { guestBuildCookieName } from "@/lib/guest-build-token";
+import { getDestination } from "@/lib/destinations";
+import { Prisma } from "@/app/generated/prisma/client";
+import { ensureBuildRevisionBaseline, getBuildSnapshot, recordBuildRevision } from "@/lib/build-history";
+
+function asRecord(value: unknown): Record<string, unknown> {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) throw new Error("Invalid TrailPicker import file.");
+  return value as Record<string, unknown>;
+}
+
+function optionalText(value: unknown, max: number) {
+  if (value == null || value === "") return null;
+  if (typeof value !== "string" || value.length > max) throw new Error("Invalid TrailPicker import file.");
+  return value;
+}
+
+function optionalNumber(value: unknown, min: number, max: number, integer = false) {
+  if (value == null || value === "") return null;
+  if (typeof value !== "number" || !Number.isFinite(value) || value < min || value > max || (integer && !Number.isInteger(value))) {
+    throw new Error("Invalid TrailPicker import file.");
+  }
+  return value;
+}
+
+function importDate(value: unknown) {
+  if (value == null || value === "") return null;
+  if (typeof value !== "string") throw new Error("Invalid TrailPicker import file.");
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) throw new Error("Invalid TrailPicker import date.");
+  return date;
+}
+
+function importItem(value: unknown) {
+  const item = asRecord(value);
+  const quantity = optionalNumber(item.quantity, 1, 999, true) ?? 1;
+  const gearId = optionalText(item.gearId, 200);
+  const gearName = optionalText(item.gearName, 200);
+  const gearNameSnapshot = optionalText(item.gearNameSnapshot, 200);
+  return {
+    gearId,
+    gearName,
+    quantity,
+    isConsumable: item.isConsumable === true,
+    isWorn: item.isWorn === true,
+    customCategory: optionalText(item.customCategory, 100),
+    gearNameSnapshot,
+    weightSnapshot: optionalNumber(item.weightSnapshot, 0, 1_000_000, true),
+    priceSnapshot: optionalNumber(item.priceSnapshot, 0, 1_000_000),
+  };
+}
+
+function importDay(value: unknown) {
+  const day = asRecord(value);
+  const date = importDate(day.date);
+  if (!date) throw new Error("Imported itinerary day is missing a date.");
+  const text = (key: string, max = 5000) => optionalText(day[key], max);
+  return {
+    date,
+    minTemperature: optionalNumber(day.minTemperature, -100, 60, true),
+    conditions: text("conditions", 20),
+    notes: text("notes"),
+    startLocation: text("startLocation", 500),
+    endLocation: text("endLocation", 500),
+    distanceKm: optionalNumber(day.distanceKm, 0, 1000),
+    elevationGainM: optionalNumber(day.elevationGainM, 0, 20000, true),
+    elevationLossM: optionalNumber(day.elevationLossM, 0, 20000, true),
+    durationMinutes: optionalNumber(day.durationMinutes, 0, 1440, true),
+    campsite: text("campsite"),
+    reservation: text("reservation"),
+    waterSource: text("waterSource"),
+    waterCarryL: optionalNumber(day.waterCarryL, 0, 100),
+    trailConditions: text("trailConditions"),
+    activities: text("activities"),
+  };
+}
+
+export async function getBuildExport(buildId: string) {
+  const access = await requireBuildAccess(buildId);
+  const snapshot = await getBuildSnapshot(access.id, access.userId);
+
+  return {
+    format: "trailpicker-build",
+    version: 2,
+    exportedAt: new Date().toISOString(),
+    ...snapshot,
+  };
+}
+
+export async function importBuildItems(formData: FormData) {
+  const buildId = formData.get("buildId")?.toString() ?? "";
+  const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(access.id, access.userId);
+  const raw = formData.get("payload");
+  const mode = formData.get("mode") === "replace" ? "replace" : "merge";
+
+  if (typeof raw !== "string" || raw.length > 2_000_000) throw new Error("Import file is missing or too large.");
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    throw new Error("That file is not valid JSON.");
+  }
+  const payload = asRecord(parsed);
+  if (payload.format != null && payload.format !== "trailpicker-build") throw new Error("That JSON file is not a TrailPicker build export.");
+  if (!Array.isArray(payload.items) || payload.items.length > 1000) throw new Error("Import must contain no more than 1,000 gear items.");
+  if (payload.days != null && (!Array.isArray(payload.days) || payload.days.length > 366)) throw new Error("Import must contain no more than 366 itinerary days.");
+
+  const items = payload.items.map(importItem);
+  const days = Array.isArray(payload.days) ? payload.days.map(importDay) : null;
+  const requestedGearIds = [...new Set(items.map((item) => item.gearId).filter((id): id is string => Boolean(id)))];
+  const existingGear = requestedGearIds.length
+    ? await prisma.gear.findMany({ where: { id: { in: requestedGearIds } }, select: { id: true } })
+    : [];
+  const existingGearIds = new Set(existingGear.map((gear) => gear.id));
+
+  await prisma.$transaction(async (tx) => {
+    if (mode === "replace") {
+      const startDate = importDate(payload.startDate);
+      const endDate = importDate(payload.endDate);
+      if ((startDate == null) !== (endDate == null) || (startDate && endDate && endDate < startDate)) {
+        throw new Error("Imported trip dates are invalid.");
+      }
+
+      const name = optionalText(payload.name, 100) ?? "Imported build";
+      const people = optionalNumber(payload.people, 1, 100, true) ?? 1;
+      const location = optionalText(payload.location, 500);
+      const locationLat = optionalNumber(payload.locationLat, -90, 90);
+      const locationLng = optionalNumber(payload.locationLng, -180, 180);
+      if ((locationLat == null) !== (locationLng == null)) throw new Error("Imported coordinates must include latitude and longitude.");
+
+      await tx.build.update({
+        where: { id: access.id, userId: access.userId },
+        data: {
+          name,
+          destinationId: optionalText(payload.destinationId, 200),
+          location,
+          locationLat,
+          locationLng,
+          startDate,
+          endDate,
+          people,
+          minTemperature: optionalNumber(payload.minTemperature, -100, 60, true),
+          conditions: optionalText(payload.conditions, 50),
+          routeWaypoints: payload.routeWaypoints == null ? Prisma.DbNull : JSON.parse(JSON.stringify(payload.routeWaypoints)),
+          tripLogistics: payload.tripLogistics == null ? Prisma.DbNull : JSON.parse(JSON.stringify(payload.tripLogistics)),
+        },
+      });
+
+      await tx.buildItem.deleteMany({ where: { buildId: access.id } });
+      await tx.tripDay.deleteMany({ where: { buildId: access.id } });
+
+      if (days) {
+        if (days.length) await tx.tripDay.createMany({ data: days.map((day) => ({ ...day, buildId: access.id })) });
+      } else if (startDate && endDate) {
+        const range = getDateRange(startDate, endDate);
+        if (range.length) await tx.tripDay.createMany({ data: range.map((date) => ({ buildId: access.id, date })) });
+      }
+    }
+
+    for (const item of items) {
+      const gearId = item.gearId && existingGearIds.has(item.gearId) ? item.gearId : null;
+      if (mode === "merge" && gearId) {
+        await tx.buildItem.upsert({
+          where: { buildId_gearId: { buildId: access.id, gearId } },
+          update: {
+            quantity: { increment: item.quantity },
+            isConsumable: item.isConsumable,
+            isWorn: item.isWorn,
+          },
+          create: {
+            buildId: access.id,
+            gearId,
+            quantity: item.quantity,
+            isConsumable: item.isConsumable,
+            isWorn: item.isWorn,
+          },
+        });
+      } else {
+        await tx.buildItem.create({
+          data: {
+            buildId: access.id,
+            gearId,
+            quantity: item.quantity,
+            isConsumable: item.isConsumable,
+            isWorn: item.isWorn,
+            customCategory: item.customCategory,
+            gearNameSnapshot: gearId ? item.gearNameSnapshot : item.gearNameSnapshot ?? item.gearName ?? "Imported item",
+            weightSnapshot: item.weightSnapshot,
+            priceSnapshot: item.priceSnapshot,
+          },
+        });
+      }
+    }
+  });
+
+  await recordBuildRevision(
+    access.id,
+    access.userId,
+    "import",
+    mode === "replace" ? `Imported and replaced build with ${items.length} gear item${items.length === 1 ? "" : "s"}` : `Imported ${items.length} gear item${items.length === 1 ? "" : "s"}`,
+  );
+  revalidatePath(`/build/${access.id}`);
+  revalidatePath("/profile/builds");
+
+  return { mode, itemCount: items.length, dayCount: days?.length ?? 0 };
+}
+
+export async function duplicateBuild(formData: FormData) {
+  const buildId = formData.get("buildId") as string;
+
+  const access = await requireBuildAccess(buildId);
+  const ownerId = await currentBuildUserId();
+  const original = await prisma.build.findUnique({
+    where: { id: buildId, userId: access.userId },
+    include: { items: true, days: true },
+  });
+
+  if (!original) throw new Error("Build not found.");
+
+  const copy = await prisma.build.create({
+    data: {
+      name: `${original.name} (copy)`,
+      userId: ownerId,
+      locationLat: original.locationLat,
+      locationLng: original.locationLng,
+      location: original.location,
+      startDate: original.startDate,
+      endDate: original.endDate,
+      people: original.people,
+      minTemperature: original.minTemperature,
+      conditions: original.conditions,
+      routeWaypoints: original.routeWaypoints ?? undefined,
+      tripLogistics: original.tripLogistics ?? undefined,
+      days: { create: original.days.map(({ id: _id, buildId: _buildId, createdAt: _createdAt, updatedAt: _updatedAt, ...day }) => day) },
+      items: {
+        create: original.items.map((item) => ({
+          gearId: item.gearId,
+          quantity: item.quantity,
+          isConsumable: item.isConsumable,
+          isWorn: item.isWorn,
+          customCategory: item.customCategory,
+          gearNameSnapshot: item.gearNameSnapshot,
+          weightSnapshot: item.weightSnapshot,
+          priceSnapshot: item.priceSnapshot,
+        })),
+      },
+    },
+  });
+
+  await recordBuildRevision(copy.id, ownerId, "copy", `Created from ${original.name}`);
+  await setCurrentBuild(copy.id, !ownerId);
+  redirect(`/build/${copy.id}`);
+}
+export async function setItemCategory(formData: FormData) {
+  const itemId = formData.get("itemId") as string;
+  const buildId = formData.get("buildId") as string;
+  const item = await requireBuildItemAccess(buildId, itemId);
+  await ensureBuildRevisionBaseline(buildId, item.accessUserId);
+  const category = formData.get("category") as "base" | "worn" | "consumable";
+
+  await prisma.buildItem.update({
+    where: { id: itemId, buildId, build: { userId: item.accessUserId } },
+    data: {
+      isWorn: category === "worn",
+      isConsumable: category === "consumable",
+    },
+  });
+
+  await recordBuildRevision(buildId, item.accessUserId, "gear", "Changed gear category");
+  revalidatePath(`/build/${buildId}`);
+}
+
+export async function addCustomItem(formData: FormData) {
+  const buildId = formData.get("buildId") as string;
+  const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
+  const category = formData.get("category") as string;
+  const name = formData.get("name") as string;
+  const weightRaw = formData.get("weight_g") as string;
+  const priceRaw = formData.get("price_cad") as string;
+
+  if (!name?.trim()) {
+    throw new Error("Item name is required.");
+  }
+
+  await prisma.buildItem.create({
+    data: {
+      build: { connect: { id: buildId, userId: access.userId } },
+      customCategory: category,
+      gearNameSnapshot: name.trim(),
+      weightSnapshot: weightRaw ? Number(weightRaw) : null,
+      priceSnapshot: priceRaw ? Number(priceRaw) : null,
+    },
+  });
+
+  await recordBuildRevision(buildId, access.userId, "gear", `Added custom item: ${name.trim()}`);
+  redirect(`/build/${buildId}`);
+}
+
+export async function updateQuantity(formData: FormData) {
+  const itemId = formData.get("itemId") as string;
+  const buildId = formData.get("buildId") as string;
+  const delta = Number(formData.get("delta"));
+
+  const item = await requireBuildItemAccess(buildId, itemId);
+  await ensureBuildRevisionBaseline(buildId, item.accessUserId);
+
+  if (!Number.isInteger(delta) || Math.abs(delta) !== 1) throw new Error("Invalid quantity change.");
+  const newQuantity = Math.max(1, item.quantity + delta);
+
+  await prisma.buildItem.update({
+    where: { id: itemId, buildId, build: { userId: item.accessUserId } },
+    data: { quantity: newQuantity },
+  });
+
+  await recordBuildRevision(buildId, item.accessUserId, "gear", "Changed gear quantity");
+  revalidatePath(`/build/${buildId}`);
+}
+export async function claimCurrentBuild(formData?: FormData) {
+  const userId = await currentBuildUserId();
+  if (!userId) return;
+  const cookieStore = await cookies();
+  const submittedId = formData?.get("buildId");
+  const buildId = typeof submittedId === "string" ? submittedId : cookieStore.get("currentBuild")?.value;
+  if (!buildId || !(await hasGuestBuildAccess(buildId))) return;
+  const result = await prisma.build.updateMany({
+    where: { id: buildId, userId: null }, data: { userId },
+  });
+  if (result.count) {
+    cookieStore.delete(guestBuildCookieName(buildId));
+    revalidatePath(`/build/${buildId}`);
+    revalidatePath("/profile/builds");
+  }
+}
+export async function createBuild(formData: FormData) {
+  const ownerId = await currentBuildUserId();
+
+  const name = formData.get("name")?.toString().trim();
+
+  if (!name) {
+    throw new Error("Build name is required.");
+  }
+
+  const startDateRaw = formData.get("startDate")?.toString();
+  const endDateRaw = formData.get("endDate")?.toString();
+  const peopleRaw = formData.get("people")?.toString();
+  const minTemperatureRaw =
+    formData.get("minTemperature")?.toString();
+  const conditions = formData.get("conditions")?.toString();
+
+  const destinationIdRaw =
+    formData.get("destinationId")?.toString() || null;
+
+  const selectedDestination = getDestination(destinationIdRaw);
+
+
+  const submittedLocation =
+    formData.get("location")?.toString().trim();
+
+  const submittedLat =
+    formData.get("locationLat")?.toString();
+
+  const submittedLng =
+    formData.get("locationLng")?.toString();
+
+  const location = selectedDestination
+    ? `${selectedDestination.name}, ${selectedDestination.park}`
+    : submittedLocation || null;
+
+  const locationLat = selectedDestination
+    ? selectedDestination.latitude
+    : submittedLat
+      ? Number(submittedLat)
+      : null;
+
+  const locationLng = selectedDestination
+    ? selectedDestination.longitude
+    : submittedLng
+      ? Number(submittedLng)
+      : null;
+
+  const dates = parseDates(startDateRaw ?? "", endDateRaw ?? "");
+  const build = await prisma.build.create({
+    data: {
+      name,
+      destinationId: selectedDestination?.id ?? null,
+      location,
+      locationLat,
+      locationLng,
+      ...dates,
+      people: peopleRaw ? Number(peopleRaw) : 1,
+      minTemperature: minTemperatureRaw
+        ? Number(minTemperatureRaw)
+        : null,
+      conditions: conditions || null,
+      userId: ownerId,
+    },
+  });
+
+  if (build.startDate && build.endDate) {
+    const range = getDateRange(
+      build.startDate,
+      build.endDate,
+    );
+
+    await prisma.tripDay.createMany({
+      data: range.map((date) => ({
+        buildId: build.id,
+        date,
+      })),
+      skipDuplicates: true,
+    });
+  }
+
+  await recordBuildRevision(build.id, ownerId, "create", "Created build");
+  await setCurrentBuild(build.id, !ownerId);
+
+  redirect(`/build/${build.id}`);
+}
+export async function addGear(formData: FormData) {
+  const buildId = formData.get("buildId") as string;
+  const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
+  const gearId = formData.get("gearId") as string;
+
+  await prisma.buildItem.upsert({
+    where: {
+      buildId_gearId: { buildId, gearId },
+      build: { userId: access.userId },
+    },
+    update: {
+      quantity: { increment: 1 },
+    },
+    create: {
+      build: { connect: { id: buildId, userId: access.userId } },
+      gear: { connect: { id: gearId } },
+    },
+  });
+
+  await recordBuildRevision(buildId, access.userId, "gear", "Added gear");
+  redirect(`/build/${buildId}`);
+}
+
+export async function removeGear(formData: FormData) {
+  const itemId = formData.get("itemId") as string;
+  const buildId = formData.get("buildId") as string;
+  const item = await requireBuildItemAccess(buildId, itemId);
+  await ensureBuildRevisionBaseline(buildId, item.accessUserId);
+
+  await prisma.buildItem.delete({
+    where: {
+      id: itemId,
+      buildId,
+      build: { userId: item.accessUserId },
+    },
+  });
+
+  await recordBuildRevision(buildId, item.accessUserId, "gear", "Removed gear");
+  redirect(`/build/${buildId}`);
+}
+
+export async function updateTripDetails(formData: FormData) { return saveTripDetails(formData); }
+export async function updateTripDay(formData: FormData) { return saveTripDay(formData); }
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/app/profile/actions.ts`
+
+```typescript
+"use server";
+
+import { setCurrentBuild } from "@/lib/build-access";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
+
+async function currentUser() {
+  const session = await auth();
+  if (!session?.user?.email) throw new Error("You must be signed in.");
+  const user = await prisma.user.findUnique({ where: { email: session.user.email }, select: { id: true } });
+  if (!user) throw new Error("User not found.");
+  return user;
+}
+
+export async function deleteBuild(formData: FormData) {
+  const user = await currentUser();
+  const buildId = String(formData.get("buildId") || "");
+  await prisma.build.deleteMany({ where: { id: buildId, userId: user.id } });
+  revalidatePath("/profile");
+  revalidatePath("/profile/builds");
+}
+
+export async function renameBuild(formData: FormData) {
+  const user = await currentUser();
+  const buildId = String(formData.get("buildId") || "");
+  const name = String(formData.get("name") || "").trim();
+  if (!name) throw new Error("Build name is required.");
+  await ensureBuildRevisionBaseline(buildId, user.id);
+  await prisma.build.updateMany({ where: { id: buildId, userId: user.id }, data: { name: name.slice(0, 80) } });
+  await recordBuildRevision(buildId, user.id, "settings", "Renamed build");
+  revalidatePath("/profile");
+  revalidatePath("/profile/builds");
+}
+
+export async function duplicateProfileBuild(formData: FormData) {
+  const user = await currentUser();
+  const buildId = String(formData.get("buildId") || "");
+  const original = await prisma.build.findFirst({ where: { id: buildId, userId: user.id }, include: { items: true, days: true } });
+  if (!original) throw new Error("Build not found.");
+  const copy = await prisma.build.create({
+    data: {
+      name: `${original.name} (copy)`,
+      userId: user.id,
+      location: original.location,
+      locationLat: original.locationLat,
+      locationLng: original.locationLng,
+      startDate: original.startDate,
+      endDate: original.endDate,
+      people: original.people,
+      minTemperature: original.minTemperature,
+      conditions: original.conditions,
+      items: {
+        create: original.items.map(
+          ({ gearId, quantity, isConsumable, isWorn, customCategory, gearNameSnapshot, weightSnapshot, priceSnapshot }) => ({
+            gearId,
+            quantity,
+            isConsumable,
+            isWorn,
+            customCategory,
+            gearNameSnapshot,
+            weightSnapshot,
+            priceSnapshot,
+          }),
+        ),
+      },
+      days: {
+        create: original.days.map(({ date, minTemperature, conditions, notes }) => ({
+          date,
+          minTemperature,
+          conditions,
+          notes,
+        })),
+      },
+    },
+  });
+  await recordBuildRevision(copy.id, user.id, "copy", `Created from ${original.name}`);
+  await setCurrentBuild(copy.id);
+  redirect(`/build/${copy.id}`);
+}
+
+export async function updateProfile(formData: FormData) {
+  const user = await currentUser();
+  const name = String(formData.get("name") || "").trim();
+  const username = String(formData.get("username") || "").trim().toLowerCase();
+  const bio = String(formData.get("bio") || "").trim();
+  const location = String(formData.get("location") || "").trim();
+  if (!name) throw new Error("Display name is required.");
+  if (username && !/^[a-z0-9_]{3,24}$/.test(username)) throw new Error("Username must be 3–24 letters, numbers, or underscores.");
+  await prisma.user.update({ where: { id: user.id }, data: { name, username: username || null, bio: bio || null, location: location || null, isProfilePublic: formData.get("isProfilePublic") === "on" } });
+  revalidatePath("/profile", "layout");
+  redirect("/profile");
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/app/profile/gear/actions.ts`
+
+```typescript
+"use server";
+
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
+import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
+
+async function userId() {
+  const session = await auth();
+  if (!session?.user?.email) throw new Error("You must be signed in.");
+  const user = await prisma.user.findUnique({ where: { email: session.user.email }, select: { id: true } });
+  if (!user) throw new Error("User not found.");
+  return user.id;
+}
+
+function gearIdFrom(formData: FormData) {
+  const gearId = String(formData.get("gearId") || "");
+  if (!gearId) throw new Error("Gear item is required.");
+  return gearId;
+}
+
+function refreshGearPages(gearId: string) {
+  revalidatePath("/profile", "layout");
+  revalidatePath("/profile/gear");
+  revalidatePath("/profile/favorites");
+  revalidatePath(`/gear/${gearId}`);
+}
+
+export async function addOwnedGear(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.ownedGear.upsert({
+    where: { userId_gearId: { userId: userIdValue, gearId } },
+    update: {},
+    create: { userId: userIdValue, gearId },
+  });
+  refreshGearPages(gearId);
+}
+
+export async function removeOwnedGear(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.ownedGear.deleteMany({ where: { userId: userIdValue, gearId } });
+  refreshGearPages(gearId);
+}
+
+export async function addFavorite(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.favorite.upsert({
+    where: { userId_gearId: { userId: userIdValue, gearId } },
+    update: {},
+    create: { userId: userIdValue, gearId },
+  });
+  refreshGearPages(gearId);
+}
+
+export async function removeFavorite(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.favorite.deleteMany({ where: { userId: userIdValue, gearId } });
+  refreshGearPages(gearId);
+}
+
+export async function moveFavoriteToGear(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  await prisma.$transaction([
+    prisma.ownedGear.upsert({ where: { userId_gearId: { userId: userIdValue, gearId } }, update: {}, create: { userId: userIdValue, gearId } }),
+    prisma.favorite.deleteMany({ where: { userId: userIdValue, gearId } }),
+  ]);
+  refreshGearPages(gearId);
+}
+
+export async function addGearToCurrentBuild(formData: FormData) {
+  const userIdValue = await userId();
+  const gearId = gearIdFrom(formData);
+  const buildId = (await cookies()).get("currentBuild")?.value;
+  if (!buildId) redirect("/profile/builds");
+  const build = await prisma.build.findFirst({ where: { id: buildId, userId: userIdValue }, select: { id: true } });
+  if (!build) redirect("/profile/builds");
+  await ensureBuildRevisionBaseline(build.id, userIdValue);
+  await prisma.buildItem.upsert({
+    where: { buildId_gearId: { buildId: build.id, gearId } },
+    update: { quantity: { increment: 1 } },
+    create: { buildId: build.id, gearId },
+  });
+  await recordBuildRevision(build.id, userIdValue, "gear", "Added gear from library");
+  revalidatePath(`/build/${build.id}`);
+  redirect(`/build/${build.id}`);
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/components/builder/BuildDataTools.tsx`
+
+```typescript
+"use client";
+
+import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  AlertTriangle,
+  Backpack,
+  CheckCircle2,
+  Clock3,
+  Download,
+  FileDown,
+  FileJson2,
+  FileUp,
+  History,
+  Loader2,
+  MapPinned,
+  PackageOpen,
+  RotateCcw,
+  UploadCloud,
+  X,
+} from "lucide-react";
+import { getBuildExport, importBuildItems } from "@/app/build/actions";
+import { getBuildHistory, restoreBuildRevision } from "@/lib/build-history-actions";
+
+type Tool = "import" | "export" | "history";
+type ImportMode = "merge" | "replace";
+
+type ImportPreview = {
+  name: string;
+  itemCount: number;
+  dayCount: number;
+  version: number | null;
+  fullBuild: boolean;
+};
+
+type SelectedImport = {
+  fileName: string;
+  size: number;
+  text: string;
+  preview: ImportPreview;
+};
+
+type HistoryEntry = {
+  id: string;
+  action: string;
+  summary: string;
+  createdAt: string;
+  itemCount: number;
+  dayCount: number;
+  name: string;
+  isCurrent: boolean;
+};
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function inspectImport(text: string): ImportPreview {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    throw new Error("That file is not valid JSON.");
+  }
+
+  if (!isRecord(parsed) || !Array.isArray(parsed.items)) {
+    throw new Error("This doesn’t look like a TrailPicker export.");
+  }
+  if (parsed.format != null && parsed.format !== "trailpicker-build") {
+    throw new Error("This file was not exported by TrailPicker.");
+  }
+
+  const version = typeof parsed.version === "number" ? parsed.version : null;
+  return {
+    name: typeof parsed.name === "string" && parsed.name.trim() ? parsed.name.trim() : "Imported build",
+    itemCount: parsed.items.length,
+    dayCount: Array.isArray(parsed.days) ? parsed.days.length : 0,
+    version,
+    fullBuild: version === 2 || Array.isArray(parsed.days) || "routeWaypoints" in parsed || "tripLogistics" in parsed,
+  };
+}
+
+function bytes(size: number) {
+  if (size < 1024) return `${size} B`;
+  if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+  return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function safeFileName(name: string) {
+  const base = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return `${base || "trailpicker-build"}.json`;
+}
+
+function historyIcon(action: string) {
+  if (action === "import") return FileUp;
+  if (action === "restore") return RotateCcw;
+  if (action === "route" || action === "trip" || action === "itinerary" || action === "logistics") return MapPinned;
+  if (action === "gear") return Backpack;
+  return Clock3;
+}
+
+const toolTitle: Record<Tool, string> = {
+  import: "Import build",
+  export: "Export build",
+  history: "History",
+};
+
+export default function BuildDataTools({
+  buildId,
+  buildName,
+  createdAt,
+  updatedAt,
+  buttonClassName,
+}: {
+  buildId: string;
+  buildName: string;
+  createdAt: Date;
+  updatedAt: Date;
+  buttonClassName: string;
+}) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  const fileInput = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  const [tool, setTool] = useState<Tool>("import");
+  const [selectedImport, setSelectedImport] = useState<SelectedImport | null>(null);
+  const [importMode, setImportMode] = useState<ImportMode>("merge");
+  const [importError, setImportError] = useState<string | null>(null);
+  const [importNotice, setImportNotice] = useState<string | null>(null);
+  const [importing, setImporting] = useState(false);
+  const [exporting, setExporting] = useState(false);
+  const [exportNotice, setExportNotice] = useState<string | null>(null);
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [historyError, setHistoryError] = useState<string | null>(null);
+  const [confirmRestore, setConfirmRestore] = useState<string | null>(null);
+  const [restoring, setRestoring] = useState<string | null>(null);
+
+  async function loadHistory() {
+    setHistoryLoading(true);
+    setHistoryError(null);
+    try {
+      const entries = await getBuildHistory(buildId);
+      setHistory(entries);
+    } catch {
+      setHistoryError("Couldn’t load history.");
+    } finally {
+      setHistoryLoading(false);
+    }
+  }
+
+  function open(nextTool: Tool) {
+    setTool(nextTool);
+    setImportError(null);
+    setImportNotice(null);
+    setExportNotice(null);
+    setHistoryError(null);
+    setConfirmRestore(null);
+    dialog.current?.showModal();
+    if (nextTool === "history") void loadHistory();
+  }
+
+  async function readImportFile(file: File) {
+    setImportError(null);
+    setImportNotice(null);
+    if (file.size > 2_000_000) {
+      setSelectedImport(null);
+      setImportError("File is too large. Maximum size is 2 MB.");
+      return;
+    }
+    try {
+      const text = await file.text();
+      const preview = inspectImport(text);
+      setSelectedImport({ fileName: file.name, size: file.size, text, preview });
+    } catch (error) {
+      setSelectedImport(null);
+      setImportError(error instanceof Error ? error.message : "Couldn’t read that file.");
+    }
+  }
+
+  async function runImport() {
+    if (!selectedImport || importing) return;
+    setImporting(true);
+    setImportError(null);
+    setImportNotice(null);
+    try {
+      const formData = new FormData();
+      formData.set("buildId", buildId);
+      formData.set("payload", selectedImport.text);
+      formData.set("mode", importMode);
+      const result = await importBuildItems(formData);
+      setImportNotice(
+        result.mode === "replace"
+          ? `Imported ${result.itemCount} item${result.itemCount === 1 ? "" : "s"}.`
+          : `Added ${result.itemCount} item${result.itemCount === 1 ? "" : "s"}.`,
+      );
+      setSelectedImport(null);
+      if (fileInput.current) fileInput.current.value = "";
+      setHistory([]);
+      router.refresh();
+    } catch (error) {
+      setImportError(error instanceof Error ? error.message : "Import failed.");
+    } finally {
+      setImporting(false);
+    }
+  }
+
+  async function runExport() {
+    if (exporting) return;
+    setExporting(true);
+    setExportNotice(null);
+    try {
+      const data = await getBuildExport(buildId);
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = safeFileName(buildName);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setExportNotice("Downloaded.");
+    } catch {
+      setExportNotice("Export failed. Try again.");
+    } finally {
+      setExporting(false);
+    }
+  }
+
+  async function restore(entry: HistoryEntry) {
+    if (restoring || entry.isCurrent) return;
+    setRestoring(entry.id);
+    setHistoryError(null);
+    try {
+      await restoreBuildRevision(buildId, entry.id);
+      setConfirmRestore(null);
+      await loadHistory();
+      router.refresh();
+    } catch {
+      setHistoryError("Couldn’t restore that version.");
+    } finally {
+      setRestoring(null);
+    }
+  }
+
+  return (
+    <>
+      <button type="button" onClick={() => open("import")} className={buttonClassName}>
+        <FileUp className="h-4 w-4" aria-hidden="true" />
+        Import
+      </button>
+      <button type="button" onClick={() => open("export")} className={buttonClassName}>
+        <FileDown className="h-4 w-4" aria-hidden="true" />
+        Export
+      </button>
+      <button type="button" onClick={() => open("history")} className={buttonClassName}>
+        <History className="h-4 w-4" aria-hidden="true" />
+        History
+      </button>
+
+      <dialog
+        ref={dialog}
+        aria-labelledby="build-data-title"
+        className="fixed inset-0 m-auto max-h-[88vh] w-[calc(100%_-_2rem)] max-w-2xl overflow-hidden rounded-2xl border border-gray-200 bg-white p-0 text-gray-900 shadow-2xl backdrop:bg-gray-950/45"
+        onClick={(event) => {
+          if (event.target !== event.currentTarget) return;
+          const rect = event.currentTarget.getBoundingClientRect();
+          const outside = event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom;
+          if (outside) event.currentTarget.close();
+        }}
+      >
+        <div className="flex max-h-[88vh] flex-col">
+          <header className="flex items-center justify-between gap-4 border-b border-gray-200 px-6 py-5">
+            <h2 id="build-data-title" className="text-lg font-semibold text-gray-950">{toolTitle[tool]}</h2>
+            <button
+              type="button"
+              onClick={() => dialog.current?.close()}
+              aria-label="Close"
+              className="rounded-lg p-2 text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
+            >
+              <X className="h-5 w-5" aria-hidden="true" />
+            </button>
+          </header>
+
+          <div className="overflow-y-auto px-6 py-6">
+            {tool === "import" && (
+              <div className="space-y-5">
+                <input
+                  ref={fileInput}
+                  type="file"
+                  accept="application/json,.json"
+                  className="hidden"
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (file) void readImportFile(file);
+                  }}
+                />
+
+                <button
+                  type="button"
+                  onClick={() => fileInput.current?.click()}
+                  onDragOver={(event) => event.preventDefault()}
+                  onDrop={(event) => {
+                    event.preventDefault();
+                    const file = event.dataTransfer.files?.[0];
+                    if (file) void readImportFile(file);
+                  }}
+                  className="group flex w-full flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 px-6 py-9 text-center transition hover:border-green-600 hover:bg-green-50/40"
+                >
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-green-800 shadow-sm ring-1 ring-gray-200">
+                    <UploadCloud className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <span className="mt-3 text-sm font-semibold text-gray-900">Choose a JSON file</span>
+                  <span className="mt-1 text-xs text-gray-500">or drop it here</span>
+                </button>
+
+                {selectedImport && (
+                  <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+                    <div className="flex items-center gap-3 border-b border-gray-100 bg-gray-50 px-4 py-3">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-green-800 ring-1 ring-gray-200">
+                        <FileJson2 className="h-5 w-5" aria-hidden="true" />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-semibold text-gray-900">{selectedImport.fileName}</p>
+                        <p className="text-xs text-gray-500">{bytes(selectedImport.size)} · {selectedImport.preview.version ? `v${selectedImport.preview.version}` : "legacy"}</p>
+                      </div>
+                      <button type="button" onClick={() => setSelectedImport(null)} className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-700" aria-label="Remove file">
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                    <div className="grid gap-3 p-4 sm:grid-cols-3">
+                      <div>
+                        <p className="text-xs text-gray-500">Build</p>
+                        <p className="mt-1 truncate text-sm font-medium text-gray-900">{selectedImport.preview.name}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Gear</p>
+                        <p className="mt-1 text-sm font-medium text-gray-900">{selectedImport.preview.itemCount} item{selectedImport.preview.itemCount === 1 ? "" : "s"}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Trip</p>
+                        <p className="mt-1 text-sm font-medium text-gray-900">{selectedImport.preview.fullBuild ? `${selectedImport.preview.dayCount} day${selectedImport.preview.dayCount === 1 ? "" : "s"}` : "Gear only"}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {selectedImport && (
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <button
+                      type="button"
+                      onClick={() => setImportMode("merge")}
+                      className={`rounded-xl border p-4 text-left transition ${importMode === "merge" ? "border-green-700 bg-green-50 ring-1 ring-green-700/10" : "border-gray-200 hover:bg-gray-50"}`}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <PackageOpen className="h-5 w-5 text-green-800" />
+                        {importMode === "merge" && <CheckCircle2 className="h-5 w-5 text-green-700" />}
+                      </div>
+                      <p className="mt-3 text-sm font-semibold text-gray-900">Add gear</p>
+                      <p className="mt-1 text-xs leading-5 text-gray-500">Keep this build and add the imported gear.</p>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setImportMode("replace")}
+                      className={`rounded-xl border p-4 text-left transition ${importMode === "replace" ? "border-amber-500 bg-amber-50 ring-1 ring-amber-500/10" : "border-gray-200 hover:bg-gray-50"}`}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <RotateCcw className="h-5 w-5 text-amber-700" />
+                        {importMode === "replace" && <CheckCircle2 className="h-5 w-5 text-amber-600" />}
+                      </div>
+                      <p className="mt-3 text-sm font-semibold text-gray-900">Replace build</p>
+                      <p className="mt-1 text-xs leading-5 text-gray-500">Replace the current gear and trip data.</p>
+                    </button>
+                  </div>
+                )}
+
+                {importError && <p role="alert" className="flex items-start gap-2 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />{importError}</p>}
+                {importNotice && <p role="status" className="flex items-start gap-2 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-800"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />{importNotice}</p>}
+
+                <div className="flex justify-end border-t border-gray-100 pt-5">
+                  <button
+                    type="button"
+                    onClick={runImport}
+                    disabled={!selectedImport || importing}
+                    className="inline-flex min-w-28 items-center justify-center gap-2 rounded-lg bg-green-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-900 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    {importing ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileUp className="h-4 w-4" />}
+                    {importing ? "Importing…" : importMode === "replace" ? "Replace" : "Import"}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {tool === "export" && (
+              <div className="space-y-5">
+                <div className="rounded-xl border border-gray-200 p-5">
+                  <div className="flex items-start gap-4">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-800">
+                      <Download className="h-5 w-5" />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate font-semibold text-gray-950">{buildName}</p>
+                      <p className="mt-1 text-sm text-gray-500">Gear, trip details, route, logistics, and itinerary.</p>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={runExport}
+                    disabled={exporting}
+                    className="mt-5 inline-flex items-center gap-2 rounded-lg bg-green-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-900 disabled:opacity-60"
+                  >
+                    {exporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileDown className="h-4 w-4" />}
+                    {exporting ? "Preparing…" : "Download JSON"}
+                  </button>
+                </div>
+
+                <p className="text-xs text-gray-500">
+                  Created {createdAt.toLocaleString()} · Updated {updatedAt.toLocaleString()}
+                </p>
+
+                {exportNotice && (
+                  <p role="status" className={`rounded-lg px-4 py-3 text-sm ${exportNotice === "Downloaded." ? "bg-green-50 text-green-800" : "bg-red-50 text-red-700"}`}>
+                    {exportNotice}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {tool === "history" && (
+              <div className="space-y-4">
+                <div className="flex justify-end">
+                  <button type="button" onClick={() => void loadHistory()} disabled={historyLoading} className="rounded-lg border border-gray-200 px-3 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50">
+                    Refresh
+                  </button>
+                </div>
+
+                {historyLoading && history.length === 0 && (
+                  <div className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 py-12 text-sm text-gray-500"><Loader2 className="h-4 w-4 animate-spin" />Loading…</div>
+                )}
+                {historyError && <p role="alert" className="flex items-start gap-2 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />{historyError}</p>}
+
+                {!historyLoading && !historyError && history.length === 0 && (
+                  <div className="rounded-xl border border-dashed border-gray-300 px-6 py-10 text-center">
+                    <History className="mx-auto h-7 w-7 text-gray-400" />
+                    <p className="mt-3 text-sm font-semibold text-gray-800">No history yet</p>
+                  </div>
+                )}
+
+                <div className="space-y-2">
+                  {history.map((entry) => {
+                    const Icon = historyIcon(entry.action);
+                    const confirming = confirmRestore === entry.id;
+                    return (
+                      <div key={entry.id} className={`rounded-xl border p-4 ${entry.isCurrent ? "border-green-200 bg-green-50/50" : "border-gray-200 bg-white"}`}>
+                        <div className="flex items-start gap-3">
+                          <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${entry.isCurrent ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}>
+                            <Icon className="h-4 w-4" />
+                          </span>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <p className="text-sm font-semibold text-gray-900">{entry.summary}</p>
+                              {entry.isCurrent && <span className="rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-green-800">Current</span>}
+                            </div>
+                            <p className="mt-1 text-xs text-gray-500">{new Date(entry.createdAt).toLocaleString()} · {entry.itemCount} gear · {entry.dayCount} day{entry.dayCount === 1 ? "" : "s"}</p>
+                          </div>
+                          {!entry.isCurrent && !confirming && (
+                            <button type="button" onClick={() => setConfirmRestore(entry.id)} className="shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                              Restore
+                            </button>
+                          )}
+                        </div>
+
+                        {confirming && (
+                          <div className="mt-4 flex flex-col gap-3 rounded-lg bg-amber-50 p-3 sm:flex-row sm:items-center sm:justify-between">
+                            <p className="text-xs leading-5 text-amber-900">Restore this version? Your current version will stay in history.</p>
+                            <div className="flex shrink-0 gap-2">
+                              <button type="button" onClick={() => setConfirmRestore(null)} className="rounded-lg px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-white/70">Cancel</button>
+                              <button type="button" onClick={() => void restore(entry)} disabled={Boolean(restoring)} className="inline-flex items-center gap-1.5 rounded-lg bg-amber-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-700 disabled:opacity-50">
+                                {restoring === entry.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RotateCcw className="h-3.5 w-3.5" />}
+                                Restore
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </dialog>
+    </>
+  );
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/components/builder/ShareBar.tsx`
+
+```typescript
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { Copy, CopyCheck, Plus, Save } from "lucide-react";
+import BuildSettings from "@/components/builder/BuildSettings";
+import BuildDataTools from "@/components/builder/BuildDataTools";
+import { duplicateBuild } from "@/app/build/actions";
+
+type Props = {
+  buildId: string;
+  buildName: string;
+  isPublic: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+const btnClass =
+  "flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:border-gray-400 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50";
+
+export default function ShareBar({ buildId, buildName, isPublic, createdAt, updatedAt }: Props) {
+  const [copied, setCopied] = useState(false);
+  const shareUrl = typeof window !== "undefined" ? `${window.location.origin}/build/${buildId}` : `/build/${buildId}`;
+
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    } catch {
+      // The URL remains selectable if clipboard permission is blocked.
+    }
+  }
+
+  return (
+    <div className="flex flex-wrap items-center gap-2.5 px-5 py-4">
+      <div className="flex min-w-[280px] flex-1 items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 shadow-inner shadow-gray-100/70">
+        <button
+          type="button"
+          onClick={copyLink}
+          title={isPublic ? "Copy public link" : "Copy private link"}
+          className="shrink-0 rounded-md p-1 text-gray-400 transition hover:bg-white hover:text-green-800"
+        >
+          {copied ? <CopyCheck className="h-4 w-4 text-green-700" /> : <Copy className="h-4 w-4" />}
+        </button>
+        <input
+          readOnly
+          value={shareUrl}
+          onFocus={(event) => event.currentTarget.select()}
+          className="w-full truncate bg-transparent text-sm text-gray-700 outline-none"
+        />
+        <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${isPublic ? "bg-green-100 text-green-800" : "bg-gray-200 text-gray-600"}`}>
+          {isPublic ? "Public" : "Private"}
+        </span>
+      </div>
+
+      <BuildDataTools
+        buildId={buildId}
+        buildName={buildName}
+        createdAt={createdAt}
+        updatedAt={updatedAt}
+        buttonClassName={btnClass}
+      />
+
+      <BuildSettings buildId={buildId} buildName={buildName} isPublic={isPublic} buttonClassName={btnClass} />
+
+      <form action={duplicateBuild}>
+        <input type="hidden" name="buildId" value={buildId} />
+        <button type="submit" className={btnClass}>
+          <Save className="h-4 w-4" aria-hidden="true" />
+          Save As
+        </button>
+      </form>
+
+      <Link href="/build" className={btnClass}>
+        <Plus className="h-4 w-4" aria-hidden="true" />
+        New Build
+      </Link>
+    </div>
+  );
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/build-history-actions.ts`
+
+```typescript
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/app/generated/prisma/client";
+import { requireBuildAccess } from "@/lib/build-access";
+import {
+  ensureBuildRevisionBaseline,
+  recordBuildRevision,
+  type BuildSnapshot,
+  type BuildSnapshotDay,
+  type BuildSnapshotItem,
+} from "@/lib/build-history";
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function parseSnapshot(value: unknown): BuildSnapshot {
+  if (!isRecord(value) || typeof value.name !== "string" || !Array.isArray(value.items) || !Array.isArray(value.days)) {
+    throw new Error("This history entry can’t be restored.");
+  }
+  return value as unknown as BuildSnapshot;
+}
+
+function dateOrNull(value: string | null) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) throw new Error("This history entry contains an invalid date.");
+  return date;
+}
+
+function safeItem(item: BuildSnapshotItem) {
+  return {
+    gearId: typeof item.gearId === "string" ? item.gearId : null,
+    gearName: typeof item.gearName === "string" ? item.gearName : null,
+    quantity: Number.isInteger(item.quantity) && item.quantity > 0 ? Math.min(item.quantity, 999) : 1,
+    isConsumable: Boolean(item.isConsumable),
+    isWorn: Boolean(item.isWorn),
+    customCategory: typeof item.customCategory === "string" ? item.customCategory.slice(0, 100) : null,
+    gearNameSnapshot: typeof item.gearNameSnapshot === "string" ? item.gearNameSnapshot.slice(0, 200) : null,
+    weightSnapshot: Number.isFinite(item.weightSnapshot) ? item.weightSnapshot : null,
+    priceSnapshot: Number.isFinite(item.priceSnapshot) ? item.priceSnapshot : null,
+  };
+}
+
+function safeDay(day: BuildSnapshotDay) {
+  const date = new Date(day.date);
+  if (Number.isNaN(date.getTime())) throw new Error("This history entry contains an invalid itinerary date.");
+  return { ...day, date };
+}
+
+export async function getBuildHistory(buildId: string) {
+  const access = await requireBuildAccess(buildId);
+
+  await ensureBuildRevisionBaseline(access.id, access.userId);
+
+  const revisions = await prisma.buildRevision.findMany({
+    where: { buildId: access.id },
+    orderBy: { createdAt: "desc" },
+    take: 30,
+    select: { id: true, action: true, summary: true, snapshot: true, createdAt: true },
+  });
+
+  return revisions.map((revision, index) => {
+    const snapshot = isRecord(revision.snapshot) ? revision.snapshot : null;
+    const itemCount = snapshot && Array.isArray(snapshot.items) ? snapshot.items.length : 0;
+    const dayCount = snapshot && Array.isArray(snapshot.days) ? snapshot.days.length : 0;
+    const name = snapshot && typeof snapshot.name === "string" ? snapshot.name : "Build";
+
+    return {
+      id: revision.id,
+      action: revision.action,
+      summary: revision.summary,
+      createdAt: revision.createdAt.toISOString(),
+      itemCount,
+      dayCount,
+      name,
+      isCurrent: index === 0,
+    };
+  });
+}
+
+export async function restoreBuildRevision(buildId: string, revisionId: string) {
+  const access = await requireBuildAccess(buildId);
+  if (typeof revisionId !== "string" || !revisionId || revisionId.length > 200) {
+    throw new Error("Invalid history entry.");
+  }
+
+  const revision = await prisma.buildRevision.findFirst({
+    where: { id: revisionId, buildId: access.id },
+    select: { snapshot: true, createdAt: true },
+  });
+  if (!revision) throw new Error("History entry not found.");
+
+  const snapshot = parseSnapshot(revision.snapshot);
+  await recordBuildRevision(access.id, access.userId, "history", "Saved before restore");
+  if (snapshot.items.length > 1000 || snapshot.days.length > 366) {
+    throw new Error("This history entry is too large to restore.");
+  }
+
+  const items = snapshot.items.map(safeItem);
+  const days = snapshot.days.map(safeDay);
+  const requestedGearIds = [...new Set(items.map((item) => item.gearId).filter((id): id is string => Boolean(id)))];
+  const existingGear = requestedGearIds.length
+    ? await prisma.gear.findMany({ where: { id: { in: requestedGearIds } }, select: { id: true } })
+    : [];
+  const existingGearIds = new Set(existingGear.map((gear) => gear.id));
+
+  await prisma.$transaction(async (tx) => {
+    await tx.build.update({
+      where: { id: access.id, userId: access.userId },
+      data: {
+        name: snapshot.name.slice(0, 100) || "Restored build",
+        destinationId: snapshot.destinationId ?? null,
+        location: snapshot.location ?? null,
+        locationLat: snapshot.locationLat ?? null,
+        locationLng: snapshot.locationLng ?? null,
+        startDate: dateOrNull(snapshot.startDate),
+        endDate: dateOrNull(snapshot.endDate),
+        people: Number.isInteger(snapshot.people) && snapshot.people > 0 ? Math.min(snapshot.people, 100) : 1,
+        minTemperature: Number.isFinite(snapshot.minTemperature) ? snapshot.minTemperature : null,
+        conditions: snapshot.conditions ?? null,
+        routeWaypoints: snapshot.routeWaypoints == null ? Prisma.DbNull : JSON.parse(JSON.stringify(snapshot.routeWaypoints)),
+        tripLogistics: snapshot.tripLogistics == null ? Prisma.DbNull : JSON.parse(JSON.stringify(snapshot.tripLogistics)),
+      },
+    });
+
+    await tx.buildItem.deleteMany({ where: { buildId: access.id } });
+    for (const item of items) {
+      const gearId = item.gearId && existingGearIds.has(item.gearId) ? item.gearId : null;
+      await tx.buildItem.create({
+        data: {
+          buildId: access.id,
+          gearId,
+          quantity: item.quantity,
+          isConsumable: item.isConsumable,
+          isWorn: item.isWorn,
+          customCategory: item.customCategory,
+          gearNameSnapshot: gearId ? item.gearNameSnapshot : item.gearNameSnapshot ?? item.gearName ?? "Restored item",
+          weightSnapshot: item.weightSnapshot,
+          priceSnapshot: item.priceSnapshot,
+        },
+      });
+    }
+
+    await tx.tripDay.deleteMany({ where: { buildId: access.id } });
+    if (days.length) {
+      await tx.tripDay.createMany({
+        data: days.map((day) => ({ ...day, buildId: access.id })),
+      });
+    }
+  });
+
+  const restoredDate = revision.createdAt.toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" });
+  await recordBuildRevision(access.id, access.userId, "restore", `Restored version from ${restoredDate}`);
+  revalidatePath(`/build/${access.id}`);
+  revalidatePath("/profile/builds");
+
+  return { ok: true };
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/build-history.ts`
+
+```typescript
+import "server-only";
+
+import { prisma } from "@/lib/prisma";
+
+export type BuildSnapshotItem = {
+  gearId: string | null;
+  gearName: string | null;
+  quantity: number;
+  isConsumable: boolean;
+  isWorn: boolean;
+  customCategory: string | null;
+  gearNameSnapshot: string | null;
+  weightSnapshot: number | null;
+  priceSnapshot: number | null;
+};
+
+export type BuildSnapshotDay = {
+  date: string;
+  minTemperature: number | null;
+  conditions: string | null;
+  notes: string | null;
+  startLocation: string | null;
+  endLocation: string | null;
+  distanceKm: number | null;
+  elevationGainM: number | null;
+  elevationLossM: number | null;
+  durationMinutes: number | null;
+  campsite: string | null;
+  reservation: string | null;
+  waterSource: string | null;
+  waterCarryL: number | null;
+  trailConditions: string | null;
+  activities: string | null;
+};
+
+export type BuildSnapshot = {
+  name: string;
+  destinationId: string | null;
+  location: string | null;
+  locationLat: number | null;
+  locationLng: number | null;
+  startDate: string | null;
+  endDate: string | null;
+  people: number;
+  minTemperature: number | null;
+  conditions: string | null;
+  routeWaypoints: unknown;
+  tripLogistics: unknown;
+  items: BuildSnapshotItem[];
+  days: BuildSnapshotDay[];
+};
+
+export async function getBuildSnapshot(buildId: string, userId: string | null): Promise<BuildSnapshot> {
+  const build = await prisma.build.findUnique({
+    where: { id: buildId, userId },
+    include: {
+      items: {
+        orderBy: { id: "asc" },
+        include: { gear: { select: { name: true } } },
+      },
+      days: { orderBy: { date: "asc" } },
+    },
+  });
+
+  if (!build) throw new Error("Build not found.");
+
+  return {
+    name: build.name,
+    destinationId: build.destinationId,
+    location: build.location,
+    locationLat: build.locationLat,
+    locationLng: build.locationLng,
+    startDate: build.startDate?.toISOString() ?? null,
+    endDate: build.endDate?.toISOString() ?? null,
+    people: build.people,
+    minTemperature: build.minTemperature,
+    conditions: build.conditions,
+    routeWaypoints: build.routeWaypoints ?? null,
+    tripLogistics: build.tripLogistics ?? null,
+    items: build.items.map((item) => ({
+      gearId: item.gearId,
+      gearName: item.gear?.name ?? item.gearNameSnapshot,
+      quantity: item.quantity,
+      isConsumable: item.isConsumable,
+      isWorn: item.isWorn,
+      customCategory: item.customCategory,
+      gearNameSnapshot: item.gearNameSnapshot,
+      weightSnapshot: item.weightSnapshot,
+      priceSnapshot: item.priceSnapshot,
+    })),
+    days: build.days.map((day) => ({
+      date: day.date.toISOString(),
+      minTemperature: day.minTemperature,
+      conditions: day.conditions,
+      notes: day.notes,
+      startLocation: day.startLocation,
+      endLocation: day.endLocation,
+      distanceKm: day.distanceKm,
+      elevationGainM: day.elevationGainM,
+      elevationLossM: day.elevationLossM,
+      durationMinutes: day.durationMinutes,
+      campsite: day.campsite,
+      reservation: day.reservation,
+      waterSource: day.waterSource,
+      waterCarryL: day.waterCarryL,
+      trailConditions: day.trailConditions,
+      activities: day.activities,
+    })),
+  };
+}
+
+
+export async function ensureBuildRevisionBaseline(buildId: string, userId: string | null) {
+  const count = await prisma.buildRevision.count({ where: { buildId } });
+  if (count > 0) return;
+  const snapshot = await getBuildSnapshot(buildId, userId);
+  await prisma.buildRevision.create({
+    data: {
+      buildId,
+      action: "history",
+      summary: "Version history started",
+      snapshot: JSON.parse(JSON.stringify(snapshot)),
+    },
+  });
+}
+
+export async function recordBuildRevision(
+  buildId: string,
+  userId: string | null,
+  action: string,
+  summary: string,
+) {
+  await prisma.build.update({ where: { id: buildId, userId }, data: { updatedAt: new Date() } });
+  const snapshot = await getBuildSnapshot(buildId, userId);
+
+  await prisma.buildRevision.create({
+    data: {
+      buildId,
+      action: action.slice(0, 50),
+      summary: summary.slice(0, 240),
+      snapshot: JSON.parse(JSON.stringify(snapshot)),
+    },
+  });
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/build-settings-actions.ts`
+
+```typescript
+"use server";
+
+import { prisma } from "@/lib/prisma";
+import { requireBuildAccess } from "@/lib/build-access";
+import { revalidatePath } from "next/cache";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
+
+export async function renameBuild(buildId: string, name: string) {
+  if (typeof buildId !== "string" || !buildId || buildId.length > 200 || typeof name !== "string") {
+    throw new Error("Invalid build name.");
+  }
+  const trimmed = name.trim();
+  if (!trimmed || trimmed.length > 100) throw new Error("Use a build name between 1 and 100 characters.");
+  const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(access.id, access.userId);
+  const result = await prisma.build.updateMany({
+    where: { id: access.id, userId: access.userId },
+    data: { name: trimmed },
+  });
+  if (result.count !== 1) throw new Error("Build access changed. Refresh and try again.");
+  await recordBuildRevision(access.id, access.userId, "settings", "Renamed build");
+  revalidatePath(`/build/${access.id}`);
+  revalidatePath("/profile/builds");
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/build-visibility-actions.ts`
+
+```typescript
+"use server";
+
+import { prisma } from "@/lib/prisma";
+import { requireBuildAccess } from "@/lib/build-access";
+import { revalidatePath } from "next/cache";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
+
+export async function setBuildVisibility(buildId: string, isPublic: boolean) {
+  if (typeof buildId !== "string" || !buildId || buildId.length > 200 || typeof isPublic !== "boolean") {
+    throw new Error("Invalid visibility request.");
+  }
+  const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(access.id, access.userId);
+  // Repeat the owner condition in the write to prevent a stale guest claim.
+  const result = await prisma.build.updateMany({
+    where: { id: access.id, userId: access.userId },
+    data: { isPublic },
+  });
+  if (result.count !== 1) throw new Error("Build access changed. Refresh and try again.");
+  await recordBuildRevision(access.id, access.userId, "settings", "Changed build visibility");
+  revalidatePath(`/build/${access.id}`);
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/lib/trip-planner-actions.ts`
+
+```typescript
+"use server";
+import { prisma } from "@/lib/prisma";
+import { requireBuildAccess, requireTripDayAccess } from "@/lib/build-access";
+import { revalidatePath } from "next/cache";
+import { getDestination } from "@/lib/destinations";
+import { getDateRange } from "@/lib/trip";
+import { dayTextFields, emptyLogistics, nullableNumber, parseDates, readWaypoints } from "@/lib/trip-planner";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
+const text = (f: FormData, key: string, max = 5000) => { const v = f.get(key); if (v != null && typeof v !== "string") throw new Error(`Invalid ${key}.`); const s = (v ?? "").trim(); if (s.length > max) throw new Error(`${key} is too long (maximum ${max} characters).`); return s || null; };
+const number = (f: FormData, key: string, min: number, max: number, integer = false) => nullableNumber(f.get(key),key,min,max,integer);
+const condition = (f: FormData) => { const v = text(f,"conditions",20); if (v && !["dry","rain","snow"].includes(v)) throw new Error("Choose a valid weather condition."); return v; };
+export async function saveTripDetails(f: FormData) {
+  const buildId = text(f,"buildId",200)!;
+  const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
+  const dates = parseDates(text(f,"startDate",10) ?? "", text(f,"endDate",10) ?? "");
+  const selected = getDestination(text(f,"destinationId",200));
+  const lat = selected?.latitude ?? number(f,"locationLat",-90,90), lng = selected?.longitude ?? number(f,"locationLng",-180,180);
+  if ((lat == null) !== (lng == null)) throw new Error("Provide both location coordinates.");
+  const data = { ...dates, destinationId: selected?.id ?? null, location: selected ? `${selected.name}, ${selected.park}` : text(f,"location",500), locationLat: lat, locationLng: lng, people: number(f,"people",1,100,true) ?? 1, minTemperature: number(f,"minTemperature",-100,60,true), conditions: condition(f) };
+  await prisma.$transaction(async tx => {
+    const old = await tx.tripDay.findMany({ where: { buildId }, select: { date: true } });
+    const range = dates.startDate && dates.endDate ? getDateRange(dates.startDate,dates.endDate) : [];
+    const keys = new Set(range.map(d => d.getTime()));
+    if (old.some(d => !keys.has(d.date.getTime())) && f.get("confirmDateChange") !== "yes") throw new Error("The new dates remove itinerary days. Tick the confirmation box to discard those days. Days still within the range will be kept.");
+    await tx.build.update({ where: { id: buildId, userId: access.userId }, data });
+    if (range.length) await tx.tripDay.createMany({ data: range.map(date => ({ buildId,date })), skipDuplicates: true });
+    await tx.tripDay.deleteMany({ where: { buildId, date: { notIn: range } } });
+  });
+  await recordBuildRevision(buildId, access.userId, "trip", "Updated trip details");
+  revalidatePath(`/build/${buildId}`);
+}
+export async function saveTripDay(f: FormData) {
+  const buildId = text(f,"buildId",200)!, dayId = text(f,"dayId",200)!;
+  const day = await requireTripDayAccess(buildId,dayId);
+  await ensureBuildRevisionBaseline(buildId, day.accessUserId);
+  const strings = Object.fromEntries(dayTextFields.map(key => [key,text(f,key)]));
+  await prisma.tripDay.update({ where: { id: dayId, buildId, build: { userId: day.accessUserId } }, data: { ...strings, conditions: condition(f), minTemperature: number(f,"minTemperature",-100,60,true), distanceKm: number(f,"distanceKm",0,1000), elevationGainM: number(f,"elevationGainM",0,20000,true), elevationLossM: number(f,"elevationLossM",0,20000,true), durationMinutes: number(f,"durationMinutes",0,1440,true), waterCarryL: number(f,"waterCarryL",0,100) } });
+  await recordBuildRevision(buildId, day.accessUserId, "itinerary", "Updated itinerary day");
+  revalidatePath(`/build/${buildId}`);
+}
+export async function saveTripRoute(f: FormData) {
+  const buildId = text(f,"buildId",200)!, access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
+  const raw: unknown = JSON.parse(text(f,"waypoints",100000) ?? "[]");
+  const points = readWaypoints(raw);
+  if (!Array.isArray(raw) || points.length !== raw.length || points.length > 200 || new Set(points.map(p=>p.id)).size !== points.length || points.some(p=>!p.name.trim() || p.name.length>200 || p.id.length>200 || (p.elevationM != null && (p.elevationM < -500 || p.elevationM > 9000)))) throw new Error("Check waypoint names, coordinates, elevations, and unique IDs. Maximum 200 waypoints.");
+  await prisma.build.update({ where: { id: buildId,userId: access.userId }, data: { routeWaypoints: points.map(p=>({...p,name:p.name.trim()})) } });
+  await recordBuildRevision(buildId, access.userId, "route", "Updated trip route");
+  revalidatePath(`/build/${buildId}`);
+}
+export async function saveTripLogistics(f: FormData) {
+  const buildId = text(f,"buildId",200)!, access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
+  const value = Object.fromEntries(Object.keys(emptyLogistics).map(key=>[key,text(f,key) ?? ""]));
+  await prisma.build.update({ where: { id: buildId, userId: access.userId }, data: { tripLogistics: value } });
+  await recordBuildRevision(buildId, access.userId, "logistics", "Updated trip logistics");
+  revalidatePath(`/build/${buildId}`);
+}
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/prisma/schema.prisma`
+
+```text
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Brand {
+  id      String  @id @default(cuid())
+  name    String
+  website String?
+  logo    String?
+
+  gear Gear[]
+
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  gear Gear[]
+  subcategories Subcategory[]
+  createdAt DateTime @default(now())
+}
+model Subcategory {
+  id         String   @id @default(cuid())
+  name       String
+  slug String
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  gear        Gear[]
+
+  createdAt  DateTime @default(now())
+  @@unique([categoryId, slug])
+}
+model Gear {
+  id String @id @default(cuid())
+
+  name        String
+  description String?
+  
+  weight_g Int?
+
+  price_cad Float?
+
+  capacity_l Float?
+
+  frame_type String?
+
+  waterproof Boolean?
+
+  temperature_rating Int?
+
+  season String?
+
+  material String?
+
+  brandId String
+  brand   Brand  @relation(fields: [brandId], references: [id])
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  subcategoryId String?
+  subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
+
+  images GearImage[]
+  specifications GearSpecification[]
+  prices Price[]
+  reviews Review[]
+  buildItems BuildItem[]
+  favorites Favorite[]
+  ownedGear OwnedGear[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model OwnedGear {
+  id String @id @default(cuid())
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  gearId String
+  gear Gear @relation(fields: [gearId], references: [id], onDelete: Cascade)
+
+  purchasedPrice Float?
+  purchasedAt DateTime?
+  notes String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, gearId])
+}
+model GearImage {
+  id String @id @default(cuid())
+
+  url String
+
+  isPrimary Boolean @default(false)
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id], onDelete: Cascade)
+}
+
+model GearSpecification {
+  id String @id @default(cuid())
+
+  key   String
+  value String
+  unit  String?
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id], onDelete: Cascade)
+}
+
+model Retailer {
+  id String @id @default(cuid())
+
+  name    String
+  website String?
+  logo    String?
+
+  prices Price[]
+}
+
+model Price {
+  id String @id @default(cuid())
+
+  price Float
+
+  currency String @default("CAD")
+
+  url String?
+
+  inStock Boolean @default(true)
+
+  lastUpdated DateTime @default(now())
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  retailerId String
+  retailer   Retailer @relation(fields: [retailerId], references: [id])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  username      String?    @unique
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+
+  bio             String?
+  location        String?
+  isProfilePublic Boolean  @default(false)
+
+  accounts Account[]
+  sessions Session[]
+  builds    Build[]
+  reviews   Review[]
+  favorites Favorite[]
+  ownedGear OwnedGear[]
+
+  createdAt DateTime @default(now())
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  @@unique([identifier, token])
+}
+
+model Build {
+  isPublic Boolean @default(false)
+  id String @id @default(cuid())
+
+  name String
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  items     BuildItem[]
+  days      TripDay[]
+  revisions BuildRevision[]
+
+  routeWaypoints Json?
+  tripLogistics Json?
+
+  destinationId String?
+
+  location    String?
+  locationLat Float?
+  locationLng Float?
+  startDate   DateTime?
+  endDate     DateTime?
+
+  people Int @default(1)
+
+  minTemperature Int?
+  conditions String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BuildRevision {
+  id String @id @default(cuid())
+
+  buildId String
+  build   Build @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  action   String
+  summary  String
+  snapshot Json
+
+  createdAt DateTime @default(now())
+
+  @@index([buildId, createdAt])
+}
+
+model TripDay {
+  id String @id @default(cuid())
+
+  buildId String
+  build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  date DateTime
+
+  minTemperature Int?
+  conditions     String?
+  notes          String?
+  startLocation String?
+  endLocation String?
+  distanceKm Float?
+  elevationGainM Int?
+  elevationLossM Int?
+  durationMinutes Int?
+  campsite String?
+  reservation String?
+  waterSource String?
+  waterCarryL Float?
+  trailConditions String?
+  activities String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([buildId, date])
+}
+
+model BuildItem {
+  id String @id @default(cuid())
+
+  quantity Int @default(1)
+
+  customWeight Int?
+
+  isConsumable Boolean @default(false)
+
+  isWorn Boolean @default(false)
+
+  gearNameSnapshot String?
+
+  weightSnapshot Int?
+
+  priceSnapshot Float?
+
+  customCategory String?
+
+  buildId String
+  build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  gearId String?
+  gear   Gear?   @relation(fields: [gearId], references: [id])
+
+  @@unique([buildId, gearId])
+}
+
+model Review {
+  id String @id @default(cuid())
+
+  rating Int
+
+  title String?
+  body  String?
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Favorite {
+  id String @id @default(cuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  gearId String
+  gear   Gear   @relation(fields: [gearId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, gearId])
+}
+
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/tests/builder-ownership.test.cjs`
+
+```typescript
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const { stripTypeScriptTypes } = require('node:module');
+const root = path.resolve(__dirname, '..');
+process.env.AUTH_SECRET = 'ownership-test-secret-not-for-production';
+
+// Execute the actual TS helpers/actions, with Auth.js, Next and Prisma replaced
+// by deterministic boundary mocks. No network or database is needed.
+function load(relative, dependencies = {}) {
+  let js = stripTypeScriptTypes(fs.readFileSync(path.join(root, relative), 'utf8'));
+  const names = [...js.matchAll(/export (?:async )?function (\w+)|export const (\w+)/g)].map(m => m[1] || m[2]);
+  js = js.replace(/import\s+\{([^}]+)\}\s+from\s+["']([^"']+)["'];/g, (_, names, spec) => `const {${names}} = require(${JSON.stringify(spec)});`)
+    .replace(/import ["']server-only["'];/g, '')
+    .replace(/export /g, '');
+  const requireMock = spec => spec in dependencies ? dependencies[spec] : require(spec);
+  return new Function('require', 'process', 'Buffer', js + `\nreturn {${names.join(',')}};`)(requireMock, process, Buffer);
+}
+const token = load('lib/guest-build-token.ts');
+function harness() {
+  const state = { email: 'a@test', cookies: new Map(), writes: [], builds: [
+    { id: 'a', userId: 'user-a', name: 'A', items: [], days: [] },
+    { id: 'b', userId: 'user-b', name: 'B', items: [], days: [] },
+    { id: 'guest', userId: null, name: 'Guest', items: [], days: [] },
+  ] };
+  const matches = (b, where) => b.id === where.id && (!('userId' in where) || b.userId === where.userId) && (!where.OR || where.OR.some(p => b.userId === p.userId));
+  const cookieStore = { get: name => state.cookies.has(name) ? { value: state.cookies.get(name) } : undefined,
+    set: (name, value, options) => { state.cookies.set(name, value); state.lastCookieOptions = options; },
+    delete: name => state.cookies.delete(name) };
+  const write = type => async args => { state.writes.push({ type, args }); return { id: 'copy', ...args.data }; };
+  const prisma = {
+    user: { findUnique: async ({ where }) => where.email ? { id: `user-${where.email[0]}` } : null },
+    build: { findFirst: async ({ where }) => state.builds.find(b => matches(b, where)) || null,
+      findUnique: async ({ where }) => state.builds.find(b => matches(b, where)) || null,
+      create: write('build.create'), update: write('build.update'),
+      updateMany: async ({ where, data }) => { const b = state.builds.find(b => matches(b, where)); if (!b) return {count:0}; state.writes.push({type:'claim'}); Object.assign(b, data); return {count:1}; } },
+    buildItem: { findFirst: async ({ where }) => {
+      const buildId = where.id === 'item-a' ? 'a' : where.id === 'item-b' ? 'b' : null;
+      return buildId === where.buildId ? { id: where.id, buildId, quantity: 2 } : null;
+    }, update: write('item.update'), delete: write('item.delete'), create: write('item.create'), upsert: write('item.upsert') },
+    tripDay: { findFirst: async ({ where }) => where.id === 'day-a' && where.buildId === 'a' ? { id: 'day-a', buildId: 'a' } : null,
+      update: write('day.update'), createMany: write('day.createMany'), deleteMany: write('day.deleteMany') },
+  };
+  const navigation = { notFound: () => { throw new Error('404'); }, redirect: url => { throw new Error(`REDIRECT:${url}`); } };
+  const access = load('lib/build-access.ts', { '@/auth': {auth: async () => state.email ? {user:{email:state.email}} : null},
+    '@/lib/prisma': { prisma }, 'next/headers': {cookies:async()=>cookieStore}, 'next/navigation': navigation, '@/lib/guest-build-token': token });
+  const planner = load('lib/trip-planner.ts');
+  const history = { ensureBuildRevisionBaseline: async () => {}, recordBuildRevision: async () => {}, getBuildSnapshot: async (buildId, userId) => {
+    const b = state.builds.find(build => build.id === buildId && build.userId === userId);
+    if (!b) throw new Error('Build not found.');
+    return { name:b.name, destinationId:null, location:null, locationLat:null, locationLng:null, startDate:null, endDate:null, people:1, minTemperature:null, conditions:null, routeWaypoints:null, tripLogistics:null, items:b.items || [], days:b.days || [] };
+  } };
+  const plannerActions = load('lib/trip-planner-actions.ts', { '@/lib/prisma':{prisma}, '@/lib/build-access':access, 'next/cache':{revalidatePath:()=>{}}, '@/lib/destinations':{getDestination:()=>null}, '@/lib/trip':{getDateRange:()=>[]}, '@/lib/trip-planner':planner, '@/lib/build-history':history });
+  const actions = load('app/build/actions.ts', {'@/lib/prisma':{prisma}, '@/lib/trip-planner-actions':plannerActions, '@/lib/trip-planner':planner, 'next/navigation': navigation,
+    'next/headers':{cookies:async()=>cookieStore}, 'next/cache':{revalidatePath:()=>{}}, '@/lib/trip':{getDateRange:()=>[]},
+    '@/lib/build-access':access, '@/lib/guest-build-token':token, '@/lib/destinations':{getDestination:()=>null}, '@/lib/build-history':history, '@/app/generated/prisma/client':{Prisma:{DbNull:null}} });
+  return { state, access, actions };
+}
+function form(values) { const f = new FormData(); for (const [key,value] of Object.entries(values)) f.set(key, String(value)); return f; }
+
+test('guest tokens are bound to build, expire, and reject tampering', () => {
+  const t = token.createGuestBuildToken('guest', 1000000);
+  assert.equal(token.verifyGuestBuildToken('guest', t, 1000000), true);
+  assert.equal(token.verifyGuestBuildToken('other', t, 1000000), false);
+  assert.equal(token.verifyGuestBuildToken('guest', t.slice(0,-1)+'!', 1000000), false);
+  assert.equal(token.verifyGuestBuildToken('guest', t, 1000000 + token.GUEST_BUILD_MAX_AGE*1000), false);
+  for (const invalid of [undefined, '', 'guest', 'x'.repeat(201), '1:x.y']) assert.equal(token.verifyGuestBuildToken('guest', invalid), false);
+});
+for (const email of ['a@test', null]) {
+  test(`access matrix for ${email || 'anonymous'}`, async () => {
+    const {state, access} = harness(); state.email=email;
+    assert.equal((await access.findAccessibleBuild('a'))?.id, email ? 'a' : undefined);
+    assert.equal(await access.findAccessibleBuild('b'), null);
+    state.cookies.set('currentBuild','guest');
+    assert.equal(await access.findAccessibleBuild('guest'), null);
+    state.cookies.set(token.guestBuildCookieName('guest'), token.createGuestBuildToken('guest'));
+    assert.equal((await access.findAccessibleBuild('guest')).id, 'guest');
+    state.cookies.set(token.guestBuildCookieName('b'), token.createGuestBuildToken('b'));
+    assert.equal(await access.findAccessibleBuild('b'), null); // capability cannot override account owner
+    assert.equal(await access.findAccessibleBuild('missing'), null);
+    await assert.rejects(access.requireBuildPageAccess('b'), /404/);
+  });
+}
+for (const name of ['importBuildItems','duplicateBuild','addCustomItem','addGear','updateTripDetails','setItemCategory','updateQuantity','removeGear','updateTripDay']) {
+  test(`${name} rejects another user's build before any write`, async () => {
+    const {state,actions}=harness();
+    await assert.rejects(actions[name](form({buildId:'b', itemId:'item-b', dayId:'day-b', payload:'invalid JSON', delta:1})), /Build not found/);
+    assert.deepEqual(state.writes, []);
+  });
+}
+for (const name of ['setItemCategory','updateQuantity','removeGear']) {
+  test(`${name} rejects another build's item paired with owned build`, async () => {
+    const {state,actions}=harness();
+    await assert.rejects(actions[name](form({buildId:'a',itemId:'item-b',delta:1})), /Item not found/);
+    assert.deepEqual(state.writes,[]);
+  });
+}
+test('trip day must belong to the authorized build', async () => {
+  const {state,actions}=harness();
+  await assert.rejects(actions.updateTripDay(form({buildId:'a',dayId:'day-b'})),/Day not found/);
+  assert.deepEqual(state.writes,[]);
+  await actions.updateTripDay(form({buildId:'a',dayId:'day-a',notes:'Hello'}));
+  assert.equal(state.writes[0].type,'day.update');
+});
+test('export is private', async () => {
+  const {actions}=harness();
+  assert.equal((await actions.getBuildExport('a')).name,'A');
+  await assert.rejects(actions.getBuildExport('b'), /Build not found/);
+});
+test('claim ignores forged currentBuild cookie and accepts signed guest proof', async () => {
+  const {state,actions,access}=harness(); state.cookies.set('currentBuild','guest');
+  await actions.claimCurrentBuild(); assert.deepEqual(state.writes,[]);
+  state.cookies.set(token.guestBuildCookieName('guest'),token.createGuestBuildToken('guest'));
+  await actions.claimCurrentBuild();
+  assert.equal(state.builds[2].userId,'user-a');
+  assert.equal(state.cookies.has(token.guestBuildCookieName('guest')),false);
+  state.email=null; assert.equal(await access.findAccessibleBuild('guest'),null);
+});
+test('guest proof cannot claim someone else\'s account build', async () => {
+  const {state,actions}=harness(); state.cookies.set('currentBuild','b');
+  state.cookies.set(token.guestBuildCookieName('b'),token.createGuestBuildToken('b'));
+  await actions.claimCurrentBuild(); assert.deepEqual(state.writes,[]);
+});
+for (const email of ['a@test',null]) {
+  test(`duplicate preserves ownership and navigation for ${email || 'guest'}`, async () => {
+    const {state,actions}=harness();state.email=email;
+    if (!email) state.cookies.set(token.guestBuildCookieName('guest'),token.createGuestBuildToken('guest'));
+    await assert.rejects(actions.duplicateBuild(form({buildId:email?'a':'guest'})),/REDIRECT:\/build\/copy/);
+    assert.equal(state.writes[0].args.data.userId,email?'user-a':null);
+    assert.equal(state.cookies.get('currentBuild'),'copy');
+    if (!email) assert.equal(token.verifyGuestBuildToken('copy',state.cookies.get(token.guestBuildCookieName('copy'))),true);
+    assert.equal(state.lastCookieOptions.httpOnly,true);
+    assert.equal(state.lastCookieOptions.sameSite,'lax');
+  });
+}
+test('owner can mutate own item', async () => {
+  const {state,actions}=harness(); await actions.updateQuantity(form({buildId:'a',itemId:'item-a',delta:1}));
+  assert.equal(state.writes[0].args.data.quantity,3);
+});
+for (const name of ['getBuildExport','importBuildItems','duplicateBuild','addCustomItem','addGear','updateTripDetails','setItemCategory','updateQuantity','removeGear','updateTripDay']) {
+  test(`${name} rejects anonymous access to account build`, async () => {
+    const {state,actions}=harness();state.email=null;state.cookies.set('currentBuild','a');
+    const input = name === 'getBuildExport' ? 'a' : form({buildId:'a',itemId:'item-a',dayId:'day-a',payload:'{}',delta:1});
+    await assert.rejects(actions[name](input), /Build not found/);
+    assert.deepEqual(state.writes,[]);
+  });
+}
+test('missing child IDs are rejected instead of becoming unfiltered Prisma queries',async()=>{
+  const {access}=harness();
+  await assert.rejects(access.requireBuildItemAccess('a',undefined),/Item not found/);
+  await assert.rejects(access.requireTripDayAccess('a',undefined),/Day not found/);
+});
+for (const email of ['a@test',null]) {
+  test(`new build ownership for ${email || 'guest'}`,async()=>{
+    const {state,actions}=harness();state.email=email;
+    await assert.rejects(actions.createBuild(form({name:'Trip'})),/REDIRECT:\/build\/copy/);
+    assert.equal(state.writes[0].args.data.userId,email?'user-a':null);
+    assert.equal(state.cookies.get('currentBuild'),'copy');
+    assert.equal(state.cookies.has(token.guestBuildCookieName('copy')),!email);
+  });
+}
+test('claim uses the submitted authorized build even when currentBuild points elsewhere',async()=>{
+  const {state,actions}=harness();state.cookies.set('currentBuild','b');
+  state.cookies.set(token.guestBuildCookieName('guest'),token.createGuestBuildToken('guest'));
+  await actions.claimCurrentBuild(form({buildId:'guest'}));
+  assert.equal(state.builds[2].userId,'user-a');
+  assert.equal(state.builds[1].userId,'user-b');
+});
+
+
+```
+
+### `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/tests/trip-planner.test.cjs`
+
+```typescript
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const {stripTypeScriptTypes}=require('node:module');
+function load(file,deps={}){let js=stripTypeScriptTypes(fs.readFileSync(path.join(__dirname,'..',file),'utf8'));const names=[...js.matchAll(/export (?:async )?function (\w+)|export const (\w+)/g)].map(m=>m[1]||m[2]);js=js.replace(/import\s+\{([^}]+)\}\s+from\s+["']([^"']+)["'];/g,(_,n,s)=>`const {${n}}=require(${JSON.stringify(s)});`).replace(/export /g,'');return new Function('require',js+`\nreturn {${names.join(',')}};`)(s=>s in deps?deps[s]:require(s));}
+const p=load('lib/trip-planner.ts'),trip=load('lib/trip.ts');
+const form=o=>{const f=new FormData();Object.entries(o).forEach(([k,v])=>f.set(k,String(v)));return f;};
+function harness(){const writes=[], old=[{date:new Date('2026-07-01')},{date:new Date('2026-07-02')}];const tx={build:{update:async x=>writes.push(['build',x])},tripDay:{findMany:async()=>old,createMany:async x=>writes.push(['create',x]),deleteMany:async x=>writes.push(['delete',x]),update:async x=>writes.push(['day',x])}};const prisma={...tx,$transaction:async fn=>fn(tx)};const a=load('lib/trip-planner-actions.ts',{'@/lib/prisma':{prisma},'@/lib/build-access':{requireBuildAccess:async id=>{if(id!=='owned')throw Error('Build not found.');return {userId:'owner'};},requireTripDayAccess:async(id,day)=>{if(id!=='owned'||day!=='day')throw Error('Day not found.');return {accessUserId:'owner'};}},'next/cache':{revalidatePath:()=>{}},'@/lib/destinations':{getDestination:()=>null},'@/lib/trip':trip,'@/lib/trip-planner':p,'@/lib/build-history':{ensureBuildRevisionBaseline:async()=>{},recordBuildRevision:async()=>{}}});return {a,writes};}
+test('rejects reversed, incomplete, impossible and excessive dates',()=>{for(const [s,e] of [['2026-07-02','2026-07-01'],['2026-07-01',''],['2026-02-30','2026-03-01'],['2026-01-01','2028-01-01']])assert.throws(()=>p.parseDates(s,e));assert.equal(trip.getDateRange(...Object.values(p.parseDates('2026-03-07','2026-03-09'))).length,3);});
+test('totals preserve zero and indicate partial distance coverage',()=>{const days=[{startLocation:'A',endLocation:'B',distanceKm:0,elevationGainM:10},{startLocation:'B',endLocation:'C',distanceKm:12.4,elevationLossM:5},{notes:'weather only'}];assert.deepEqual(p.tripTotals(days),{distanceKm:12.4,gainM:10,lossM:5,minutes:0,measuredDays:2,plannedDays:2});});
+test('invalid numeric values rejected',()=>{for(const v of ['NaN','Infinity','abc',-1])assert.throws(()=>p.nullableNumber(v,'distance',0,1000));assert.equal(p.nullableNumber('0','distance',0,1000),0);assert.throws(()=>p.nullableNumber('1.5','minutes',0,1440,true));});
+test('date shortening requires explicit confirmation before writes',async()=>{const {a,writes}=harness();await assert.rejects(a.saveTripDetails(form({buildId:'owned',startDate:'2026-07-02',endDate:'2026-07-03'})),/confirmation/);assert.equal(writes.length,0);await a.saveTripDetails(form({buildId:'owned',startDate:'2026-07-02',endDate:'2026-07-03',confirmDateChange:'yes'}));assert.equal(writes.length,3);assert.equal(writes[2][1].where.date.notIn.length,2);});
+test('invalid day and unowned route never write',async()=>{const {a,writes}=harness();await assert.rejects(a.saveTripDay(form({buildId:'owned',dayId:'day',distanceKm:'NaN'})),/distanceKm/);await assert.rejects(a.saveTripRoute(form({buildId:'other',waypoints:'[]'})),/Build not found/);assert.equal(writes.length,0);});
+test('day writes preserve zeros, nullable fields and ownership scope',async()=>{const {a,writes}=harness();await a.saveTripDay(form({buildId:'owned',dayId:'day',distanceKm:0,minTemperature:0,startLocation:' A '}));assert.equal(writes[0][1].data.distanceKm,0);assert.equal(writes[0][1].data.minTemperature,0);assert.equal(writes[0][1].data.startLocation,'A');assert.equal(writes[0][1].where.build.userId,'owner');});
+test('route validation rejects out of range coordinates and duplicate IDs',async()=>{const {a,writes}=harness(),point={id:'one',name:'Camp',kind:'camp',lat:49,lng:-123,elevationM:900};for(const points of [[{...point,lat:91}],[point,point]])await assert.rejects(a.saveTripRoute(form({buildId:'owned',waypoints:JSON.stringify(points)})),/waypoint/);assert.equal(writes.length,0);await a.saveTripRoute(form({buildId:'owned',waypoints:JSON.stringify([point])}));assert.deepEqual(writes[0][1].data.routeWaypoints,[point]);});
+test('logistics are bounded and stored on owned build',async()=>{const {a,writes}=harness();await assert.rejects(a.saveTripLogistics(form({buildId:'owned',emergencyContact:'x'.repeat(5001)})),/too long/);await a.saveTripLogistics(form({buildId:'owned',parking:'Lot A'}));assert.equal(writes[0][1].data.tripLogistics.parking,'Lot A');assert.equal(writes[0][1].where.userId,'owner');});
 
 ```
 
@@ -996,78 +7017,210 @@ import { getDateRange } from "@/lib/trip";
 import { currentBuildUserId, hasGuestBuildAccess, requireBuildAccess, requireBuildItemAccess, setCurrentBuild } from "@/lib/build-access";
 import { guestBuildCookieName } from "@/lib/guest-build-token";
 import { getDestination } from "@/lib/destinations";
+import { Prisma } from "@/app/generated/prisma/client";
+import { ensureBuildRevisionBaseline, getBuildSnapshot, recordBuildRevision } from "@/lib/build-history";
+
+function asRecord(value: unknown): Record<string, unknown> {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) throw new Error("Invalid TrailPicker import file.");
+  return value as Record<string, unknown>;
+}
+
+function optionalText(value: unknown, max: number) {
+  if (value == null || value === "") return null;
+  if (typeof value !== "string" || value.length > max) throw new Error("Invalid TrailPicker import file.");
+  return value;
+}
+
+function optionalNumber(value: unknown, min: number, max: number, integer = false) {
+  if (value == null || value === "") return null;
+  if (typeof value !== "number" || !Number.isFinite(value) || value < min || value > max || (integer && !Number.isInteger(value))) {
+    throw new Error("Invalid TrailPicker import file.");
+  }
+  return value;
+}
+
+function importDate(value: unknown) {
+  if (value == null || value === "") return null;
+  if (typeof value !== "string") throw new Error("Invalid TrailPicker import file.");
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) throw new Error("Invalid TrailPicker import date.");
+  return date;
+}
+
+function importItem(value: unknown) {
+  const item = asRecord(value);
+  const quantity = optionalNumber(item.quantity, 1, 999, true) ?? 1;
+  const gearId = optionalText(item.gearId, 200);
+  const gearName = optionalText(item.gearName, 200);
+  const gearNameSnapshot = optionalText(item.gearNameSnapshot, 200);
+  return {
+    gearId,
+    gearName,
+    quantity,
+    isConsumable: item.isConsumable === true,
+    isWorn: item.isWorn === true,
+    customCategory: optionalText(item.customCategory, 100),
+    gearNameSnapshot,
+    weightSnapshot: optionalNumber(item.weightSnapshot, 0, 1_000_000, true),
+    priceSnapshot: optionalNumber(item.priceSnapshot, 0, 1_000_000),
+  };
+}
+
+function importDay(value: unknown) {
+  const day = asRecord(value);
+  const date = importDate(day.date);
+  if (!date) throw new Error("Imported itinerary day is missing a date.");
+  const text = (key: string, max = 5000) => optionalText(day[key], max);
+  return {
+    date,
+    minTemperature: optionalNumber(day.minTemperature, -100, 60, true),
+    conditions: text("conditions", 20),
+    notes: text("notes"),
+    startLocation: text("startLocation", 500),
+    endLocation: text("endLocation", 500),
+    distanceKm: optionalNumber(day.distanceKm, 0, 1000),
+    elevationGainM: optionalNumber(day.elevationGainM, 0, 20000, true),
+    elevationLossM: optionalNumber(day.elevationLossM, 0, 20000, true),
+    durationMinutes: optionalNumber(day.durationMinutes, 0, 1440, true),
+    campsite: text("campsite"),
+    reservation: text("reservation"),
+    waterSource: text("waterSource"),
+    waterCarryL: optionalNumber(day.waterCarryL, 0, 100),
+    trailConditions: text("trailConditions"),
+    activities: text("activities"),
+  };
+}
 
 export async function getBuildExport(buildId: string) {
   const access = await requireBuildAccess(buildId);
-  const build = await prisma.build.findUnique({
-    where: { id: buildId, userId: access.userId },
-    include: { items: { include: { gear: { select: { id: true, name: true } } } } },
-  });
-
-  if (!build) throw new Error("Build not found.");
+  const snapshot = await getBuildSnapshot(access.id, access.userId);
 
   return {
-    version: 1,
-    name: build.name,
-    location: build.location,
-    startDate: build.startDate,
-    endDate: build.endDate,
-    people: build.people,
-    minTemperature: build.minTemperature,
-    conditions: build.conditions,
-    items: build.items.map((item) => ({
-      gearId: item.gearId,
-      gearName: item.gear?.name ?? item.gearNameSnapshot,
-      quantity: item.quantity,
-      isConsumable: item.isConsumable,
-      isWorn: item.isWorn,
-      customCategory: item.customCategory,
-      gearNameSnapshot: item.gearNameSnapshot,
-      weightSnapshot: item.weightSnapshot,
-      priceSnapshot: item.priceSnapshot,
-    })),
+    format: "trailpicker-build",
+    version: 2,
+    exportedAt: new Date().toISOString(),
+    ...snapshot,
   };
 }
 
 export async function importBuildItems(formData: FormData) {
-  const buildId = formData.get("buildId") as string;
+  const buildId = formData.get("buildId")?.toString() ?? "";
   const access = await requireBuildAccess(buildId);
-  const payload = JSON.parse(formData.get("payload") as string);
+  await ensureBuildRevisionBaseline(access.id, access.userId);
+  const raw = formData.get("payload");
+  const mode = formData.get("mode") === "replace" ? "replace" : "merge";
 
-  if (!Array.isArray(payload.items)) {
-    throw new Error("Invalid import file.");
+  if (typeof raw !== "string" || raw.length > 2_000_000) throw new Error("Import file is missing or too large.");
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    throw new Error("That file is not valid JSON.");
   }
+  const payload = asRecord(parsed);
+  if (payload.format != null && payload.format !== "trailpicker-build") throw new Error("That JSON file is not a TrailPicker build export.");
+  if (!Array.isArray(payload.items) || payload.items.length > 1000) throw new Error("Import must contain no more than 1,000 gear items.");
+  if (payload.days != null && (!Array.isArray(payload.days) || payload.days.length > 366)) throw new Error("Import must contain no more than 366 itinerary days.");
 
-  for (const item of payload.items) {
-    if (item.gearId) {
-      await prisma.buildItem.upsert({
-        where: { buildId_gearId: { buildId, gearId: item.gearId }, build: { userId: access.userId } },
-        update: { quantity: { increment: item.quantity ?? 1 } },
-        create: {
-          build: { connect: { id: buildId, userId: access.userId } },
-          gear: { connect: { id: item.gearId } },
-          quantity: item.quantity ?? 1,
-          isConsumable: !!item.isConsumable,
-          isWorn: !!item.isWorn,
-        },
-      });
-    } else {
-      await prisma.buildItem.create({
+  const items = payload.items.map(importItem);
+  const days = Array.isArray(payload.days) ? payload.days.map(importDay) : null;
+  const requestedGearIds = [...new Set(items.map((item) => item.gearId).filter((id): id is string => Boolean(id)))];
+  const existingGear = requestedGearIds.length
+    ? await prisma.gear.findMany({ where: { id: { in: requestedGearIds } }, select: { id: true } })
+    : [];
+  const existingGearIds = new Set(existingGear.map((gear) => gear.id));
+
+  await prisma.$transaction(async (tx) => {
+    if (mode === "replace") {
+      const startDate = importDate(payload.startDate);
+      const endDate = importDate(payload.endDate);
+      if ((startDate == null) !== (endDate == null) || (startDate && endDate && endDate < startDate)) {
+        throw new Error("Imported trip dates are invalid.");
+      }
+
+      const name = optionalText(payload.name, 100) ?? "Imported build";
+      const people = optionalNumber(payload.people, 1, 100, true) ?? 1;
+      const location = optionalText(payload.location, 500);
+      const locationLat = optionalNumber(payload.locationLat, -90, 90);
+      const locationLng = optionalNumber(payload.locationLng, -180, 180);
+      if ((locationLat == null) !== (locationLng == null)) throw new Error("Imported coordinates must include latitude and longitude.");
+
+      await tx.build.update({
+        where: { id: access.id, userId: access.userId },
         data: {
-          build: { connect: { id: buildId, userId: access.userId } },
-          customCategory: item.customCategory ?? null,
-          gearNameSnapshot: item.gearNameSnapshot ?? item.gearName ?? "Imported item",
-          weightSnapshot: item.weightSnapshot ?? null,
-          priceSnapshot: item.priceSnapshot ?? null,
-          quantity: item.quantity ?? 1,
-          isConsumable: !!item.isConsumable,
-          isWorn: !!item.isWorn,
+          name,
+          destinationId: optionalText(payload.destinationId, 200),
+          location,
+          locationLat,
+          locationLng,
+          startDate,
+          endDate,
+          people,
+          minTemperature: optionalNumber(payload.minTemperature, -100, 60, true),
+          conditions: optionalText(payload.conditions, 50),
+          routeWaypoints: payload.routeWaypoints == null ? Prisma.DbNull : JSON.parse(JSON.stringify(payload.routeWaypoints)),
+          tripLogistics: payload.tripLogistics == null ? Prisma.DbNull : JSON.parse(JSON.stringify(payload.tripLogistics)),
         },
       });
-    }
-  }
 
-  revalidatePath(`/build/${buildId}`);
+      await tx.buildItem.deleteMany({ where: { buildId: access.id } });
+      await tx.tripDay.deleteMany({ where: { buildId: access.id } });
+
+      if (days) {
+        if (days.length) await tx.tripDay.createMany({ data: days.map((day) => ({ ...day, buildId: access.id })) });
+      } else if (startDate && endDate) {
+        const range = getDateRange(startDate, endDate);
+        if (range.length) await tx.tripDay.createMany({ data: range.map((date) => ({ buildId: access.id, date })) });
+      }
+    }
+
+    for (const item of items) {
+      const gearId = item.gearId && existingGearIds.has(item.gearId) ? item.gearId : null;
+      if (mode === "merge" && gearId) {
+        await tx.buildItem.upsert({
+          where: { buildId_gearId: { buildId: access.id, gearId } },
+          update: {
+            quantity: { increment: item.quantity },
+            isConsumable: item.isConsumable,
+            isWorn: item.isWorn,
+          },
+          create: {
+            buildId: access.id,
+            gearId,
+            quantity: item.quantity,
+            isConsumable: item.isConsumable,
+            isWorn: item.isWorn,
+          },
+        });
+      } else {
+        await tx.buildItem.create({
+          data: {
+            buildId: access.id,
+            gearId,
+            quantity: item.quantity,
+            isConsumable: item.isConsumable,
+            isWorn: item.isWorn,
+            customCategory: item.customCategory,
+            gearNameSnapshot: gearId ? item.gearNameSnapshot : item.gearNameSnapshot ?? item.gearName ?? "Imported item",
+            weightSnapshot: item.weightSnapshot,
+            priceSnapshot: item.priceSnapshot,
+          },
+        });
+      }
+    }
+  });
+
+  await recordBuildRevision(
+    access.id,
+    access.userId,
+    "import",
+    mode === "replace" ? `Imported and replaced build with ${items.length} gear item${items.length === 1 ? "" : "s"}` : `Imported ${items.length} gear item${items.length === 1 ? "" : "s"}`,
+  );
+  revalidatePath(`/build/${access.id}`);
+  revalidatePath("/profile/builds");
+
+  return { mode, itemCount: items.length, dayCount: days?.length ?? 0 };
 }
 
 export async function duplicateBuild(formData: FormData) {
@@ -1112,6 +7265,7 @@ export async function duplicateBuild(formData: FormData) {
     },
   });
 
+  await recordBuildRevision(copy.id, ownerId, "copy", `Created from ${original.name}`);
   await setCurrentBuild(copy.id, !ownerId);
   redirect(`/build/${copy.id}`);
 }
@@ -1119,6 +7273,7 @@ export async function setItemCategory(formData: FormData) {
   const itemId = formData.get("itemId") as string;
   const buildId = formData.get("buildId") as string;
   const item = await requireBuildItemAccess(buildId, itemId);
+  await ensureBuildRevisionBaseline(buildId, item.accessUserId);
   const category = formData.get("category") as "base" | "worn" | "consumable";
 
   await prisma.buildItem.update({
@@ -1129,12 +7284,14 @@ export async function setItemCategory(formData: FormData) {
     },
   });
 
+  await recordBuildRevision(buildId, item.accessUserId, "gear", "Changed gear category");
   revalidatePath(`/build/${buildId}`);
 }
 
 export async function addCustomItem(formData: FormData) {
   const buildId = formData.get("buildId") as string;
   const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
   const category = formData.get("category") as string;
   const name = formData.get("name") as string;
   const weightRaw = formData.get("weight_g") as string;
@@ -1154,6 +7311,7 @@ export async function addCustomItem(formData: FormData) {
     },
   });
 
+  await recordBuildRevision(buildId, access.userId, "gear", `Added custom item: ${name.trim()}`);
   redirect(`/build/${buildId}`);
 }
 
@@ -1163,6 +7321,7 @@ export async function updateQuantity(formData: FormData) {
   const delta = Number(formData.get("delta"));
 
   const item = await requireBuildItemAccess(buildId, itemId);
+  await ensureBuildRevisionBaseline(buildId, item.accessUserId);
 
   if (!Number.isInteger(delta) || Math.abs(delta) !== 1) throw new Error("Invalid quantity change.");
   const newQuantity = Math.max(1, item.quantity + delta);
@@ -1172,6 +7331,7 @@ export async function updateQuantity(formData: FormData) {
     data: { quantity: newQuantity },
   });
 
+  await recordBuildRevision(buildId, item.accessUserId, "gear", "Changed gear quantity");
   revalidatePath(`/build/${buildId}`);
 }
 export async function claimCurrentBuild(formData?: FormData) {
@@ -1270,6 +7430,7 @@ export async function createBuild(formData: FormData) {
     });
   }
 
+  await recordBuildRevision(build.id, ownerId, "create", "Created build");
   await setCurrentBuild(build.id, !ownerId);
 
   redirect(`/build/${build.id}`);
@@ -1277,6 +7438,7 @@ export async function createBuild(formData: FormData) {
 export async function addGear(formData: FormData) {
   const buildId = formData.get("buildId") as string;
   const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
   const gearId = formData.get("gearId") as string;
 
   await prisma.buildItem.upsert({
@@ -1293,6 +7455,7 @@ export async function addGear(formData: FormData) {
     },
   });
 
+  await recordBuildRevision(buildId, access.userId, "gear", "Added gear");
   redirect(`/build/${buildId}`);
 }
 
@@ -1300,6 +7463,7 @@ export async function removeGear(formData: FormData) {
   const itemId = formData.get("itemId") as string;
   const buildId = formData.get("buildId") as string;
   const item = await requireBuildItemAccess(buildId, itemId);
+  await ensureBuildRevisionBaseline(buildId, item.accessUserId);
 
   await prisma.buildItem.delete({
     where: {
@@ -1309,6 +7473,7 @@ export async function removeGear(formData: FormData) {
     },
   });
 
+  await recordBuildRevision(buildId, item.accessUserId, "gear", "Removed gear");
   redirect(`/build/${buildId}`);
 }
 
@@ -2027,6 +8192,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
 
 async function currentUser() {
   const session = await auth();
@@ -2049,7 +8215,9 @@ export async function renameBuild(formData: FormData) {
   const buildId = String(formData.get("buildId") || "");
   const name = String(formData.get("name") || "").trim();
   if (!name) throw new Error("Build name is required.");
+  await ensureBuildRevisionBaseline(buildId, user.id);
   await prisma.build.updateMany({ where: { id: buildId, userId: user.id }, data: { name: name.slice(0, 80) } });
+  await recordBuildRevision(buildId, user.id, "settings", "Renamed build");
   revalidatePath("/profile");
   revalidatePath("/profile/builds");
 }
@@ -2095,6 +8263,7 @@ export async function duplicateProfileBuild(formData: FormData) {
       },
     },
   });
+  await recordBuildRevision(copy.id, user.id, "copy", `Created from ${original.name}`);
   await setCurrentBuild(copy.id);
   redirect(`/build/${copy.id}`);
 }
@@ -2238,6 +8407,7 @@ import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
 
 async function userId() {
   const session = await auth();
@@ -2313,11 +8483,13 @@ export async function addGearToCurrentBuild(formData: FormData) {
   if (!buildId) redirect("/profile/builds");
   const build = await prisma.build.findFirst({ where: { id: buildId, userId: userIdValue }, select: { id: true } });
   if (!build) redirect("/profile/builds");
+  await ensureBuildRevisionBaseline(build.id, userIdValue);
   await prisma.buildItem.upsert({
     where: { buildId_gearId: { buildId: build.id, gearId } },
     update: { quantity: { increment: 1 } },
     create: { buildId: build.id, gearId },
   });
+  await recordBuildRevision(build.id, userIdValue, "gear", "Added gear from library");
   revalidatePath(`/build/${build.id}`);
   redirect(`/build/${build.id}`);
 }
@@ -3829,6 +10001,639 @@ export default function AddGearButton({
 }
 ```
 
+### `components/builder/BuildDataTools.tsx`
+
+```typescript
+"use client";
+
+import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  AlertTriangle,
+  Backpack,
+  CheckCircle2,
+  Clock3,
+  Download,
+  FileDown,
+  FileJson2,
+  FileUp,
+  History,
+  Loader2,
+  MapPinned,
+  PackageOpen,
+  RotateCcw,
+  UploadCloud,
+  X,
+} from "lucide-react";
+import { getBuildExport, importBuildItems } from "@/app/build/actions";
+import { getBuildHistory, restoreBuildRevision, undoLastBuildChange } from "@/lib/build-history-actions";
+
+type Tool = "import" | "export" | "history";
+type ImportMode = "merge" | "replace";
+
+type ImportPreview = {
+  name: string;
+  itemCount: number;
+  dayCount: number;
+  version: number | null;
+  fullBuild: boolean;
+};
+
+type SelectedImport = {
+  fileName: string;
+  size: number;
+  text: string;
+  preview: ImportPreview;
+};
+
+type HistoryEntry = {
+  id: string;
+  action: string;
+  summary: string;
+  createdAt: string;
+  itemCount: number;
+  dayCount: number;
+  name: string;
+  isCurrent: boolean;
+};
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function inspectImport(text: string): ImportPreview {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    throw new Error("That file is not valid JSON.");
+  }
+
+  if (!isRecord(parsed) || !Array.isArray(parsed.items)) {
+    throw new Error("This doesn’t look like a TrailPicker export.");
+  }
+  if (parsed.format != null && parsed.format !== "trailpicker-build") {
+    throw new Error("This file was not exported by TrailPicker.");
+  }
+
+  const version = typeof parsed.version === "number" ? parsed.version : null;
+  return {
+    name: typeof parsed.name === "string" && parsed.name.trim() ? parsed.name.trim() : "Imported build",
+    itemCount: parsed.items.length,
+    dayCount: Array.isArray(parsed.days) ? parsed.days.length : 0,
+    version,
+    fullBuild: version === 2 || Array.isArray(parsed.days) || "routeWaypoints" in parsed || "tripLogistics" in parsed,
+  };
+}
+
+function bytes(size: number) {
+  if (size < 1024) return `${size} B`;
+  if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+  return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function safeFileName(name: string) {
+  const base = name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return `${base || "trailpicker-build"}.json`;
+}
+
+function historyIcon(action: string) {
+  if (action === "import") return FileUp;
+  if (action === "restore") return RotateCcw;
+  if (action === "route" || action === "trip" || action === "itinerary" || action === "logistics") return MapPinned;
+  if (action === "gear") return Backpack;
+  return Clock3;
+}
+
+function relativeTime(value: string) {
+  const date = new Date(value);
+  const seconds = Math.max(0, Math.floor((Date.now() - date.getTime()) / 1000));
+  if (seconds < 45) return "Just now";
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 7) return `${days}d ago`;
+  return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}
+
+function dayLabel(value: string) {
+  const date = new Date(value);
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  const target = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+  const diff = Math.round((start - target) / 86_400_000);
+  if (diff === 0) return "Today";
+  if (diff === 1) return "Yesterday";
+  return date.toLocaleDateString(undefined, { month: "long", day: "numeric", year: date.getFullYear() === now.getFullYear() ? undefined : "numeric" });
+}
+
+function historyGroups(entries: HistoryEntry[]) {
+  const groups: { label: string; entries: HistoryEntry[] }[] = [];
+  for (const entry of entries) {
+    const label = dayLabel(entry.createdAt);
+    const last = groups[groups.length - 1];
+    if (last?.label === label) last.entries.push(entry);
+    else groups.push({ label, entries: [entry] });
+  }
+  return groups;
+}
+
+const toolTitle: Record<Tool, string> = {
+  import: "Import build",
+  export: "Export build",
+  history: "History",
+};
+
+export default function BuildDataTools({
+  buildId,
+  buildName,
+  createdAt,
+  updatedAt,
+  buttonClassName,
+}: {
+  buildId: string;
+  buildName: string;
+  createdAt: Date;
+  updatedAt: Date;
+  buttonClassName: string;
+}) {
+  const dialog = useRef<HTMLDialogElement>(null);
+  const fileInput = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  const [tool, setTool] = useState<Tool>("import");
+  const [selectedImport, setSelectedImport] = useState<SelectedImport | null>(null);
+  const [importMode, setImportMode] = useState<ImportMode>("merge");
+  const [importError, setImportError] = useState<string | null>(null);
+  const [importNotice, setImportNotice] = useState<string | null>(null);
+  const [importing, setImporting] = useState(false);
+  const [exporting, setExporting] = useState(false);
+  const [exportNotice, setExportNotice] = useState<string | null>(null);
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [historyError, setHistoryError] = useState<string | null>(null);
+  const [historyNotice, setHistoryNotice] = useState<string | null>(null);
+  const [confirmRestore, setConfirmRestore] = useState<string | null>(null);
+  const [restoring, setRestoring] = useState<string | null>(null);
+
+  async function loadHistory() {
+    setHistoryLoading(true);
+    setHistoryError(null);
+    try {
+      const entries = await getBuildHistory(buildId);
+      setHistory(entries);
+    } catch {
+      setHistoryError("Couldn’t load history.");
+    } finally {
+      setHistoryLoading(false);
+    }
+  }
+
+  function open(nextTool: Tool) {
+    setTool(nextTool);
+    setImportError(null);
+    setImportNotice(null);
+    setExportNotice(null);
+    setHistoryError(null);
+    setHistoryNotice(null);
+    setConfirmRestore(null);
+    dialog.current?.showModal();
+    if (nextTool === "history") void loadHistory();
+  }
+
+  async function readImportFile(file: File) {
+    setImportError(null);
+    setImportNotice(null);
+    if (file.size > 2_000_000) {
+      setSelectedImport(null);
+      setImportError("File is too large. Maximum size is 2 MB.");
+      return;
+    }
+    try {
+      const text = await file.text();
+      const preview = inspectImport(text);
+      setSelectedImport({ fileName: file.name, size: file.size, text, preview });
+    } catch (error) {
+      setSelectedImport(null);
+      setImportError(error instanceof Error ? error.message : "Couldn’t read that file.");
+    }
+  }
+
+  async function runImport() {
+    if (!selectedImport || importing) return;
+    setImporting(true);
+    setImportError(null);
+    setImportNotice(null);
+    try {
+      const formData = new FormData();
+      formData.set("buildId", buildId);
+      formData.set("payload", selectedImport.text);
+      formData.set("mode", importMode);
+      const result = await importBuildItems(formData);
+      setImportNotice(
+        result.mode === "replace"
+          ? `Imported ${result.itemCount} item${result.itemCount === 1 ? "" : "s"}.`
+          : `Added ${result.itemCount} item${result.itemCount === 1 ? "" : "s"}.`,
+      );
+      setSelectedImport(null);
+      if (fileInput.current) fileInput.current.value = "";
+      setHistory([]);
+      router.refresh();
+    } catch (error) {
+      setImportError(error instanceof Error ? error.message : "Import failed.");
+    } finally {
+      setImporting(false);
+    }
+  }
+
+  async function runExport() {
+    if (exporting) return;
+    setExporting(true);
+    setExportNotice(null);
+    try {
+      const data = await getBuildExport(buildId);
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = safeFileName(buildName);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setExportNotice("Downloaded.");
+    } catch {
+      setExportNotice("Export failed. Try again.");
+    } finally {
+      setExporting(false);
+    }
+  }
+
+  async function restore(entry: HistoryEntry) {
+    if (restoring || entry.isCurrent) return;
+    setRestoring(entry.id);
+    setHistoryError(null);
+    try {
+      await restoreBuildRevision(buildId, entry.id);
+      setConfirmRestore(null);
+      setHistoryNotice("Version restored.");
+      await loadHistory();
+      router.refresh();
+    } catch {
+      setHistoryError("Couldn’t restore that version.");
+    } finally {
+      setRestoring(null);
+    }
+  }
+
+  async function undoLastChange() {
+    if (restoring || history.length < 2) return;
+    setRestoring("undo");
+    setHistoryError(null);
+    setHistoryNotice(null);
+    try {
+      await undoLastBuildChange(buildId);
+      setHistoryNotice("Last change undone.");
+      await loadHistory();
+      router.refresh();
+    } catch (error) {
+      setHistoryError(error instanceof Error ? error.message : "Couldn’t undo the last change.");
+    } finally {
+      setRestoring(null);
+    }
+  }
+
+  return (
+    <>
+      <button type="button" onClick={() => open("import")} className={buttonClassName}>
+        <FileUp className="h-4 w-4" aria-hidden="true" />
+        Import
+      </button>
+      <button type="button" onClick={() => open("export")} className={buttonClassName}>
+        <FileDown className="h-4 w-4" aria-hidden="true" />
+        Export
+      </button>
+      <button type="button" onClick={() => open("history")} className={buttonClassName}>
+        <History className="h-4 w-4" aria-hidden="true" />
+        History
+      </button>
+
+      <dialog
+        ref={dialog}
+        aria-labelledby="build-data-title"
+        className="fixed inset-0 m-auto max-h-[88vh] w-[calc(100%_-_2rem)] max-w-2xl overflow-hidden rounded-2xl border border-gray-200 bg-white p-0 text-gray-900 shadow-2xl backdrop:bg-gray-950/45"
+        onClick={(event) => {
+          if (event.target !== event.currentTarget) return;
+          const rect = event.currentTarget.getBoundingClientRect();
+          const outside = event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom;
+          if (outside) event.currentTarget.close();
+        }}
+      >
+        <div className="flex max-h-[88vh] flex-col">
+          <header className="flex items-center justify-between gap-4 border-b border-gray-200 px-6 py-5">
+            <h2 id="build-data-title" className="text-lg font-semibold text-gray-950">{toolTitle[tool]}</h2>
+            <button
+              type="button"
+              onClick={() => dialog.current?.close()}
+              aria-label="Close"
+              className="rounded-lg p-2 text-gray-400 transition hover:bg-gray-100 hover:text-gray-700"
+            >
+              <X className="h-5 w-5" aria-hidden="true" />
+            </button>
+          </header>
+
+          <div className="overflow-y-auto px-6 py-6">
+            {tool === "import" && (
+              <div className="space-y-5">
+                <input
+                  ref={fileInput}
+                  type="file"
+                  accept="application/json,.json"
+                  className="hidden"
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (file) void readImportFile(file);
+                  }}
+                />
+
+                <button
+                  type="button"
+                  onClick={() => fileInput.current?.click()}
+                  onDragOver={(event) => event.preventDefault()}
+                  onDrop={(event) => {
+                    event.preventDefault();
+                    const file = event.dataTransfer.files?.[0];
+                    if (file) void readImportFile(file);
+                  }}
+                  className="group flex w-full flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 px-6 py-9 text-center transition hover:border-green-600 hover:bg-green-50/40"
+                >
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-green-800 shadow-sm ring-1 ring-gray-200">
+                    <UploadCloud className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <span className="mt-3 text-sm font-semibold text-gray-900">Choose a JSON file</span>
+                  <span className="mt-1 text-xs text-gray-500">or drop it here</span>
+                </button>
+
+                {selectedImport && (
+                  <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+                    <div className="flex items-center gap-3 border-b border-gray-100 bg-gray-50 px-4 py-3">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-green-800 ring-1 ring-gray-200">
+                        <FileJson2 className="h-5 w-5" aria-hidden="true" />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-semibold text-gray-900">{selectedImport.fileName}</p>
+                        <p className="text-xs text-gray-500">{bytes(selectedImport.size)} · {selectedImport.preview.version ? `v${selectedImport.preview.version}` : "legacy"}</p>
+                      </div>
+                      <button type="button" onClick={() => setSelectedImport(null)} className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-700" aria-label="Remove file">
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                    <div className="grid gap-3 p-4 sm:grid-cols-3">
+                      <div>
+                        <p className="text-xs text-gray-500">Build</p>
+                        <p className="mt-1 truncate text-sm font-medium text-gray-900">{selectedImport.preview.name}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Gear</p>
+                        <p className="mt-1 text-sm font-medium text-gray-900">{selectedImport.preview.itemCount} item{selectedImport.preview.itemCount === 1 ? "" : "s"}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-500">Trip</p>
+                        <p className="mt-1 text-sm font-medium text-gray-900">{selectedImport.preview.fullBuild ? `${selectedImport.preview.dayCount} day${selectedImport.preview.dayCount === 1 ? "" : "s"}` : "Gear only"}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {selectedImport && (
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <button
+                      type="button"
+                      onClick={() => setImportMode("merge")}
+                      className={`rounded-xl border p-4 text-left transition ${importMode === "merge" ? "border-green-700 bg-green-50 ring-1 ring-green-700/10" : "border-gray-200 hover:bg-gray-50"}`}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <PackageOpen className="h-5 w-5 text-green-800" />
+                        {importMode === "merge" && <CheckCircle2 className="h-5 w-5 text-green-700" />}
+                      </div>
+                      <p className="mt-3 text-sm font-semibold text-gray-900">Add gear</p>
+                      <p className="mt-1 text-xs leading-5 text-gray-500">Keep this build and add the imported gear.</p>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setImportMode("replace")}
+                      className={`rounded-xl border p-4 text-left transition ${importMode === "replace" ? "border-amber-500 bg-amber-50 ring-1 ring-amber-500/10" : "border-gray-200 hover:bg-gray-50"}`}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <RotateCcw className="h-5 w-5 text-amber-700" />
+                        {importMode === "replace" && <CheckCircle2 className="h-5 w-5 text-amber-600" />}
+                      </div>
+                      <p className="mt-3 text-sm font-semibold text-gray-900">Replace build</p>
+                      <p className="mt-1 text-xs leading-5 text-gray-500">Replace the current gear and trip data.</p>
+                    </button>
+                  </div>
+                )}
+
+                {importError && <p role="alert" className="flex items-start gap-2 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />{importError}</p>}
+                {importNotice && <p role="status" className="flex items-start gap-2 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-800"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />{importNotice}</p>}
+
+                <div className="flex justify-end border-t border-gray-100 pt-5">
+                  <button
+                    type="button"
+                    onClick={runImport}
+                    disabled={!selectedImport || importing}
+                    className="inline-flex min-w-28 items-center justify-center gap-2 rounded-lg bg-green-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-900 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    {importing ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileUp className="h-4 w-4" />}
+                    {importing ? "Importing…" : importMode === "replace" ? "Replace" : "Import"}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {tool === "export" && (
+              <div className="space-y-5">
+                <div className="rounded-xl border border-gray-200 p-5">
+                  <div className="flex items-start gap-4">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-800">
+                      <Download className="h-5 w-5" />
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate font-semibold text-gray-950">{buildName}</p>
+                      <p className="mt-1 text-sm text-gray-500">Gear, trip details, route, logistics, and itinerary.</p>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={runExport}
+                    disabled={exporting}
+                    className="mt-5 inline-flex items-center gap-2 rounded-lg bg-green-800 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-900 disabled:opacity-60"
+                  >
+                    {exporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileDown className="h-4 w-4" />}
+                    {exporting ? "Preparing…" : "Download JSON"}
+                  </button>
+                </div>
+
+                <p className="text-xs text-gray-500">
+                  Created {createdAt.toLocaleString()} · Updated {updatedAt.toLocaleString()}
+                </p>
+
+                {exportNotice && (
+                  <p role="status" className={`rounded-lg px-4 py-3 text-sm ${exportNotice === "Downloaded." ? "bg-green-50 text-green-800" : "bg-red-50 text-red-700"}`}>
+                    {exportNotice}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {tool === "history" && (
+              <div className="space-y-5">
+                <div className="flex items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    onClick={() => void undoLastChange()}
+                    disabled={historyLoading || history.length < 2 || Boolean(restoring)}
+                    className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    {restoring === "undo" ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-4 w-4" />}
+                    Undo last change
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void loadHistory()}
+                    disabled={historyLoading}
+                    className="rounded-lg px-3 py-2 text-xs font-semibold text-gray-500 transition hover:bg-gray-100 hover:text-gray-800 disabled:opacity-50"
+                  >
+                    Refresh
+                  </button>
+                </div>
+
+                {historyError && (
+                  <p role="alert" className="flex items-start gap-2 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
+                    <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+                    {historyError}
+                  </p>
+                )}
+                {historyNotice && (
+                  <p role="status" className="flex items-start gap-2 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-800">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
+                    {historyNotice}
+                  </p>
+                )}
+
+                {historyLoading && history.length === 0 && (
+                  <div className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 py-12 text-sm text-gray-500">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Loading…
+                  </div>
+                )}
+
+                {!historyLoading && !historyError && history.length === 0 && (
+                  <div className="rounded-xl border border-dashed border-gray-300 px-6 py-10 text-center">
+                    <History className="mx-auto h-7 w-7 text-gray-400" />
+                    <p className="mt-3 text-sm font-semibold text-gray-800">No history yet</p>
+                  </div>
+                )}
+
+                {history[0] && (
+                  <section>
+                    <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-gray-400">Current</p>
+                    <div className="rounded-xl border border-green-200 bg-green-50/60 p-4">
+                      <div className="flex items-start gap-3">
+                        {(() => {
+                          const Icon = historyIcon(history[0].action);
+                          return (
+                            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-800">
+                              <Icon className="h-4 w-4" />
+                            </span>
+                          );
+                        })()}
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-semibold text-gray-950">{history[0].summary}</p>
+                          <p className="mt-1 text-xs text-gray-500" title={new Date(history[0].createdAt).toLocaleString()}>
+                            {relativeTime(history[0].createdAt)} · {history[0].itemCount} gear · {history[0].dayCount} day{history[0].dayCount === 1 ? "" : "s"}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                )}
+
+                {historyGroups(history.slice(1)).map((group) => (
+                  <section key={group.label}>
+                    <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-gray-400">{group.label}</p>
+                    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+                      {group.entries.map((entry, index) => {
+                        const Icon = historyIcon(entry.action);
+                        const confirming = confirmRestore === entry.id;
+                        return (
+                          <div key={entry.id} className={index === 0 ? "" : "border-t border-gray-100"}>
+                            <div className="flex items-start gap-3 px-4 py-3.5">
+                              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+                                <Icon className="h-4 w-4" />
+                              </span>
+                              <div className="min-w-0 flex-1">
+                                <p className="text-sm font-medium text-gray-900">{entry.summary}</p>
+                                <p className="mt-1 text-xs text-gray-500" title={new Date(entry.createdAt).toLocaleString()}>
+                                  {new Date(entry.createdAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })} · {entry.itemCount} gear · {entry.dayCount} day{entry.dayCount === 1 ? "" : "s"}
+                                </p>
+                              </div>
+                              {!confirming && (
+                                <button
+                                  type="button"
+                                  onClick={() => { setConfirmRestore(entry.id); setHistoryNotice(null); }}
+                                  disabled={Boolean(restoring)}
+                                  className="shrink-0 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-gray-500 transition hover:bg-gray-100 hover:text-gray-900 disabled:opacity-40"
+                                >
+                                  Restore
+                                </button>
+                              )}
+                            </div>
+
+                            {confirming && (
+                              <div className="flex flex-col gap-3 border-t border-amber-100 bg-amber-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+                                <p className="text-xs font-medium text-amber-900">Restore this version?</p>
+                                <div className="flex shrink-0 gap-2">
+                                  <button
+                                    type="button"
+                                    onClick={() => setConfirmRestore(null)}
+                                    className="rounded-lg px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-white/70"
+                                  >
+                                    Cancel
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => void restore(entry)}
+                                    disabled={Boolean(restoring)}
+                                    className="inline-flex items-center gap-1.5 rounded-lg bg-amber-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-700 disabled:opacity-50"
+                                  >
+                                    {restoring === entry.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RotateCcw className="h-3.5 w-3.5" />}
+                                    Restore
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </section>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </dialog>
+    </>
+  );
+}
+
+```
+
 ### `components/builder/BuildHeader.tsx`
 
 ```typescript
@@ -4906,169 +11711,87 @@ export default function RemoveGearButton({
 
 ```typescript
 "use client";
-//components/builder/ShareBar.tsx
-import { useRef, useState } from "react";
+
+import { useState } from "react";
 import Link from "next/link";
+import { Copy, CopyCheck, Plus, Save } from "lucide-react";
 import BuildSettings from "@/components/builder/BuildSettings";
-import { duplicateBuild, getBuildExport, importBuildItems } from "@/app/build/actions";
+import BuildDataTools from "@/components/builder/BuildDataTools";
+import { duplicateBuild } from "@/app/build/actions";
 
 type Props = {
-    buildId: string;
-    buildName: string;
-    isPublic: boolean;
-    createdAt: Date;
-    updatedAt: Date;
+  buildId: string;
+  buildName: string;
+  isPublic: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 const btnClass =
-    "flex items-center gap-1.5 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 cursor-pointer transition disabled:opacity-50 disabled:cursor-not-allowed";
+  "flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:border-gray-400 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50";
 
 export default function ShareBar({ buildId, buildName, isPublic, createdAt, updatedAt }: Props) {
-    const [copied, setCopied] = useState(false);
-    const [showHistory, setShowHistory] = useState(false);
-    const [importing, setImporting] = useState(false);
-    const fileInputRef = useRef<HTMLInputElement>(null);
+  const [copied, setCopied] = useState(false);
+  const shareUrl = typeof window !== "undefined" ? `${window.location.origin}/build/${buildId}` : `/build/${buildId}`;
 
-    const shareUrl =
-        typeof window !== "undefined" ? `${window.location.origin}/build/${buildId}` : `/build/${buildId}`;
-
-    async function copyLink() {
-        try {
-            await navigator.clipboard.writeText(shareUrl);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 1500);
-        } catch {
-            // clipboard blocked — user can still select the text manually
-        }
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    } catch {
+      // The URL remains selectable if clipboard permission is blocked.
     }
+  }
 
-    async function exportBuild() {
-        const data = await getBuildExport(buildId);
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
+  return (
+    <div className="flex flex-wrap items-center gap-2.5 px-5 py-4">
+      <div className="flex min-w-[280px] flex-1 items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 shadow-inner shadow-gray-100/70">
+        <button
+          type="button"
+          onClick={copyLink}
+          title={isPublic ? "Copy public link" : "Copy private link"}
+          className="shrink-0 rounded-md p-1 text-gray-400 transition hover:bg-white hover:text-green-800"
+        >
+          {copied ? <CopyCheck className="h-4 w-4 text-green-700" /> : <Copy className="h-4 w-4" />}
+        </button>
+        <input
+          readOnly
+          value={shareUrl}
+          onFocus={(event) => event.currentTarget.select()}
+          className="w-full truncate bg-transparent text-sm text-gray-700 outline-none"
+        />
+        <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${isPublic ? "bg-green-100 text-green-800" : "bg-gray-200 text-gray-600"}`}>
+          {isPublic ? "Public" : "Private"}
+        </span>
+      </div>
 
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `${buildName.replace(/\s+/g, "-").toLowerCase()}.json`;
-        a.click();
+      <BuildDataTools
+        buildId={buildId}
+        buildName={buildName}
+        createdAt={createdAt}
+        updatedAt={updatedAt}
+        buttonClassName={btnClass}
+      />
 
-        URL.revokeObjectURL(url);
-    }
+      <BuildSettings buildId={buildId} buildName={buildName} isPublic={isPublic} buttonClassName={btnClass} />
 
-    async function handleImportFile(e: React.ChangeEvent<HTMLInputElement>) {
-        const file = e.target.files?.[0];
-        if (!file) return;
+      <form action={duplicateBuild}>
+        <input type="hidden" name="buildId" value={buildId} />
+        <button type="submit" className={btnClass}>
+          <Save className="h-4 w-4" aria-hidden="true" />
+          Save As
+        </button>
+      </form>
 
-        setImporting(true);
-        try {
-            const text = await file.text();
-            JSON.parse(text);
-
-            const formData = new FormData();
-            formData.append("buildId", buildId);
-            formData.append("payload", text);
-            await importBuildItems(formData);
-
-            window.location.reload();
-        } catch {
-            alert("Couldn't read that file — check it's a TrailPicker export.");
-        } finally {
-            setImporting(false);
-            e.target.value = "";
-        }
-    }
-
-    return (
-        <div className="flex flex-wrap items-center gap-3 px-5 py-4">
-            <div className="flex flex-1 min-w-[280px] items-center gap-2 rounded-md border border-gray-300 bg-gray-50 px-3 py-2">
-                <button
-                    type="button"
-                    onClick={copyLink}
-                    title={isPublic ? "Copy public link" : "Copy private link"}
-                    className="shrink-0 text-gray-400 hover:text-gray-700 cursor-pointer"
-                >
-                    {copied ? (
-                        <span className="text-xs font-semibold text-green-700 whitespace-nowrap">Copied!</span>
-                    ) : (
-                        <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
-                            <rect x="9" y="9" width="13" height="13" rx="2" />
-                            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
-                        </svg>
-                    )}
-                </button>
-
-                <input
-                    readOnly
-                    value={shareUrl}
-                    onFocus={(e) => e.currentTarget.select()}
-                    className="w-full bg-transparent text-sm text-gray-700 outline-none truncate"
-                />
-            </div>
-
-            <span className="text-xs text-gray-500">{isPublic ? "Public build" : "Private build"}</span>
-
-            <input
-                ref={fileInputRef}
-                type="file"
-                accept="application/json"
-                onChange={handleImportFile}
-                className="hidden"
-            />
-
-            <button type="button" onClick={() => fileInputRef.current?.click()} disabled={importing} className={btnClass}>
-                <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
-                </svg>
-                {importing ? "Importing…" : "Import"}
-            </button>
-
-            <button type="button" onClick={exportBuild} className={btnClass}>
-                <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 15V3m0 0l-4 4m4-4l4 4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
-                </svg>
-                Export
-            </button>
-
-            <div className="relative">
-                <button type="button" onClick={() => setShowHistory(!showHistory)} className={btnClass}>
-                    <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
-                        <circle cx="12" cy="12" r="9" />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 3" />
-                    </svg>
-                    History
-                </button>
-
-                {showHistory && (
-                    <div className="absolute right-0 top-full mt-2 w-56 rounded-lg border bg-white p-3 text-xs text-gray-600 shadow-lg z-20">
-                        <p><span className="font-semibold">Created:</span> {createdAt.toLocaleDateString()}</p>
-                        <p className="mt-1"><span className="font-semibold">Last updated:</span> {updatedAt.toLocaleDateString()}</p>
-                    </div>
-                )}
-            </div>
-
-            <BuildSettings buildId={buildId} buildName={buildName} isPublic={isPublic} buttonClassName={btnClass} />
-
-            <form action={duplicateBuild}>
-                <input type="hidden" name="buildId" value={buildId} />
-                <button type="submit" className={btnClass}>
-                    <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
-                        <rect x="8" y="8" width="12" height="12" rx="2" />
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16V5a1 1 0 011-1h11" />
-                    </svg>
-                    Save As
-                </button>
-            </form>
-
-            <Link href="/build" className={btnClass}>
-                <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                </svg>
-                New Build
-            </Link>
-        </div>
-
-    );
+      <Link href="/build" className={btnClass}>
+        <Plus className="h-4 w-4" aria-hidden="true" />
+        New Build
+      </Link>
+    </div>
+  );
 }
+
 ```
 
 ### `components/builder/TripPlanner/MapPreviewInner.tsx`
@@ -8022,6 +14745,483 @@ export async function setCurrentBuild(buildId: string, guest = false) {
 
 ```
 
+### `lib/build-history-actions.ts`
+
+```typescript
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/app/generated/prisma/client";
+import { requireBuildAccess } from "@/lib/build-access";
+import {
+  ensureBuildRevisionBaseline,
+  getBuildSnapshot,
+  recordBuildRevision,
+  snapshotsEqual,
+  type BuildSnapshot,
+  type BuildSnapshotDay,
+  type BuildSnapshotItem,
+} from "@/lib/build-history";
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function parseSnapshot(value: unknown): BuildSnapshot {
+  if (!isRecord(value) || typeof value.name !== "string" || !Array.isArray(value.items) || !Array.isArray(value.days)) {
+    throw new Error("This history entry can’t be restored.");
+  }
+  return value as unknown as BuildSnapshot;
+}
+
+function dateOrNull(value: string | null) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) throw new Error("This history entry contains an invalid date.");
+  return date;
+}
+
+function safeItem(item: BuildSnapshotItem) {
+  return {
+    gearId: typeof item.gearId === "string" ? item.gearId : null,
+    gearName: typeof item.gearName === "string" ? item.gearName : null,
+    quantity: Number.isInteger(item.quantity) && item.quantity > 0 ? Math.min(item.quantity, 999) : 1,
+    isConsumable: Boolean(item.isConsumable),
+    isWorn: Boolean(item.isWorn),
+    customCategory: typeof item.customCategory === "string" ? item.customCategory.slice(0, 100) : null,
+    gearNameSnapshot: typeof item.gearNameSnapshot === "string" ? item.gearNameSnapshot.slice(0, 200) : null,
+    weightSnapshot: Number.isFinite(item.weightSnapshot) ? item.weightSnapshot : null,
+    priceSnapshot: Number.isFinite(item.priceSnapshot) ? item.priceSnapshot : null,
+  };
+}
+
+function safeDay(day: BuildSnapshotDay) {
+  const date = new Date(day.date);
+  if (Number.isNaN(date.getTime())) throw new Error("This history entry contains an invalid itinerary date.");
+  return { ...day, date };
+}
+
+function snapshotMeta(value: unknown) {
+  const snapshot = isRecord(value) ? value : null;
+  return {
+    itemCount: snapshot && Array.isArray(snapshot.items) ? snapshot.items.length : 0,
+    dayCount: snapshot && Array.isArray(snapshot.days) ? snapshot.days.length : 0,
+    name: snapshot && typeof snapshot.name === "string" ? snapshot.name : "Build",
+  };
+}
+
+export async function getBuildHistory(buildId: string) {
+  const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(access.id, access.userId);
+
+  const revisions = await prisma.buildRevision.findMany({
+    where: { buildId: access.id },
+    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+    take: 60,
+    select: { id: true, action: true, summary: true, snapshot: true, createdAt: true },
+  });
+
+  return revisions.map((revision, index) => ({
+    id: revision.id,
+    action: revision.action,
+    summary: revision.summary,
+    createdAt: revision.createdAt.toISOString(),
+    ...snapshotMeta(revision.snapshot),
+    isCurrent: index === 0,
+  }));
+}
+
+async function restoreSnapshot(
+  access: { id: string; userId: string | null },
+  revision: { id: string; snapshot: unknown; createdAt: Date; summary: string },
+  summary: string,
+) {
+  const snapshot = parseSnapshot(revision.snapshot);
+  if (snapshot.items.length > 1000 || snapshot.days.length > 366) {
+    throw new Error("This history entry is too large to restore.");
+  }
+
+  // Normally the latest revision already represents the current state. If some
+  // future mutation forgets to write history, keep a safety copy before restore.
+  const current = await getBuildSnapshot(access.id, access.userId);
+  const latest = await prisma.buildRevision.findFirst({
+    where: { buildId: access.id },
+    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+    select: { snapshot: true },
+  });
+  if (!latest || !isRecord(latest.snapshot) || !snapshotsEqual(current, parseSnapshot(latest.snapshot))) {
+    await recordBuildRevision(access.id, access.userId, "history", "Saved before restore");
+  }
+
+  const items = snapshot.items.map(safeItem);
+  const days = snapshot.days.map(safeDay);
+  const requestedGearIds = [...new Set(items.map((item) => item.gearId).filter((id): id is string => Boolean(id)))];
+  const existingGear = requestedGearIds.length
+    ? await prisma.gear.findMany({ where: { id: { in: requestedGearIds } }, select: { id: true } })
+    : [];
+  const existingGearIds = new Set(existingGear.map((gear) => gear.id));
+
+  await prisma.$transaction(async (tx) => {
+    await tx.build.update({
+      where: { id: access.id, userId: access.userId },
+      data: {
+        name: snapshot.name.slice(0, 100) || "Restored build",
+        destinationId: snapshot.destinationId ?? null,
+        location: snapshot.location ?? null,
+        locationLat: snapshot.locationLat ?? null,
+        locationLng: snapshot.locationLng ?? null,
+        startDate: dateOrNull(snapshot.startDate),
+        endDate: dateOrNull(snapshot.endDate),
+        people: Number.isInteger(snapshot.people) && snapshot.people > 0 ? Math.min(snapshot.people, 100) : 1,
+        minTemperature: Number.isFinite(snapshot.minTemperature) ? snapshot.minTemperature : null,
+        conditions: snapshot.conditions ?? null,
+        routeWaypoints: snapshot.routeWaypoints == null ? Prisma.DbNull : JSON.parse(JSON.stringify(snapshot.routeWaypoints)),
+        tripLogistics: snapshot.tripLogistics == null ? Prisma.DbNull : JSON.parse(JSON.stringify(snapshot.tripLogistics)),
+      },
+    });
+
+    await tx.buildItem.deleteMany({ where: { buildId: access.id } });
+    for (const item of items) {
+      const gearId = item.gearId && existingGearIds.has(item.gearId) ? item.gearId : null;
+      await tx.buildItem.create({
+        data: {
+          buildId: access.id,
+          gearId,
+          quantity: item.quantity,
+          isConsumable: item.isConsumable,
+          isWorn: item.isWorn,
+          customCategory: item.customCategory,
+          gearNameSnapshot: gearId ? item.gearNameSnapshot : item.gearNameSnapshot ?? item.gearName ?? "Restored item",
+          weightSnapshot: item.weightSnapshot,
+          priceSnapshot: item.priceSnapshot,
+        },
+      });
+    }
+
+    await tx.tripDay.deleteMany({ where: { buildId: access.id } });
+    if (days.length) {
+      await tx.tripDay.createMany({
+        data: days.map((day) => ({ ...day, buildId: access.id })),
+      });
+    }
+  });
+
+  await recordBuildRevision(access.id, access.userId, "restore", summary);
+  revalidatePath(`/build/${access.id}`);
+  revalidatePath("/profile/builds");
+
+  return { ok: true };
+}
+
+export async function restoreBuildRevision(buildId: string, revisionId: string) {
+  const access = await requireBuildAccess(buildId);
+  if (typeof revisionId !== "string" || !revisionId || revisionId.length > 200) {
+    throw new Error("Invalid history entry.");
+  }
+
+  const revision = await prisma.buildRevision.findFirst({
+    where: { id: revisionId, buildId: access.id },
+    select: { id: true, snapshot: true, createdAt: true, summary: true },
+  });
+  if (!revision) throw new Error("History entry not found.");
+
+  const restoredDate = revision.createdAt.toLocaleString("en-CA", {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+  return restoreSnapshot(access, revision, `Restored ${restoredDate}`);
+}
+
+export async function undoLastBuildChange(buildId: string) {
+  const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(access.id, access.userId);
+
+  const revisions = await prisma.buildRevision.findMany({
+    where: { buildId: access.id },
+    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+    take: 2,
+    select: { id: true, snapshot: true, createdAt: true, summary: true },
+  });
+  if (revisions.length < 2) throw new Error("Nothing to undo yet.");
+
+  const target = revisions[1];
+  await restoreSnapshot(access, target, `Undid: ${revisions[0].summary}`);
+  return { ok: true, undone: revisions[0].summary };
+}
+
+```
+
+### `lib/build-history.ts`
+
+```typescript
+import "server-only";
+
+import { prisma } from "@/lib/prisma";
+
+export type BuildSnapshotItem = {
+  gearId: string | null;
+  gearName: string | null;
+  quantity: number;
+  isConsumable: boolean;
+  isWorn: boolean;
+  customCategory: string | null;
+  gearNameSnapshot: string | null;
+  weightSnapshot: number | null;
+  priceSnapshot: number | null;
+};
+
+export type BuildSnapshotDay = {
+  date: string;
+  minTemperature: number | null;
+  conditions: string | null;
+  notes: string | null;
+  startLocation: string | null;
+  endLocation: string | null;
+  distanceKm: number | null;
+  elevationGainM: number | null;
+  elevationLossM: number | null;
+  durationMinutes: number | null;
+  campsite: string | null;
+  reservation: string | null;
+  waterSource: string | null;
+  waterCarryL: number | null;
+  trailConditions: string | null;
+  activities: string | null;
+};
+
+export type BuildSnapshot = {
+  name: string;
+  destinationId: string | null;
+  location: string | null;
+  locationLat: number | null;
+  locationLng: number | null;
+  startDate: string | null;
+  endDate: string | null;
+  people: number;
+  minTemperature: number | null;
+  conditions: string | null;
+  routeWaypoints: unknown;
+  tripLogistics: unknown;
+  items: BuildSnapshotItem[];
+  days: BuildSnapshotDay[];
+};
+
+function stable(value: unknown) {
+  return JSON.stringify(value ?? null);
+}
+
+export function snapshotsEqual(a: BuildSnapshot, b: BuildSnapshot) {
+  return stable(a) === stable(b);
+}
+
+function itemKey(item: BuildSnapshotItem) {
+  if (item.gearId) return `gear:${item.gearId}`;
+  return `custom:${item.customCategory ?? ""}:${item.gearNameSnapshot ?? item.gearName ?? ""}`;
+}
+
+function itemName(item: BuildSnapshotItem) {
+  return item.gearName ?? item.gearNameSnapshot ?? "gear item";
+}
+
+function cleanName(name: string) {
+  return name.length > 48 ? `${name.slice(0, 45)}…` : name;
+}
+
+function prettyDate(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "itinerary day";
+  return date.toLocaleDateString("en-CA", { month: "short", day: "numeric" });
+}
+
+function changedDay(previous: BuildSnapshot, current: BuildSnapshot) {
+  if (previous.days.length !== current.days.length) return null;
+  const changed = current.days.filter((day, index) => stable(day) !== stable(previous.days[index]));
+  return changed.length === 1 ? changed[0] : null;
+}
+
+function changedItem(previous: BuildSnapshot, current: BuildSnapshot) {
+  const before = new Map(previous.items.map((item) => [itemKey(item), item]));
+  const after = new Map(current.items.map((item) => [itemKey(item), item]));
+  const added = current.items.filter((item) => !before.has(itemKey(item)));
+  const removed = previous.items.filter((item) => !after.has(itemKey(item)));
+  const changed = current.items
+    .map((item) => ({ before: before.get(itemKey(item)), after: item }))
+    .filter((pair): pair is { before: BuildSnapshotItem; after: BuildSnapshotItem } => Boolean(pair.before) && stable(pair.before) !== stable(pair.after));
+  return { added, removed, changed };
+}
+
+function summarizeChange(previous: BuildSnapshot | null, current: BuildSnapshot, action: string, fallback: string) {
+  if (!previous || ["create", "copy", "import", "restore", "history", "baseline"].includes(action)) return fallback;
+
+  if (previous.name !== current.name) return `Renamed build to “${current.name}”`;
+
+  const items = changedItem(previous, current);
+  if (items.added.length === 1 && items.removed.length === 0 && items.changed.length === 0) {
+    return `Added ${cleanName(itemName(items.added[0]))}`;
+  }
+  if (items.removed.length === 1 && items.added.length === 0 && items.changed.length === 0) {
+    return `Removed ${cleanName(itemName(items.removed[0]))}`;
+  }
+  if (items.changed.length === 1 && items.added.length === 0 && items.removed.length === 0) {
+    const { before, after } = items.changed[0];
+    const name = cleanName(itemName(after));
+    if (before.quantity !== after.quantity) return `Changed ${name} quantity to ${after.quantity}`;
+    if (before.isWorn !== after.isWorn || before.isConsumable !== after.isConsumable) {
+      if (after.isWorn) return `Marked ${name} as worn`;
+      if (after.isConsumable) return `Marked ${name} as consumable`;
+      return `Marked ${name} as base weight`;
+    }
+  }
+
+  const day = changedDay(previous, current);
+  if (day) return `Updated ${prettyDate(day.date)} itinerary`;
+
+  if (stable(previous.routeWaypoints) !== stable(current.routeWaypoints)) return "Updated route";
+  if (stable(previous.tripLogistics) !== stable(current.tripLogistics)) return "Updated trip logistics";
+
+  const datesChanged = previous.startDate !== current.startDate || previous.endDate !== current.endDate;
+  const locationChanged = previous.location !== current.location || previous.locationLat !== current.locationLat || previous.locationLng !== current.locationLng;
+  const tripSettingsChanged = previous.people !== current.people || previous.minTemperature !== current.minTemperature || previous.conditions !== current.conditions || previous.destinationId !== current.destinationId;
+  if (datesChanged && !locationChanged && !tripSettingsChanged) return "Changed trip dates";
+  if (locationChanged && !datesChanged && !tripSettingsChanged) return "Changed trip location";
+  if (datesChanged || locationChanged || tripSettingsChanged || previous.days.length !== current.days.length) return "Updated trip details";
+
+  return fallback;
+}
+
+function summaryGroupKey(summary: string) {
+  return summary
+    .replace(/ quantity to \d+$/i, " quantity")
+    .replace(/^Updated [A-Z][a-z]{2} \d{1,2} itinerary$/i, (value) => value)
+    .toLowerCase();
+}
+
+function canCoalesce(action: string, previousAction: string, previousSummary: string, nextSummary: string, previousCreatedAt: Date) {
+  if (["create", "copy", "import", "restore", "history", "baseline", "settings"].includes(action)) return false;
+  if (action !== previousAction) return false;
+  if (Date.now() - previousCreatedAt.getTime() > 90_000) return false;
+  return summaryGroupKey(previousSummary) === summaryGroupKey(nextSummary);
+}
+
+export async function getBuildSnapshot(buildId: string, userId: string | null): Promise<BuildSnapshot> {
+  const build = await prisma.build.findUnique({
+    where: { id: buildId, userId },
+    include: {
+      items: {
+        orderBy: { id: "asc" },
+        include: { gear: { select: { name: true } } },
+      },
+      days: { orderBy: { date: "asc" } },
+    },
+  });
+
+  if (!build) throw new Error("Build not found.");
+
+  return {
+    name: build.name,
+    destinationId: build.destinationId,
+    location: build.location,
+    locationLat: build.locationLat,
+    locationLng: build.locationLng,
+    startDate: build.startDate?.toISOString() ?? null,
+    endDate: build.endDate?.toISOString() ?? null,
+    people: build.people,
+    minTemperature: build.minTemperature,
+    conditions: build.conditions,
+    routeWaypoints: build.routeWaypoints ?? null,
+    tripLogistics: build.tripLogistics ?? null,
+    items: build.items.map((item) => ({
+      gearId: item.gearId,
+      gearName: item.gear?.name ?? item.gearNameSnapshot,
+      quantity: item.quantity,
+      isConsumable: item.isConsumable,
+      isWorn: item.isWorn,
+      customCategory: item.customCategory,
+      gearNameSnapshot: item.gearNameSnapshot,
+      weightSnapshot: item.weightSnapshot,
+      priceSnapshot: item.priceSnapshot,
+    })),
+    days: build.days.map((day) => ({
+      date: day.date.toISOString(),
+      minTemperature: day.minTemperature,
+      conditions: day.conditions,
+      notes: day.notes,
+      startLocation: day.startLocation,
+      endLocation: day.endLocation,
+      distanceKm: day.distanceKm,
+      elevationGainM: day.elevationGainM,
+      elevationLossM: day.elevationLossM,
+      durationMinutes: day.durationMinutes,
+      campsite: day.campsite,
+      reservation: day.reservation,
+      waterSource: day.waterSource,
+      waterCarryL: day.waterCarryL,
+      trailConditions: day.trailConditions,
+      activities: day.activities,
+    })),
+  };
+}
+
+export async function ensureBuildRevisionBaseline(buildId: string, userId: string | null) {
+  const count = await prisma.buildRevision.count({ where: { buildId } });
+  if (count > 0) return;
+  const snapshot = await getBuildSnapshot(buildId, userId);
+  await prisma.buildRevision.create({
+    data: {
+      buildId,
+      action: "baseline",
+      summary: "First saved version",
+      snapshot: JSON.parse(JSON.stringify(snapshot)),
+    },
+  });
+}
+
+export async function recordBuildRevision(
+  buildId: string,
+  userId: string | null,
+  action: string,
+  requestedSummary: string,
+) {
+  await prisma.build.update({ where: { id: buildId, userId }, data: { updatedAt: new Date() } });
+
+  const last = await prisma.buildRevision.findFirst({
+    where: { buildId },
+    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+    select: { id: true, action: true, summary: true, snapshot: true, createdAt: true },
+  });
+  const previous = last?.snapshot && typeof last.snapshot === "object" && !Array.isArray(last.snapshot)
+    ? last.snapshot as unknown as BuildSnapshot
+    : null;
+  const snapshot = await getBuildSnapshot(buildId, userId);
+  const summary = summarizeChange(previous, snapshot, action, requestedSummary).slice(0, 240);
+  const safeAction = action.slice(0, 50);
+  const jsonSnapshot = JSON.parse(JSON.stringify(snapshot));
+
+  if (last && canCoalesce(safeAction, last.action, last.summary, summary, last.createdAt)) {
+    await prisma.buildRevision.update({
+      where: { id: last.id },
+      data: { summary, snapshot: jsonSnapshot, createdAt: new Date() },
+    });
+    return last.id;
+  }
+
+  const revision = await prisma.buildRevision.create({
+    data: {
+      buildId,
+      action: safeAction,
+      summary,
+      snapshot: jsonSnapshot,
+    },
+    select: { id: true },
+  });
+  return revision.id;
+}
+
+```
+
 ### `lib/build-settings-actions.ts`
 
 ```typescript
@@ -8030,6 +15230,7 @@ export async function setCurrentBuild(buildId: string, guest = false) {
 import { prisma } from "@/lib/prisma";
 import { requireBuildAccess } from "@/lib/build-access";
 import { revalidatePath } from "next/cache";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
 
 export async function renameBuild(buildId: string, name: string) {
   if (typeof buildId !== "string" || !buildId || buildId.length > 200 || typeof name !== "string") {
@@ -8038,11 +15239,13 @@ export async function renameBuild(buildId: string, name: string) {
   const trimmed = name.trim();
   if (!trimmed || trimmed.length > 100) throw new Error("Use a build name between 1 and 100 characters.");
   const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(access.id, access.userId);
   const result = await prisma.build.updateMany({
     where: { id: access.id, userId: access.userId },
     data: { name: trimmed },
   });
   if (result.count !== 1) throw new Error("Build access changed. Refresh and try again.");
+  await recordBuildRevision(access.id, access.userId, "settings", "Renamed build");
   revalidatePath(`/build/${access.id}`);
   revalidatePath("/profile/builds");
 }
@@ -8057,18 +15260,21 @@ export async function renameBuild(buildId: string, name: string) {
 import { prisma } from "@/lib/prisma";
 import { requireBuildAccess } from "@/lib/build-access";
 import { revalidatePath } from "next/cache";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
 
 export async function setBuildVisibility(buildId: string, isPublic: boolean) {
   if (typeof buildId !== "string" || !buildId || buildId.length > 200 || typeof isPublic !== "boolean") {
     throw new Error("Invalid visibility request.");
   }
   const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(access.id, access.userId);
   // Repeat the owner condition in the write to prevent a stale guest claim.
   const result = await prisma.build.updateMany({
     where: { id: access.id, userId: access.userId },
     data: { isPublic },
   });
   if (result.count !== 1) throw new Error("Build access changed. Refresh and try again.");
+  await recordBuildRevision(access.id, access.userId, "settings", "Changed build visibility");
   revalidatePath(`/build/${access.id}`);
 }
 
@@ -8725,12 +15931,14 @@ import { revalidatePath } from "next/cache";
 import { getDestination } from "@/lib/destinations";
 import { getDateRange } from "@/lib/trip";
 import { dayTextFields, emptyLogistics, nullableNumber, parseDates, readWaypoints } from "@/lib/trip-planner";
+import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
 const text = (f: FormData, key: string, max = 5000) => { const v = f.get(key); if (v != null && typeof v !== "string") throw new Error(`Invalid ${key}.`); const s = (v ?? "").trim(); if (s.length > max) throw new Error(`${key} is too long (maximum ${max} characters).`); return s || null; };
 const number = (f: FormData, key: string, min: number, max: number, integer = false) => nullableNumber(f.get(key),key,min,max,integer);
 const condition = (f: FormData) => { const v = text(f,"conditions",20); if (v && !["dry","rain","snow"].includes(v)) throw new Error("Choose a valid weather condition."); return v; };
 export async function saveTripDetails(f: FormData) {
   const buildId = text(f,"buildId",200)!;
   const access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
   const dates = parseDates(text(f,"startDate",10) ?? "", text(f,"endDate",10) ?? "");
   const selected = getDestination(text(f,"destinationId",200));
   const lat = selected?.latitude ?? number(f,"locationLat",-90,90), lng = selected?.longitude ?? number(f,"locationLng",-180,180);
@@ -8745,27 +15953,34 @@ export async function saveTripDetails(f: FormData) {
     if (range.length) await tx.tripDay.createMany({ data: range.map(date => ({ buildId,date })), skipDuplicates: true });
     await tx.tripDay.deleteMany({ where: { buildId, date: { notIn: range } } });
   });
+  await recordBuildRevision(buildId, access.userId, "trip", "Updated trip details");
   revalidatePath(`/build/${buildId}`);
 }
 export async function saveTripDay(f: FormData) {
   const buildId = text(f,"buildId",200)!, dayId = text(f,"dayId",200)!;
   const day = await requireTripDayAccess(buildId,dayId);
+  await ensureBuildRevisionBaseline(buildId, day.accessUserId);
   const strings = Object.fromEntries(dayTextFields.map(key => [key,text(f,key)]));
   await prisma.tripDay.update({ where: { id: dayId, buildId, build: { userId: day.accessUserId } }, data: { ...strings, conditions: condition(f), minTemperature: number(f,"minTemperature",-100,60,true), distanceKm: number(f,"distanceKm",0,1000), elevationGainM: number(f,"elevationGainM",0,20000,true), elevationLossM: number(f,"elevationLossM",0,20000,true), durationMinutes: number(f,"durationMinutes",0,1440,true), waterCarryL: number(f,"waterCarryL",0,100) } });
+  await recordBuildRevision(buildId, day.accessUserId, "itinerary", "Updated itinerary day");
   revalidatePath(`/build/${buildId}`);
 }
 export async function saveTripRoute(f: FormData) {
   const buildId = text(f,"buildId",200)!, access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
   const raw: unknown = JSON.parse(text(f,"waypoints",100000) ?? "[]");
   const points = readWaypoints(raw);
   if (!Array.isArray(raw) || points.length !== raw.length || points.length > 200 || new Set(points.map(p=>p.id)).size !== points.length || points.some(p=>!p.name.trim() || p.name.length>200 || p.id.length>200 || (p.elevationM != null && (p.elevationM < -500 || p.elevationM > 9000)))) throw new Error("Check waypoint names, coordinates, elevations, and unique IDs. Maximum 200 waypoints.");
   await prisma.build.update({ where: { id: buildId,userId: access.userId }, data: { routeWaypoints: points.map(p=>({...p,name:p.name.trim()})) } });
+  await recordBuildRevision(buildId, access.userId, "route", "Updated trip route");
   revalidatePath(`/build/${buildId}`);
 }
 export async function saveTripLogistics(f: FormData) {
   const buildId = text(f,"buildId",200)!, access = await requireBuildAccess(buildId);
+  await ensureBuildRevisionBaseline(buildId, access.userId);
   const value = Object.fromEntries(Object.keys(emptyLogistics).map(key=>[key,text(f,key) ?? ""]));
   await prisma.build.update({ where: { id: buildId, userId: access.userId }, data: { tripLogistics: value } });
+  await recordBuildRevision(buildId, access.userId, "logistics", "Updated trip logistics");
   revalidatePath(`/build/${buildId}`);
 }
 
@@ -9200,8 +16415,9 @@ model Build {
   userId String?
   user   User?   @relation(fields: [userId], references: [id])
 
-  items BuildItem[]
-  days  TripDay[]
+  items     BuildItem[]
+  days      TripDay[]
+  revisions BuildRevision[]
 
   routeWaypoints Json?
   tripLogistics Json?
@@ -9221,6 +16437,21 @@ model Build {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model BuildRevision {
+  id String @id @default(cuid())
+
+  buildId String
+  build   Build @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  action   String
+  summary  String
+  snapshot Json
+
+  createdAt DateTime @default(now())
+
+  @@index([buildId, createdAt])
 }
 
 model TripDay {
@@ -9841,10 +17072,15 @@ function harness() {
   const access = load('lib/build-access.ts', { '@/auth': {auth: async () => state.email ? {user:{email:state.email}} : null},
     '@/lib/prisma': { prisma }, 'next/headers': {cookies:async()=>cookieStore}, 'next/navigation': navigation, '@/lib/guest-build-token': token });
   const planner = load('lib/trip-planner.ts');
-  const plannerActions = load('lib/trip-planner-actions.ts', { '@/lib/prisma':{prisma}, '@/lib/build-access':access, 'next/cache':{revalidatePath:()=>{}}, '@/lib/destinations':{getDestination:()=>null}, '@/lib/trip':{getDateRange:()=>[]}, '@/lib/trip-planner':planner });
+  const history = { ensureBuildRevisionBaseline: async () => {}, recordBuildRevision: async () => {}, getBuildSnapshot: async (buildId, userId) => {
+    const b = state.builds.find(build => build.id === buildId && build.userId === userId);
+    if (!b) throw new Error('Build not found.');
+    return { name:b.name, destinationId:null, location:null, locationLat:null, locationLng:null, startDate:null, endDate:null, people:1, minTemperature:null, conditions:null, routeWaypoints:null, tripLogistics:null, items:b.items || [], days:b.days || [] };
+  } };
+  const plannerActions = load('lib/trip-planner-actions.ts', { '@/lib/prisma':{prisma}, '@/lib/build-access':access, 'next/cache':{revalidatePath:()=>{}}, '@/lib/destinations':{getDestination:()=>null}, '@/lib/trip':{getDateRange:()=>[]}, '@/lib/trip-planner':planner, '@/lib/build-history':history });
   const actions = load('app/build/actions.ts', {'@/lib/prisma':{prisma}, '@/lib/trip-planner-actions':plannerActions, '@/lib/trip-planner':planner, 'next/navigation': navigation,
     'next/headers':{cookies:async()=>cookieStore}, 'next/cache':{revalidatePath:()=>{}}, '@/lib/trip':{getDateRange:()=>[]},
-    '@/lib/build-access':access, '@/lib/guest-build-token':token, '@/lib/destinations':{getDestination:()=>null} });
+    '@/lib/build-access':access, '@/lib/guest-build-token':token, '@/lib/destinations':{getDestination:()=>null}, '@/lib/build-history':history, '@/app/generated/prisma/client':{Prisma:{DbNull:null}} });
   return { state, access, actions };
 }
 function form(values) { const f = new FormData(); for (const [key,value] of Object.entries(values)) f.set(key, String(value)); return f; }
@@ -9972,7 +17208,7 @@ const {stripTypeScriptTypes}=require('node:module');
 function load(file,deps={}){let js=stripTypeScriptTypes(fs.readFileSync(path.join(__dirname,'..',file),'utf8'));const names=[...js.matchAll(/export (?:async )?function (\w+)|export const (\w+)/g)].map(m=>m[1]||m[2]);js=js.replace(/import\s+\{([^}]+)\}\s+from\s+["']([^"']+)["'];/g,(_,n,s)=>`const {${n}}=require(${JSON.stringify(s)});`).replace(/export /g,'');return new Function('require',js+`\nreturn {${names.join(',')}};`)(s=>s in deps?deps[s]:require(s));}
 const p=load('lib/trip-planner.ts'),trip=load('lib/trip.ts');
 const form=o=>{const f=new FormData();Object.entries(o).forEach(([k,v])=>f.set(k,String(v)));return f;};
-function harness(){const writes=[], old=[{date:new Date('2026-07-01')},{date:new Date('2026-07-02')}];const tx={build:{update:async x=>writes.push(['build',x])},tripDay:{findMany:async()=>old,createMany:async x=>writes.push(['create',x]),deleteMany:async x=>writes.push(['delete',x]),update:async x=>writes.push(['day',x])}};const prisma={...tx,$transaction:async fn=>fn(tx)};const a=load('lib/trip-planner-actions.ts',{'@/lib/prisma':{prisma},'@/lib/build-access':{requireBuildAccess:async id=>{if(id!=='owned')throw Error('Build not found.');return {userId:'owner'};},requireTripDayAccess:async(id,day)=>{if(id!=='owned'||day!=='day')throw Error('Day not found.');return {accessUserId:'owner'};}},'next/cache':{revalidatePath:()=>{}},'@/lib/destinations':{getDestination:()=>null},'@/lib/trip':trip,'@/lib/trip-planner':p});return {a,writes};}
+function harness(){const writes=[], old=[{date:new Date('2026-07-01')},{date:new Date('2026-07-02')}];const tx={build:{update:async x=>writes.push(['build',x])},tripDay:{findMany:async()=>old,createMany:async x=>writes.push(['create',x]),deleteMany:async x=>writes.push(['delete',x]),update:async x=>writes.push(['day',x])}};const prisma={...tx,$transaction:async fn=>fn(tx)};const a=load('lib/trip-planner-actions.ts',{'@/lib/prisma':{prisma},'@/lib/build-access':{requireBuildAccess:async id=>{if(id!=='owned')throw Error('Build not found.');return {userId:'owner'};},requireTripDayAccess:async(id,day)=>{if(id!=='owned'||day!=='day')throw Error('Day not found.');return {accessUserId:'owner'};}},'next/cache':{revalidatePath:()=>{}},'@/lib/destinations':{getDestination:()=>null},'@/lib/trip':trip,'@/lib/trip-planner':p,'@/lib/build-history':{ensureBuildRevisionBaseline:async()=>{},recordBuildRevision:async()=>{}}});return {a,writes};}
 test('rejects reversed, incomplete, impossible and excessive dates',()=>{for(const [s,e] of [['2026-07-02','2026-07-01'],['2026-07-01',''],['2026-02-30','2026-03-01'],['2026-01-01','2028-01-01']])assert.throws(()=>p.parseDates(s,e));assert.equal(trip.getDateRange(...Object.values(p.parseDates('2026-03-07','2026-03-09'))).length,3);});
 test('totals preserve zero and indicate partial distance coverage',()=>{const days=[{startLocation:'A',endLocation:'B',distanceKm:0,elevationGainM:10},{startLocation:'B',endLocation:'C',distanceKm:12.4,elevationLossM:5},{notes:'weather only'}];assert.deepEqual(p.tripTotals(days),{distanceKm:12.4,gainM:10,lossM:5,minutes:0,measuredDays:2,plannedDays:2});});
 test('invalid numeric values rejected',()=>{for(const v of ['NaN','Infinity','abc',-1])assert.throws(()=>p.nullableNumber(v,'distance',0,1000));assert.equal(p.nullableNumber('0','distance',0,1000),0);assert.throws(()=>p.nullableNumber('1.5','minutes',0,1440,true));});

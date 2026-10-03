@@ -20,7 +20,7 @@ import {
   X,
 } from "lucide-react";
 import { getBuildExport, importBuildItems } from "@/app/build/actions";
-import { getBuildHistory, restoreBuildRevision, undoLastBuildChange } from "@/lib/build-history-actions";
+import { getBuildHistory, restoreBuildRevision } from "@/lib/build-history-actions";
 
 type Tool = "import" | "export" | "history";
 type ImportMode = "merge" | "replace";
@@ -99,41 +99,6 @@ function historyIcon(action: string) {
   return Clock3;
 }
 
-function relativeTime(value: string) {
-  const date = new Date(value);
-  const seconds = Math.max(0, Math.floor((Date.now() - date.getTime()) / 1000));
-  if (seconds < 45) return "Just now";
-  const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `${minutes}m ago`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}h ago`;
-  const days = Math.floor(hours / 24);
-  if (days < 7) return `${days}d ago`;
-  return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
-}
-
-function dayLabel(value: string) {
-  const date = new Date(value);
-  const now = new Date();
-  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-  const target = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
-  const diff = Math.round((start - target) / 86_400_000);
-  if (diff === 0) return "Today";
-  if (diff === 1) return "Yesterday";
-  return date.toLocaleDateString(undefined, { month: "long", day: "numeric", year: date.getFullYear() === now.getFullYear() ? undefined : "numeric" });
-}
-
-function historyGroups(entries: HistoryEntry[]) {
-  const groups: { label: string; entries: HistoryEntry[] }[] = [];
-  for (const entry of entries) {
-    const label = dayLabel(entry.createdAt);
-    const last = groups[groups.length - 1];
-    if (last?.label === label) last.entries.push(entry);
-    else groups.push({ label, entries: [entry] });
-  }
-  return groups;
-}
-
 const toolTitle: Record<Tool, string> = {
   import: "Import build",
   export: "Export build",
@@ -168,7 +133,6 @@ export default function BuildDataTools({
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [historyLoading, setHistoryLoading] = useState(false);
   const [historyError, setHistoryError] = useState<string | null>(null);
-  const [historyNotice, setHistoryNotice] = useState<string | null>(null);
   const [confirmRestore, setConfirmRestore] = useState<string | null>(null);
   const [restoring, setRestoring] = useState<string | null>(null);
 
@@ -191,7 +155,6 @@ export default function BuildDataTools({
     setImportNotice(null);
     setExportNotice(null);
     setHistoryError(null);
-    setHistoryNotice(null);
     setConfirmRestore(null);
     dialog.current?.showModal();
     if (nextTool === "history") void loadHistory();
@@ -272,28 +235,10 @@ export default function BuildDataTools({
     try {
       await restoreBuildRevision(buildId, entry.id);
       setConfirmRestore(null);
-      setHistoryNotice("Version restored.");
       await loadHistory();
       router.refresh();
     } catch {
       setHistoryError("Couldn’t restore that version.");
-    } finally {
-      setRestoring(null);
-    }
-  }
-
-  async function undoLastChange() {
-    if (restoring || history.length < 2) return;
-    setRestoring("undo");
-    setHistoryError(null);
-    setHistoryNotice(null);
-    try {
-      await undoLastBuildChange(buildId);
-      setHistoryNotice("Last change undone.");
-      await loadHistory();
-      router.refresh();
-    } catch (error) {
-      setHistoryError(error instanceof Error ? error.message : "Couldn’t undo the last change.");
     } finally {
       setRestoring(null);
     }
@@ -485,46 +430,17 @@ export default function BuildDataTools({
             )}
 
             {tool === "history" && (
-              <div className="space-y-5">
-                <div className="flex items-center justify-between gap-3">
-                  <button
-                    type="button"
-                    onClick={() => void undoLastChange()}
-                    disabled={historyLoading || history.length < 2 || Boolean(restoring)}
-                    className="inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3.5 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    {restoring === "undo" ? <Loader2 className="h-4 w-4 animate-spin" /> : <RotateCcw className="h-4 w-4" />}
-                    Undo last change
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => void loadHistory()}
-                    disabled={historyLoading}
-                    className="rounded-lg px-3 py-2 text-xs font-semibold text-gray-500 transition hover:bg-gray-100 hover:text-gray-800 disabled:opacity-50"
-                  >
+              <div className="space-y-4">
+                <div className="flex justify-end">
+                  <button type="button" onClick={() => void loadHistory()} disabled={historyLoading} className="rounded-lg border border-gray-200 px-3 py-2 text-xs font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50">
                     Refresh
                   </button>
                 </div>
 
-                {historyError && (
-                  <p role="alert" className="flex items-start gap-2 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
-                    <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
-                    {historyError}
-                  </p>
-                )}
-                {historyNotice && (
-                  <p role="status" className="flex items-start gap-2 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-800">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
-                    {historyNotice}
-                  </p>
-                )}
-
                 {historyLoading && history.length === 0 && (
-                  <div className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 py-12 text-sm text-gray-500">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Loading…
-                  </div>
+                  <div className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 py-12 text-sm text-gray-500"><Loader2 className="h-4 w-4 animate-spin" />Loading…</div>
                 )}
+                {historyError && <p role="alert" className="flex items-start gap-2 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700"><AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />{historyError}</p>}
 
                 {!historyLoading && !historyError && history.length === 0 && (
                   <div className="rounded-xl border border-dashed border-gray-300 px-6 py-10 text-center">
@@ -533,90 +449,46 @@ export default function BuildDataTools({
                   </div>
                 )}
 
-                {history[0] && (
-                  <section>
-                    <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-gray-400">Current</p>
-                    <div className="rounded-xl border border-green-200 bg-green-50/60 p-4">
-                      <div className="flex items-start gap-3">
-                        {(() => {
-                          const Icon = historyIcon(history[0].action);
-                          return (
-                            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-800">
-                              <Icon className="h-4 w-4" />
-                            </span>
-                          );
-                        })()}
-                        <div className="min-w-0 flex-1">
-                          <p className="text-sm font-semibold text-gray-950">{history[0].summary}</p>
-                          <p className="mt-1 text-xs text-gray-500" title={new Date(history[0].createdAt).toLocaleString()}>
-                            {relativeTime(history[0].createdAt)} · {history[0].itemCount} gear · {history[0].dayCount} day{history[0].dayCount === 1 ? "" : "s"}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-                )}
-
-                {historyGroups(history.slice(1)).map((group) => (
-                  <section key={group.label}>
-                    <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-gray-400">{group.label}</p>
-                    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
-                      {group.entries.map((entry, index) => {
-                        const Icon = historyIcon(entry.action);
-                        const confirming = confirmRestore === entry.id;
-                        return (
-                          <div key={entry.id} className={index === 0 ? "" : "border-t border-gray-100"}>
-                            <div className="flex items-start gap-3 px-4 py-3.5">
-                              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
-                                <Icon className="h-4 w-4" />
-                              </span>
-                              <div className="min-w-0 flex-1">
-                                <p className="text-sm font-medium text-gray-900">{entry.summary}</p>
-                                <p className="mt-1 text-xs text-gray-500" title={new Date(entry.createdAt).toLocaleString()}>
-                                  {new Date(entry.createdAt).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })} · {entry.itemCount} gear · {entry.dayCount} day{entry.dayCount === 1 ? "" : "s"}
-                                </p>
-                              </div>
-                              {!confirming && (
-                                <button
-                                  type="button"
-                                  onClick={() => { setConfirmRestore(entry.id); setHistoryNotice(null); }}
-                                  disabled={Boolean(restoring)}
-                                  className="shrink-0 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-gray-500 transition hover:bg-gray-100 hover:text-gray-900 disabled:opacity-40"
-                                >
-                                  Restore
-                                </button>
-                              )}
+                <div className="space-y-2">
+                  {history.map((entry) => {
+                    const Icon = historyIcon(entry.action);
+                    const confirming = confirmRestore === entry.id;
+                    return (
+                      <div key={entry.id} className={`rounded-xl border p-4 ${entry.isCurrent ? "border-green-200 bg-green-50/50" : "border-gray-200 bg-white"}`}>
+                        <div className="flex items-start gap-3">
+                          <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${entry.isCurrent ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}>
+                            <Icon className="h-4 w-4" />
+                          </span>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <p className="text-sm font-semibold text-gray-900">{entry.summary}</p>
+                              {entry.isCurrent && <span className="rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-green-800">Current</span>}
                             </div>
-
-                            {confirming && (
-                              <div className="flex flex-col gap-3 border-t border-amber-100 bg-amber-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-                                <p className="text-xs font-medium text-amber-900">Restore this version?</p>
-                                <div className="flex shrink-0 gap-2">
-                                  <button
-                                    type="button"
-                                    onClick={() => setConfirmRestore(null)}
-                                    className="rounded-lg px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-white/70"
-                                  >
-                                    Cancel
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={() => void restore(entry)}
-                                    disabled={Boolean(restoring)}
-                                    className="inline-flex items-center gap-1.5 rounded-lg bg-amber-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-700 disabled:opacity-50"
-                                  >
-                                    {restoring === entry.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RotateCcw className="h-3.5 w-3.5" />}
-                                    Restore
-                                  </button>
-                                </div>
-                              </div>
-                            )}
+                            <p className="mt-1 text-xs text-gray-500">{new Date(entry.createdAt).toLocaleString()} · {entry.itemCount} gear · {entry.dayCount} day{entry.dayCount === 1 ? "" : "s"}</p>
                           </div>
-                        );
-                      })}
-                    </div>
-                  </section>
-                ))}
+                          {!entry.isCurrent && !confirming && (
+                            <button type="button" onClick={() => setConfirmRestore(entry.id)} className="shrink-0 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                              Restore
+                            </button>
+                          )}
+                        </div>
+
+                        {confirming && (
+                          <div className="mt-4 flex flex-col gap-3 rounded-lg bg-amber-50 p-3 sm:flex-row sm:items-center sm:justify-between">
+                            <p className="text-xs leading-5 text-amber-900">Restore this version? Your current version will stay in history.</p>
+                            <div className="flex shrink-0 gap-2">
+                              <button type="button" onClick={() => setConfirmRestore(null)} className="rounded-lg px-3 py-1.5 text-xs font-semibold text-gray-600 hover:bg-white/70">Cancel</button>
+                              <button type="button" onClick={() => void restore(entry)} disabled={Boolean(restoring)} className="inline-flex items-center gap-1.5 rounded-lg bg-amber-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-700 disabled:opacity-50">
+                                {restoring === entry.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <RotateCcw className="h-3.5 w-3.5" />}
+                                Restore
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>

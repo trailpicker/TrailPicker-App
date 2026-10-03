@@ -6,9 +6,7 @@ import { Prisma } from "@/app/generated/prisma/client";
 import { requireBuildAccess } from "@/lib/build-access";
 import {
   ensureBuildRevisionBaseline,
-  getBuildSnapshot,
   recordBuildRevision,
-  snapshotsEqual,
   type BuildSnapshot,
   type BuildSnapshotDay,
   type BuildSnapshotItem,
@@ -52,56 +50,53 @@ function safeDay(day: BuildSnapshotDay) {
   return { ...day, date };
 }
 
-function snapshotMeta(value: unknown) {
-  const snapshot = isRecord(value) ? value : null;
-  return {
-    itemCount: snapshot && Array.isArray(snapshot.items) ? snapshot.items.length : 0,
-    dayCount: snapshot && Array.isArray(snapshot.days) ? snapshot.days.length : 0,
-    name: snapshot && typeof snapshot.name === "string" ? snapshot.name : "Build",
-  };
-}
-
 export async function getBuildHistory(buildId: string) {
   const access = await requireBuildAccess(buildId);
+
   await ensureBuildRevisionBaseline(access.id, access.userId);
 
   const revisions = await prisma.buildRevision.findMany({
     where: { buildId: access.id },
-    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
-    take: 60,
+    orderBy: { createdAt: "desc" },
+    take: 30,
     select: { id: true, action: true, summary: true, snapshot: true, createdAt: true },
   });
 
-  return revisions.map((revision, index) => ({
-    id: revision.id,
-    action: revision.action,
-    summary: revision.summary,
-    createdAt: revision.createdAt.toISOString(),
-    ...snapshotMeta(revision.snapshot),
-    isCurrent: index === 0,
-  }));
+  return revisions.map((revision, index) => {
+    const snapshot = isRecord(revision.snapshot) ? revision.snapshot : null;
+    const itemCount = snapshot && Array.isArray(snapshot.items) ? snapshot.items.length : 0;
+    const dayCount = snapshot && Array.isArray(snapshot.days) ? snapshot.days.length : 0;
+    const name = snapshot && typeof snapshot.name === "string" ? snapshot.name : "Build";
+
+    return {
+      id: revision.id,
+      action: revision.action,
+      summary: revision.summary,
+      createdAt: revision.createdAt.toISOString(),
+      itemCount,
+      dayCount,
+      name,
+      isCurrent: index === 0,
+    };
+  });
 }
 
-async function restoreSnapshot(
-  access: { id: string; userId: string | null },
-  revision: { id: string; snapshot: unknown; createdAt: Date; summary: string },
-  summary: string,
-) {
-  const snapshot = parseSnapshot(revision.snapshot);
-  if (snapshot.items.length > 1000 || snapshot.days.length > 366) {
-    throw new Error("This history entry is too large to restore.");
+export async function restoreBuildRevision(buildId: string, revisionId: string) {
+  const access = await requireBuildAccess(buildId);
+  if (typeof revisionId !== "string" || !revisionId || revisionId.length > 200) {
+    throw new Error("Invalid history entry.");
   }
 
-  // Normally the latest revision already represents the current state. If some
-  // future mutation forgets to write history, keep a safety copy before restore.
-  const current = await getBuildSnapshot(access.id, access.userId);
-  const latest = await prisma.buildRevision.findFirst({
-    where: { buildId: access.id },
-    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
-    select: { snapshot: true },
+  const revision = await prisma.buildRevision.findFirst({
+    where: { id: revisionId, buildId: access.id },
+    select: { snapshot: true, createdAt: true },
   });
-  if (!latest || !isRecord(latest.snapshot) || !snapshotsEqual(current, parseSnapshot(latest.snapshot))) {
-    await recordBuildRevision(access.id, access.userId, "history", "Saved before restore");
+  if (!revision) throw new Error("History entry not found.");
+
+  const snapshot = parseSnapshot(revision.snapshot);
+  await recordBuildRevision(access.id, access.userId, "history", "Saved before restore");
+  if (snapshot.items.length > 1000 || snapshot.days.length > 366) {
+    throw new Error("This history entry is too large to restore.");
   }
 
   const items = snapshot.items.map(safeItem);
@@ -157,47 +152,10 @@ async function restoreSnapshot(
     }
   });
 
-  await recordBuildRevision(access.id, access.userId, "restore", summary);
+  const restoredDate = revision.createdAt.toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" });
+  await recordBuildRevision(access.id, access.userId, "restore", `Restored version from ${restoredDate}`);
   revalidatePath(`/build/${access.id}`);
   revalidatePath("/profile/builds");
 
   return { ok: true };
-}
-
-export async function restoreBuildRevision(buildId: string, revisionId: string) {
-  const access = await requireBuildAccess(buildId);
-  if (typeof revisionId !== "string" || !revisionId || revisionId.length > 200) {
-    throw new Error("Invalid history entry.");
-  }
-
-  const revision = await prisma.buildRevision.findFirst({
-    where: { id: revisionId, buildId: access.id },
-    select: { id: true, snapshot: true, createdAt: true, summary: true },
-  });
-  if (!revision) throw new Error("History entry not found.");
-
-  const restoredDate = revision.createdAt.toLocaleString("en-CA", {
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
-  return restoreSnapshot(access, revision, `Restored ${restoredDate}`);
-}
-
-export async function undoLastBuildChange(buildId: string) {
-  const access = await requireBuildAccess(buildId);
-  await ensureBuildRevisionBaseline(access.id, access.userId);
-
-  const revisions = await prisma.buildRevision.findMany({
-    where: { buildId: access.id },
-    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
-    take: 2,
-    select: { id: true, snapshot: true, createdAt: true, summary: true },
-  });
-  if (revisions.length < 2) throw new Error("Nothing to undo yet.");
-
-  const target = revisions[1];
-  await restoreSnapshot(access, target, `Undid: ${revisions[0].summary}`);
-  return { ok: true, undone: revisions[0].summary };
 }
