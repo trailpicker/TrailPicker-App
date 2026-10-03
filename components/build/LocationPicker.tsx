@@ -15,15 +15,26 @@ export default function LocationPicker({
     latField,
     lngField,
     initialName,
+    initialLat,
+    initialLng,
 }: {
     nameField: string;
     latField: string;
     lngField: string;
     initialName?: string;
+    initialLat?: number;
+    initialLng?: number;
 }) {
     const [query, setQuery] = useState(initialName ?? "");
     const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
-    const [position, setPosition] = useState<LatLng | null>(null);
+    const [position, setPosition] = useState<LatLng | null>(
+        initialLat != null && initialLng != null
+            ? {
+                lat: initialLat,
+                lng: initialLng,
+            }
+            : null,
+    );
     const [placeName, setPlaceName] = useState(initialName ?? "");
     const [showMap, setShowMap] = useState(false);
 
@@ -47,28 +58,28 @@ export default function LocationPicker({
     }
 
     function updateMapCoords() {
-    if (!mapTriggerRef.current) return;
-    const triggerRect = mapTriggerRef.current.getBoundingClientRect();
-    const popupWidth = 460;
+        if (!mapTriggerRef.current) return;
+        const triggerRect = mapTriggerRef.current.getBoundingClientRect();
+        const popupWidth = 460;
 
-    const card = mapTriggerRef.current.closest(".trip-card");
-    const cardRect = card ? card.getBoundingClientRect() : null;
+        const card = mapTriggerRef.current.closest(".trip-card");
+        const cardRect = card ? card.getBoundingClientRect() : null;
 
-    let left = cardRect
-        ? cardRect.left + window.scrollX + cardRect.width / 2 - popupWidth / 2
-        : triggerRect.left + window.scrollX + triggerRect.width / 2 - popupWidth / 2;
+        let left = cardRect
+            ? cardRect.left + window.scrollX + cardRect.width / 2 - popupWidth / 2
+            : triggerRect.left + window.scrollX + triggerRect.width / 2 - popupWidth / 2;
 
-    // clamp so it never overflows the viewport horizontally
-    const minLeft = 8;
-    const maxLeft = window.scrollX + window.innerWidth - popupWidth - 8;
-    left = Math.min(Math.max(left, minLeft), maxLeft);
+        // clamp so it never overflows the viewport horizontally
+        const minLeft = 8;
+        const maxLeft = window.scrollX + window.innerWidth - popupWidth - 8;
+        left = Math.min(Math.max(left, minLeft), maxLeft);
 
-    setMapCoords({
-        top: triggerRect.bottom + window.scrollY + 8,
-        left,
-        width: popupWidth,
-    });
-}
+        setMapCoords({
+            top: triggerRect.bottom + window.scrollY + 8,
+            left,
+            width: popupWidth,
+        });
+    }
 
     useLayoutEffect(() => {
         if (suggestions.length > 0) updateListCoords();

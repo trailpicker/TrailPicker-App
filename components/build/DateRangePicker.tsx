@@ -1,227 +1,172 @@
 "use client";
 
-import { useState, useRef, useLayoutEffect, useEffect } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-function startOfMonth(date: Date) {
-    return new Date(date.getFullYear(), date.getMonth(), 1);
-}
-function addMonths(date: Date, n: number) {
-    return new Date(date.getFullYear(), date.getMonth() + n, 1);
-}
-function daysInMonth(date: Date) {
-    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-}
-function isSameDay(a?: Date | null, b?: Date | null) {
-    return !!a && !!b && a.toDateString() === b.toDateString();
-}
-function toISO(d: Date) {
-    return d.toISOString().split("T")[0];
-}
-
-export default function DateRangePicker({
-    startName,
-    endName,
-    initialStart,
-    initialEnd,
-}: {
+type Props = {
     startName: string;
     endName: string;
     initialStart?: string;
     initialEnd?: string;
-}) {
-    const [viewMonth, setViewMonth] = useState(() =>
-        startOfMonth(initialStart ? new Date(initialStart) : new Date())
-    );
-    const [start, setStart] = useState<Date | null>(
-        initialStart ? new Date(initialStart) : null
-    );
-    const [end, setEnd] = useState<Date | null>(
-        initialEnd ? new Date(initialEnd) : null
-    );
+};
+
+// Date-only values belong to the user's calendar, not UTC.
+function parseDate(value?: string): Date | null {
+    if (!value) return null;
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+    if (!match) return null;
+    const [, y, m, d] = match.map(Number);
+    const date = new Date(y, m - 1, d);
+    return date.getFullYear() === y && date.getMonth() === m - 1 && date.getDate() === d ? date : null;
+}
+function dateValue(date: Date) {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}
+function monthOf(date: Date) { return new Date(date.getFullYear(), date.getMonth(), 1); }
+function sameDay(a: Date | null, b: Date | null) { return !!a && !!b && dateValue(a) === dateValue(b); }
+function shortDate(date: Date, year = false) {
+    return date.toLocaleDateString(undefined, { month: "short", day: "numeric", ...(year ? { year: "numeric" } : {}) });
+}
+function duration(start: Date, end: Date) {
+    // Count calendar days correctly even across daylight saving changes.
+    return Math.round((Date.UTC(end.getFullYear(), end.getMonth(), end.getDate()) - Date.UTC(start.getFullYear(), start.getMonth(), start.getDate())) / 86400000);
+}
+
+export default function DateRangePicker({ startName, endName, initialStart, initialEnd }: Props) {
+    const [start, setStart] = useState(() => parseDate(initialStart));
+    const [end, setEnd] = useState(() => {
+        const a = parseDate(initialStart), b = parseDate(initialEnd);
+        return a && b && b >= a ? b : null;
+    });
+    const [viewMonth, setViewMonth] = useState(() => monthOf(parseDate(initialStart) ?? new Date()));
     const [hover, setHover] = useState<Date | null>(null);
     const [open, setOpen] = useState(false);
-    const [coords, setCoords] = useState({ top: 0, left: 0, width: 0 });
-
+    const [position, setPosition] = useState({ top: 0, left: 0, width: 380, maxHeight: 600 });
     const triggerRef = useRef<HTMLButtonElement>(null);
     const panelRef = useRef<HTMLDivElement>(null);
+    const id = useId();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-    function updateCoords() {
-        if (!triggerRef.current) return;
-        const rect = triggerRef.current.getBoundingClientRect();
-        setCoords({
-            top: rect.bottom + window.scrollY + 8,
-            left: rect.left + window.scrollX,
-            width: Math.max(rect.width, 288), // 288px = w-72
-        });
+    const nights = start && end ? duration(start, end) : null;
+    const summary = nights !== null ? `${nights + 1} ${nights === 0 ? "day" : "days"} · ${nights} ${nights === 1 ? "night" : "nights"}` : "Choose your departure and return dates";
+    const label = start && end
+        ? `${shortDate(start, start.getFullYear() !== end.getFullYear())} – ${shortDate(end, true)}`
+        : start ? `${shortDate(start)} – select return date` : "Select trip dates";
+
+    function close() { setOpen(false); setHover(null); triggerRef.current?.focus(); }
+    function updatePosition() {
+        const trigger = triggerRef.current;
+        if (!trigger) return;
+        const rect = trigger.getBoundingClientRect();
+        const margin = 12;
+        const width = Math.min(380, window.innerWidth - margin * 2);
+        const height = Math.min(panelRef.current?.getBoundingClientRect().height ?? 420, window.innerHeight - margin * 2);
+        const below = window.innerHeight - rect.bottom - margin - 8;
+        const above = rect.top - margin - 8;
+        const placeAbove = below < height && above > below;
+        const available = Math.max(0, placeAbove ? above : below);
+        const maxHeight = Math.max(120, available);
+        const top = placeAbove ? Math.max(margin, rect.top - Math.min(height, maxHeight) - 8) : Math.min(rect.bottom + 8, window.innerHeight - Math.min(height, maxHeight) - margin);
+        setPosition({ top: Math.max(margin, top), left: Math.max(margin, Math.min(rect.left, window.innerWidth - width - margin)), width, maxHeight: Math.min(maxHeight, window.innerHeight - margin * 2) });
     }
-
-    useLayoutEffect(() => {
-        if (open) updateCoords();
-    }, [open]);
-
+    useLayoutEffect(() => { if (open) updatePosition(); }, [open, viewMonth, start, end]);
     useEffect(() => {
         if (!open) return;
-
-        function handleScrollOrResize() {
-            updateCoords();
-        }
-
-        function handleClickOutside(e: MouseEvent) {
-            if (
-                triggerRef.current?.contains(e.target as Node) ||
-                panelRef.current?.contains(e.target as Node)
-            ) {
-                return;
+        const frame = requestAnimationFrame(() => {
+            const target = panelRef.current?.querySelector<HTMLButtonElement>('button[data-day][aria-pressed="true"]:not(:disabled), button[data-today]:not(:disabled), button[data-day]:not(:disabled)');
+            (target ?? panelRef.current)?.focus();
+        });
+        function outside(event: PointerEvent) {
+            if (!triggerRef.current?.contains(event.target as Node) && !panelRef.current?.contains(event.target as Node)) {
+                setOpen(false); setHover(null);
             }
-            setOpen(false);
         }
-
-        window.addEventListener("scroll", handleScrollOrResize, true);
-        window.addEventListener("resize", handleScrollOrResize);
-        document.addEventListener("mousedown", handleClickOutside);
-
+        window.addEventListener("resize", updatePosition);
+        window.addEventListener("scroll", updatePosition, true);
+        document.addEventListener("pointerdown", outside);
         return () => {
-            window.removeEventListener("scroll", handleScrollOrResize, true);
-            window.removeEventListener("resize", handleScrollOrResize);
-            document.removeEventListener("mousedown", handleClickOutside);
+            cancelAnimationFrame(frame);
+            window.removeEventListener("resize", updatePosition);
+            window.removeEventListener("scroll", updatePosition, true);
+            document.removeEventListener("pointerdown", outside);
         };
     }, [open]);
 
-    function handleDayClick(day: Date) {
-        if (!start || (start && end)) {
-            setStart(day);
-            setEnd(null);
-        } else if (day < start) {
-            setStart(day);
-            setEnd(null);
-        } else {
-            setEnd(day);
-            setOpen(false);
-        }
+    function select(day: Date) {
+        setHover(null);
+        if (!start || end || day < start) { setStart(day); setEnd(null); }
+        else setEnd(day);
     }
-
-    const numDays = daysInMonth(viewMonth);
-    const startWeekday = viewMonth.getDay();
-    const cells: (Date | null)[] = [];
-    for (let i = 0; i < startWeekday; i++) cells.push(null);
-    for (let d = 1; d <= numDays; d++) {
-        cells.push(new Date(viewMonth.getFullYear(), viewMonth.getMonth(), d));
-    }
-
-    const rangeEndPreview = end ?? hover;
-
-    function inRange(day: Date) {
-        if (!start || !rangeEndPreview) return false;
-        const lo = start < rangeEndPreview ? start : rangeEndPreview;
-        const hi = start < rangeEndPreview ? rangeEndPreview : start;
-        return day > lo && day < hi;
-    }
-
-    const label =
-        start && end
-            ? `${start.toLocaleDateString(undefined, { month: "short", day: "numeric" })} – ${end.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}`
-            : start
-                ? `${start.toLocaleDateString(undefined, { month: "short", day: "numeric" })} – select end date`
-                : "Select dates";
+    const preview = start && !end && hover && hover >= start ? hover : end;
+    const monthDays = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 0).getDate();
+    const totalCells = Math.ceil((viewMonth.getDay() + monthDays) / 7) * 7;
+    const cells = Array.from({ length: totalCells }, (_, i) => new Date(viewMonth.getFullYear(), viewMonth.getMonth(), i - viewMonth.getDay() + 1));
+    const focusStyle = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-700 focus-visible:ring-offset-2";
 
     return (
         <div>
-            <input type="hidden" name={startName} value={start ? toISO(start) : ""} />
-            <input type="hidden" name={endName} value={end ? toISO(end) : ""} />
-
-            <button
-                ref={triggerRef}
-                type="button"
-                onClick={() => setOpen(!open)}
-                className="w-full text-left text-sm outline-none cursor-pointer"
-            >
-                <span className={start ? "text-gray-900" : "text-gray-300"}>{label}</span>
+            <input type="hidden" name={startName} value={start ? dateValue(start) : ""} />
+            <input type="hidden" name={endName} value={end ? dateValue(end) : ""} />
+            <button ref={triggerRef} type="button" aria-haspopup="dialog" aria-expanded={open} aria-controls={open ? id : undefined}
+                onClick={() => { if (open) close(); else { setViewMonth(monthOf(start ?? new Date())); setOpen(true); } }}
+                className={`flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 rounded-lg text-left ${focusStyle}`}>
+                <span><span className={`block text-sm font-medium ${start ? "text-slate-900" : "text-slate-500"}`}>{label}</span>
+                    {nights !== null && <span className="mt-1 block text-xs text-slate-500">{summary}</span>}</span>
+                <svg aria-hidden="true" className="h-5 w-5 shrink-0 text-green-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                    <rect x="3" y="5" width="18" height="16" rx="3" /><path d="M16 3v4M8 3v4M3 11h18M8 15h2M14 15h2" />
+                </svg>
             </button>
-
             {open && typeof document !== "undefined" && createPortal(
-                <div
-                    ref={panelRef}
-                    style={{ position: "absolute", top: coords.top, left: coords.left, width: coords.width }}
-                    className="z-[999] rounded-xl border bg-white p-3 shadow-xl"
-                >
-                    <div className="flex items-center justify-between mb-2">
-                        <button
-                            type="button"
-                            onClick={() => setViewMonth(addMonths(viewMonth, -1))}
-                            className="h-7 w-7 rounded-full hover:bg-gray-100 flex items-center justify-center cursor-pointer"
-                        >
-                            ‹
-                        </button>
-                        <p className="text-sm font-semibold">
-                            {viewMonth.toLocaleDateString(undefined, { month: "long", year: "numeric" })}
-                        </p>
-                        <button
-                            type="button"
-                            onClick={() => setViewMonth(addMonths(viewMonth, 1))}
-                            className="h-7 w-7 rounded-full hover:bg-gray-100 flex items-center justify-center cursor-pointer"
-                        >
-                            ›
-                        </button>
+                <div ref={panelRef} id={id} role="dialog" aria-label="Choose trip dates" tabIndex={-1}
+                    style={{ position: "fixed", ...position, overflowY: "auto" }}
+                    className="z-[999] rounded-2xl border border-slate-200 bg-white p-4 text-slate-900 shadow-[0_16px_48px_-12px_rgba(15,23,42,0.25)]"
+                    onKeyDown={event => {
+                        if (event.key === "Escape") { event.preventDefault(); close(); }
+                        if (event.key === "Tab") {
+                            const buttons = Array.from(panelRef.current?.querySelectorAll<HTMLButtonElement>('button:not(:disabled)') ?? []);
+                            const first = buttons[0], last = buttons[buttons.length - 1];
+                            if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+                            else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+                        }
+                    }}>
+                    <div className="mb-4 flex items-center justify-between">
+                        <button type="button" aria-label="Previous month" onClick={() => { setHover(null); setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() - 1, 1)); }} className={`flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-xl text-slate-600 hover:bg-slate-100 ${focusStyle}`}>‹</button>
+                        <p aria-live="polite" className="text-base font-semibold tracking-tight">{viewMonth.toLocaleDateString(undefined, { month: "long", year: "numeric" })}</p>
+                        <button type="button" aria-label="Next month" onClick={() => { setHover(null); setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1)); }} className={`flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-xl text-slate-600 hover:bg-slate-100 ${focusStyle}`}>›</button>
                     </div>
-
-                    <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-semibold text-gray-400 mb-1">
-                        {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
-                            <div key={i}>{d}</div>
-                        ))}
+                    <p className="mb-3 text-center text-xs text-slate-500">{start && !end ? "Now choose your return date" : "Choose your departure date"}</p>
+                    <div className="mb-2 grid grid-cols-7 text-center text-[10px] font-semibold tracking-wide text-slate-500">
+                        {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map(day => <span key={day}>{day}</span>)}
                     </div>
-
-                    <div className="grid grid-cols-7 gap-1">
-                        {cells.map((day, i) => {
-                            if (!day) return <div key={i} />;
-                            const isStart = isSameDay(day, start);
-                            const isEnd = isSameDay(day, end);
+                    <div className="grid grid-cols-7 gap-y-1" onMouseLeave={() => setHover(null)}>
+                        {cells.map(day => {
+                            const isStart = sameDay(day, start), isEnd = sameDay(day, end);
                             const selected = isStart || isEnd;
-                            const between = inRange(day);
-                            const isPast = day < new Date(new Date().toDateString());
-
-                            return (
-                                <button
-                                    key={i}
-                                    type="button"
-                                    disabled={isPast}
-                                    onMouseEnter={() => setHover(day)}
-                                    onClick={() => handleDayClick(day)}
-                                    className={`
-                    h-8 w-8 text-xs rounded-full transition cursor-pointer
-                    ${isPast ? "text-gray-200 cursor-not-allowed" : ""}
-                    ${selected ? "bg-green-700 text-white font-semibold" : ""}
-                    ${between && !selected ? "bg-green-100 text-green-800" : ""}
-                    ${!selected && !between && !isPast ? "hover:bg-gray-100 text-gray-700" : ""}
-                  `}
-                                >
+                            const between = !!start && !!preview && day > start && day < preview;
+                            const previewEnd = !end && sameDay(day, preview);
+                            const connected = !!start && !!preview && preview > start;
+                            const isPast = day < today;
+                            const outside = day.getMonth() !== viewMonth.getMonth();
+                            const isToday = sameDay(day, today);
+                            return <div key={dateValue(day)} className={`flex h-11 items-center justify-center ${between ? "bg-green-50" : ""} ${connected && isStart ? "rounded-l-full bg-green-50" : ""} ${connected && (isEnd || previewEnd) ? "rounded-r-full bg-green-50" : ""}`}>
+                                <button type="button" data-day={dateValue(day)} data-today={isToday ? "true" : undefined}
+                                    aria-label={`${day.toLocaleDateString(undefined, { weekday: "long", year: "numeric", month: "long", day: "numeric" })}${isStart ? ", departure date" : ""}${isEnd ? ", return date" : ""}`}
+                                    aria-pressed={selected} disabled={isPast} onClick={() => select(day)} onMouseEnter={() => setHover(day)} onFocus={() => setHover(day)}
+                                    className={`relative flex h-10 w-10 max-w-full items-center justify-center rounded-full text-sm transition-colors ${focusStyle} ${selected ? "bg-green-800 font-semibold text-white shadow-sm" : isPast ? "cursor-not-allowed text-slate-300" : `${outside ? "text-slate-400" : "text-slate-700"} cursor-pointer hover:bg-green-100`} ${isToday && !selected ? "ring-1 ring-inset ring-green-700" : ""} ${previewEnd ? "bg-green-100" : ""}`}>
                                     {day.getDate()}
                                 </button>
-                            );
+                            </div>;
                         })}
                     </div>
-
-                    <div className="mt-2 flex justify-between items-center pt-2 border-t">
-                        <button
-                            type="button"
-                            onClick={() => {
-                                setStart(null);
-                                setEnd(null);
-                            }}
-                            className="text-xs text-gray-400 hover:text-gray-600 cursor-pointer"
-                        >
-                            Clear
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => setOpen(false)}
-                            className="text-xs font-semibold text-green-700 hover:text-green-800 cursor-pointer"
-                        >
-                            Done
-                        </button>
+                    <div className="mt-4 border-t border-slate-100 pt-4">
+                        <div aria-live="polite" className="mb-3"><p className="text-sm font-semibold">{start ? label : "Your next adventure"}</p><p className="mt-1 text-xs text-slate-500">{summary}</p></div>
+                        <div className="flex items-center justify-between">
+                            {start ? <button type="button" onClick={() => { setStart(null); setEnd(null); setHover(null); }} className={`rounded-md px-2 py-2 text-xs font-medium text-slate-500 hover:bg-slate-100 hover:text-slate-900 ${focusStyle}`}>Clear dates</button> : <span />}
+                            <button type="button" disabled={!start || !end} onClick={close} className={`rounded-lg bg-green-800 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-900 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 ${focusStyle}`}>Done</button>
+                        </div>
                     </div>
-                </div>,
-                document.body
+                </div>, document.body
             )}
         </div>
     );

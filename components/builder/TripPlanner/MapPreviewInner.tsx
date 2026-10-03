@@ -21,7 +21,7 @@ export default function MapPreviewInner({ lat, lng }: { lat: number; lng: number
       dragging={false}
       doubleClickZoom={false}
       zoomControl={false}
-      className="h-40 w-full rounded-lg"
+      className="h-56 w-full"
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

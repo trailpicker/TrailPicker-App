@@ -6,113 +6,114 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { getDateRange } from "@/lib/trip";
 import { auth } from "@/auth";
+import { getDestination } from "@/lib/destinations";
 
 export async function getBuildExport(buildId: string) {
-    const build = await prisma.build.findUnique({
-        where: { id: buildId },
-        include: { items: { include: { gear: { select: { id: true, name: true } } } } },
-    });
+  const build = await prisma.build.findUnique({
+    where: { id: buildId },
+    include: { items: { include: { gear: { select: { id: true, name: true } } } } },
+  });
 
-    if (!build) throw new Error("Build not found.");
+  if (!build) throw new Error("Build not found.");
 
-    return {
-        version: 1,
-        name: build.name,
-        location: build.location,
-        startDate: build.startDate,
-        endDate: build.endDate,
-        people: build.people,
-        minTemperature: build.minTemperature,
-        conditions: build.conditions,
-        items: build.items.map((item) => ({
-            gearId: item.gearId,
-            gearName: item.gear?.name ?? item.gearNameSnapshot,
-            quantity: item.quantity,
-            isConsumable: item.isConsumable,
-            isWorn: item.isWorn,
-            customCategory: item.customCategory,
-            gearNameSnapshot: item.gearNameSnapshot,
-            weightSnapshot: item.weightSnapshot,
-            priceSnapshot: item.priceSnapshot,
-        })),
-    };
+  return {
+    version: 1,
+    name: build.name,
+    location: build.location,
+    startDate: build.startDate,
+    endDate: build.endDate,
+    people: build.people,
+    minTemperature: build.minTemperature,
+    conditions: build.conditions,
+    items: build.items.map((item) => ({
+      gearId: item.gearId,
+      gearName: item.gear?.name ?? item.gearNameSnapshot,
+      quantity: item.quantity,
+      isConsumable: item.isConsumable,
+      isWorn: item.isWorn,
+      customCategory: item.customCategory,
+      gearNameSnapshot: item.gearNameSnapshot,
+      weightSnapshot: item.weightSnapshot,
+      priceSnapshot: item.priceSnapshot,
+    })),
+  };
 }
 
 export async function importBuildItems(formData: FormData) {
-    const buildId = formData.get("buildId") as string;
-    const payload = JSON.parse(formData.get("payload") as string);
+  const buildId = formData.get("buildId") as string;
+  const payload = JSON.parse(formData.get("payload") as string);
 
-    if (!Array.isArray(payload.items)) {
-        throw new Error("Invalid import file.");
+  if (!Array.isArray(payload.items)) {
+    throw new Error("Invalid import file.");
+  }
+
+  for (const item of payload.items) {
+    if (item.gearId) {
+      await prisma.buildItem.upsert({
+        where: { buildId_gearId: { buildId, gearId: item.gearId } },
+        update: { quantity: { increment: item.quantity ?? 1 } },
+        create: {
+          buildId,
+          gearId: item.gearId,
+          quantity: item.quantity ?? 1,
+          isConsumable: !!item.isConsumable,
+          isWorn: !!item.isWorn,
+        },
+      });
+    } else {
+      await prisma.buildItem.create({
+        data: {
+          buildId,
+          customCategory: item.customCategory ?? null,
+          gearNameSnapshot: item.gearNameSnapshot ?? item.gearName ?? "Imported item",
+          weightSnapshot: item.weightSnapshot ?? null,
+          priceSnapshot: item.priceSnapshot ?? null,
+          quantity: item.quantity ?? 1,
+          isConsumable: !!item.isConsumable,
+          isWorn: !!item.isWorn,
+        },
+      });
     }
+  }
 
-    for (const item of payload.items) {
-        if (item.gearId) {
-            await prisma.buildItem.upsert({
-                where: { buildId_gearId: { buildId, gearId: item.gearId } },
-                update: { quantity: { increment: item.quantity ?? 1 } },
-                create: {
-                    buildId,
-                    gearId: item.gearId,
-                    quantity: item.quantity ?? 1,
-                    isConsumable: !!item.isConsumable,
-                    isWorn: !!item.isWorn,
-                },
-            });
-        } else {
-            await prisma.buildItem.create({
-                data: {
-                    buildId,
-                    customCategory: item.customCategory ?? null,
-                    gearNameSnapshot: item.gearNameSnapshot ?? item.gearName ?? "Imported item",
-                    weightSnapshot: item.weightSnapshot ?? null,
-                    priceSnapshot: item.priceSnapshot ?? null,
-                    quantity: item.quantity ?? 1,
-                    isConsumable: !!item.isConsumable,
-                    isWorn: !!item.isWorn,
-                },
-            });
-        }
-    }
-
-    revalidatePath(`/build/${buildId}`);
+  revalidatePath(`/build/${buildId}`);
 }
 
 export async function duplicateBuild(formData: FormData) {
-    const buildId = formData.get("buildId") as string;
+  const buildId = formData.get("buildId") as string;
 
-    const original = await prisma.build.findUnique({
-        where: { id: buildId },
-        include: { items: true },
-    });
+  const original = await prisma.build.findUnique({
+    where: { id: buildId },
+    include: { items: true },
+  });
 
-    if (!original) throw new Error("Build not found.");
+  if (!original) throw new Error("Build not found.");
 
-    const copy = await prisma.build.create({
-        data: {
-            name: `${original.name} (copy)`,
-            location: original.location,
-            startDate: original.startDate,
-            endDate: original.endDate,
-            people: original.people,
-            minTemperature: original.minTemperature,
-            conditions: original.conditions,
-            items: {
-                create: original.items.map((item) => ({
-                    gearId: item.gearId,
-                    quantity: item.quantity,
-                    isConsumable: item.isConsumable,
-                    isWorn: item.isWorn,
-                    customCategory: item.customCategory,
-                    gearNameSnapshot: item.gearNameSnapshot,
-                    weightSnapshot: item.weightSnapshot,
-                    priceSnapshot: item.priceSnapshot,
-                })),
-            },
-        },
-    });
+  const copy = await prisma.build.create({
+    data: {
+      name: `${original.name} (copy)`,
+      location: original.location,
+      startDate: original.startDate,
+      endDate: original.endDate,
+      people: original.people,
+      minTemperature: original.minTemperature,
+      conditions: original.conditions,
+      items: {
+        create: original.items.map((item) => ({
+          gearId: item.gearId,
+          quantity: item.quantity,
+          isConsumable: item.isConsumable,
+          isWorn: item.isWorn,
+          customCategory: item.customCategory,
+          gearNameSnapshot: item.gearNameSnapshot,
+          weightSnapshot: item.weightSnapshot,
+          priceSnapshot: item.priceSnapshot,
+        })),
+      },
+    },
+  });
 
-    redirect(`/build/${copy.id}`);
+  redirect(`/build/${copy.id}`);
 }
 export async function setItemCategory(formData: FormData) {
   const itemId = formData.get("itemId") as string;
@@ -191,52 +192,93 @@ export async function claimCurrentBuild() {
 }
 export async function createBuild(formData: FormData) {
   const session = await auth();
+
   const name = formData.get("name")?.toString().trim();
 
   if (!name) {
     throw new Error("Build name is required.");
   }
 
-  const location = formData.get("location")?.toString().trim();
-  const locationLatRaw = formData.get("locationLat")?.toString();
-  const locationLngRaw = formData.get("locationLng")?.toString();
   const startDateRaw = formData.get("startDate")?.toString();
   const endDateRaw = formData.get("endDate")?.toString();
   const peopleRaw = formData.get("people")?.toString();
-  const minTemperatureRaw = formData.get("minTemperature")?.toString();
+  const minTemperatureRaw =
+    formData.get("minTemperature")?.toString();
   const conditions = formData.get("conditions")?.toString();
 
-  const build = await prisma.build.create({
-  data: {
-    name,
-    location: location || null,
-    locationLat: locationLatRaw ? Number(locationLatRaw) : null,
-    locationLng: locationLngRaw ? Number(locationLngRaw) : null,
-    startDate: startDateRaw ? new Date(startDateRaw) : null,
-    endDate: endDateRaw ? new Date(endDateRaw) : null,
-    people: peopleRaw ? Number(peopleRaw) : 1,
-    minTemperature: minTemperatureRaw ? Number(minTemperatureRaw) : null,
-    conditions: conditions || null,
+  const destinationIdRaw =
+    formData.get("destinationId")?.toString() || null;
 
-    userId: session?.user?.id ?? null, // add this
-  },
-});
+  const selectedDestination = getDestination(destinationIdRaw);
+
+  const destinationId = selectedDestination?.id ?? null;
+
+  const submittedLocation =
+    formData.get("location")?.toString().trim();
+
+  const submittedLat =
+    formData.get("locationLat")?.toString();
+
+  const submittedLng =
+    formData.get("locationLng")?.toString();
+
+  const location = selectedDestination
+    ? `${selectedDestination.name}, ${selectedDestination.park}`
+    : submittedLocation || null;
+
+  const locationLat = selectedDestination
+    ? selectedDestination.latitude
+    : submittedLat
+      ? Number(submittedLat)
+      : null;
+
+  const locationLng = selectedDestination
+    ? selectedDestination.longitude
+    : submittedLng
+      ? Number(submittedLng)
+      : null;
+
+  const build = await prisma.build.create({
+    data: {
+      name,
+      location,
+      locationLat,
+      locationLng,
+      startDate: startDateRaw
+        ? new Date(startDateRaw)
+        : null,
+      endDate: endDateRaw
+        ? new Date(endDateRaw)
+        : null,
+      people: peopleRaw ? Number(peopleRaw) : 1,
+      minTemperature: minTemperatureRaw
+        ? Number(minTemperatureRaw)
+        : null,
+      conditions: conditions || null,
+      userId: session?.user?.id ?? null,
+    },
+  });
 
   if (build.startDate && build.endDate) {
-    const range = getDateRange(build.startDate, build.endDate);
+    const range = getDateRange(
+      build.startDate,
+      build.endDate,
+    );
+
     await prisma.tripDay.createMany({
-      data: range.map((date) => ({ buildId: build.id, date })),
+      data: range.map((date) => ({
+        buildId: build.id,
+        date,
+      })),
       skipDuplicates: true,
     });
   }
 
   const cookieStore = await cookies();
-
   cookieStore.set("currentBuild", build.id);
 
   redirect(`/build/${build.id}`);
 }
-
 export async function addGear(formData: FormData) {
   const buildId = formData.get("buildId") as string;
   const gearId = formData.get("gearId") as string;
@@ -273,25 +315,67 @@ export async function removeGear(formData: FormData) {
 export async function updateTripDetails(formData: FormData) {
   const buildId = formData.get("buildId") as string;
 
-  const location = (formData.get("location") as string) || null;
-  const locationLatRaw = formData.get("locationLat") as string;
-  const locationLngRaw = formData.get("locationLng") as string;
-  const startDateRaw = formData.get("startDate") as string;
-  const endDateRaw = formData.get("endDate") as string;
-  const startDate = startDateRaw ? new Date(startDateRaw) : null;
-  const endDate = endDateRaw ? new Date(endDateRaw) : null;
+  const startDateRaw =
+    formData.get("startDate")?.toString() || "";
+
+  const endDateRaw =
+    formData.get("endDate")?.toString() || "";
+
+  const startDate = startDateRaw
+    ? new Date(startDateRaw)
+    : null;
+
+  const endDate = endDateRaw
+    ? new Date(endDateRaw)
+    : null;
+
   const people = Number(formData.get("people")) || 1;
+
   const minTemperature = formData.get("minTemperature")
     ? Number(formData.get("minTemperature"))
     : null;
-  const conditions = (formData.get("conditions") as string) || null;
+
+  const conditions =
+    formData.get("conditions")?.toString() || null;
+
+  const destinationIdRaw =
+    formData.get("destinationId")?.toString() || null;
+
+  const selectedDestination = getDestination(destinationIdRaw);
+
+  const destinationId = selectedDestination?.id ?? null;
+
+  const submittedLocation =
+    formData.get("location")?.toString().trim();
+
+  const submittedLat =
+    formData.get("locationLat")?.toString();
+
+  const submittedLng =
+    formData.get("locationLng")?.toString();
+
+  const location = selectedDestination
+    ? `${selectedDestination.name}, ${selectedDestination.park}`
+    : submittedLocation || null;
+
+  const locationLat = selectedDestination
+    ? selectedDestination.latitude
+    : submittedLat
+      ? Number(submittedLat)
+      : null;
+
+  const locationLng = selectedDestination
+    ? selectedDestination.longitude
+    : submittedLng
+      ? Number(submittedLng)
+      : null;
 
   await prisma.build.update({
     where: { id: buildId },
     data: {
       location,
-      locationLat: locationLatRaw ? Number(locationLatRaw) : null,
-      locationLng: locationLngRaw ? Number(locationLngRaw) : null,
+      locationLat,
+      locationLng,
       startDate,
       endDate,
       people,
@@ -300,12 +384,18 @@ export async function updateTripDetails(formData: FormData) {
     },
   });
 
-  // Keep TripDay rows in sync with the current date range
-  if (startDate && endDate && startDate.getTime() <= endDate.getTime()) {
+  if (
+    startDate &&
+    endDate &&
+    startDate.getTime() <= endDate.getTime()
+  ) {
     const range = getDateRange(startDate, endDate);
 
     await prisma.tripDay.createMany({
-      data: range.map((date) => ({ buildId, date })),
+      data: range.map((date) => ({
+        buildId,
+        date,
+      })),
       skipDuplicates: true,
     });
 
@@ -316,7 +406,9 @@ export async function updateTripDetails(formData: FormData) {
       },
     });
   } else {
-    await prisma.tripDay.deleteMany({ where: { buildId } });
+    await prisma.tripDay.deleteMany({
+      where: { buildId },
+    });
   }
 
   revalidatePath(`/build/${buildId}`);

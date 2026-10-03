@@ -1,0 +1,19 @@
+{
+  "output": "PROJECT_CONTEXT.md",
+  "includeExtensions": [
+    ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs",
+    ".json", ".jsonc", ".md", ".mdx", ".css", ".scss", ".html",
+    ".yaml", ".yml", ".toml", ".ini", ".txt",
+    ".env.example", ".gitignore", ".npmrc"
+  ],
+  "ignoreDirs": [
+    ".git", "node_modules", "dist", "coverage",
+    ".cache", ".next", ".turbo", ".vite", "out", "target", "generated"
+  ],
+  "ignoreFiles": [
+    "PROJECT_CONTEXT.md", "PROJECT_STRUCTURE.md", ".env"
+  ],
+  "maxFileBytes": 300000,
+  "includeLockfiles": false,
+  "includeHiddenFiles": true
+}

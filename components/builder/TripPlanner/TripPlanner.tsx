@@ -1,5 +1,5 @@
 "use client";
-//components/builder/TripPlanner/TripPlanner.tsx
+
 import { useState } from "react";
 import TripSummaryCard from "./TripSummaryCard";
 import TripEditForm from "./TripEditForm";
@@ -30,23 +30,52 @@ type Props = {
   issues: CompatibilityIssue[];
 };
 
-export default function TripPlanner({ build, issues }: Props) {
-  const [editing, setEditing] = useState(!build.startDate);
+export default function TripPlanner({
+  build,
+  issues,
+}: Props) {
+  const [editing, setEditing] = useState(
+    !build.startDate,
+  );
 
   return (
-    <div className="max-w-5xl mx-auto mt-8 space-y-8 pb-16">
+    <div className="mx-auto mt-6 max-w-6xl space-y-6 px-3 pb-20 sm:mt-8 sm:px-6">
       {editing ? (
         <TripEditForm
           build={build}
           onSaved={() => setEditing(false)}
-          onCancel={build.startDate ? () => setEditing(false) : undefined}
+          onCancel={
+            build.startDate
+              ? () => setEditing(false)
+              : undefined
+          }
         />
       ) : (
-        <TripSummaryCard build={build} issues={issues} onEdit={() => setEditing(true)} />
-      )}
+        <>
+          <TripSummaryCard
+            build={build}
+            issues={issues}
+            onEdit={() => setEditing(true)}
+          />
 
-      {!editing && build.days.length > 0 && (
-        <TripDayList buildId={build.id} days={build.days} />
+          {build.days.length > 0 ? (
+            <TripDayList
+              buildId={build.id}
+              days={build.days}
+            />
+          ) : (
+            <div className="rounded-2xl border border-dashed border-gray-300 bg-white px-6 py-12 text-center">
+              <p className="font-semibold text-gray-700">
+                No itinerary days yet
+              </p>
+
+              <p className="mt-1 text-sm text-gray-400">
+                Edit your trip and choose a start and end
+                date.
+              </p>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

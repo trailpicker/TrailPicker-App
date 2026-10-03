@@ -1,6 +1,6 @@
 // components/build/CreateTripDetails.tsx
 "use client";
-import LocationPicker from "./LocationPicker";
+import DestinationPicker from "./DestinationPicker";
 import DateRangePicker from "./DateRangePicker";
 
 import { useState } from "react";
@@ -98,7 +98,7 @@ export default function CreateTripDetails() {
             <div
                 className={`
                 transition-all duration-300
-                ${open ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"}
+                ${open ? "max-h-[1800px] opacity-100" : "max-h-0 opacity-0"}
                 `}
             >
                 <div className="bg-gray-50 p-5 space-y-4">
@@ -111,7 +111,8 @@ export default function CreateTripDetails() {
                             Location
                         </label>
 
-                        <LocationPicker
+                        <DestinationPicker
+                            destinationField="destinationId"
                             nameField="location"
                             latField="locationLat"
                             lngField="locationLng"

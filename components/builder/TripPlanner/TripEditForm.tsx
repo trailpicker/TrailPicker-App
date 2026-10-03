@@ -1,7 +1,7 @@
 "use client";
 //components/builder/TripPlanner/TripEditForm.tsx
 import { useTransition } from "react";
-import LocationPicker from "@/components/build/LocationPicker";
+import DestinationPicker from "@/components/build/DestinationPicker";
 import DateRangePicker from "@/components/build/DateRangePicker";
 import { updateTripDetails } from "@/app/build/actions";
 
@@ -14,6 +14,8 @@ type Props = {
     people: number;
     minTemperature: number | null;
     conditions: string | null;
+    locationLat: number | null;
+    locationLng: number | null;
   };
   onSaved: () => void;
   onCancel?: () => void;
@@ -58,11 +60,13 @@ export default function TripEditForm({ build, onSaved, onCancel }: Props) {
           <label className="text-xs font-semibold uppercase text-gray-400 mb-2 block">
             Location
           </label>
-          <LocationPicker
+          <DestinationPicker
             nameField="location"
             latField="locationLat"
             lngField="locationLng"
             initialName={build.location ?? undefined}
+            initialLat={build.locationLat}
+            initialLng={build.locationLng}
           />
         </div>
 

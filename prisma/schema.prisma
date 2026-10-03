@@ -71,21 +71,33 @@ model Gear {
   subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
 
   images GearImage[]
-
   specifications GearSpecification[]
-
   prices Price[]
-
   reviews Review[]
-
   buildItems BuildItem[]
-
   favorites Favorite[]
+  ownedGear OwnedGear[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+model OwnedGear {
+  id String @id @default(cuid())
 
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  gearId String
+  gear Gear @relation(fields: [gearId], references: [id], onDelete: Cascade)
+
+  purchasedPrice Float?
+  purchasedAt DateTime?
+  notes String?
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, gearId])
+}
 model GearImage {
   id String @id @default(cuid())
 
@@ -141,16 +153,21 @@ model Price {
 model User {
   id            String    @id @default(cuid())
   name          String?
-  username      String?
+  username      String?    @unique
   email         String    @unique
   emailVerified DateTime?
   image         String?
+
+  bio             String?
+  location        String?
+  isProfilePublic Boolean  @default(false)
 
   accounts Account[]
   sessions Session[]
   builds    Build[]
   reviews   Review[]
   favorites Favorite[]
+  ownedGear OwnedGear[]
 
   createdAt DateTime @default(now())
 }
@@ -197,6 +214,8 @@ model Build {
 
   items BuildItem[]
   days  TripDay[]
+
+  destinationId String?
 
   location    String?
   locationLat Float?
