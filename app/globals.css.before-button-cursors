@@ -68,21 +68,3 @@ body {
   border: 2px solid #2563eb;
   cursor: pointer;
 }
-
-/* Make native and accessible button controls feel clickable site-wide. */
-@layer base {
-  button:not(:disabled):not([aria-disabled="true"]),
-  input:is([type="button"], [type="submit"], [type="reset"]):not(:disabled):not([aria-disabled="true"]),
-  [role="button"]:not([aria-disabled="true"]):not(:disabled),
-  summary {
-    cursor: pointer;
-  }
-}
-
-/* Disabled controls stay disabled even when they have cursor-pointer utilities. */
-button:is(:disabled, [aria-disabled="true"]),
-input:is([type="button"], [type="submit"], [type="reset"]):is(:disabled, [aria-disabled="true"]),
-[role="button"]:is(:disabled, [aria-disabled="true"]) {
-  cursor: not-allowed;
-}
-

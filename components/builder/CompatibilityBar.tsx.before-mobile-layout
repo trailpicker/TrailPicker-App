@@ -27,8 +27,8 @@ export default function CompatibilityBar({ build, items, days = [], totalWeight 
     const style = statusStyles[summary.status];
 
     return (
-    <div className={`flex items-center justify-between max-md:flex-wrap max-md:gap-3 px-5 py-3 text-sm ${style.bar}`}>
-            <div className="flex items-center gap-2 max-md:flex-wrap max-md:min-w-0">
+    <div className={`flex items-center justify-between px-5 py-3 text-sm ${style.bar}`}>
+            <div className="flex items-center gap-2">
                 <span className={`h-2 w-2 rounded-full ${style.dot}`} />
                 <span className="font-semibold">{style.label}</span>
 
@@ -53,4 +53,3 @@ export default function CompatibilityBar({ build, items, days = [], totalWeight 
         </div>
     );
 }
-

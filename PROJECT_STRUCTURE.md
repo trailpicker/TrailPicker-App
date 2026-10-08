@@ -87,6 +87,8 @@
 │   │   └── page.tsx
 │   ├── gear/
 │   │   ├── [id]/
+│   │   │   ├── [subcategory]/
+│   │   │   │   └── page.tsx
 │   │   │   └── page.tsx
 │   │   └── page.tsx
 │   ├── profile/
@@ -124,7 +126,9 @@
 │   │   │   ├── TripLogistics.tsx
 │   │   │   ├── TripPlanner.tsx
 │   │   │   ├── TripRoute.tsx
-│   │   │   └── TripSummaryCard.tsx
+│   │   │   ├── TripSummaryCard.tsx
+│   │   │   ├── WaypointIcon.tsx
+│   │   │   └── WaypointSearch.tsx
 │   │   ├── AddCustomItemForm.tsx
 │   │   ├── AddGearButton.tsx
 │   │   ├── BuildDataTools.tsx
@@ -135,8 +139,10 @@
 │   │   ├── CompatibilityBar.tsx
 │   │   ├── CompatibilityDetails.tsx
 │   │   ├── CostSummary.tsx
+│   │   ├── GearPicker.tsx
 │   │   ├── GearTab.tsx
 │   │   ├── ItemCategoryToggle.tsx
+│   │   ├── OriginalGearPicker.tsx
 │   │   ├── PrivateBuildNotice.tsx
 │   │   ├── PublicBuildView.tsx
 │   │   ├── QuantityStepper.tsx
@@ -158,6 +164,7 @@
 │   ├── GearFilters.tsx
 │   ├── GearSort.tsx
 │   ├── Navbar.tsx
+│   ├── NavbarNavigation.tsx
 │   ├── ProfileDropdown.tsx
 │   └── SearchBar.tsx
 ├── data/
@@ -172,12 +179,35 @@
 │   ├── calculations.ts
 │   ├── compatibility.ts
 │   ├── destinations.ts
+│   ├── gear-picker.ts
+│   ├── gear-selection-actions.ts
 │   ├── guest-build-token.ts
+│   ├── legacy-gear-selection.ts
 │   ├── prisma.ts
 │   ├── profile.ts
 │   ├── trip-planner-actions.ts
 │   ├── trip-planner.ts
-│   └── trip.ts
+│   ├── trip.ts
+│   └── waypoint-map.ts
+├── mobile-update/
+│   ├── files/
+│   │   ├── app/
+│   │   │   └── build/
+│   │   │       └── [id]/
+│   │   │           └── page.tsx
+│   │   └── components/
+│   │       └── builder/
+│   │           ├── AddCustomItemForm.tsx
+│   │           ├── BuildHeader.tsx
+│   │           ├── BuildRow.tsx
+│   │           ├── CompatibilityBar.tsx
+│   │           ├── CostSummary.tsx
+│   │           ├── ItemCategoryToggle.tsx
+│   │           ├── QuantityStepper.tsx
+│   │           ├── ShareBar.tsx
+│   │           └── WeightSummary.tsx
+│   ├── install.mjs
+│   └── README.md
 ├── prisma/
 │   ├── migrations/
 │   │   └── migration_lock.toml
@@ -241,14 +271,15 @@
 - `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/tests/builder-ownership.test.cjs` (11.6 KB, 171 lines)
 - `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/tests/trip-planner.test.cjs` (4.7 KB, 18 lines)
 - `app/api/auth/[...nextauth]/route.ts` (74 B, 2 lines)
-- `app/build/[id]/page.tsx` (8.8 KB, 223 lines)
-- `app/build/[id]/select/[category]/[subcategory]/page.tsx` (11.3 KB, 309 lines)
-- `app/build/[id]/select/[category]/page.tsx` (2.2 KB, 88 lines)
+- `app/build/[id]/page.tsx` (8.8 KB, 225 lines)
+- `app/build/[id]/select/[category]/[subcategory]/page.tsx` (510 B, 11 lines)
+- `app/build/[id]/select/[category]/page.tsx` (467 B, 11 lines)
 - `app/build/actions.ts` (17.2 KB, 475 lines)
 - `app/build/page.tsx` (4.3 KB, 117 lines)
-- `app/gear/[id]/page.tsx` (2.2 KB, 132 lines)
-- `app/gear/page.tsx` (3.0 KB, 189 lines)
-- `app/globals.css` (1.2 KB, 70 lines)
+- `app/gear/[id]/[subcategory]/page.tsx` (469 B, 10 lines)
+- `app/gear/[id]/page.tsx` (2.4 KB, 138 lines)
+- `app/gear/page.tsx` (409 B, 10 lines)
+- `app/globals.css` (1.8 KB, 89 lines)
 - `app/layout.tsx` (910 B, 42 lines)
 - `app/page.tsx` (2.1 KB, 120 lines)
 - `app/profile/actions.ts` (3.8 KB, 96 lines)
@@ -265,35 +296,39 @@
 - `components/build/DestinationPicker.tsx` (11.9 KB, 410 lines)
 - `components/build/LocationMap.tsx` (2.3 KB, 113 lines)
 - `components/build/LocationPicker.tsx` (8.5 KB, 240 lines)
-- `components/builder/AddCustomItemForm.tsx` (2.4 KB, 77 lines)
+- `components/builder/AddCustomItemForm.tsx` (2.5 KB, 79 lines)
 - `components/builder/AddGearButton.tsx` (914 B, 49 lines)
 - `components/builder/BuildDataTools.tsx` (27.4 KB, 628 lines)
-- `components/builder/BuildHeader.tsx` (1.4 KB, 45 lines)
-- `components/builder/BuildRow.tsx` (8.6 KB, 204 lines)
+- `components/builder/BuildHeader.tsx` (1.4 KB, 47 lines)
+- `components/builder/BuildRow.tsx` (9.4 KB, 203 lines)
 - `components/builder/BuildSettings.tsx` (5.9 KB, 118 lines)
 - `components/builder/BuildVisibilityToggle.tsx` (2.7 KB, 60 lines)
-- `components/builder/CompatibilityBar.tsx` (2.2 KB, 55 lines)
+- `components/builder/CompatibilityBar.tsx` (2.2 KB, 57 lines)
 - `components/builder/CompatibilityDetails.tsx` (1.9 KB, 52 lines)
-- `components/builder/CostSummary.tsx` (651 B, 30 lines)
+- `components/builder/CostSummary.tsx` (816 B, 33 lines)
+- `components/builder/GearPicker.tsx` (11.6 KB, 124 lines)
 - `components/builder/GearTab.tsx` (4.3 KB, 156 lines)
-- `components/builder/ItemCategoryToggle.tsx` (2.5 KB, 87 lines)
+- `components/builder/ItemCategoryToggle.tsx` (2.6 KB, 91 lines)
+- `components/builder/OriginalGearPicker.tsx` (12.5 KB, 253 lines)
 - `components/builder/PrivateBuildNotice.tsx` (1008 B, 17 lines)
 - `components/builder/PublicBuildView.tsx` (4.0 KB, 62 lines)
-- `components/builder/QuantityStepper.tsx` (2.4 KB, 87 lines)
+- `components/builder/QuantityStepper.tsx` (2.4 KB, 89 lines)
 - `components/builder/RemoveGearButton.tsx` (677 B, 35 lines)
-- `components/builder/ShareBar.tsx` (2.9 KB, 82 lines)
+- `components/builder/ShareBar.tsx` (3.0 KB, 84 lines)
 - `components/builder/TripPlanner/MapPreviewInner.tsx` (1.0 KB, 33 lines)
 - `components/builder/TripPlanner/PlannerFields.tsx` (2.1 KB, 85 lines)
-- `components/builder/TripPlanner/RouteMapInner.tsx` (1.6 KB, 15 lines)
+- `components/builder/TripPlanner/RouteMapInner.tsx` (5.4 KB, 100 lines)
 - `components/builder/TripPlanner/TripDayList.tsx` (3.3 KB, 98 lines)
 - `components/builder/TripPlanner/TripDayRow.tsx` (15.9 KB, 511 lines)
 - `components/builder/TripPlanner/TripEditForm.tsx` (4.8 KB, 145 lines)
 - `components/builder/TripPlanner/TripLocationPreview.tsx` (342 B, 9 lines)
 - `components/builder/TripPlanner/TripLogistics.tsx` (2.0 KB, 13 lines)
 - `components/builder/TripPlanner/TripPlanner.tsx` (3.3 KB, 27 lines)
-- `components/builder/TripPlanner/TripRoute.tsx` (6.3 KB, 32 lines)
+- `components/builder/TripPlanner/TripRoute.tsx` (14.8 KB, 140 lines)
 - `components/builder/TripPlanner/TripSummaryCard.tsx` (7.5 KB, 246 lines)
-- `components/builder/WeightSummary.tsx` (2.7 KB, 85 lines)
+- `components/builder/TripPlanner/WaypointIcon.tsx` (463 B, 8 lines)
+- `components/builder/TripPlanner/WaypointSearch.tsx` (5.0 KB, 80 lines)
+- `components/builder/WeightSummary.tsx` (2.6 KB, 87 lines)
 - `components/filters/BrandFilter.tsx` (2.6 KB, 99 lines)
 - `components/filters/FilterSection.tsx` (1.2 KB, 51 lines)
 - `components/filters/RangeFilter.tsx` (2.1 KB, 109 lines)
@@ -302,11 +337,12 @@
 - `components/GearCard.tsx` (1.1 KB, 61 lines)
 - `components/GearFilters.tsx` (2.6 KB, 149 lines)
 - `components/GearSort.tsx` (1.1 KB, 71 lines)
-- `components/Navbar.tsx` (2.5 KB, 54 lines)
+- `components/Navbar.tsx` (1.3 KB, 35 lines)
+- `components/NavbarNavigation.tsx` (7.2 KB, 102 lines)
 - `components/profile/BuildCard.tsx` (3.4 KB, 33 lines)
 - `components/profile/DeleteBuildButton.tsx` (461 B, 19 lines)
 - `components/profile/GearLibraryCard.tsx` (4.2 KB, 88 lines)
-- `components/ProfileDropdown.tsx` (6.7 KB, 223 lines)
+- `components/ProfileDropdown.tsx` (6.7 KB, 226 lines)
 - `components/SearchBar.tsx` (884 B, 52 lines)
 - `data/destinations.json` (9.0 KB, 275 lines)
 - `docs.config.json` (589 B, 20 lines)
@@ -320,13 +356,29 @@
 - `lib/calculations.ts` (1.2 KB, 54 lines)
 - `lib/compatibility.ts` (12.9 KB, 374 lines)
 - `lib/destinations.ts` (1.3 KB, 57 lines)
+- `lib/gear-picker.ts` (1.2 KB, 31 lines)
+- `lib/gear-selection-actions.ts` (572 B, 16 lines)
 - `lib/guest-build-token.ts` (1.6 KB, 37 lines)
+- `lib/legacy-gear-selection.ts` (768 B, 15 lines)
 - `lib/prisma.ts` (471 B, 20 lines)
 - `lib/profile.ts` (1.5 KB, 43 lines)
 - `lib/trip-planner-actions.ts` (5.2 KB, 60 lines)
 - `lib/trip-planner.ts` (4.0 KB, 38 lines)
 - `lib/trip.ts` (1.9 KB, 65 lines)
-- `next-env.d.ts` (251 B, 7 lines)
+- `lib/waypoint-map.ts` (5.2 KB, 84 lines)
+- `mobile-update/files/app/build/[id]/page.tsx` (8.8 KB, 225 lines)
+- `mobile-update/files/components/builder/AddCustomItemForm.tsx` (2.5 KB, 79 lines)
+- `mobile-update/files/components/builder/BuildHeader.tsx` (1.4 KB, 47 lines)
+- `mobile-update/files/components/builder/BuildRow.tsx` (9.4 KB, 203 lines)
+- `mobile-update/files/components/builder/CompatibilityBar.tsx` (2.2 KB, 57 lines)
+- `mobile-update/files/components/builder/CostSummary.tsx` (816 B, 33 lines)
+- `mobile-update/files/components/builder/ItemCategoryToggle.tsx` (2.6 KB, 91 lines)
+- `mobile-update/files/components/builder/QuantityStepper.tsx` (2.4 KB, 89 lines)
+- `mobile-update/files/components/builder/ShareBar.tsx` (3.0 KB, 84 lines)
+- `mobile-update/files/components/builder/WeightSummary.tsx` (2.6 KB, 87 lines)
+- `mobile-update/install.mjs` (3.3 KB, 73 lines)
+- `mobile-update/README.md` (1.9 KB, 20 lines)
+- `next-env.d.ts` (247 B, 7 lines)
 - `next.config.ts` (259 B, 15 lines)
 - `package.json` (907 B, 39 lines)
 - `postcss.config.mjs` (94 B, 8 lines)

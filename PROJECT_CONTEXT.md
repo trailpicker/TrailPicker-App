@@ -2,12 +2,12 @@
 
 > Generated automatically. Treat source files as authoritative; summaries are derived metadata.
 
-- Generated: 2026-10-03T05:13:37.684Z
+- Generated: 2026-10-08T04:38:33.383Z
 - Root: `trailpicker`
-- Files scanned: 136
-- Files included with readable text: 136
-- Total included source lines: 16,614
-- Total scanned size: 634.1 KB
+- Files scanned: 158
+- Files included with readable text: 158
+- Total included source lines: 18,093
+- Total scanned size: 718.0 KB
 - Max file size: 293.0 KB
 
 
@@ -98,6 +98,8 @@
 │   │   └── page.tsx
 │   ├── gear/
 │   │   ├── [id]/
+│   │   │   ├── [subcategory]/
+│   │   │   │   └── page.tsx
 │   │   │   └── page.tsx
 │   │   └── page.tsx
 │   ├── profile/
@@ -135,7 +137,9 @@
 │   │   │   ├── TripLogistics.tsx
 │   │   │   ├── TripPlanner.tsx
 │   │   │   ├── TripRoute.tsx
-│   │   │   └── TripSummaryCard.tsx
+│   │   │   ├── TripSummaryCard.tsx
+│   │   │   ├── WaypointIcon.tsx
+│   │   │   └── WaypointSearch.tsx
 │   │   ├── AddCustomItemForm.tsx
 │   │   ├── AddGearButton.tsx
 │   │   ├── BuildDataTools.tsx
@@ -146,8 +150,10 @@
 │   │   ├── CompatibilityBar.tsx
 │   │   ├── CompatibilityDetails.tsx
 │   │   ├── CostSummary.tsx
+│   │   ├── GearPicker.tsx
 │   │   ├── GearTab.tsx
 │   │   ├── ItemCategoryToggle.tsx
+│   │   ├── OriginalGearPicker.tsx
 │   │   ├── PrivateBuildNotice.tsx
 │   │   ├── PublicBuildView.tsx
 │   │   ├── QuantityStepper.tsx
@@ -169,6 +175,7 @@
 │   ├── GearFilters.tsx
 │   ├── GearSort.tsx
 │   ├── Navbar.tsx
+│   ├── NavbarNavigation.tsx
 │   ├── ProfileDropdown.tsx
 │   └── SearchBar.tsx
 ├── data/
@@ -183,12 +190,35 @@
 │   ├── calculations.ts
 │   ├── compatibility.ts
 │   ├── destinations.ts
+│   ├── gear-picker.ts
+│   ├── gear-selection-actions.ts
 │   ├── guest-build-token.ts
+│   ├── legacy-gear-selection.ts
 │   ├── prisma.ts
 │   ├── profile.ts
 │   ├── trip-planner-actions.ts
 │   ├── trip-planner.ts
-│   └── trip.ts
+│   ├── trip.ts
+│   └── waypoint-map.ts
+├── mobile-update/
+│   ├── files/
+│   │   ├── app/
+│   │   │   └── build/
+│   │   │       └── [id]/
+│   │   │           └── page.tsx
+│   │   └── components/
+│   │       └── builder/
+│   │           ├── AddCustomItemForm.tsx
+│   │           ├── BuildHeader.tsx
+│   │           ├── BuildRow.tsx
+│   │           ├── CompatibilityBar.tsx
+│   │           ├── CostSummary.tsx
+│   │           ├── ItemCategoryToggle.tsx
+│   │           ├── QuantityStepper.tsx
+│   │           ├── ShareBar.tsx
+│   │           └── WeightSummary.tsx
+│   ├── install.mjs
+│   └── README.md
 ├── prisma/
 │   ├── migrations/
 │   │   └── migration_lock.toml
@@ -228,10 +258,6 @@
 - `components/build/CreateTripDetails.tsx` → `components/build/DateRangePicker.tsx` (import: `./DateRangePicker`)
 - `components/build/DestinationPicker.tsx` → `components/build/LocationPicker.tsx` (import: `./LocationPicker`)
 - `components/build/LocationPicker.tsx` → `components/build/LocationMap.tsx` (import: `./LocationMap`)
-- `components/builder/BuildRow.tsx` → `components/builder/RemoveGearButton.tsx` (import: `./RemoveGearButton`)
-- `components/builder/BuildRow.tsx` → `components/builder/QuantityStepper.tsx` (import: `./QuantityStepper`)
-- `components/builder/BuildRow.tsx` → `components/builder/AddCustomItemForm.tsx` (import: `./AddCustomItemForm`)
-- `components/builder/BuildRow.tsx` → `components/builder/ItemCategoryToggle.tsx` (import: `./ItemCategoryToggle`)
 - `components/builder/PublicBuildView.tsx` → `components/builder/TripPlanner/TripPlanner.tsx` (import: `./TripPlanner/TripPlanner`)
 - `components/builder/TripPlanner/TripDayList.tsx` → `components/builder/TripPlanner/TripDayRow.tsx` (import: `./TripDayRow`)
 - `components/builder/TripPlanner/TripDayRow.tsx` → `components/builder/TripPlanner/PlannerFields.tsx` (import: `./PlannerFields`)
@@ -242,13 +268,11 @@
 - `components/builder/TripPlanner/TripPlanner.tsx` → `components/builder/TripPlanner/TripDayList.tsx` (import: `./TripDayList`)
 - `components/builder/TripPlanner/TripPlanner.tsx` → `components/builder/TripPlanner/TripRoute.tsx` (import: `./TripRoute`)
 - `components/builder/TripPlanner/TripPlanner.tsx` → `components/builder/TripPlanner/TripLogistics.tsx` (import: `./TripLogistics`)
-- `components/builder/TripPlanner/TripRoute.tsx` → `components/builder/TripPlanner/PlannerFields.tsx` (import: `./PlannerFields`)
-- `components/builder/TripPlanner/TripRoute.tsx` → `components/builder/TripPlanner/RouteMapInner.tsx` (import: `./RouteMapInner`)
 - `components/profile/BuildCard.tsx` → `components/profile/DeleteBuildButton.tsx` (import: `./DeleteBuildButton`)
 
 ## UNRESOLVED RELATIVE IMPORTS
 
-- `next-env.d.ts` → `./.next/dev/types/routes.d.ts`
+- `next-env.d.ts` → `./.next/types/routes.d.ts`
 - `prisma/seed.ts` → `../app/generated/prisma/client`
 
 ## TODO / FIXME / HACK
@@ -298,14 +322,15 @@
 | `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/tests/builder-ownership.test.cjs` | 11.6 KB | 171 | Included |
 | `.trailpicker-backups/import-export-history-2026-10-03T05-05-59-627Z/tests/trip-planner.test.cjs` | 4.7 KB | 18 | Included |
 | `app/api/auth/[...nextauth]/route.ts` | 74 B | 2 | Included |
-| `app/build/[id]/page.tsx` | 8.8 KB | 223 | Included |
-| `app/build/[id]/select/[category]/[subcategory]/page.tsx` | 11.3 KB | 309 | Included |
-| `app/build/[id]/select/[category]/page.tsx` | 2.2 KB | 88 | Included |
+| `app/build/[id]/page.tsx` | 8.8 KB | 225 | Included |
+| `app/build/[id]/select/[category]/[subcategory]/page.tsx` | 510 B | 11 | Included |
+| `app/build/[id]/select/[category]/page.tsx` | 467 B | 11 | Included |
 | `app/build/actions.ts` | 17.2 KB | 475 | Included |
 | `app/build/page.tsx` | 4.3 KB | 117 | Included |
-| `app/gear/[id]/page.tsx` | 2.2 KB | 132 | Included |
-| `app/gear/page.tsx` | 3.0 KB | 189 | Included |
-| `app/globals.css` | 1.2 KB | 70 | Included |
+| `app/gear/[id]/[subcategory]/page.tsx` | 469 B | 10 | Included |
+| `app/gear/[id]/page.tsx` | 2.4 KB | 138 | Included |
+| `app/gear/page.tsx` | 409 B | 10 | Included |
+| `app/globals.css` | 1.8 KB | 89 | Included |
 | `app/layout.tsx` | 910 B | 42 | Included |
 | `app/page.tsx` | 2.1 KB | 120 | Included |
 | `app/profile/actions.ts` | 3.8 KB | 96 | Included |
@@ -322,35 +347,39 @@
 | `components/build/DestinationPicker.tsx` | 11.9 KB | 410 | Included |
 | `components/build/LocationMap.tsx` | 2.3 KB | 113 | Included |
 | `components/build/LocationPicker.tsx` | 8.5 KB | 240 | Included |
-| `components/builder/AddCustomItemForm.tsx` | 2.4 KB | 77 | Included |
+| `components/builder/AddCustomItemForm.tsx` | 2.5 KB | 79 | Included |
 | `components/builder/AddGearButton.tsx` | 914 B | 49 | Included |
 | `components/builder/BuildDataTools.tsx` | 27.4 KB | 628 | Included |
-| `components/builder/BuildHeader.tsx` | 1.4 KB | 45 | Included |
-| `components/builder/BuildRow.tsx` | 8.6 KB | 204 | Included |
+| `components/builder/BuildHeader.tsx` | 1.4 KB | 47 | Included |
+| `components/builder/BuildRow.tsx` | 9.4 KB | 203 | Included |
 | `components/builder/BuildSettings.tsx` | 5.9 KB | 118 | Included |
 | `components/builder/BuildVisibilityToggle.tsx` | 2.7 KB | 60 | Included |
-| `components/builder/CompatibilityBar.tsx` | 2.2 KB | 55 | Included |
+| `components/builder/CompatibilityBar.tsx` | 2.2 KB | 57 | Included |
 | `components/builder/CompatibilityDetails.tsx` | 1.9 KB | 52 | Included |
-| `components/builder/CostSummary.tsx` | 651 B | 30 | Included |
+| `components/builder/CostSummary.tsx` | 816 B | 33 | Included |
+| `components/builder/GearPicker.tsx` | 11.6 KB | 124 | Included |
 | `components/builder/GearTab.tsx` | 4.3 KB | 156 | Included |
-| `components/builder/ItemCategoryToggle.tsx` | 2.5 KB | 87 | Included |
+| `components/builder/ItemCategoryToggle.tsx` | 2.6 KB | 91 | Included |
+| `components/builder/OriginalGearPicker.tsx` | 12.5 KB | 253 | Included |
 | `components/builder/PrivateBuildNotice.tsx` | 1008 B | 17 | Included |
 | `components/builder/PublicBuildView.tsx` | 4.0 KB | 62 | Included |
-| `components/builder/QuantityStepper.tsx` | 2.4 KB | 87 | Included |
+| `components/builder/QuantityStepper.tsx` | 2.4 KB | 89 | Included |
 | `components/builder/RemoveGearButton.tsx` | 677 B | 35 | Included |
-| `components/builder/ShareBar.tsx` | 2.9 KB | 82 | Included |
+| `components/builder/ShareBar.tsx` | 3.0 KB | 84 | Included |
 | `components/builder/TripPlanner/MapPreviewInner.tsx` | 1.0 KB | 33 | Included |
 | `components/builder/TripPlanner/PlannerFields.tsx` | 2.1 KB | 85 | Included |
-| `components/builder/TripPlanner/RouteMapInner.tsx` | 1.6 KB | 15 | Included |
+| `components/builder/TripPlanner/RouteMapInner.tsx` | 5.4 KB | 100 | Included |
 | `components/builder/TripPlanner/TripDayList.tsx` | 3.3 KB | 98 | Included |
 | `components/builder/TripPlanner/TripDayRow.tsx` | 15.9 KB | 511 | Included |
 | `components/builder/TripPlanner/TripEditForm.tsx` | 4.8 KB | 145 | Included |
 | `components/builder/TripPlanner/TripLocationPreview.tsx` | 342 B | 9 | Included |
 | `components/builder/TripPlanner/TripLogistics.tsx` | 2.0 KB | 13 | Included |
 | `components/builder/TripPlanner/TripPlanner.tsx` | 3.3 KB | 27 | Included |
-| `components/builder/TripPlanner/TripRoute.tsx` | 6.3 KB | 32 | Included |
+| `components/builder/TripPlanner/TripRoute.tsx` | 14.8 KB | 140 | Included |
 | `components/builder/TripPlanner/TripSummaryCard.tsx` | 7.5 KB | 246 | Included |
-| `components/builder/WeightSummary.tsx` | 2.7 KB | 85 | Included |
+| `components/builder/TripPlanner/WaypointIcon.tsx` | 463 B | 8 | Included |
+| `components/builder/TripPlanner/WaypointSearch.tsx` | 5.0 KB | 80 | Included |
+| `components/builder/WeightSummary.tsx` | 2.6 KB | 87 | Included |
 | `components/filters/BrandFilter.tsx` | 2.6 KB | 99 | Included |
 | `components/filters/FilterSection.tsx` | 1.2 KB | 51 | Included |
 | `components/filters/RangeFilter.tsx` | 2.1 KB | 109 | Included |
@@ -359,11 +388,12 @@
 | `components/GearCard.tsx` | 1.1 KB | 61 | Included |
 | `components/GearFilters.tsx` | 2.6 KB | 149 | Included |
 | `components/GearSort.tsx` | 1.1 KB | 71 | Included |
-| `components/Navbar.tsx` | 2.5 KB | 54 | Included |
+| `components/Navbar.tsx` | 1.3 KB | 35 | Included |
+| `components/NavbarNavigation.tsx` | 7.2 KB | 102 | Included |
 | `components/profile/BuildCard.tsx` | 3.4 KB | 33 | Included |
 | `components/profile/DeleteBuildButton.tsx` | 461 B | 19 | Included |
 | `components/profile/GearLibraryCard.tsx` | 4.2 KB | 88 | Included |
-| `components/ProfileDropdown.tsx` | 6.7 KB | 223 | Included |
+| `components/ProfileDropdown.tsx` | 6.7 KB | 226 | Included |
 | `components/SearchBar.tsx` | 884 B | 52 | Included |
 | `data/destinations.json` | 9.0 KB | 275 | Included |
 | `docs.config.json` | 589 B | 20 | Included |
@@ -377,13 +407,29 @@
 | `lib/calculations.ts` | 1.2 KB | 54 | Included |
 | `lib/compatibility.ts` | 12.9 KB | 374 | Included |
 | `lib/destinations.ts` | 1.3 KB | 57 | Included |
+| `lib/gear-picker.ts` | 1.2 KB | 31 | Included |
+| `lib/gear-selection-actions.ts` | 572 B | 16 | Included |
 | `lib/guest-build-token.ts` | 1.6 KB | 37 | Included |
+| `lib/legacy-gear-selection.ts` | 768 B | 15 | Included |
 | `lib/prisma.ts` | 471 B | 20 | Included |
 | `lib/profile.ts` | 1.5 KB | 43 | Included |
 | `lib/trip-planner-actions.ts` | 5.2 KB | 60 | Included |
 | `lib/trip-planner.ts` | 4.0 KB | 38 | Included |
 | `lib/trip.ts` | 1.9 KB | 65 | Included |
-| `next-env.d.ts` | 251 B | 7 | Included |
+| `lib/waypoint-map.ts` | 5.2 KB | 84 | Included |
+| `mobile-update/files/app/build/[id]/page.tsx` | 8.8 KB | 225 | Included |
+| `mobile-update/files/components/builder/AddCustomItemForm.tsx` | 2.5 KB | 79 | Included |
+| `mobile-update/files/components/builder/BuildHeader.tsx` | 1.4 KB | 47 | Included |
+| `mobile-update/files/components/builder/BuildRow.tsx` | 9.4 KB | 203 | Included |
+| `mobile-update/files/components/builder/CompatibilityBar.tsx` | 2.2 KB | 57 | Included |
+| `mobile-update/files/components/builder/CostSummary.tsx` | 816 B | 33 | Included |
+| `mobile-update/files/components/builder/ItemCategoryToggle.tsx` | 2.6 KB | 91 | Included |
+| `mobile-update/files/components/builder/QuantityStepper.tsx` | 2.4 KB | 89 | Included |
+| `mobile-update/files/components/builder/ShareBar.tsx` | 3.0 KB | 84 | Included |
+| `mobile-update/files/components/builder/WeightSummary.tsx` | 2.6 KB | 87 | Included |
+| `mobile-update/install.mjs` | 3.3 KB | 73 | Included |
+| `mobile-update/README.md` | 1.9 KB | 20 | Included |
+| `next-env.d.ts` | 247 B | 7 | Included |
 | `next.config.ts` | 259 B | 15 | Included |
 | `package.json` | 907 B | 39 | Included |
 | `postcss.config.mjs` | 94 B | 8 | Included |
@@ -6481,7 +6527,7 @@ export default async function BuildPage({
   return (
     <div className="min-h-screen bg-gray-50">
       {canClaim && (
-        <form action={claimCurrentBuild} className="mx-5 mt-4 flex items-center justify-between gap-3 rounded-md border border-green-200 bg-green-50 p-3 text-sm">
+        <form action={claimCurrentBuild} className="mx-5 mt-4 flex items-center justify-between gap-3 max-md:flex-wrap rounded-md border border-green-200 bg-green-50 p-3 text-sm">
           <input type="hidden" name="buildId" value={build.id} />
           <span>This guest build is saved in this browser for 30 days.</span>
           <button type="submit" className="rounded-md bg-green-800 px-3 py-2 font-medium text-white">Save to my account</button>
@@ -6542,7 +6588,7 @@ export default async function BuildPage({
 
           <>
             <div className="mt-10 overflow-hidden rounded-xl bg-white">
-              <div className="grid grid-cols-[180px_minmax(0,1fr)_100px_100px_100px] p-3 text-xs bg-gray-50 font-light text-gray-600">
+              <div className="grid max-md:hidden grid-cols-[180px_minmax(0,1fr)_100px_100px_100px] p-3 text-xs bg-gray-50 font-light text-gray-600">
                 <div>Component</div>
                 <div>Selection</div>
                 <div className="text-center pr-5">Weight</div>
@@ -6593,413 +6639,40 @@ export default async function BuildPage({
   );
 }
 
+
+
 ```
 
 ### `app/build/[id]/select/[category]/[subcategory]/page.tsx`
 
 ```typescript
-import { requireBuildPageAccess } from "@/lib/build-access";
-import { prisma } from "@/lib/prisma";
-import { notFound } from "next/navigation";
-import AddGearButton from "@/components/builder/AddGearButton";
-import BrandFilter from "@/components/filters/BrandFilter";
-import FilterSection from "@/components/filters/FilterSection";
-import RangeFilter from "@/components/filters/RangeFilter";
-import SortHeader from "@/components/filters/SortHeader";
-import Image from "next/image";
+import { redirectGearSelection } from "@/lib/legacy-gear-selection";
+import type { GearBrowseSearch } from "@/components/builder/OriginalGearPicker";
 
-export default async function SelectGearPage({
-    params,
-    searchParams,
-}: {
-    params: Promise<{
-        id: string;
-        category: string;
-        subcategory: string;
-    }>
-    searchParams: Promise<{
-        brand?: string;
-        maxWeight?: string;
-        maxPrice?: string;
-        sort?: string;
-        direction?: string;
-    }>;
+export default async function SelectGearPage({ params, searchParams }: {
+  params: Promise<{ id: string; category: string; subcategory: string }>;
+  searchParams: Promise<GearBrowseSearch>;
 }) {
-    const filters = await searchParams;
-    const sort = filters.sort ?? "";
-    const direction =
-        filters.direction === "desc"
-            ? "desc"
-            : "asc";
-    const brands = Array.isArray(filters.brand)
-        ? filters.brand.flatMap((item) => item.split(","))
-        : filters.brand
-            ? filters.brand.split(",")
-            : [];
-    const maxWeight = filters.maxWeight
-        ? Number(filters.maxWeight)
-        : undefined;
-
-    const maxPrice = filters.maxPrice
-        ? Number(filters.maxPrice)
-        : undefined;
-    const {
-        id,
-        category,
-        subcategory: subcategorySlug,
-    } = await params;
-    const access = await requireBuildPageAccess(id);
-
-
-    const categoryData = await prisma.category.findUnique({
-        where: {
-            slug: category,
-        },
-    });
-
-
-    if (!categoryData) {
-        notFound();
-    }
-
-
-    const subcategoryData = await prisma.subcategory.findUnique({
-        where: {
-            categoryId_slug: {
-                categoryId: categoryData.id,
-                slug: subcategorySlug,
-            },
-        },
-    });
-
-
-    if (!subcategoryData) {
-        notFound();
-    }
-
-    const build = await prisma.build.findUnique({
-        where: {
-            id,
-            userId: access.userId,
-        },
-    });
-
-
-    if (!build) {
-        notFound();
-    }
-    const availableBrands = await prisma.brand.findMany({
-        where: {
-            gear: {
-                some: {
-                    subcategory: {
-                        slug: subcategorySlug,
-                    }
-                },
-            },
-        },
-        orderBy: {
-            name: "asc",
-        },
-    });
-
-
-    const gear = await prisma.gear.findMany({
-        where: {
-            subcategory: {
-                slug: subcategorySlug,
-            },
-
-            ...(brands.length > 0 && {
-                brand: {
-                    name: {
-                        in: brands,
-                    },
-                },
-            }),
-            ...(maxWeight !== undefined && {
-                weight_g: {
-                    lte: maxWeight,
-                },
-            }),
-            ...(maxPrice !== undefined && {
-                price_cad: {
-                    lte: maxPrice,
-                },
-            }),
-        },
-        orderBy:
-            sort === "weight"
-                ? {
-                    weight_g: direction,
-                }
-                : sort === "price"
-                    ? {
-                        price_cad: direction,
-                    }
-                    : undefined,
-        include: {
-            brand: true,
-            reviews: true,
-            images: true
-        },
-    });
-
-    return (
-        <div className="min-h-screen bg-gray-50">
-            <main className="max-w-[110rem] mx-auto px-8 py-8">
-
-                <h1 className="text-3xl font-bold mb-8">
-                    Choose {subcategoryData.name}
-                </h1>
-
-                <div className="grid grid-cols-[250px_1fr] gap-8">
-
-                    {/* Filters */}
-                    <aside className="border-r pr-6">
-
-                        <h2 className="font-bold text-xl mb-4">
-                            Filters
-                        </h2>
-
-
-                        <div className="space-y">
-                            <FilterSection title="BRAND">
-                                <BrandFilter
-                                    brands={availableBrands}
-                                />
-                            </FilterSection>
-
-
-                            <FilterSection title="WEIGHT">
-                                <RangeFilter
-                                    min={0}
-                                    max={3000}
-                                    unit="g"
-                                    param="maxWeight"
-                                />
-                            </FilterSection>
-
-                            <FilterSection title="PRICE">
-                                <RangeFilter
-                                    min={0}
-                                    max={1000}
-                                    unit="CAD"
-                                    param="maxPrice"
-                                />
-                            </FilterSection>
-                        </div>
-                    </aside>
-
-                    {/* Gear */}
-                    <div className="overflow-hidden rounded-lg">
-                        <p className="mb-8 text-lg font-bold text-black">
-                            {gear.length} Compatible Products
-                        </p>
-                        <div className="grid grid-cols-[2.3fr_90px_90px_100px_90px_90px_90px_90px] px-5 py-3 text-xs font-semibold tracking-wide text-gray-500 border-b border-gray-400">
-                            <div>Product</div>
-                            <SortHeader
-                                label="Weight"
-                                value="weight"
-                            />
-                            <div className="text-center">Capacity</div>
-                            <div className="text-center">Frame</div>
-                            <div className="text-center">Waterproof</div>
-                            <div className="text-center">Rating</div>
-                            <SortHeader
-                                label="Price"
-                                value="price"
-                            />
-                            <div></div>
-                        </div>
-
-                        <div className="divide-y divide-gray-200">
-                            {gear.map((item) => {
-                                const averageRating =
-                                    item.reviews.length > 0
-                                        ? (
-                                            item.reviews.reduce(
-                                                (sum, review) => sum + review.rating,
-                                                0
-                                            ) / item.reviews.length
-                                        ).toFixed(1)
-                                        : null;
-
-                                return (
-                                    <div
-                                        key={item.id}
-                                        className="grid grid-cols-[2.3fr_90px_90px_100px_90px_90px_90px_90px] items-center px-5 py-2 hover:bg-gray-50"
-                                    >
-                                        <div className="flex items-center gap-3">
-
-                                            <div className="
-                                                    relative
-                                                    w-12
-                                                    aspect-square
-                                                    rounded-lg
-                                                    overflow-hidden
-                                                    bg-white
-                                                    border
-                                                    border-gray-200
-                                                    shrink-0
-                                                ">
-                                                {item.images[0] && (
-                                                    <Image
-                                                        src={item.images[0].url}
-                                                        alt={item.name}
-                                                        fill
-                                                        className="object-contain"
-                                                    />
-                                                )}
-                                            </div>
-
-
-                                            <div>
-                                                <h2 className="font-semibold hover:text-blue-600">
-                                                    {item.name}
-                                                </h2>
-
-                                                <p className="text-[13px] text-gray-500">
-                                                    {item.brand.name}
-                                                </p>
-                                            </div>
-
-                                        </div>
-
-                                        <div className="text-center">
-                                            {item.weight_g ?? "—"}g
-                                        </div>
-
-                                        <div className="text-center">
-                                            {item.capacity_l ?? "—"}L
-                                        </div>
-
-                                        <div className="text-center">
-                                            {item.frame_type ?? "—"}
-                                        </div>
-
-                                        <div className="text-center">
-                                            {item.waterproof === null || item.waterproof === undefined
-                                                ? "—"
-                                                : item.waterproof
-                                                    ? "Yes"
-                                                    : "No"}
-                                        </div>
-                                        <div className="text-center">
-                                            {averageRating
-                                                ? `★ ${averageRating}`
-                                                : "—"}
-                                        </div>
-                                        <div className="text-center">
-                                            ${item.price_cad ?? "—"}
-                                        </div>
-
-                                        <div className="flex justify-end">
-                                            <AddGearButton buildId={id} gearId={item.id} />
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    );
+  const [{ id, category, subcategory }, filters] = await Promise.all([params, searchParams]);
+  return redirectGearSelection(id, category, filters, subcategory);
 }
+
 ```
 
 ### `app/build/[id]/select/[category]/page.tsx`
 
 ```typescript
-import { requireBuildPageAccess } from "@/lib/build-access";
-import { prisma } from "@/lib/prisma";
-import Link from "next/link";
-import { notFound } from "next/navigation";
+import { redirectGearSelection } from "@/lib/legacy-gear-selection";
+import type { GearBrowseSearch } from "@/components/builder/OriginalGearPicker";
 
-export default async function SelectCategoryPage({
-    params,
-}: {
-    params: Promise<{
-        id: string;
-        category: string;
-    }>;
+export default async function SelectCategoryPage({ params, searchParams }: {
+  params: Promise<{ id: string; category: string }>;
+  searchParams: Promise<GearBrowseSearch>;
 }) {
-
-    const { id, category } = await params;
-    await requireBuildPageAccess(id);
-
-
-    const categoryData = await prisma.category.findUnique({
-        where: {
-            slug: category.toLowerCase(),
-        },
-        include: {
-            subcategories: true,
-        },
-    });
-
-
-    if (!categoryData) {
-        notFound();
-    }
-
-
-    return (
-        <div className="min-h-screen bg-gray-50">
-            <main className="max-w-5xl mx-auto px-8 py-8">
-
-                <h1 className="text-3xl font-bold mb-6">
-                    Choose {categoryData.name}
-                </h1>
-
-
-                <div className="overflow-hidden rounded-lg border">
-
-                    <div className="bg-gray-50 px-5 py-3 text-xs font-semibold uppercase tracking-wide text-gray-500">
-                        Subcategory
-                    </div>
-
-
-                    <div className="divide-y divide-gray-100">
-
-                        {categoryData.subcategories.map((subcategory) => (
-
-                            <Link
-                                key={subcategory.id}
-                                href={`/build/${id}/select/${categoryData.slug}/${subcategory.slug}`}
-                                className="
-        flex
-        items-center
-        justify-between
-        px-5
-        py-3
-        hover:bg-gray-50
-        transition
-        "
-                            >
-
-                                <span className="font-semibold">
-                                    {subcategory.name}
-                                </span>
-
-
-                                <span className="text-sm text-gray-400">
-                                    Select →
-                                </span>
-
-                            </Link>
-
-                        ))}
-
-                    </div>
-
-                </div>
-
-            </main>
-        </div>
-    );
+  const [{ id, category }, filters] = await Promise.all([params, searchParams]);
+  return redirectGearSelection(id, category, filters);
 }
+
 ```
 
 ### `app/build/actions.ts`
@@ -7604,20 +7277,40 @@ export default function BuildPage() {
 }
 ```
 
+### `app/gear/[id]/[subcategory]/page.tsx`
+
+```typescript
+import OriginalGearPicker, { type GearBrowseSearch } from "@/components/builder/OriginalGearPicker";
+
+export default async function GearSubcategoryPage({ params, searchParams }: {
+  params: Promise<{ id: string; subcategory: string }>;
+  searchParams: Promise<GearBrowseSearch>;
+}) {
+  const [{ id, subcategory }, filters] = await Promise.all([params, searchParams]);
+  return <OriginalGearPicker categorySlug={id} subcategorySlug={subcategory} filters={filters} />;
+}
+
+```
+
 ### `app/gear/[id]/page.tsx`
 
 ```typescript
+import OriginalGearPicker, { type GearBrowseSearch } from "@/components/builder/OriginalGearPicker";
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
   
 
 export default async function GearDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<GearBrowseSearch>;
 }) {
 
   const { id } = await params;
+  const category = await prisma.category.findUnique({ where: { slug: id.toLowerCase() }, select: { id: true } });
+  if (category) return <OriginalGearPicker categorySlug={id} filters={await searchParams} />;
 
 
   const gear = await prisma.gear.findUnique({
@@ -7739,200 +7432,22 @@ export default async function GearDetailPage({
     </main>
   );
 }
+
 ```
 
 ### `app/gear/page.tsx`
 
 ```typescript
 import { prisma } from "@/lib/prisma";
-import SearchBar from "@/components/SearchBar";
-import GearFilters from "@/components/GearFilters";
-import GearSort from "@/components/GearSort";
-import GearCard from "@/components/GearCard";
+import { notFound, redirect } from "next/navigation";
 
-
-export default async function GearPage({
-  searchParams,
-}: {
-  searchParams: Promise<{
-    q?: string;
-    category?: string;
-    maxWeight?: string;
-    maxPrice?: string;
-    season?: string;
-    sort?: string;
-  }>;
-}) {
-
-  const params = await searchParams;
-
-  const query = params.q;
-
-
-  let orderBy:
-    | {
-        weight_g?: "asc" | "desc";
-        price_cad?: "asc" | "desc";
-        createdAt?: "asc" | "desc";
-      }
-    | undefined = undefined;
-
-
-  if (params.sort === "weight") {
-    orderBy = {
-      weight_g: "asc",
-    };
-  }
-
-
-  if (params.sort === "price") {
-    orderBy = {
-      price_cad: "asc",
-    };
-  }
-
-
-  if (params.sort === "newest") {
-    orderBy = {
-      createdAt: "desc",
-    };
-  }
-
-
-
-  const gear = await prisma.gear.findMany({
-
-    where: {
-      AND: [
-
-        query
-          ? {
-              OR: [
-                {
-                  name: {
-                    contains: query,
-                    mode: "insensitive",
-                  },
-                },
-                {
-                  brand: {
-                    name: {
-                      contains: query,
-                      mode: "insensitive",
-                    },
-                  },
-                },
-                {
-                  category: {
-                    name: {
-                      contains: query,
-                      mode: "insensitive",
-                    },
-                  },
-                },
-              ],
-            }
-          : {},
-
-
-
-        params.category
-          ? {
-              category: {
-                name: params.category,
-              },
-            }
-          : {},
-
-
-
-        params.maxWeight
-          ? {
-              weight_g: {
-                lte: Number(params.maxWeight),
-              },
-            }
-          : {},
-
-
-
-        params.maxPrice
-          ? {
-              price_cad: {
-                lte: Number(params.maxPrice),
-              },
-            }
-          : {},
-
-
-
-        params.season
-          ? {
-              season: params.season,
-            }
-          : {},
-
-      ],
-    },
-
-
-    orderBy,
-
-
-    include: {
-      brand: true,
-      category: true,
-    },
-
-  });
-
-
-
-  return (
-    <main className="p-8">
-
-
-      <h1 className="text-4xl font-bold mb-8">
-        TrailPicker Gear
-      </h1>
-
-
-
-      <SearchBar />
-
-      <GearFilters />
-
-      <GearSort />
-
-
-
-      <div className="grid gap-6 md:grid-cols-3">
-
-        {gear.map((item) => (
-
-          <GearCard
-            key={item.id}
-            gear={item}
-          />
-
-        ))}
-
-      </div>
-
-
-
-      {gear.length === 0 && (
-
-        <p className="mt-8">
-          No gear found.
-        </p>
-
-      )}
-
-
-    </main>
-  );
+// The obsolete all-gear listing is retired. Keep old bookmarks useful.
+export default async function GearPage() {
+  const category = await prisma.category.findFirst({ orderBy: { createdAt: "asc" }, select: { slug: true } });
+  if (!category) notFound();
+  redirect(`/gear/${encodeURIComponent(category.slug)}`);
 }
+
 ```
 
 ### `app/globals.css`
@@ -8008,6 +7523,25 @@ body {
   border: 2px solid #2563eb;
   cursor: pointer;
 }
+
+/* Make native and accessible button controls feel clickable site-wide. */
+@layer base {
+  button:not(:disabled):not([aria-disabled="true"]),
+  input:is([type="button"], [type="submit"], [type="reset"]):not(:disabled):not([aria-disabled="true"]),
+  [role="button"]:not([aria-disabled="true"]):not(:disabled),
+  summary {
+    cursor: pointer;
+  }
+}
+
+/* Disabled controls stay disabled even when they have cursor-pointer utilities. */
+button:is(:disabled, [aria-disabled="true"]),
+input:is([type="button"], [type="submit"], [type="reset"]):is(:disabled, [aria-disabled="true"]),
+[role="button"]:is(:disabled, [aria-disabled="true"]) {
+  cursor: not-allowed;
+}
+
+
 ```
 
 ### `app/layout.tsx`
@@ -9899,7 +9433,7 @@ export default function AddCustomItemForm({
     return (
         <form
             action={addCustomItem}
-            className="mt-2 flex flex-wrap items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 p-3"
+            className="mt-2 max-md:w-full max-md:min-w-0 max-md:flex-none flex flex-wrap items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 p-3"
         >
             <input type="hidden" name="buildId" value={buildId} />
             <input type="hidden" name="category" value={category} />
@@ -9908,14 +9442,14 @@ export default function AddCustomItemForm({
                 name="name"
                 placeholder="Item name"
                 required
-                className="flex-1 min-w-[140px] rounded-md border border-gray-300 px-2 py-1 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                className="flex-1 min-w-[140px] max-md:basis-full max-md:min-w-0 rounded-md border border-gray-300 px-2 py-1 max-md:min-h-9 text-sm outline-none focus:ring-2 focus:ring-blue-500"
             />
 
             <input
                 name="weight_g"
                 type="number"
                 placeholder="Weight (g)"
-                className="w-24 rounded-md border border-gray-300 px-2 py-1 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-24 max-md:min-w-0 max-md:flex-1 rounded-md border border-gray-300 px-2 py-1 max-md:min-h-9 text-sm outline-none focus:ring-2 focus:ring-blue-500"
             />
 
             <input
@@ -9923,7 +9457,7 @@ export default function AddCustomItemForm({
                 type="number"
                 step="0.01"
                 placeholder="Price ($)"
-                className="w-24 rounded-md border border-gray-300 px-2 py-1 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-24 rounded-md border border-gray-300 px-2 py-1 max-md:min-h-9 text-sm outline-none focus:ring-2 focus:ring-blue-500"
             />
 
             <div className="flex gap-2">
@@ -9945,6 +9479,8 @@ export default function AddCustomItemForm({
         </form>
     );
 }
+
+
 ```
 
 ### `components/builder/AddGearButton.tsx`
@@ -10655,7 +10191,7 @@ export default function BuildHeader({ buildId, name, active, issueCount }: Props
   return (
     <div className="w-full bg-green-700 shadow-sm">
       <div className="max-w-screen-2xl mx-auto px-6 pt-6 pb-0">
-        <h1 className="text-3xl font-bold text-white text-center mb-5">{name}</h1>
+        <h1 className="text-3xl font-bold text-white text-center mb-5 max-md:break-words max-md:[overflow-wrap:anywhere]">{name}</h1>
 
         <div className="flex justify-center gap-2">
           {tabs.map((t) => (
@@ -10682,16 +10218,19 @@ export default function BuildHeader({ buildId, name, active, issueCount }: Props
     </div>
   );
 }
+
+
 ```
 
 ### `components/builder/BuildRow.tsx`
 
 ```typescript
+import { openGearSelection } from "@/lib/gear-selection-actions";
 import Link from "next/link";
-import RemoveGearButton from "./RemoveGearButton";
-import QuantityStepper from "./QuantityStepper";
-import AddCustomItemForm from "./AddCustomItemForm";
-import ItemFlagToggle from "./ItemCategoryToggle";
+import RemoveGearButton from "@/components/builder/RemoveGearButton";
+import QuantityStepper from "@/components/builder/QuantityStepper";
+import AddCustomItemForm from "@/components/builder/AddCustomItemForm";
+import ItemFlagToggle from "@/components/builder/ItemCategoryToggle";
 import Image from "next/image";
 
 type Props = {
@@ -10737,6 +10276,7 @@ export default function BuildRow({
             className="
             grid
             grid-cols-[180px_minmax(0,1fr)_100px_100px_100px]
+            max-md:grid-cols-1 max-md:gap-3
             items-start
             border-t
             border-gray-400
@@ -10755,12 +10295,10 @@ export default function BuildRow({
                 {name}
             </Link>
 
-            <div className="col-span-4">
+            <div className="col-span-4 max-md:col-span-1 max-md:min-w-0">
                 {items.length === 0 ? (
-                    <div className="flex items-center gap-4">
-                        <Link
-                            href={`/build/${buildId}/select/${selectCategory.toLowerCase()}`}
-                            className="
+                    <div className="flex items-center gap-4 max-md:flex-wrap max-md:items-start max-md:gap-3">
+                        <form action={openGearSelection.bind(null, buildId, selectCategory)}><button type="submit" className="
                 inline-block
                 rounded-lg
                 bg-blue-500
@@ -10771,9 +10309,7 @@ export default function BuildRow({
                 hover:bg-blue-700
                 transition
             "
-                        >
-                            Add Gear
-                        </Link>
+                        >Add Gear</button></form>
 
                         <AddCustomItemForm
                             buildId={buildId}
@@ -10794,9 +10330,9 @@ export default function BuildRow({
                                 return (
                                     <div
                                         key={item.id}
-                                        className="grid grid-cols-[minmax(0,1fr)_100px_100px_100px] items-center py-4 first:pt-0 last:pb-0"
+                                        className="grid grid-cols-[minmax(0,1fr)_100px_100px_100px] max-md:grid-cols-2 max-md:gap-x-3 max-md:gap-y-3 items-center py-4 first:pt-0 last:pb-0"
                                     >
-                                        <div className="flex items-center gap-3 min-w-0">
+                                        <div className="flex items-center gap-3 min-w-0 max-md:col-span-2 max-md:items-start">
 
                                             {item.gear?.images[0] && (
                                                 <div className="
@@ -10819,16 +10355,16 @@ export default function BuildRow({
                                                 </div>
                                             )}
 
-                                            <div className="flex flex-wrap items-center gap-2 min-w-0">
+                                            <div className="flex flex-wrap items-center gap-2 min-w-0 max-md:flex-1 max-md:gap-y-2">
                                                 {item.gear ? (
                                                     <Link
                                                         href={`/gear/${item.gear.id}`}
-                                                        className="block font-bold truncate hover:underline hover:text-blue-600"
+                                                        className="block font-bold truncate hover:underline hover:text-blue-600 max-md:w-full max-md:whitespace-normal max-md:break-words max-md:[overflow-wrap:anywhere]"
                                                     >
                                                         {itemName}
                                                     </Link>
                                                 ) : (
-                                                    <span className="block font-bold italic text-gray-700 truncate">
+                                                    <span className="block font-bold italic text-gray-700 truncate max-md:w-full max-md:whitespace-normal max-md:break-words max-md:[overflow-wrap:anywhere]">
                                                         {itemName}
                                                     </span>
                                                 )}
@@ -10849,21 +10385,23 @@ export default function BuildRow({
                                             </div>
                                         </div>
 
-                                        <div className="text-center pr-5">
+                                        <div className="text-center pr-5 max-md:pr-0 max-md:text-left max-md:break-words">
+                                            <span className="hidden max-md:block max-md:text-xs max-md:text-gray-500">Weight</span>
                                             {weight != null ? `${weight * item.quantity}g` : "—"}
                                         </div>
 
-                                        <div className="text-center pr-5">
+                                        <div className="text-center pr-5 max-md:pr-0 max-md:text-left max-md:break-words">
+                                            <span className="hidden max-md:block max-md:text-xs max-md:text-gray-500">Price</span>
                                             {price != null
                                                 ? `$${(price * item.quantity).toFixed(2)}`
                                                 : "—"}
                                         </div>
 
-                                        <div className="flex items-center justify-end gap-1">
+                                        <div className="flex items-center justify-end gap-1 max-md:col-span-2 max-md:gap-2 max-md:[&_button]:min-h-9 max-md:[&_button]:min-w-9">
                                             {item.gear && (
                                                 <Link
                                                     href="#"
-                                                    className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700 transition"
+                                                    className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700 transition max-md:min-h-9 max-md:inline-flex max-md:items-center"
                                                 >
                                                     Buy
                                                 </Link>
@@ -10875,13 +10413,9 @@ export default function BuildRow({
                             })}
                         </div>
 
-                        <div className="mt-2 flex items-center gap-4">
-                            <Link
-                                href={`/build/${buildId}/select/${selectCategory.toLowerCase()}`}
-                                className="inline-block text-sm text-blue-600 hover:underline"
-                            >
-                                + Add Additional
-                            </Link>
+                        <div className="mt-2 flex items-center gap-4 max-md:flex-wrap max-md:items-start max-md:gap-3">
+                            <form action={openGearSelection.bind(null, buildId, selectCategory)}><button type="submit" className="inline-block text-sm text-blue-600 hover:underline"
+                            >+ Add Additional</button></form>
 
                             <AddCustomItemForm buildId={buildId} category={categoryName} />
                         </div>
@@ -10891,6 +10425,9 @@ export default function BuildRow({
         </div>
     );
 }
+
+
+
 ```
 
 ### `components/builder/BuildSettings.tsx`
@@ -11113,8 +10650,8 @@ export default function CompatibilityBar({ build, items, days = [], totalWeight 
     const style = statusStyles[summary.status];
 
     return (
-    <div className={`flex items-center justify-between px-5 py-3 text-sm ${style.bar}`}>
-            <div className="flex items-center gap-2">
+    <div className={`flex items-center justify-between max-md:flex-wrap max-md:gap-3 px-5 py-3 text-sm ${style.bar}`}>
+            <div className="flex items-center gap-2 max-md:flex-wrap max-md:min-w-0">
                 <span className={`h-2 w-2 rounded-full ${style.dot}`} />
                 <span className="font-semibold">{style.label}</span>
 
@@ -11139,6 +10676,8 @@ export default function CompatibilityBar({ build, items, days = [], totalWeight 
         </div>
     );
 }
+
+
 ```
 
 ### `components/builder/CompatibilityDetails.tsx`
@@ -11211,6 +10750,7 @@ export default function CostSummary({ totalCost }: Props) {
             className="
     grid
     grid-cols-[180px_minmax(0,1fr)_100px_100px_100px]
+    max-md:grid-cols-[auto_minmax(0,1fr)] max-md:gap-3
     items-center
     border-t
     border-gray-400
@@ -11219,18 +10759,149 @@ export default function CostSummary({ totalCost }: Props) {
     bg-gray-50
     "
         >
-            <div className="col-span-3 text-right pr-5 text-lg font-medium text-gray-900">
+            <div className="col-span-3 text-right pr-5 max-md:col-span-1 max-md:text-left max-md:pr-0 text-lg font-medium text-gray-900">
                 Total Cost:
             </div>
 
-            <div className="text-center pr-5 text-2xl font-bold">
+            <div className="text-center pr-5 text-2xl font-bold max-md:text-right max-md:pr-0 max-md:break-words max-md:text-xl">
                 ${totalCost.toFixed(2)}
             </div>
 
-            <div />
+            <div className="max-md:hidden" />
         </div>
     );
 }
+
+
+```
+
+### `components/builder/GearPicker.tsx`
+
+```typescript
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ArrowLeft, ArrowUpRight, Package, Search, SlidersHorizontal } from "lucide-react";
+import AddGearButton from "@/components/builder/AddGearButton";
+import { requireBuildPageAccess } from "@/lib/build-access";
+import { prisma } from "@/lib/prisma";
+import { pickerHref, pickerLimit, pickerValue, pickerWeight, type PickerSearch } from "@/lib/gear-picker";
+
+export default async function GearPicker({ buildId, categorySlug, filters, subcategorySlug }: {
+  buildId: string;
+  categorySlug: string;
+  filters: PickerSearch;
+  subcategorySlug?: string;
+}) {
+  // Public build viewers must never reach the editing picker.
+  await requireBuildPageAccess(buildId);
+  const category = await prisma.category.findUnique({
+    where: { slug: categorySlug.toLowerCase() },
+    include: { subcategories: {
+      orderBy: { name: "asc" },
+      include: {
+        _count: { select: { gear: true } },
+        gear: {
+          where: { images: { some: {} } },
+          orderBy: { name: "asc" }, take: 1,
+          select: { name: true, images: { orderBy: [{ isPrimary: "desc" }, { id: "asc" }], take: 1 } },
+        },
+      },
+    } },
+  });
+  if (!category) notFound();
+  const selectedSlug = subcategorySlug ?? pickerValue(filters.subcategory);
+  const selected = selectedSlug ? category.subcategories.find((item) => item.slug === selectedSlug) : undefined;
+  if (selectedSlug && !selected) notFound();
+  const path = `/build/${encodeURIComponent(buildId)}/select/${encodeURIComponent(category.slug)}`;
+  const scope = { categoryId: category.id, ...(selected ? { subcategoryId: selected.id } : {}) };
+  const q = pickerValue(filters.q).trim().slice(0, 120);
+  const brands = (Array.isArray(filters.brand) ? filters.brand : [filters.brand ?? ""])
+    .flatMap((value) => value.split(",")).filter(Boolean);
+  const maxWeight = pickerWeight(filters.maxWeight);
+  const maxPrice = pickerLimit(filters.maxPrice);
+  const sort = pickerValue(filters.sort);
+  // Preserve existing weight/price + direction links while using one select in the new UI.
+  const direction = sort.endsWith("-desc") || pickerValue(filters.direction) === "desc" ? "desc" as const : "asc" as const;
+  const [availableBrands, gear, categoryCount] = await Promise.all([
+    prisma.brand.findMany({ where: { gear: { some: scope } }, orderBy: { name: "asc" } }),
+    prisma.gear.findMany({
+      where: {
+        ...scope,
+        ...(q ? { name: { contains: q, mode: "insensitive" as const } } : {}),
+        ...(brands.length ? { brand: { name: { in: brands } } } : {}),
+        ...(maxWeight !== undefined ? { weight_g: { lte: maxWeight } } : {}),
+        ...(maxPrice !== undefined ? { price_cad: { lte: maxPrice } } : {}),
+      },
+      orderBy: sort.startsWith("weight") ? [{ weight_g: direction }, { name: "asc" }]
+        : sort.startsWith("price") ? [{ price_cad: direction }, { name: "asc" }]
+        : [{ name: "asc" }],
+      include: { brand: true, subcategory: true, images: { orderBy: [{ isPrimary: "desc" }, { id: "asc" }], take: 1 } },
+    }),
+    prisma.gear.count({ where: { categoryId: category.id } }),
+  ]);
+  const activeFilters = !!(q || brands.length || maxWeight !== undefined || maxPrice !== undefined);
+  const sortValue = sort.startsWith("weight") ? `weight-${direction}` : sort.startsWith("price") ? `price-${direction}` : "name";
+  const inputClass = "w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/15";
+
+  return (
+    <div className="min-h-screen bg-gray-50 text-gray-900">
+      <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
+        <Link href={`/build/${buildId}`} className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-green-800"><ArrowLeft size={16} /> Back to build</Link>
+        <div className="mb-6 mt-5 flex flex-wrap items-end justify-between gap-3">
+          <div><p className="mb-1 text-xs font-semibold uppercase tracking-widest text-green-800">Gear selection</p><h1 className="text-3xl font-semibold tracking-tight">Choose {category.name}</h1><p className="mt-2 text-sm text-gray-500">Browse everything, or choose a type below.</p></div>
+          <Link href={path} className="rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium hover:border-green-700" aria-current={!selected ? "page" : undefined}>All {category.name.toLowerCase()} <span className="ml-2 text-gray-400">{categoryCount}</span></Link>
+        </div>
+
+        <nav aria-label={`${category.name} types`} className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+          {category.subcategories.map((item) => {
+            const photo = item.gear[0]?.images[0];
+            const active = selected?.id === item.id;
+            return <Link key={item.id} href={pickerHref(path, filters, item.slug)} aria-current={active ? "page" : undefined}
+              className={`group overflow-hidden rounded-2xl border bg-white transition hover:border-green-700 hover:shadow-sm ${active ? "border-green-800 ring-2 ring-green-800/15" : "border-gray-200"}`}>
+              <div className="relative aspect-square bg-white">
+                {photo ? <Image src={photo.url} alt={item.gear[0].name} fill sizes="(max-width: 640px) 45vw, (max-width: 1024px) 25vw, 240px" className="object-contain p-5 transition group-hover:scale-105" />
+                  : <div className="flex h-full items-center justify-center text-gray-300"><Package size={48} strokeWidth={1} aria-label="No product photo" /></div>}
+                {active && <span className="absolute left-3 top-3 rounded-full bg-green-800 px-2.5 py-1 text-xs font-medium text-white">Selected</span>}
+              </div>
+              <div className="flex items-center justify-between gap-2 border-t border-gray-100 px-4 py-3"><div><h2 className="text-sm font-semibold">{item.name}</h2><p className="mt-0.5 text-xs text-gray-500">{item._count.gear} products</p></div><ArrowUpRight size={16} className="shrink-0 text-gray-400" /></div>
+            </Link>;
+          })}
+        </nav>
+
+        <div className="mt-8 grid items-start gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
+          <aside className="rounded-2xl border border-gray-200 bg-white p-5">
+            <div className="mb-5 flex items-center justify-between"><h2 className="flex items-center gap-2 font-semibold"><SlidersHorizontal size={16} /> Filters</h2>{activeFilters && <Link href={pickerHref(path, {}, selectedSlug)} className="text-xs text-green-800 underline underline-offset-4">Reset</Link>}</div>
+            <form action={path} method="get" key={`${selectedSlug}:${JSON.stringify(filters)}`} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              {selectedSlug && <input type="hidden" name="subcategory" value={selectedSlug} />}
+              <label className="block text-xs font-medium text-gray-600">Search products<div className="relative mt-2"><Search size={15} className="pointer-events-none absolute left-3 top-3 text-gray-400" /><input name="q" defaultValue={q} placeholder="Product name" maxLength={120} className={`${inputClass} pl-9`} /></div></label>
+              <fieldset><legend className="mb-2 text-xs font-medium text-gray-600">Brand</legend><div className="max-h-44 space-y-2 overflow-y-auto">{availableBrands.length ? availableBrands.map((brand) => <label key={brand.id} className="flex items-center gap-2 text-sm"><input type="checkbox" name="brand" value={brand.name} defaultChecked={brands.includes(brand.name)} className="h-4 w-4 accent-green-800" />{brand.name}</label>) : <p className="text-sm text-gray-400">No brands yet</p>}</div></fieldset>
+              <label className="text-xs font-medium text-gray-600">Max weight (g)<input className={`${inputClass} mt-2`} name="maxWeight" type="number" min="0" step="1" placeholder="Any weight" defaultValue={maxWeight} /></label>
+              <label className="text-xs font-medium text-gray-600">Max price (CAD)<input className={`${inputClass} mt-2`} name="maxPrice" type="number" min="0" step="0.01" placeholder="Any price" defaultValue={maxPrice} /></label>
+              <label className="text-xs font-medium text-gray-600">Sort by<select name="sort" defaultValue={sortValue} className={`${inputClass} mt-2`}><option value="name">Name: A–Z</option><option value="weight-asc">Weight: lightest first</option><option value="weight-desc">Weight: heaviest first</option><option value="price-asc">Price: lowest first</option><option value="price-desc">Price: highest first</option></select></label>
+              <button className="rounded-lg bg-green-800 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-900">Apply filters</button>
+            </form>
+          </aside>
+
+          <section aria-label="Products" className="min-w-0">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2"><h2 className="text-lg font-semibold">{selected?.name ?? `All ${category.name.toLowerCase()}`} <span className="ml-1 text-sm font-normal text-gray-500">{gear.length} {gear.length === 1 ? "product" : "products"}</span></h2><span className="text-xs text-gray-500">Prices in CAD · weight in grams</span></div>
+            {gear.length === 0 ? <div className="rounded-2xl border border-dashed border-gray-300 bg-white px-6 py-12 text-center"><Package size={32} className="mx-auto mb-3 text-gray-400" /><h3 className="font-semibold">No products found</h3><p className="mt-2 text-sm text-gray-500">{activeFilters ? "Try removing a filter or browsing another type." : "There are no products in this type yet."}</p><Link href={path} className="mt-4 inline-block text-sm font-medium text-green-800 underline underline-offset-4">Browse all {category.name.toLowerCase()}</Link></div>
+              : <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{gear.map((item) => <article key={item.id} className="flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white">
+                <Link href={`/gear/${item.id}`} className="relative block aspect-[4/3] border-b border-gray-100 bg-white" aria-label={`View ${item.name}`}>
+                  {item.images[0] ? <Image src={item.images[0].url} alt={item.name} fill sizes="(max-width: 640px) 90vw, (max-width: 1280px) 45vw, 300px" className="object-contain p-6" /> : <div className="flex h-full items-center justify-center text-gray-300"><Package size={44} strokeWidth={1} /></div>}
+                </Link>
+                <div className="flex flex-1 flex-col p-4"><p className="text-xs text-gray-500">{item.brand.name}{item.subcategory ? ` · ${item.subcategory.name}` : ""}</p><Link href={`/gear/${item.id}`} className="mt-1 font-semibold leading-snug hover:text-green-800">{item.name}</Link>
+                  <div className="mb-4 mt-3 flex flex-wrap gap-2 text-xs text-gray-600"><span className="rounded-md bg-gray-50 px-2 py-1">{item.weight_g === null ? "Weight unavailable" : `${item.weight_g.toLocaleString("en-CA")} g`}</span>{item.capacity_l !== null && <span className="rounded-md bg-gray-50 px-2 py-1">{item.capacity_l} L</span>}{item.season && <span className="rounded-md bg-gray-50 px-2 py-1">{item.season}</span>}{item.waterproof === true && <span className="rounded-md bg-gray-50 px-2 py-1">Waterproof</span>}</div>
+                  <div className="mt-auto flex items-center justify-between gap-3 border-t border-gray-100 pt-3"><span className="text-sm font-semibold">{item.price_cad === null ? "Price unavailable" : `$${item.price_cad.toLocaleString("en-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</span><AddGearButton buildId={buildId} gearId={item.id} /></div>
+                </div>
+              </article>)}</div>}
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+}
+
 ```
 
 ### `components/builder/GearTab.tsx`
@@ -11455,8 +11126,9 @@ export default function ItemCategoryToggle({
             <button
                 type="button"
                 onClick={() => select("worn")}
+                aria-pressed={optimisticCategory === "worn"}
                 className={`
-                    rounded-full px-2 py-0.5 text-[10px] font-semibold
+                    rounded-full px-2 py-0.5 max-md:min-h-9 max-md:px-3 text-[10px] font-semibold
                     cursor-pointer transition whitespace-nowrap
                     ${optimisticCategory === "worn"
                         ? "bg-amber-400 text-amber-950"
@@ -11470,8 +11142,9 @@ export default function ItemCategoryToggle({
             <button
                 type="button"
                 onClick={() => select("consumable")}
+                aria-pressed={optimisticCategory === "consumable"}
                 className={`
-                    rounded-full px-2 py-0.5 text-[10px] font-semibold
+                    rounded-full px-2 py-0.5 max-md:min-h-9 max-md:px-3 text-[10px] font-semibold
                     cursor-pointer transition whitespace-nowrap
                     ${optimisticCategory === "consumable"
                         ? "bg-emerald-400 text-emerald-950"
@@ -11484,6 +11157,266 @@ export default function ItemCategoryToggle({
         </div>
     );
 }
+
+
+```
+
+### `components/builder/OriginalGearPicker.tsx`
+
+```typescript
+import { prisma } from "@/lib/prisma";
+import { findAccessibleBuild, requireBuildPageAccess } from "@/lib/build-access";
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import AddGearButton from "@/components/builder/AddGearButton";
+import BrandFilter from "@/components/filters/BrandFilter";
+import FilterSection from "@/components/filters/FilterSection";
+import RangeFilter from "@/components/filters/RangeFilter";
+import SortHeader from "@/components/filters/SortHeader";
+
+export type GearBrowseSearch = Record<string, string | string[] | undefined>;
+const first = (value: string | string[] | undefined) => (Array.isArray(value) ? value[0] : value) ?? "";
+function limit(value: string | string[] | undefined, integer = false) {
+  const text = first(value).trim();
+  const number = Number(text);
+  if (!text || !Number.isFinite(number) || number < 0) return undefined;
+  return integer ? Math.min(Math.floor(number), 2147483647) : number;
+}
+
+export default async function OriginalGearPicker({ categorySlug, subcategorySlug, filters }: {
+  categorySlug: string; subcategorySlug?: string; filters: GearBrowseSearch;
+}) {
+  const explicitBuild = first(filters.build);
+  const cookieBuild = (await cookies()).get("currentBuild")?.value;
+  // Navigation state chooses a candidate; ownership proof authorizes it.
+  const access = explicitBuild
+    ? await requireBuildPageAccess(explicitBuild)
+    : cookieBuild ? await findAccessibleBuild(cookieBuild) : null;
+  const build = access ? await prisma.build.findUnique({
+    where: { id: access.id, userId: access.userId }, select: { id: true, name: true },
+  }) : null;
+  const categoryData = await prisma.category.findUnique({
+    where: { slug: categorySlug.toLowerCase() },
+    include: { subcategories: {
+      orderBy: { name: "asc" },
+      include: { gear: {
+        where: { images: { some: {} } }, take: 1, orderBy: { name: "asc" },
+        select: { name: true, images: { take: 1, orderBy: [{ isPrimary: "desc" }, { id: "asc" }] } },
+      } },
+    } },
+  });
+  if (!categoryData) notFound();
+  const selected = subcategorySlug ? categoryData.subcategories.find(item => item.slug === subcategorySlug) : undefined;
+  if (subcategorySlug && !selected) notFound();
+  const scope = { categoryId: categoryData.id, ...(selected ? { subcategoryId: selected.id } : {}) };
+  const sort = first(filters.sort);
+  const direction = first(filters.direction) === "desc" ? "desc" as const : "asc" as const;
+  const brands = (Array.isArray(filters.brand) ? filters.brand : [filters.brand ?? ""]).flatMap(item => item.split(",")).filter(Boolean);
+  const maxWeight = limit(filters.maxWeight, true);
+  const maxPrice = limit(filters.maxPrice);
+  const [availableBrands, gear] = await Promise.all([
+    prisma.brand.findMany({ where: { gear: { some: scope } }, orderBy: { name: "asc" } }),
+    prisma.gear.findMany({
+      where: {
+        ...scope,
+        ...(brands.length ? { brand: { name: { in: brands } } } : {}),
+        ...(maxWeight !== undefined ? { weight_g: { lte: maxWeight } } : {}),
+        ...(maxPrice !== undefined ? { price_cad: { lte: maxPrice } } : {}),
+      },
+      orderBy: sort === "weight" ? { weight_g: direction } : sort === "price" ? { price_cad: direction } : undefined,
+      include: { brand: true, reviews: true, images: true },
+    }),
+  ]);
+  const base = `/gear/${encodeURIComponent(categoryData.slug)}`;
+  function typeHref(slug: string) {
+    const query = new URLSearchParams();
+    for (const key of ["brand", "maxWeight", "maxPrice", "sort", "direction", "build"]) {
+      const value = filters[key];
+      if (value) query.set(key, Array.isArray(value) ? value.join(",") : value);
+    }
+    return `${base}${slug ? "/" + encodeURIComponent(slug) : ""}${query.size ? "?" + query : ""}`;
+  }
+  const tiles = !selected && categoryData.subcategories.length > 0 ? <nav aria-label="Subcategories" className="mb-6">
+    <h2 className="mb-3 text-center text-lg font-semibold">Shop by category</h2>
+    <div className="flex flex-wrap justify-center gap-3">
+{categoryData.subcategories.map(type => <Link
+  key={type.id}
+  href={typeHref(type.slug)}
+  className="w-28 shrink-0 rounded-lg border border-gray-200 bg-white p-2 text-center">
+      <div className="relative mx-auto h-20 w-20">
+        {type.gear[0]?.images[0] ? <Image src={type.gear[0].images[0].url} alt={type.gear[0].name} fill sizes="80px" className="object-contain p-1" />
+          : <div className="flex h-full items-center justify-center text-xs text-gray-400">No photo</div>}
+      </div><span className="text-xs font-semibold">{type.name}</span>
+    </Link>)}
+    </div>
+  </nav> : null;
+    return (
+        <div className="min-h-screen bg-gray-50">
+            <main className="max-w-[110rem] mx-auto px-8 py-8">
+
+                <h1 className="text-3xl font-bold mb-8">
+                    Choose {selected?.name ?? categoryData.name}
+                </h1>
+
+                {build && <p className="mb-4 text-sm text-gray-500">Adding to {build.name} · <Link href={`/build/${build.id}`} className="text-blue-600 hover:underline">Back to build</Link></p>}
+                {tiles}
+                <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-8">
+
+                    {/* Filters */}
+                    <aside className="border-r pr-6">
+
+                        <h2 className="font-bold text-xl mb-4">
+                            Filters
+                        </h2>
+
+
+                        <div className="space-y">
+                            <FilterSection title="BRAND">
+                                <BrandFilter
+                                    brands={availableBrands}
+                                />
+                            </FilterSection>
+
+
+                            <FilterSection title="WEIGHT">
+                                <RangeFilter
+                                    min={0}
+                                    max={3000}
+                                    unit="g"
+                                    param="maxWeight"
+                                />
+                            </FilterSection>
+
+                            <FilterSection title="PRICE">
+                                <RangeFilter
+                                    min={0}
+                                    max={1000}
+                                    unit="CAD"
+                                    param="maxPrice"
+                                />
+                            </FilterSection>
+                        </div>
+                    </aside>
+
+                    {/* Gear */}
+                    <div role="region" aria-label="Products" className="min-w-0 overflow-x-auto rounded-lg">
+                        <p className="mb-8 text-lg font-bold text-black">
+                            {gear.length} Compatible Products
+                        </p>
+                        <div className="grid min-w-[850px] grid-cols-[2.3fr_90px_90px_100px_90px_90px_90px_90px] px-5 py-3 text-xs font-semibold tracking-wide text-gray-500 border-b border-gray-400">
+                            <div>Product</div>
+                            <SortHeader
+                                label="Weight"
+                                value="weight"
+                            />
+                            <div className="text-center">Capacity</div>
+                            <div className="text-center">Frame</div>
+                            <div className="text-center">Waterproof</div>
+                            <div className="text-center">Rating</div>
+                            <SortHeader
+                                label="Price"
+                                value="price"
+                            />
+                            <div></div>
+                        </div>
+
+                        <div className="divide-y divide-gray-200">
+                            {gear.map((item) => {
+                                const averageRating =
+                                    item.reviews.length > 0
+                                        ? (
+                                            item.reviews.reduce(
+                                                (sum, review) => sum + review.rating,
+                                                0
+                                            ) / item.reviews.length
+                                        ).toFixed(1)
+                                        : null;
+
+                                return (
+                                    <div
+                                        key={item.id}
+                                        className="grid grid-cols-[2.3fr_90px_90px_100px_90px_90px_90px_90px] items-center px-5 py-2 hover:bg-gray-50"
+                                    >
+                                        <div className="flex items-center gap-3">
+
+                                            <div className="
+                                                    relative
+                                                    w-12
+                                                    aspect-square
+                                                    rounded-lg
+                                                    overflow-hidden
+                                                    bg-white
+                                                    border
+                                                    border-gray-200
+                                                    shrink-0
+                                                ">
+                                                {item.images[0] && (
+                                                    <Image
+                                                        src={item.images[0].url}
+                                                        alt={item.name}
+                                                        fill
+                                                        className="object-contain"
+                                                    />
+                                                )}
+                                            </div>
+
+
+                                            <div>
+                                                <h2 className="font-semibold hover:text-blue-600">
+                                                    {item.name}
+                                                </h2>
+
+                                                <p className="text-[13px] text-gray-500">
+                                                    {item.brand.name}
+                                                </p>
+                                            </div>
+
+                                        </div>
+
+                                        <div className="text-center">
+                                            {item.weight_g ?? "—"}g
+                                        </div>
+
+                                        <div className="text-center">
+                                            {item.capacity_l ?? "—"}L
+                                        </div>
+
+                                        <div className="text-center">
+                                            {item.frame_type ?? "—"}
+                                        </div>
+
+                                        <div className="text-center">
+                                            {item.waterproof === null || item.waterproof === undefined
+                                                ? "—"
+                                                : item.waterproof
+                                                    ? "Yes"
+                                                    : "No"}
+                                        </div>
+                                        <div className="text-center">
+                                            {averageRating
+                                                ? `★ ${averageRating}`
+                                                : "—"}
+                                        </div>
+                                        <div className="text-center">
+                                            ${item.price_cad ?? "—"}
+                                        </div>
+
+                                        <div className="flex justify-end">
+                                            {build ? <AddGearButton buildId={build.id} gearId={item.id} /> : <Link href="/build" className="text-sm text-blue-600 hover:underline">Create build</Link>}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    );
+}
+
 ```
 
 ### `components/builder/PrivateBuildNotice.tsx`
@@ -11630,7 +11563,7 @@ export default function QuantityStepper({
                 disabled={optimisticQuantity <= 1}
                 aria-label="Decrease quantity"
                 className="
-                w-6 h-6
+                w-6 h-6 max-md:w-9 max-md:h-9
                 flex items-center justify-center
                 text-gray-500
                 hover:text-red-600
@@ -11652,7 +11585,7 @@ export default function QuantityStepper({
                 onClick={() => change(1)}
                 aria-label="Increase quantity"
                 className="
-                w-6 h-6
+                w-6 h-6 max-md:w-9 max-md:h-9
                 flex items-center justify-center
                 text-gray-500
                 hover:text-green-700
@@ -11665,6 +11598,8 @@ export default function QuantityStepper({
         </div>
     );
 }
+
+
 ```
 
 ### `components/builder/RemoveGearButton.tsx`
@@ -11746,7 +11681,7 @@ export default function ShareBar({ buildId, buildName, isPublic, createdAt, upda
 
   return (
     <div className="flex flex-wrap items-center gap-2.5 px-5 py-4">
-      <div className="flex min-w-[280px] flex-1 items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 shadow-inner shadow-gray-100/70">
+      <div className="flex min-w-[280px] max-md:min-w-0 max-md:basis-full flex-1 items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 shadow-inner shadow-gray-100/70">
         <button
           type="button"
           onClick={copyLink}
@@ -11759,7 +11694,7 @@ export default function ShareBar({ buildId, buildName, isPublic, createdAt, upda
           readOnly
           value={shareUrl}
           onFocus={(event) => event.currentTarget.select()}
-          className="w-full truncate bg-transparent text-sm text-gray-700 outline-none"
+          className="w-full max-md:min-w-0 truncate bg-transparent text-sm text-gray-700 outline-none"
         />
         <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${isPublic ? "bg-green-100 text-green-800" : "bg-gray-200 text-gray-600"}`}>
           {isPublic ? "Public" : "Private"}
@@ -11791,6 +11726,8 @@ export default function ShareBar({ buildId, buildName, isPublic, createdAt, upda
     </div>
   );
 }
+
+
 
 ```
 
@@ -11926,18 +11863,103 @@ export function SaveStatus({
 
 ```typescript
 "use client";
-import { useEffect } from "react";
-import { MapContainer, TileLayer, CircleMarker, Popup, Polyline, useMap, useMapEvents } from "react-leaflet";
+import { useEffect, useMemo, useRef } from "react";
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap, useMapEvents } from "react-leaflet";
+import { divIcon, DomEvent, type Marker as LeafletMarker } from "leaflet";
+import { LocateFixed } from "lucide-react";
 import type { Waypoint } from "@/lib/trip-planner";
+import { waypointMarkerHtml, waypointType } from "@/lib/waypoint-map";
 import "leaflet/dist/leaflet.css";
-function Controls({ points, onPick }: { points: Waypoint[]; onPick?: (lat: number,lng: number)=>void }) {
+
+export type MapFocus = { lat: number; lng: number; request: number };
+type Props = {
+  points: Waypoint[];
+  fallback: [number, number] | null;
+  onPick?: (lat: number, lng: number) => void;
+  onSelect?: (id: string) => void;
+  onMove?: (id: string, lat: number, lng: number) => void;
+  selectedId?: string | null;
+  focus?: MapFocus | null;
+};
+
+function Controls({ points, onPick, focus }: Pick<Props, "points" | "onPick" | "focus">) {
   const map = useMap();
-  useMapEvents({ click(e) { onPick?.(e.latlng.lat,e.latlng.lng); } });
-  useEffect(()=>{if(points.length>1)map.fitBounds(points.map(p=>[p.lat,p.lng]),{padding:[32,32],maxZoom:14});else if(points.length===1)map.setView([points[0].lat,points[0].lng],12);},[map,points]);
+  const initialized = useRef(false);
+  useMapEvents({ click(event) { onPick?.(event.latlng.lat, event.latlng.lng); } });
+  useEffect(() => {
+    if (initialized.current) return;
+    initialized.current = true;
+    if (points.length > 1) map.fitBounds(points.map(p => [p.lat, p.lng]), { padding: [44, 44], maxZoom: 14 });
+    else if (points.length === 1) map.setView([points[0].lat, points[0].lng], 13);
+  }, [map, points]);
+  useEffect(() => {
+    if (focus) map.setView([focus.lat, focus.lng], Math.max(map.getZoom(), 14));
+  }, [map, focus]);
+  useEffect(() => {
+    const container = map.getContainer();
+    const previous = container.style.cursor;
+    container.style.cursor = onPick ? "crosshair" : "";
+    return () => { container.style.cursor = previous; };
+  }, [map, onPick]);
   return null;
 }
-export default function RouteMapInner({ points, fallback, onPick }: { points: Waypoint[]; fallback: [number,number] | null; onPick?: (lat: number,lng: number)=>void }) {
-  return <MapContainer center={fallback ?? [49.7,-123.1]} zoom={9} scrollWheelZoom={false} className="relative z-0 h-80 w-full"><TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' /><Controls points={points} onPick={onPick} />{points.length>1 && <Polyline positions={points.map(p=>[p.lat,p.lng])} pathOptions={{color:"#166534",dashArray:"6 8"}} />}{points.map((p,i)=><CircleMarker key={p.id} center={[p.lat,p.lng]} radius={8} pathOptions={{color:p.kind==="water"?"#0369a1":"#166534",fillOpacity:1}}><Popup>{i+1}. {p.name} · {p.kind}</Popup></CircleMarker>)}{!points.length && fallback && <CircleMarker center={fallback} radius={8}><Popup>Trip location</Popup></CircleMarker>}</MapContainer>;
+
+function FitRoute({ points, fallback }: Pick<Props, "points" | "fallback">) {
+  const map = useMap();
+  const toolbar = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (toolbar.current) { DomEvent.disableClickPropagation(toolbar.current); DomEvent.disableScrollPropagation(toolbar.current); }
+  }, []);
+  function fit() {
+    if (points.length > 1) map.fitBounds(points.map(p => [p.lat, p.lng]), { padding: [44, 44], maxZoom: 14 });
+    else if (points.length === 1) map.setView([points[0].lat, points[0].lng], 14);
+    else if (fallback) map.setView(fallback, 12);
+  }
+  return <div ref={toolbar} className="absolute right-3 top-3 z-[1000]">
+    <button type="button" onClick={fit} disabled={!points.length && !fallback} className="flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 shadow-sm hover:bg-gray-50 disabled:opacity-50">
+      <LocateFixed className="h-4 w-4" aria-hidden="true" />Fit route
+    </button>
+  </div>;
+}
+
+function StopMarker({ point, order, selected, onSelect, onMove }: {
+  point: Waypoint; order: number; selected: boolean;
+  onSelect?: (id: string) => void; onMove?: (id: string, lat: number, lng: number) => void;
+}) {
+  const marker = useRef<LeafletMarker | null>(null);
+  const icon = useMemo(() => divIcon({
+    html: waypointMarkerHtml(point.kind, order, selected),
+    className: "trailpicker-stop-icon",
+    iconSize: [34, 34], iconAnchor: [17, 17], popupAnchor: [0, -22],
+  }), [point.kind, order, selected]);
+  useEffect(() => {
+    const element = marker.current?.getElement();
+    if (element) {
+      element.title = `${order}. ${point.name}`;
+      element.setAttribute("aria-label", `${order}. ${waypointType(point.kind).label}: ${point.name}`);
+    }
+  }, [point.name, point.kind, order, icon]);
+  return <Marker ref={marker} position={[point.lat, point.lng]} icon={icon} title={`${order}. ${point.name}`} alt={`${waypointType(point.kind).label}: ${point.name}`} keyboard bubblingMouseEvents={false}
+    draggable={!!onMove} zIndexOffset={selected ? 1000 : 0} eventHandlers={{
+      click: () => onSelect?.(point.id),
+      dragend: event => {
+        const position = (event.target as LeafletMarker).getLatLng();
+        onMove?.(point.id, position.lat, position.lng);
+      },
+    }}>
+    <Popup><strong>{order}. {point.name}</strong><br />{waypointType(point.kind).label}{point.elevationM != null && <> · {point.elevationM} m</>}{onMove && <><br /><span>Drag the pin to adjust its location.</span></>}</Popup>
+  </Marker>;
+}
+
+export default function RouteMapInner({ points, fallback, onPick, onSelect, onMove, selectedId, focus }: Props) {
+  return <MapContainer center={fallback ?? [49.7, -123.1]} zoom={fallback ? 12 : 9} scrollWheelZoom={false} className="relative z-0 h-[420px] w-full sm:h-[480px]">
+    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' />
+    <Controls points={points} onPick={onPick} focus={focus} />
+    <FitRoute points={points} fallback={fallback} />
+    {points.length > 1 && <Polyline interactive={false} positions={points.map(p => [p.lat, p.lng])} pathOptions={{ color: "#166534", weight: 3, dashArray: "6 8", opacity: 0.7 }} />}
+    {points.map((point, index) => <StopMarker key={point.id} point={point} order={index + 1} selected={selectedId === point.id} onSelect={onSelect} onMove={onMove} />)}
+    {!points.length && fallback && <Marker position={fallback} icon={divIcon({ html: waypointMarkerHtml("waypoint", 1, false), className: "trailpicker-stop-icon", iconSize: [34, 34], iconAnchor: [17, 17] })} title="Trip location"><Popup>Trip location · add your first route stop here or explore the map.</Popup></Marker>}
+  </MapContainer>;
 }
 
 ```
@@ -12780,34 +12802,142 @@ export default function TripPlanner({ build, issues, readOnly = false }: { build
 ```typescript
 "use client";
 import dynamic from "next/dynamic";
-import { useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowDown, ArrowUp, Check, MapPin, Pencil, Plus, Trash2, X } from "lucide-react";
 import { readWaypoints, type Waypoint } from "@/lib/trip-planner";
 import { saveTripRoute } from "@/lib/trip-planner-actions";
-import { inputClass, SaveStatus } from "./PlannerFields";
-const RouteMap = dynamic(()=>import("./RouteMapInner"),{ssr:false,loading:()=> <div className="h-80 animate-pulse bg-gray-100" />});
-export default function TripRoute({ buildId, value, lat, lng, readOnly = false }: { buildId: string; value: unknown; lat: number | null; lng: number | null; readOnly?: boolean }) {
-  const [points,setPoints]=useState(()=>readWaypoints(value)),[editing,setEditing]=useState(false),[error,setError]=useState(""),[saved,setSaved]=useState(false),[pending,start]=useTransition();
-  const [name,setName]=useState(""),[latitude,setLatitude]=useState(""),[longitude,setLongitude]=useState(""),[height,setHeight]=useState(""),[kind,setKind]=useState<Waypoint["kind"]>("waypoint");
-  function add() {
-    const lat=Number(latitude),lng=Number(longitude), elevationM=height===""?null:Number(height);
-    if(!name.trim() || !latitude.trim() || !longitude.trim() || !Number.isFinite(lat) || !Number.isFinite(lng) || Math.abs(lat)>90 || Math.abs(lng)>180 || (elevationM!=null && (!Number.isFinite(elevationM) || elevationM < -500 || elevationM>9000))) {setError("Enter a name and valid coordinates. Optional elevation must be between -500 and 9000 m.");return;}
-    if(points.length>=200){setError("Maximum 200 waypoints.");return;}
-    setPoints([...points,{id:crypto.randomUUID(),name:name.trim(),lat,lng,elevationM,kind}]);setName("");setHeight("");setError("");setSaved(false);
+import { WAYPOINT_TYPES, moveWaypoint, nextWaypointName, routeForSave, validCoordinates, waypointType, type PlaceResult } from "@/lib/waypoint-map";
+import { inputClass } from "@/components/builder/TripPlanner/PlannerFields";
+import WaypointIcon from "@/components/builder/TripPlanner/WaypointIcon";
+import WaypointSearch from "@/components/builder/TripPlanner/WaypointSearch";
+import type { MapFocus } from "@/components/builder/TripPlanner/RouteMapInner";
+const RouteMap = dynamic(() => import("@/components/builder/TripPlanner/RouteMapInner"), { ssr: false, loading: () => <div className="h-[420px] animate-pulse bg-gray-100 sm:h-[480px]" /> });
+
+export default function TripRoute({ buildId, value, lat, lng, readOnly = false }: {
+  buildId: string; value: unknown; lat: number | null; lng: number | null; readOnly?: boolean;
+}) {
+  const [points, setPoints] = useState(() => readWaypoints(value));
+  const committed = useRef(readWaypoints(value));
+  const [editing, setEditing] = useState(false);
+  const [placing, setPlacing] = useState(false);
+  const [kind, setKind] = useState<Waypoint["kind"]>("waypoint");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [moveId, setMoveId] = useState<string | null>(null);
+  const [focus, setFocus] = useState<MapFocus | null>(null);
+  const sequence = useRef(0);
+  const [error, setError] = useState("");
+  const [saved, setSaved] = useState(false);
+  const [pending, start] = useTransition();
+  const router = useRouter();
+  const fallback: [number, number] | null = validCoordinates(lat, lng) ? [lat as number, lng as number] : null;
+  const selected = points.find(point => point.id === selectedId);
+  const dirty = JSON.stringify(points) !== JSON.stringify(committed.current);
+  const canEdit = editing && !readOnly;
+  const near: [number, number] | null = selected ? [selected.lat, selected.lng] : points.length ? [points[points.length - 1].lat, points[points.length - 1].lng] : fallback;
+
+  useEffect(() => {
+    if (!canEdit || !dirty) return;
+    const warn = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ""; };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [canEdit, dirty]);
+
+  function changed() { setSaved(false); setError(""); }
+  function patch(id: string, data: Partial<Waypoint>) {
+    if (!canEdit || pending) return;
+    setPoints(current => current.map(point => point.id === id ? { ...point, ...data, id: point.id } : point));
+    changed();
   }
-  function move(i:number,delta:number){const next=[...points];[next[i],next[i+delta]]=[next[i+delta],next[i]];setPoints(next);setSaved(false);}
-  function submit(f:FormData){setError("");start(async()=>{try{await saveTripRoute(f);setSaved(true);setEditing(false);}catch(e){setError(e instanceof Error?e.message:"Could not save route.");}});}
-  const elevations=points.filter(p=>p.elevationM!=null);
-  const profileReady=points.length>=2 && elevations.length===points.length;
-  const min=Math.min(...elevations.map(p=>p.elevationM!)),max=Math.max(...elevations.map(p=>p.elevationM!));
-  return <section id="route" className="scroll-mt-20 overflow-hidden rounded-3xl border border-gray-200 bg-white"><div className="flex flex-wrap items-center justify-between gap-3 p-5 sm:px-8"><div><h2 className="text-xl font-bold">Route</h2><p className="mt-1 text-sm text-gray-500">Trailheads, camps, water stops, and waypoints in travel order.</p></div>{!readOnly && <button type="button" disabled={pending} onClick={()=>{if(editing){setPoints(readWaypoints(value));setError("");}setEditing(!editing);setSaved(false);}} className="rounded-xl border px-4 py-2 text-sm font-semibold">{editing?"Cancel editing":"Edit route"}</button>}</div>
-    <RouteMap points={points} fallback={lat!=null&&lng!=null?[lat,lng]:null} onPick={editing&&!pending ? (a,b)=>{setLatitude(a.toFixed(6));setLongitude(b.toFixed(6));}:undefined} />
-    <div className="space-y-4 p-5 sm:px-8"><p className="text-xs text-gray-500">Dashed lines connect waypoints directly; they do not follow trails. Enter daily walking distances in the itinerary.</p>
-      {profileReady ? <div><p className="text-xs font-semibold text-gray-600">Waypoint elevations · {min}–{max} m · evenly spaced stops</p><svg viewBox="0 0 600 100" role="img" aria-label="Elevation at each waypoint, ordered by travel, not distance" className="mt-2 h-24 w-full"><polyline fill="none" stroke="#166534" strokeWidth="3" points={points.map((p,i)=>`${10+i*580/(points.length-1)},${85-((p.elevationM!-min)/Math.max(1,max-min))*70}`).join(" ")} /></svg></div> : <p className="text-xs text-gray-400">Add elevation to every waypoint (at least two) to see an elevation sketch.</p>}
-      {!points.length && <p className="text-sm text-gray-500">No route waypoints yet.</p>}
-      <ol className="space-y-2">{points.map((p,i)=><li key={p.id} className="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-gray-50 px-3 py-2 text-sm"><div><strong>{i+1}. {p.name}</strong><span className="ml-2 text-gray-500">{p.kind} · {p.lat.toFixed(4)}, {p.lng.toFixed(4)}{p.elevationM!=null?` · ${p.elevationM} m`:""}</span></div>{editing && <div className="flex gap-3"><button type="button" disabled={pending||i===0} aria-label={`Move ${p.name} earlier`} onClick={()=>move(i,-1)} className="disabled:opacity-30">↑</button><button type="button" disabled={pending||i===points.length-1} aria-label={`Move ${p.name} later`} onClick={()=>move(i,1)} className="disabled:opacity-30">↓</button><button type="button" disabled={pending} onClick={()=>{setPoints(points.filter(x=>x.id!==p.id));setSaved(false);}} className="text-red-700">Remove</button></div>}</li>)}</ol>
-      {editing && <form action={submit} className="space-y-4 border-t pt-4"><input type="hidden" name="buildId" value={buildId} /><input type="hidden" name="waypoints" value={JSON.stringify(points)} /><fieldset disabled={pending} className="grid gap-3 sm:grid-cols-2"><label className="text-sm">Stop name<input value={name} maxLength={200} onChange={e=>setName(e.target.value)} className={inputClass} /></label><label className="text-sm">Type<select value={kind} onChange={e=>setKind(e.target.value as Waypoint["kind"])} className={inputClass}>{["trailhead","camp","water","waypoint"].map(k=><option key={k}>{k}</option>)}</select></label><label className="text-sm">Latitude<input value={latitude} onChange={e=>setLatitude(e.target.value)} className={inputClass} /></label><label className="text-sm">Longitude<input value={longitude} onChange={e=>setLongitude(e.target.value)} className={inputClass} /></label><label className="text-sm">Elevation (m, optional)<input value={height} onChange={e=>setHeight(e.target.value)} className={inputClass} /></label><button type="button" onClick={add} className="self-end rounded-xl border border-green-700 px-4 py-2.5 text-sm font-semibold text-green-800">Add waypoint</button></fieldset><p className="text-xs text-gray-500">Click the map to fill coordinates. Add the stop, then save your route.</p><SaveStatus pending={pending} error={error} saved={saved} /></form>}
-      {!editing&&saved&&<p aria-live="polite" className="text-sm text-green-700">Route saved.</p>}
-    </div></section>;
+  function addStop(latitude: number, longitude: number, name?: string, recenter = false) {
+    if (!canEdit || pending || !validCoordinates(latitude, longitude)) return;
+    if (points.length >= 200) { setError("A route can have up to 200 stops."); return; }
+    const id = crypto.randomUUID();
+    setPoints(current => [...current, { id, name: name?.trim().slice(0, 200) || nextWaypointName(current, kind), lat: latitude, lng: longitude, kind, elevationM: null }]);
+    setSelectedId(id); setPlacing(false); setMoveId(null); changed();
+    if (recenter) setFocus({ lat: latitude, lng: longitude, request: ++sequence.current });
+  }
+  function choosePlace(place: PlaceResult) { addStop(place.lat, place.lng, place.name, true); }
+  function pick(latitude: number, longitude: number) {
+    if (!canEdit || pending) return;
+    if (moveId) { patch(moveId, { lat: latitude, lng: longitude }); setMoveId(null); }
+    else if (placing) addStop(latitude, longitude);
+  }
+  function select(point: Waypoint) {
+    setSelectedId(point.id);
+    setFocus({ lat: point.lat, lng: point.lng, request: ++sequence.current });
+  }
+  function cancel() {
+    if (pending || (dirty && !window.confirm("Discard your unsaved route changes?"))) return;
+    setPoints(committed.current); setEditing(false); setPlacing(false); setMoveId(null); setSelectedId(null); setError(""); setSaved(false);
+  }
+  function save() {
+    if (!canEdit || pending) return;
+    let route: Waypoint[];
+    try { route = routeForSave(points); } catch (e) { setError(e instanceof Error ? e.message : "Check the route stops."); return; }
+    setError("");
+    start(async () => {
+      try {
+        const form = new FormData(); form.set("buildId", buildId); form.set("waypoints", JSON.stringify(route));
+        await saveTripRoute(form);
+        committed.current = route; setPoints(route); setSaved(true); setEditing(false); setPlacing(false); setMoveId(null); setSelectedId(null);
+        router.refresh();
+      } catch (e) { setError(e instanceof Error ? e.message : "Could not save the route. Your changes are still here—try again."); }
+    });
+  }
+  const elevations = points.map(point => point.elevationM);
+  const profileReady = points.length >= 2 && elevations.every((height): height is number => height !== null);
+  const heights = elevations.filter((height): height is number => height !== null);
+  const min = heights.length ? Math.min(...heights) : 0, max = heights.length ? Math.max(...heights) : 0;
+
+  return <section id="route" className="scroll-mt-20 overflow-hidden rounded-3xl border border-gray-200 bg-white">
+    <header className="flex flex-wrap items-center justify-between gap-3 px-5 py-5 sm:px-8">
+      <div><h2 className="text-xl font-bold text-gray-950">Route</h2><p className="mt-1 text-sm text-gray-500">Your stops, in travel order.</p></div>
+      {!readOnly && (editing ? <div className="flex items-center gap-2">
+        <button type="button" disabled={pending} onClick={cancel} className="rounded-xl border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-600 disabled:opacity-40">Cancel</button>
+        <button type="button" disabled={pending || !dirty} onClick={save} className="flex items-center gap-1.5 rounded-xl bg-green-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-40"><Check className="h-4 w-4" aria-hidden="true" />{pending ? "Saving…" : "Save route"}</button>
+      </div> : <button type="button" onClick={() => { setEditing(true); setSaved(false); setError(""); }} className="flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"><Pencil className="h-4 w-4" aria-hidden="true" />Edit route</button>)}
+    </header>
+    {canEdit && <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 bg-gray-50/70 px-5 py-3 sm:px-8">
+      <div className="flex flex-wrap gap-1.5" role="group" aria-label="Stop type to add">{WAYPOINT_TYPES.map(type => <button key={type.kind} type="button" disabled={pending} aria-pressed={kind === type.kind} onClick={() => { setKind(type.kind); setPlacing(true); setMoveId(null); }}
+        className={`flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-semibold transition disabled:opacity-40 ${kind === type.kind ? "border-green-700 bg-white text-green-900 shadow-sm" : "border-transparent text-gray-500 hover:bg-white hover:text-gray-900"}`}><WaypointIcon kind={type.kind} />{type.label}</button>)}</div>
+      <button type="button" disabled={pending} onClick={() => { setPlacing(!placing); setMoveId(null); }} className="flex items-center gap-1.5 text-xs font-semibold text-green-800 disabled:opacity-40"><Plus className="h-4 w-4" aria-hidden="true" />{placing ? "Stop placing" : "Place on map"}</button>
+    </div>}
+    {(placing || moveId) && canEdit && <div role="status" className="flex items-center justify-between gap-3 bg-green-50 px-5 py-2 text-xs text-green-900 sm:px-8"><span>{moveId ? "Click the new position on the map." : `Click the map to add a ${waypointType(kind).label.toLowerCase()}.`}</span><button type="button" disabled={pending} aria-label="Cancel map placement" onClick={() => { setPlacing(false); setMoveId(null); }}><X className="h-4 w-4" /></button></div>}
+    <div className="grid border-t border-gray-100 lg:grid-cols-[minmax(0,1fr)_340px]">
+      <div className="min-w-0"><RouteMap points={points} fallback={fallback} selectedId={selectedId} focus={focus}
+        onPick={canEdit && !pending && (placing || moveId) ? pick : undefined}
+        onSelect={setSelectedId}
+        onMove={canEdit && !pending ? (id, a, b) => { if (validCoordinates(a, b)) { patch(id, { lat: a, lng: b }); setSelectedId(id); } } : undefined} /></div>
+      <aside className="flex max-h-[640px] min-w-0 flex-col border-t border-gray-100 bg-gray-50/50 lg:max-h-[480px] lg:border-l lg:border-t-0">
+        {canEdit && <div className="border-b border-gray-100 p-4"><h3 className="mb-2 text-xs font-bold text-gray-500">Add a {waypointType(kind).label.toLowerCase()} by name</h3><WaypointSearch near={near} onChoose={choosePlace} disabled={pending} /></div>}
+        <div className="min-h-0 flex-1 overflow-y-auto p-4">
+          <div className="mb-3 flex items-center justify-between text-xs text-gray-500"><h3 className="font-semibold">Stops</h3><span>{points.length} / 200</span></div>
+          {!points.length ? <div className="rounded-xl border border-dashed border-gray-200 bg-white px-4 py-8 text-center"><MapPin className="mx-auto mb-2 h-5 w-5 text-gray-300" aria-hidden="true" /><p className="text-sm font-medium text-gray-600">No stops yet</p><p className="mt-1 text-xs leading-5 text-gray-400">{canEdit ? "Choose an icon and click the map, or search for a place above." : readOnly ? "The owner hasn’t added route stops." : "Edit the route to add your first stop."}</p></div> : <ol className="space-y-2" aria-label="Route stops">
+            {points.map((point, index) => <li key={point.id} className={`overflow-hidden rounded-xl border bg-white ${selectedId === point.id ? "border-green-700 ring-1 ring-green-700/10" : "border-gray-200"}`}>
+              <div className="flex items-center gap-1 pr-2"><button type="button" onClick={() => select(point)} aria-pressed={selectedId === point.id} className="flex min-w-0 flex-1 items-center gap-3 px-3 py-3 text-left">
+                <span className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white" style={{ backgroundColor: waypointType(point.kind).color }}><WaypointIcon kind={point.kind} /><span className="absolute -bottom-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full border border-gray-200 bg-white px-0.5 text-[9px] font-bold text-gray-600">{index + 1}</span></span>
+                <span className="min-w-0"><span className="block truncate text-sm font-semibold text-gray-800">{point.name || "Unnamed stop"}</span><span className="mt-0.5 block text-xs text-gray-400">{waypointType(point.kind).label}{point.elevationM != null ? ` · ${point.elevationM} m` : ""}</span></span>
+              </button>{canEdit && <div className="flex shrink-0 flex-col"><button type="button" disabled={pending || index === 0} aria-label={`Move ${point.name || "stop"} earlier`} onClick={() => { setPoints(current => moveWaypoint(current, index, -1)); changed(); }} className="rounded p-1 text-gray-400 hover:bg-gray-100 disabled:opacity-20"><ArrowUp className="h-3.5 w-3.5" /></button><button type="button" disabled={pending || index === points.length - 1} aria-label={`Move ${point.name || "stop"} later`} onClick={() => { setPoints(current => moveWaypoint(current, index, 1)); changed(); }} className="rounded p-1 text-gray-400 hover:bg-gray-100 disabled:opacity-20"><ArrowDown className="h-3.5 w-3.5" /></button></div>}</div>
+              {canEdit && selectedId === point.id && <div className="space-y-3 border-t border-gray-100 px-3 pb-3 pt-3">
+                <label className="block text-xs font-medium text-gray-500">Stop name<input value={point.name} maxLength={200} disabled={pending} onChange={e => patch(point.id, { name: e.target.value })} className={`${inputClass} mt-1`} /></label>
+                <label className="block text-xs font-medium text-gray-500">Type<select aria-label="Stop type" value={point.kind} disabled={pending} onChange={e => patch(point.id, { kind: e.target.value as Waypoint["kind"] })} className={`${inputClass} mt-1`}>{WAYPOINT_TYPES.map(type => <option key={type.kind} value={type.kind}>{type.label}</option>)}</select></label>
+                <div className="flex items-center justify-between gap-2"><button type="button" disabled={pending} onClick={() => { setMoveId(point.id); setPlacing(false); }} className="flex items-center gap-1 text-xs font-semibold text-green-800 disabled:opacity-40"><MapPin className="h-3.5 w-3.5" />Move on map</button><button type="button" disabled={pending} onClick={() => { setPoints(current => current.filter(p => p.id !== point.id)); setSelectedId(null); setMoveId(null); changed(); }} className="flex items-center gap-1 text-xs font-medium text-red-700 disabled:opacity-40"><Trash2 className="h-3.5 w-3.5" />Remove</button></div>
+                <details className="text-xs text-gray-400"><summary className="cursor-pointer py-1">More details</summary><label className="mt-2 block text-xs text-gray-500">Elevation (m, optional)<input type="number" min={-500} max={9000} step="any" value={point.elevationM ?? ""} disabled={pending} onChange={e => patch(point.id, { elevationM: Number.isFinite(e.target.valueAsNumber) ? e.target.valueAsNumber : null })} className={`${inputClass} mt-1`} /></label><p className="mt-2 break-words font-mono">{point.lat.toFixed(6)}, {point.lng.toFixed(6)}</p></details>
+              </div>}
+            </li>)}
+          </ol>}
+        </div>
+      </aside>
+    </div>
+    <footer className="space-y-3 border-t border-gray-100 px-5 py-4 sm:px-8">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">{WAYPOINT_TYPES.map(type => <span key={type.kind} className="flex items-center gap-1.5 text-xs text-gray-500"><span style={{ color: type.color }}><WaypointIcon kind={type.kind} className="h-3.5 w-3.5" /></span>{type.label}</span>)}</div>
+      <p className="text-xs leading-5 text-gray-400">Dashed lines connect stops directly, not along trails.{canEdit ? " Drag pins to adjust them, then save your route." : ""}</p>
+      {profileReady && <details className="text-xs text-gray-500"><summary className="cursor-pointer font-semibold">Waypoint elevations · {min}–{max} m</summary><svg viewBox="0 0 600 100" role="img" aria-label="Elevation at each waypoint in travel order, not by distance" className="mt-2 h-24 w-full"><polyline fill="none" stroke="#166534" strokeWidth="3" points={points.map((point, i) => `${10 + i * 580 / (points.length - 1)},${85 - ((point.elevationM! - min) / Math.max(1, max - min)) * 70}`).join(" ")} /></svg></details>}
+      {error && <p role="alert" className="text-sm font-medium text-red-700">{error}</p>}
+      <p role="status" aria-live="polite" className="text-xs text-green-800">{pending ? "Saving route…" : saved ? "Route saved." : canEdit && dirty ? "Unsaved changes" : ""}</p>
+    </footer>
+  </section>;
 }
 
 ```
@@ -13063,6 +13193,104 @@ function StatCard({
 
 ```
 
+### `components/builder/TripPlanner/WaypointIcon.tsx`
+
+```typescript
+import type { Waypoint } from "@/lib/trip-planner";
+import { waypointType } from "@/lib/waypoint-map";
+
+export default function WaypointIcon({ kind, className = "h-4 w-4" }: { kind: Waypoint["kind"]; className?: string }) {
+  const type = waypointType(kind);
+  return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className}><path d={type.path} /></svg>;
+}
+
+```
+
+### `components/builder/TripPlanner/WaypointSearch.tsx`
+
+```typescript
+"use client";
+import { useEffect, useRef, useState } from "react";
+import { Search, LoaderCircle, MapPin } from "lucide-react";
+import { parsePlaceResults, type PlaceResult } from "@/lib/waypoint-map";
+
+type Props = { near: [number, number] | null; onChoose: (place: PlaceResult) => void; disabled?: boolean };
+
+export default function WaypointSearch({ near, onChoose, disabled = false }: Props) {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<PlaceResult[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("");
+  const request = useRef<AbortController | null>(null);
+  const cache = useRef(new Map<string, PlaceResult[]>());
+  const lastSearch = useRef(0);
+  useEffect(() => () => { request.current?.abort(); request.current = null; }, []);
+
+  async function search(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const text = query.trim();
+    if (disabled || busy || text.length < 2) return;
+    request.current?.abort();
+    const controller = new AbortController();
+    request.current = controller;
+    const key = `${text.toLocaleLowerCase()}:${near?.map(n => n.toFixed(2)).join(",") ?? ""}`;
+    const cached = cache.current.get(key);
+    if (cached) { setResults(cached); setMessage(cached.length ? "" : "No places found. Try a nearby town or place the stop on the map."); return; }
+    if (Date.now() - lastSearch.current < 1000) { setMessage("Wait a moment before searching again."); return; }
+    lastSearch.current = Date.now();
+    setBusy(true);
+    setResults([]);
+    setMessage("");
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    try {
+      const endpoint = process.env.NEXT_PUBLIC_WAYPOINT_SEARCH_URL || "https://photon.komoot.io/api/";
+      const url = new URL(endpoint, window.location.origin);
+      url.searchParams.set("q", text);
+      url.searchParams.set("limit", "6");
+      if (near) { url.searchParams.set("lat", String(near[0])); url.searchParams.set("lon", String(near[1])); }
+      const response = await fetch(url, { signal: controller.signal });
+      if (!response.ok) throw new Error("Search failed.");
+      const found = parsePlaceResults(await response.json());
+      if (request.current !== controller || controller.signal.aborted) return;
+      if (cache.current.size >= 20) cache.current.delete(cache.current.keys().next().value!);
+      cache.current.set(key, found);
+      setResults(found);
+      setMessage(found.length ? "" : "No places found. Try a nearby town or place the stop on the map.");
+    } catch {
+      if (request.current === controller) setMessage("Place search is unavailable. You can still add stops by clicking the map.");
+    } finally {
+      clearTimeout(timeout);
+      if (request.current === controller) setBusy(false);
+    }
+  }
+
+  return <div className="space-y-2">
+    <form onSubmit={search} className="flex gap-2">
+      <label className="relative min-w-0 flex-1">
+        <span className="sr-only">Search for a place</span>
+        <Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-gray-400" aria-hidden="true" />
+        <input type="search" value={query} maxLength={200} onChange={e => {
+          setQuery(e.target.value); setResults([]); setMessage("");
+          request.current?.abort(); request.current = null; setBusy(false);
+        }} disabled={disabled} placeholder="Lake, campground, trailhead…" className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-9 pr-3 text-sm outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/10" />
+      </label>
+      <button type="submit" disabled={disabled || busy || query.trim().length < 2} aria-label="Search places" className="rounded-xl bg-green-900 px-3 text-sm font-semibold text-white disabled:opacity-40">
+        {busy ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : "Search"}
+      </button>
+    </form>
+    <p role="status" aria-live="polite" className="text-xs text-gray-500">{busy ? "Searching…" : message}</p>
+    {results.length > 0 && <ul aria-label="Place search results" className="overflow-hidden rounded-xl border border-gray-200 bg-white divide-y divide-gray-100">
+      {results.map(place => <li key={place.id}><button type="button" disabled={disabled} onClick={() => { onChoose(place); setResults([]); }} className="flex w-full items-start gap-2 px-3 py-3 text-left hover:bg-green-50 disabled:opacity-40">
+        <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-green-700" aria-hidden="true" />
+        <span className="min-w-0"><span className="block text-sm font-medium text-gray-900">{place.name}</span><span className="mt-0.5 block text-xs text-gray-500">{place.detail}</span></span>
+      </button></li>)}
+    </ul>}
+    <p className="text-[10px] text-gray-400">Place search: <a href="https://photon.komoot.io/" target="_blank" rel="noreferrer" className="underline">Photon</a> / <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer" className="underline">OpenStreetMap</a></p>
+  </div>;
+}
+
+```
+
 ### `components/builder/WeightSummary.tsx`
 
 ```typescript
@@ -13143,7 +13371,7 @@ function Stat({
     grams: number;
 }) {
     return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 max-md:flex-wrap">
             <span className={`h-2 w-2 rounded-full ${dot}`} />
             <span className="text-gray-500">{label}</span>
             <span className="font-semibold text-gray-900">{grams}g</span>
@@ -13151,6 +13379,8 @@ function Stat({
         </div>
     );
 }
+
+
 ```
 
 ### `components/filters/BrandFilter.tsx`
@@ -13837,59 +14067,147 @@ export default function GearSort() {
 
 ```typescript
 import { findAccessibleBuild } from "@/lib/build-access";
-// components/Navbar.tsx
-import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import { auth, signIn } from "@/auth";
 import ProfileDropdown from "@/components/ProfileDropdown";
+import NavbarNavigation from "@/components/NavbarNavigation";
+
 export default async function Navbar() {
-    const cookieStore = await cookies();
-    const currentId = cookieStore.get("currentBuild")?.value;
-    const buildId = currentId ? (await findAccessibleBuild(currentId))?.id : undefined;
-    const session = await auth();
+  const cookieStore = await cookies();
+  const currentId = cookieStore.get("currentBuild")?.value;
+  const [access, session, categories] = await Promise.all([
+    currentId ? findAccessibleBuild(currentId) : Promise.resolve(null),
+    auth(),
+    prisma.category.findMany({
+      orderBy: { createdAt: "asc" },
+      select: { id: true, name: true, slug: true, subcategories: {
+        orderBy: { name: "asc" }, select: { id: true, name: true, slug: true },
+      } },
+    }),
+  ]);
 
-    return (
-        <header className="sticky top-0 z-50 bg-green-900 text-white shadow-md">
-            <div className="flex h-16 items-center justify-between px-10">
-                <Link href="/" className="text-2xl font-bold text-white">🏕 TrailPicker</Link>
-
-                <nav className="flex items-center gap-11 text-sm font-medium">
-                    <Link href={buildId ? `/build/${buildId}` : "/build"} className="text-white text-lg font-semibold hover:text-gray-200 hover:underline">Builder</Link>
-                    <Link href="/gear" className="text-white text-lg font-semibold hover:text-gray-200 hover:underline">Gear</Link>
-                    <Link href="/marketplace" className="text-white text-lg font-semibold hover:text-gray-200 hover:underline">Marketplace</Link>
-                    <Link href="/community" className="text-white text-lg font-semibold hover:text-gray-200 hover:underline">Community</Link>
-                    <Link href="/guide" className="text-white text-lg font-semibold hover:text-gray-200 hover:underline">Guides</Link>
-                </nav>
-
-                {session?.user ? (
-                    <ProfileDropdown
-                        name={session.user.name}
-                        email={session.user.email}
-                        image={session.user.image}
-                    />
-                ) : (
-                    <form action={async () => {
-                        "use server";
-                        await signIn("google");
-                    }}>
-                        <button className="
-            rounded-full
-            bg-white
-            px-5 py-2
-            text-sm font-semibold
-            text-green-950
-            hover:bg-green-100
-            cursor-pointer
-            transition
-        ">
-                            Sign in
-                        </button>
-                    </form>
-                )}
-            </div>
-        </header>
-    );
+  return <NavbarNavigation
+    builderHref={access ? `/build/${access.id}` : "/build"}
+    categories={categories}
+    account={session?.user ? <ProfileDropdown name={session.user.name} email={session.user.email} image={session.user.image} /> : (
+      <form action={async () => {
+        "use server";
+        await signIn("google");
+      }}>
+        <button className="whitespace-nowrap rounded-full bg-white px-3 py-2 text-sm font-semibold text-green-950 transition hover:bg-green-100 sm:px-5">Sign in</button>
+      </form>
+    )}
+  />;
 }
+
+```
+
+### `components/NavbarNavigation.tsx`
+
+```typescript
+"use client";
+
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ChevronDown, ChevronRight, Menu, Tent, X } from "lucide-react";
+
+type Category = { id: string; name: string; slug: string; subcategories: { id: string; name: string; slug: string }[] };
+const links = [{ name: "Marketplace", href: "/marketplace" }, { name: "Community", href: "/community" }, { name: "Guides", href: "/guide" }];
+
+export default function NavbarNavigation({ builderHref, categories, account }: {
+  builderHref: string; categories: Category[]; account: ReactNode;
+}) {
+  const [panel, setPanel] = useState<"gear" | "mobile" | null>(null);
+  const [mobileGear, setMobileGear] = useState(false);
+  const [selectedId, setSelectedId] = useState(categories[0]?.id ?? "");
+  const selected = categories.find(category => category.id === selectedId) ?? categories[0];
+  const headerRef = useRef<HTMLElement>(null);
+  const gearRef = useRef<HTMLButtonElement>(null);
+  const mobileRef = useRef<HTMLButtonElement>(null);
+  const pathname = usePathname();
+
+  function close() { setPanel(null); setMobileGear(false); }
+  useEffect(() => { setPanel(null); setMobileGear(false); }, [pathname]);
+  useEffect(() => {
+    if (!panel) return;
+    function outside(event: PointerEvent) {
+      if (!headerRef.current?.contains(event.target as Node)) close();
+    }
+    function escape(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setPanel(null); setMobileGear(false);
+        (panel === "gear" ? gearRef : mobileRef).current?.focus();
+      }
+    }
+    document.addEventListener("pointerdown", outside);
+    document.addEventListener("keydown", escape);
+    return () => { document.removeEventListener("pointerdown", outside); document.removeEventListener("keydown", escape); };
+  }, [panel]);
+  useEffect(() => {
+    // Close the old surface when crossing the desktop/mobile breakpoint.
+    const breakpoint = window.matchMedia("(min-width: 1280px)");
+    const reset = () => { setPanel(null); setMobileGear(false); };
+    breakpoint.addEventListener("change", reset);
+    return () => breakpoint.removeEventListener("change", reset);
+  }, []);
+
+  const navLink = "rounded-md px-3 py-2 text-sm font-semibold text-white transition hover:bg-green-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+  const categoriesPanel = <div className="grid sm:grid-cols-[220px_minmax(0,1fr)]">
+    <div className="border-b border-gray-200 bg-gray-50 p-3 sm:border-b-0 sm:border-r">
+      <p className="px-3 pb-3 pt-1 text-xs font-semibold uppercase tracking-wide text-gray-500">Shop by category</p>
+      <div className="grid grid-cols-2 gap-1 sm:grid-cols-1">
+        {categories.map(category => <button key={category.id} type="button" onClick={() => setSelectedId(category.id)} onFocus={() => setSelectedId(category.id)}
+          aria-pressed={selected?.id === category.id}
+          className={`flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition ${selected?.id === category.id ? "bg-green-900 text-white" : "text-gray-700 hover:bg-green-100"}`}>
+          {category.name}<ChevronRight size={16} className="shrink-0" />
+        </button>)}
+      </div>
+    </div>
+    <div className="min-w-0 p-5 sm:p-6">
+      {selected ? <>
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><h2 className="text-lg font-semibold text-gray-900">{selected.name}</h2>
+          <Link href={`/gear/${encodeURIComponent(selected.slug)}`} onClick={close} className="rounded-lg border border-green-800 px-3 py-2 text-xs font-semibold text-green-900 hover:bg-green-50">Browse {selected.name.toLowerCase()}</Link>
+        </div>
+        <div className="grid gap-1 md:grid-cols-2">
+          {selected.subcategories.map(subcategory => <Link key={subcategory.id} href={`/gear/${encodeURIComponent(selected.slug)}/${encodeURIComponent(subcategory.slug)}`} onClick={close}
+            className="flex items-center justify-between gap-3 rounded-lg px-3 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-900 focus-visible:outline-2 focus-visible:outline-green-800">
+            {subcategory.name}<ChevronRight size={16} className="shrink-0 text-gray-400" />
+          </Link>)}
+        </div>
+        {!selected.subcategories.length && <p className="text-sm text-gray-500">Browse this category to see its gear.</p>}
+      </> : <p className="text-sm text-gray-500">No gear categories yet.</p>}
+    </div>
+  </div>;
+
+  return <header ref={headerRef} className="sticky top-0 z-50 bg-green-900 text-white shadow-md">
+    <div className="mx-auto flex h-16 max-w-[110rem] items-center gap-2 px-3 sm:gap-4 sm:px-6 lg:px-8">
+      <Link href="/" onClick={close} className="flex shrink-0 items-center gap-2 text-lg font-bold tracking-tight sm:text-2xl"><Tent className="h-6 w-6 sm:h-7 sm:w-7" aria-hidden="true" />TrailPicker</Link>
+      <nav aria-label="Main navigation" className="ml-auto hidden items-center gap-1 xl:flex">
+        <Link href={builderHref} onClick={close} className={navLink}>Builder</Link>
+        <button ref={gearRef} type="button" onClick={() => setPanel(panel === "gear" ? null : "gear")} aria-expanded={panel === "gear"} aria-controls="gear-navigation" className={`${navLink} flex items-center gap-1.5`}>Gear<ChevronDown size={16} className={panel === "gear" ? "rotate-180" : ""} /></button>
+        {links.map(link => <Link key={link.href} href={link.href} onClick={close} className={navLink}>{link.name}</Link>)}
+      </nav>
+      <div className="ml-auto shrink-0 xl:ml-3">{account}</div>
+      <button ref={mobileRef} type="button" onClick={() => { setPanel(panel === "mobile" ? null : "mobile"); setMobileGear(false); }} aria-label={panel === "mobile" ? "Close navigation" : "Open navigation"} aria-expanded={panel === "mobile"} aria-controls="mobile-navigation" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg hover:bg-green-800 xl:hidden">
+        {panel === "mobile" ? <X size={22} /> : <Menu size={22} />}
+      </button>
+    </div>
+    {panel === "gear" && <div id="gear-navigation" className="absolute inset-x-0 top-full hidden border-b border-gray-200 bg-white text-gray-900 shadow-xl xl:block">
+      <div className="mx-auto max-h-[calc(100dvh-80px)] max-w-5xl overflow-y-auto">{categoriesPanel}</div>
+    </div>}
+    {panel === "mobile" && <nav id="mobile-navigation" aria-label="Mobile navigation" className="absolute inset-x-0 top-full max-h-[calc(100dvh-80px)] overflow-y-auto border-b border-green-800 bg-green-900 shadow-xl xl:hidden">
+      <div className="space-y-1 p-3">
+        <Link href={builderHref} onClick={close} className={`${navLink} block`}>Builder</Link>
+        <button type="button" onClick={() => setMobileGear(!mobileGear)} aria-expanded={mobileGear} aria-controls="mobile-gear-navigation" className={`${navLink} flex w-full items-center justify-between`}>Gear<ChevronDown size={16} className={mobileGear ? "rotate-180" : ""} /></button>
+        {mobileGear && <div id="mobile-gear-navigation" className="overflow-hidden rounded-xl bg-white text-gray-900">{categoriesPanel}</div>}
+        {links.map(link => <Link key={link.href} href={link.href} onClick={close} className={`${navLink} block`}>{link.name}</Link>)}
+      </div>
+    </nav>}
+  </header>;
+}
+
 ```
 
 ### `components/profile/BuildCard.tsx`
@@ -14099,6 +14417,8 @@ export default function ProfileDropdown({
 
             <button
                 onClick={() => setOpen(!open)}
+                aria-label="Account menu"
+                aria-expanded={open}
                 className="
         flex items-center gap-3
         rounded-full
@@ -14139,7 +14459,7 @@ export default function ProfileDropdown({
                 )}
 
                 <div className="hidden text-left sm:block">
-                    <p className="text-sm font-semibold text-white leading-none">
+                    <p className="max-w-32 truncate text-sm font-semibold text-white leading-none">
                         {name ?? "Explorer"}
                     </p>
 
@@ -14159,8 +14479,8 @@ export default function ProfileDropdown({
             {open && (
                 <div
                     className="
-                        absolute right-0 mt-3
-                        w-72
+                        fixed right-3 top-16 mt-3 sm:absolute sm:right-0 sm:top-full
+                        w-72 max-w-[calc(100vw-24px)]
                         overflow-hidden
                         rounded-2xl
                         border border-green-200/20
@@ -14273,6 +14593,7 @@ export default function ProfileDropdown({
         </div>
     );
 }
+
 ```
 
 ### `components/SearchBar.tsx`
@@ -15806,6 +16127,63 @@ export function getDestinationRegions() {
 }
 ```
 
+### `lib/gear-picker.ts`
+
+```typescript
+export type PickerSearch = Record<string, string | string[] | undefined>;
+
+export function pickerValue(value: string | string[] | undefined): string {
+  return (Array.isArray(value) ? value[0] : value) ?? "";
+}
+
+export function pickerLimit(value: string | string[] | undefined): number | undefined {
+  const text = pickerValue(value).trim();
+  if (!text) return undefined;
+  const number = Number(text);
+  return Number.isFinite(number) && number >= 0 ? number : undefined;
+}
+
+export function pickerWeight(value: string | string[] | undefined): number | undefined {
+  const limit = pickerLimit(value);
+  // Prisma Int filters cannot accept fractions or numbers beyond signed 32-bit.
+  return limit === undefined ? undefined : Math.min(Math.floor(limit), 2147483647);
+}
+
+export function pickerHref(path: string, filters: PickerSearch, subcategory: string): string {
+  const query = new URLSearchParams();
+  for (const key of ["q", "brand", "maxWeight", "maxPrice", "sort", "direction"]) {
+    const values = filters[key];
+    for (const value of Array.isArray(values) ? values : [values]) {
+      if (value) query.append(key, value);
+    }
+  }
+  if (subcategory) query.set("subcategory", subcategory);
+  return query.size ? `${path}?${query}` : path;
+}
+
+```
+
+### `lib/gear-selection-actions.ts`
+
+```typescript
+"use server";
+
+import { prisma } from "@/lib/prisma";
+import { requireBuildAccess, setCurrentBuild } from "@/lib/build-access";
+import { redirect } from "next/navigation";
+
+export async function openGearSelection(buildId: string, category: string) {
+  const access = await requireBuildAccess(buildId);
+  const type = await prisma.category.findUnique({
+    where: { slug: category.toLowerCase() }, select: { slug: true },
+  });
+  if (!type) throw new Error("Category not found.");
+  await setCurrentBuild(access.id);
+  redirect(`/gear/${encodeURIComponent(type.slug)}`);
+}
+
+```
+
 ### `lib/guest-build-token.ts`
 
 ```typescript
@@ -15844,6 +16222,26 @@ export function verifyGuestBuildToken(buildId: string, token: string | undefined
   const actual = Buffer.from(match[3]);
   const expected = Buffer.from(signature(buildId, `${match[1]}:${match[2]}`));
   return actual.length === expected.length && timingSafeEqual(actual, expected);
+}
+
+```
+
+### `lib/legacy-gear-selection.ts`
+
+```typescript
+import { requireBuildPageAccess } from "@/lib/build-access";
+import { redirect } from "next/navigation";
+import type { GearBrowseSearch } from "@/components/builder/OriginalGearPicker";
+
+export async function redirectGearSelection(buildId: string, category: string, filters: GearBrowseSearch, subcategory?: string): Promise<never> {
+  await requireBuildPageAccess(buildId);
+  const query = new URLSearchParams();
+  for (const key of ["brand", "maxWeight", "maxPrice", "sort", "direction"]) {
+    const value = filters[key];
+    if (value) query.set(key, Array.isArray(value) ? value.join(",") : value);
+  }
+  query.set("build", buildId);
+  return redirect(`/gear/${encodeURIComponent(category)}${subcategory ? "/" + encodeURIComponent(subcategory) : ""}?${query}`);
 }
 
 ```
@@ -16099,12 +16497,1249 @@ export function getDaysUntil(start: Date | null): number | null {
 }
 ```
 
+### `lib/waypoint-map.ts`
+
+```typescript
+import type { Waypoint } from "@/lib/trip-planner";
+
+export const WAYPOINT_TYPES = [
+  { kind: "trailhead", label: "Trailhead", color: "#166534", path: "M5 21V3m0 0h13l-3 4 3 4H5" },
+  { kind: "camp", label: "Campsite", color: "#b45309", path: "m3 20 9-16 9 16H3Zm6 0 3-6 3 6M9 3l3 1 3-1" },
+  { kind: "water", label: "Water", color: "#0369a1", path: "M12 3s-7 8-7 12a7 7 0 0 0 14 0c0-4-7-12-7-12Z" },
+  { kind: "waypoint", label: "Stop", color: "#475569", path: "M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 1 1 16 0ZM12 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" },
+] as const;
+
+export function waypointType(kind: Waypoint["kind"]) {
+  return WAYPOINT_TYPES.find(type => type.kind === kind) ?? WAYPOINT_TYPES[3];
+}
+
+export function nextWaypointName(points: Waypoint[], kind: Waypoint["kind"]) {
+  const label = waypointType(kind).label;
+  const used = new Set(points.map(point => point.name.trim().toLocaleLowerCase()));
+  let n = 1;
+  while (used.has(`${label} ${n}`.toLocaleLowerCase())) n++;
+  return `${label} ${n}`;
+}
+
+export function validCoordinates(lat: unknown, lng: unknown): lat is number {
+  return typeof lat === "number" && Number.isFinite(lat) && Math.abs(lat) <= 90 &&
+    typeof lng === "number" && Number.isFinite(lng) && Math.abs(lng) <= 180;
+}
+
+export function moveWaypoint(points: Waypoint[], index: number, delta: -1 | 1): Waypoint[] {
+  const next = index + delta;
+  if (index < 0 || index >= points.length || next < 0 || next >= points.length) return points;
+  const result = [...points];
+  [result[index], result[next]] = [result[next], result[index]];
+  return result;
+}
+
+export function routeForSave(points: Waypoint[]): Waypoint[] {
+  if (points.length > 200) throw new Error("A route can have up to 200 stops.");
+  const ids = new Set<string>();
+  return points.map(point => {
+    if (!point.id || point.id.length > 200 || ids.has(point.id)) throw new Error("One of the stops has an invalid ID. Reload the route and try again.");
+    ids.add(point.id);
+    if (!validCoordinates(point.lat, point.lng)) throw new Error("One of the stops has an invalid map position.");
+    if (!WAYPOINT_TYPES.some(type => type.kind === point.kind)) throw new Error("Choose a valid stop type.");
+    const name = point.name.trim();
+    if (!name || name.length > 200) throw new Error("Give each stop a name between 1 and 200 characters.");
+    if (point.elevationM !== null && (!Number.isFinite(point.elevationM) || point.elevationM < -500 || point.elevationM > 9000)) {
+      throw new Error("Optional elevation must be between -500 and 9000 m.");
+    }
+    return { id: point.id, name, kind: point.kind, lat: point.lat, lng: point.lng, elevationM: point.elevationM };
+  });
+}
+
+export type PlaceResult = { id: string; name: string; detail: string; lat: number; lng: number };
+const record = (value: unknown): Record<string, unknown> | null => value !== null && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : null;
+
+export function parsePlaceResults(value: unknown): PlaceResult[] {
+  const root = record(value);
+  if (!root || !Array.isArray(root.features)) return [];
+  const results: PlaceResult[] = [];
+  const seen = new Set<string>();
+  for (const feature of root.features) {
+    const row = record(feature), geometry = record(row?.geometry), properties = record(row?.properties);
+    if (!properties || geometry?.type !== "Point" || !Array.isArray(geometry.coordinates)) continue;
+    const [lng, lat] = geometry.coordinates;
+    if (!validCoordinates(lat, lng)) continue;
+    const name = [properties.name, properties.street, properties.city].find(text => typeof text === "string" && text.trim());
+    if (typeof name !== "string") continue;
+    const detail = [...new Set([properties.city, properties.state, properties.country].filter((text): text is string => typeof text === "string" && text.trim() !== "" && text !== name))].join(", ");
+    const id = `${String(properties.osm_type ?? "place")}:${String(properties.osm_id ?? "")}:${lat}:${lng}`;
+    if (seen.has(id)) continue;
+    seen.add(id);
+    results.push({ id, name: name.trim().slice(0, 200), detail: detail.slice(0, 400), lat, lng: lng as number });
+    if (results.length === 6) break;
+  }
+  return results;
+}
+
+// Only fixed SVG paths, colors, and a numeric order enter marker HTML.
+// Names from search/user input are rendered by React, never interpolated here.
+export function waypointMarkerHtml(kind: Waypoint["kind"], order: number, selected: boolean) {
+  const type = waypointType(kind);
+  const count = Math.max(1, Math.min(200, Math.trunc(Number.isFinite(order) ? order : 1)));
+  return `<div style="position:relative;display:flex;align-items:center;justify-content:center;width:34px;height:34px;border:2px solid white;border-radius:50%;background:${type.color};box-shadow:0 2px 6px #0004${selected ? ",0 0 0 4px #ffffffcc,0 0 0 6px " + type.color : ""}"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${type.path}"/></svg><span style="position:absolute;right:-7px;bottom:-5px;display:flex;align-items:center;justify-content:center;min-width:17px;height:17px;padding:0 3px;border:1px solid #e2e8f0;border-radius:9px;background:white;color:#334155;font:700 10px system-ui">${count}</span></div>`;
+}
+
+```
+
+### `mobile-update/files/app/build/[id]/page.tsx`
+
+```typescript
+import { getBuildViewAccess } from "@/lib/build-visibility";
+import PrivateBuildNotice from "@/components/builder/PrivateBuildNotice";
+import PublicBuildView from "@/components/builder/PublicBuildView";
+import { claimCurrentBuild } from "@/app/build/actions";
+import { currentBuildUserId } from "@/lib/build-access";
+
+import { prisma } from "@/lib/prisma";
+import { notFound } from "next/navigation";
+import { calculateWeightBreakdown, calculateTotalCost } from "@/lib/calculations";
+import { type BuildForCompat, type CompatItem } from "@/lib/compatibility";
+import WeightSummary from "@/components/builder/WeightSummary";
+import BuildRow from "@/components/builder/BuildRow";
+import BuildHeader from "@/components/builder/BuildHeader";
+import CostSummary from "@/components/builder/CostSummary";
+import ShareBar from "@/components/builder/ShareBar";
+import CompatibilityBar from "@/components/builder/CompatibilityBar";
+import CompatibilityDetails from "@/components/builder/CompatibilityDetails";
+import {
+  evaluateCompatibility,
+  summarizeCompatibility,
+} from "@/lib/compatibility";
+import TripPlanner from "@/components/builder/TripPlanner/TripPlanner";
+
+export default async function BuildPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ tab?: string }>;
+}) {
+  const { id } = await params;
+  const view = await getBuildViewAccess(id);
+  if (view.status === "missing") notFound();
+  if (view.status === "private") return <PrivateBuildNotice buildId={id} />;
+  const access = view.access;
+  const canClaim = view.canEdit && access?.userId === null && !!(await currentBuildUserId());
+  const { tab } = await searchParams;
+
+  const activeTab = tab === "trip" ? "trip" : "gear";
+
+  const build = await prisma.build.findUnique({
+    where: view.canEdit && access ? { id, userId: access.userId } : { id, isPublic: true },
+    include: {
+      items: {
+        include: {
+          gear: {
+            include: {
+              brand: true,
+              category: true,
+              subcategory: true,
+              images: true,
+            },
+          },
+        },
+      },
+      days: { orderBy: { date: "asc" } },
+    },
+  });
+
+  if (!build) notFound();
+
+  const { base, consumable, worn, total } = calculateWeightBreakdown(build.items);
+  const totalCost = calculateTotalCost(build.items);
+
+  const compatBuild: BuildForCompat = {
+    people: build.people,
+    minTemperature: build.minTemperature,
+    conditions: build.conditions,
+    startDate: build.startDate,
+    endDate: build.endDate,
+  };
+
+  const compatItems: CompatItem[] = build.items.map((item) => ({
+    id: item.id,
+    quantity: item.quantity,
+    isConsumable: item.isConsumable,
+    isWorn: item.isWorn,
+    customCategory: item.customCategory,
+    gearNameSnapshot: item.gearNameSnapshot,
+    weightSnapshot: item.weightSnapshot,
+    priceSnapshot: item.priceSnapshot,
+    gear: item.gear
+      ? {
+        id: item.gear.id,
+        name: item.gear.name,
+        weight_g: item.gear.weight_g,
+        price_cad: item.gear.price_cad,
+        capacity_l: item.gear.capacity_l,
+        frame_type: item.gear.frame_type,
+        waterproof: item.gear.waterproof,
+        temperature_rating: item.gear.temperature_rating,
+        season: item.gear.season,
+        category: { name: item.gear.category.name },
+        subcategory: item.gear.subcategory
+          ? { name: item.gear.subcategory.name, slug: item.gear.subcategory.slug }
+          : null,
+      }
+      : null,
+  }));
+  const issues = evaluateCompatibility(compatBuild, compatItems, build.days);
+  const summary = summarizeCompatibility(issues);
+
+  if (!view.canEdit) {
+    return <PublicBuildView build={{ ...build, tripLogistics: undefined, days: build.days.map(day => ({ ...day, reservation: null })) }} activeTab={activeTab}
+      compatBuild={compatBuild} compatItems={compatItems}
+      issueCount={summary.errors + summary.warnings} />;
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {canClaim && (
+        <form action={claimCurrentBuild} className="mx-5 mt-4 flex items-center justify-between gap-3 max-md:flex-wrap rounded-md border border-green-200 bg-green-50 p-3 text-sm">
+          <input type="hidden" name="buildId" value={build.id} />
+          <span>This guest build is saved in this browser for 30 days.</span>
+          <button type="submit" className="rounded-md bg-green-800 px-3 py-2 font-medium text-white">Save to my account</button>
+        </form>
+      )}
+      <BuildHeader
+        buildId={build.id}
+        name={build.name}
+        active={activeTab}
+        issueCount={summary.errors + summary.warnings}
+      />
+
+      <div className="mx-auto mt-4 max-w-screen-2xl px-4">
+        <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+
+          <CompatibilityBar
+            build={compatBuild}
+            items={compatItems}
+            days={build.days}
+            totalWeight={total}
+          />
+
+          <div className="border-t border-gray-100">
+            <ShareBar
+              buildId={build.id}
+              buildName={build.name}
+              isPublic={build.isPublic}
+              createdAt={build.createdAt}
+              updatedAt={build.updatedAt}
+            />
+          </div>
+
+        </div>
+      </div>
+      <main className="max-w-screen-2xl mx-auto p-2">
+
+        {activeTab === "trip" ? (
+
+          <TripPlanner
+            build={{
+              id: build.id,
+              location: build.location,
+              locationLat: build.locationLat,
+              locationLng: build.locationLng,
+              startDate: build.startDate,
+              endDate: build.endDate,
+              people: build.people,
+              minTemperature: build.minTemperature,
+              conditions: build.conditions,
+              days: build.days,
+              routeWaypoints: build.routeWaypoints,
+              tripLogistics: build.tripLogistics,
+            }}
+            issues={issues}
+          />
+
+        ) : (
+
+          <>
+            <div className="mt-10 overflow-hidden rounded-xl bg-white">
+              <div className="grid max-md:hidden grid-cols-[180px_minmax(0,1fr)_100px_100px_100px] p-3 text-xs bg-gray-50 font-light text-gray-600">
+                <div>Component</div>
+                <div>Selection</div>
+                <div className="text-center pr-5">Weight</div>
+                <div className="text-center pr-5">Price</div>
+                <div></div>
+              </div>
+
+              <BuildRow name="Backpack" gearLink="/gear/packs" selectCategory="packs" categoryName="Packs" buildId={build.id}
+                items={build.items.filter((i) => i.gear?.category.name === "Packs" || i.customCategory === "Packs")} />
+              <BuildRow name="Shelter" gearLink="/gear/shelter" selectCategory="shelter" categoryName="Shelter" buildId={build.id}
+                items={build.items.filter((i) => i.gear?.category.name === "Shelter" || i.customCategory === "Shelter")} />
+              <BuildRow name="Sleep System" gearLink="/gear/sleep" selectCategory="sleep" categoryName="Sleep" buildId={build.id}
+                items={build.items.filter((i) => i.gear?.category.name === "Sleep" || i.customCategory === "Sleep")} />
+              <BuildRow name="Cooking" gearLink="/gear/cooking" selectCategory="cooking" categoryName="Cooking" buildId={build.id}
+                items={build.items.filter((i) => i.gear?.category.name === "Cooking" || i.customCategory === "Cooking")} />
+              <BuildRow name="Water" gearLink="/gear/water" selectCategory="water" categoryName="Water" buildId={build.id}
+                items={build.items.filter((i) => i.gear?.category.name === "Water" || i.customCategory === "Water")} />
+              <BuildRow name="Clothing" gearLink="/gear/clothing" selectCategory="clothing" categoryName="Clothing" buildId={build.id}
+                items={build.items.filter((i) => i.gear?.category.name === "Clothing" || i.customCategory === "Clothing")} />
+              <BuildRow name="Electronics" gearLink="/gear/electronics" selectCategory="electronics" categoryName="Electronics" buildId={build.id}
+                items={build.items.filter((i) => i.gear?.category.name === "Electronics" || i.customCategory === "Electronics")} />
+              <BuildRow name="Miscellaneous" gearLink="/gear/misc" selectCategory="misc" categoryName="Misc" buildId={build.id}
+                items={build.items.filter((i) => i.gear?.category.name === "Misc" || i.customCategory === "Misc")} />
+
+              <CostSummary totalCost={totalCost} />
+            </div>
+
+            <WeightSummary
+              base={base}
+              consumable={consumable}
+              worn={worn}
+              total={total}
+              totalCost={totalCost}
+            />
+
+            <CompatibilityDetails
+              build={compatBuild}
+              items={compatItems}
+              days={build.days}
+            />
+          </>
+
+        )}
+
+      </main>
+
+    </div>
+  );
+}
+
+
+
+```
+
+### `mobile-update/files/components/builder/AddCustomItemForm.tsx`
+
+```typescript
+"use client";
+
+import { useState } from "react";
+import { addCustomItem } from "@/app/build/actions";
+
+type Props = {
+    buildId: string;
+    category: string;
+};
+
+export default function AddCustomItemForm({
+    buildId,
+    category,
+}: Props) {
+    const [open, setOpen] = useState(false);
+
+    if (!open) {
+        return (
+            <button
+                type="button"
+                onClick={() => setOpen(true)}
+                className="inline-block text-sm text-gray-500 cursor-pointer hover:text-gray-700 hover:underline"
+            >
+                + Add custom item
+            </button>
+        );
+    }
+
+    return (
+        <form
+            action={addCustomItem}
+            className="mt-2 max-md:w-full max-md:min-w-0 max-md:flex-none flex flex-wrap items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 p-3"
+        >
+            <input type="hidden" name="buildId" value={buildId} />
+            <input type="hidden" name="category" value={category} />
+
+            <input
+                name="name"
+                placeholder="Item name"
+                required
+                className="flex-1 min-w-[140px] max-md:basis-full max-md:min-w-0 rounded-md border border-gray-300 px-2 py-1 max-md:min-h-9 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+            />
+
+            <input
+                name="weight_g"
+                type="number"
+                placeholder="Weight (g)"
+                className="w-24 max-md:min-w-0 max-md:flex-1 rounded-md border border-gray-300 px-2 py-1 max-md:min-h-9 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+            />
+
+            <input
+                name="price_cad"
+                type="number"
+                step="0.01"
+                placeholder="Price ($)"
+                className="w-24 rounded-md border border-gray-300 px-2 py-1 max-md:min-h-9 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+            />
+
+            <div className="flex gap-2">
+                <button
+                    type="submit"
+                    className="rounded-md bg-blue-600 px-3 py-1 text-sm text-white cursor-pointer hover:bg-blue-700 transition"
+                >
+                    Add
+                </button>
+
+                <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    className="rounded-md px-3 py-1 text-sm text-gray-500 cursor-pointer hover:text-gray-700"
+                >
+                    Cancel
+                </button>
+            </div>
+        </form>
+    );
+}
+
+
+```
+
+### `mobile-update/files/components/builder/BuildHeader.tsx`
+
+```typescript
+import Link from "next/link";
+
+type Props = {
+  buildId: string;
+  name: string;
+  active: "gear" | "trip";
+  issueCount: number;
+};
+
+export default function BuildHeader({ buildId, name, active, issueCount }: Props) {
+  const tabs = [
+    { key: "gear" as const, label: "Gear", href: `/build/${buildId}` },
+    { key: "trip" as const, label: "Trip Planner", href: `/build/${buildId}?tab=trip` },
+  ];
+
+  return (
+    <div className="w-full bg-green-700 shadow-sm">
+      <div className="max-w-screen-2xl mx-auto px-6 pt-6 pb-0">
+        <h1 className="text-3xl font-bold text-white text-center mb-5 max-md:break-words max-md:[overflow-wrap:anywhere]">{name}</h1>
+
+        <div className="flex justify-center gap-2">
+          {tabs.map((t) => (
+            <Link
+              key={t.key}
+              href={t.href}
+              className={`
+                relative px-5 py-2.5 text-sm font-semibold rounded-t-lg transition
+                ${active === t.key
+                  ? "bg-gray-50 text-green-800"
+                  : "text-white/80 hover:text-white hover:bg-white/10"}
+              `}
+            >
+              {t.label}
+              {t.key === "gear" && issueCount > 0 && (
+                <span className="ml-2 rounded-full bg-amber-400 text-amber-950 text-[10px] font-bold px-1.5 py-0.5">
+                  {issueCount}
+                </span>
+              )}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+```
+
+### `mobile-update/files/components/builder/BuildRow.tsx`
+
+```typescript
+import { openGearSelection } from "@/lib/gear-selection-actions";
+import Link from "next/link";
+import RemoveGearButton from "@/components/builder/RemoveGearButton";
+import QuantityStepper from "@/components/builder/QuantityStepper";
+import AddCustomItemForm from "@/components/builder/AddCustomItemForm";
+import ItemFlagToggle from "@/components/builder/ItemCategoryToggle";
+import Image from "next/image";
+
+type Props = {
+    name: string;
+    gearLink: string;
+    selectCategory: string;
+    categoryName: string;
+    buildId: string;
+
+    items: {
+        id: string;
+        quantity: number;
+        isConsumable: boolean;
+        isWorn: boolean;
+        gearNameSnapshot: string | null;
+        weightSnapshot: number | null;
+        priceSnapshot: number | null;
+        gear: {
+            id: string;
+            name: string;
+            weight_g: number | null;
+            price_cad: number | null;
+
+            images: {
+                id: string;
+                url: string;
+                isPrimary: boolean;
+            }[];
+        } | null;
+    }[];
+};
+
+export default function BuildRow({
+    name,
+    gearLink,
+    selectCategory,
+    categoryName,
+    buildId,
+    items,
+}: Props) {
+    return (
+        <div
+            className="
+            grid
+            grid-cols-[180px_minmax(0,1fr)_100px_100px_100px]
+            max-md:grid-cols-1 max-md:gap-3
+            items-start
+            border-t
+            border-gray-400
+            px-3
+            py-4
+            hover:bg-gray-50
+            bg-gray-50
+            transition
+            "
+        >
+            {/* Component */}
+            <Link
+                href={gearLink}
+                className="font-semibold text-blue-500 underline text-sm hover:text-blue-700 transition"
+            >
+                {name}
+            </Link>
+
+            <div className="col-span-4 max-md:col-span-1 max-md:min-w-0">
+                {items.length === 0 ? (
+                    <div className="flex items-center gap-4 max-md:flex-wrap max-md:items-start max-md:gap-3">
+                        <form action={openGearSelection.bind(null, buildId, selectCategory)}><button type="submit" className="
+                inline-block
+                rounded-lg
+                bg-blue-500
+                px-3
+                py-1.5
+                text-white
+                text-sm
+                hover:bg-blue-700
+                transition
+            "
+                        >Add Gear</button></form>
+
+                        <AddCustomItemForm
+                            buildId={buildId}
+                            category={categoryName}
+                        />
+                    </div>
+                ) : (
+                    <div>
+                        <div className="divide-y divide-gray-100">
+                            {items.map((item) => {
+                                const itemName =
+                                    item.gear?.name ?? item.gearNameSnapshot ?? "Custom item";
+                                const weight =
+                                    item.gear?.weight_g ?? item.weightSnapshot;
+                                const price =
+                                    item.gear?.price_cad ?? item.priceSnapshot;
+
+                                return (
+                                    <div
+                                        key={item.id}
+                                        className="grid grid-cols-[minmax(0,1fr)_100px_100px_100px] max-md:grid-cols-2 max-md:gap-x-3 max-md:gap-y-3 items-center py-4 first:pt-0 last:pb-0"
+                                    >
+                                        <div className="flex items-center gap-3 min-w-0 max-md:col-span-2 max-md:items-start">
+
+                                            {item.gear?.images[0] && (
+                                                <div className="
+                                                    relative
+                                                    w-12
+                                                    aspect-square
+                                                    rounded-lg
+                                                    overflow-hidden
+                                                    bg-white
+                                                    border
+                                                    border-gray-200
+                                                    shrink-0
+                                                ">
+                                                    <Image
+                                                        src={item.gear.images[0].url}
+                                                        alt={itemName}
+                                                        fill
+                                                        className="object-contain"
+                                                    />
+                                                </div>
+                                            )}
+
+                                            <div className="flex flex-wrap items-center gap-2 min-w-0 max-md:flex-1 max-md:gap-y-2">
+                                                {item.gear ? (
+                                                    <Link
+                                                        href={`/gear/${item.gear.id}`}
+                                                        className="block font-bold truncate hover:underline hover:text-blue-600 max-md:w-full max-md:whitespace-normal max-md:break-words max-md:[overflow-wrap:anywhere]"
+                                                    >
+                                                        {itemName}
+                                                    </Link>
+                                                ) : (
+                                                    <span className="block font-bold italic text-gray-700 truncate max-md:w-full max-md:whitespace-normal max-md:break-words max-md:[overflow-wrap:anywhere]">
+                                                        {itemName}
+                                                    </span>
+                                                )}
+
+                                                <QuantityStepper
+                                                    itemId={item.id}
+                                                    buildId={buildId}
+                                                    quantity={item.quantity}
+                                                />
+
+                                                <ItemFlagToggle
+                                                    itemId={item.id}
+                                                    buildId={buildId}
+                                                    isConsumable={item.isConsumable}
+                                                    isWorn={item.isWorn}
+                                                />
+
+                                            </div>
+                                        </div>
+
+                                        <div className="text-center pr-5 max-md:pr-0 max-md:text-left max-md:break-words">
+                                            <span className="hidden max-md:block max-md:text-xs max-md:text-gray-500">Weight</span>
+                                            {weight != null ? `${weight * item.quantity}g` : "—"}
+                                        </div>
+
+                                        <div className="text-center pr-5 max-md:pr-0 max-md:text-left max-md:break-words">
+                                            <span className="hidden max-md:block max-md:text-xs max-md:text-gray-500">Price</span>
+                                            {price != null
+                                                ? `$${(price * item.quantity).toFixed(2)}`
+                                                : "—"}
+                                        </div>
+
+                                        <div className="flex items-center justify-end gap-1 max-md:col-span-2 max-md:gap-2 max-md:[&_button]:min-h-9 max-md:[&_button]:min-w-9">
+                                            {item.gear && (
+                                                <Link
+                                                    href="#"
+                                                    className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700 transition max-md:min-h-9 max-md:inline-flex max-md:items-center"
+                                                >
+                                                    Buy
+                                                </Link>
+                                            )}
+                                            <RemoveGearButton itemId={item.id} buildId={buildId} />
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <div className="mt-2 flex items-center gap-4 max-md:flex-wrap max-md:items-start max-md:gap-3">
+                            <form action={openGearSelection.bind(null, buildId, selectCategory)}><button type="submit" className="inline-block text-sm text-blue-600 hover:underline"
+                            >+ Add Additional</button></form>
+
+                            <AddCustomItemForm buildId={buildId} category={categoryName} />
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}
+
+
+
+```
+
+### `mobile-update/files/components/builder/CompatibilityBar.tsx`
+
+```typescript
+import Link from "next/link";
+//components/builder/CompatibilityBar.tsx
+import {
+    evaluateCompatibility,
+    summarizeCompatibility,
+    type BuildForCompat,
+    type CompatItem,
+    type TripDayForCompat,
+} from "@/lib/compatibility";
+
+type Props = {
+    build: BuildForCompat;
+    items: CompatItem[];
+    days?: TripDayForCompat[];
+    totalWeight: number;
+};
+
+const statusStyles = {
+    ok: { bar: "bg-emerald-50 border-emerald-200 text-emerald-900", dot: "bg-emerald-500", label: "Compatible" },
+    warning: { bar: "bg-amber-100 border-amber-200 text-amber-900", dot: "bg-amber-500", label: "Warning" },
+    error: { bar: "bg-red-100 border-red-200 text-red-900", dot: "bg-red-500", label: "Issue" },
+};
+
+export default function CompatibilityBar({ build, items, days = [], totalWeight }: Props) {
+    const issues = evaluateCompatibility(build, items, days);
+    const summary = summarizeCompatibility(issues);
+    const style = statusStyles[summary.status];
+
+    return (
+    <div className={`flex items-center justify-between max-md:flex-wrap max-md:gap-3 px-5 py-3 text-sm ${style.bar}`}>
+            <div className="flex items-center gap-2 max-md:flex-wrap max-md:min-w-0">
+                <span className={`h-2 w-2 rounded-full ${style.dot}`} />
+                <span className="font-semibold">{style.label}</span>
+
+                {summary.total > 0 ? (
+                    <span>
+                        {summary.errors > 0 && `${summary.errors} issue${summary.errors !== 1 ? "s" : ""}`}
+                        {summary.errors > 0 && summary.warnings > 0 && ", "}
+                        {summary.warnings > 0 && `${summary.warnings} warning${summary.warnings !== 1 ? "s" : ""}`}
+                        {" — "}
+                        <Link href="#compatibility-details" className="underline font-medium">
+                            see details
+                        </Link>
+                    </span>
+                ) : (
+                    <span className="opacity-70">No issues found</span>
+                )}
+            </div>
+
+            <div className="rounded-md bg-white/60 px-3 py-1 text-xs font-semibold">
+                Total weight: {(totalWeight / 1000).toFixed(1)}kg
+            </div>
+        </div>
+    );
+}
+
+
+```
+
+### `mobile-update/files/components/builder/CostSummary.tsx`
+
+```typescript
+type Props = {
+    totalCost: number;
+};
+
+export default function CostSummary({ totalCost }: Props) {
+    return (
+        <div
+            className="
+    grid
+    grid-cols-[180px_minmax(0,1fr)_100px_100px_100px]
+    max-md:grid-cols-[auto_minmax(0,1fr)] max-md:gap-3
+    items-center
+    border-t
+    border-gray-400
+    px-3
+    py-4
+    bg-gray-50
+    "
+        >
+            <div className="col-span-3 text-right pr-5 max-md:col-span-1 max-md:text-left max-md:pr-0 text-lg font-medium text-gray-900">
+                Total Cost:
+            </div>
+
+            <div className="text-center pr-5 text-2xl font-bold max-md:text-right max-md:pr-0 max-md:break-words max-md:text-xl">
+                ${totalCost.toFixed(2)}
+            </div>
+
+            <div className="max-md:hidden" />
+        </div>
+    );
+}
+
+
+```
+
+### `mobile-update/files/components/builder/ItemCategoryToggle.tsx`
+
+```typescript
+"use client";
+
+import { useOptimistic, useTransition } from "react";
+import { setItemCategory } from "@/app/build/actions";
+
+type Category = "base" | "worn" | "consumable";
+
+type Props = {
+    itemId: string;
+    buildId: string;
+    isConsumable: boolean;
+    isWorn: boolean;
+};
+
+export default function ItemCategoryToggle({
+    itemId,
+    buildId,
+    isConsumable,
+    isWorn,
+}: Props) {
+    const [isPending, startTransition] = useTransition();
+
+    const initial: Category = isWorn
+        ? "worn"
+        : isConsumable
+            ? "consumable"
+            : "base";
+
+    const [optimisticCategory, setOptimisticCategory] = useOptimistic(
+        initial,
+        (_state: Category, next: Category) => next
+    );
+
+    function select(category: Category) {
+        const next = optimisticCategory === category ? "base" : category;
+
+        startTransition(async () => {
+            setOptimisticCategory(next);
+
+            const formData = new FormData();
+            formData.append("itemId", itemId);
+            formData.append("buildId", buildId);
+            formData.append("category", next);
+
+            await setItemCategory(formData);
+        });
+    }
+
+    return (
+        <div
+            className={`
+                inline-flex items-center rounded-full border border-gray-200 bg-gray-50 p-0.5
+                transition ${isPending ? "opacity-60" : ""}
+            `}
+        >
+            <button
+                type="button"
+                onClick={() => select("worn")}
+                aria-pressed={optimisticCategory === "worn"}
+                className={`
+                    rounded-full px-2 py-0.5 max-md:min-h-9 max-md:px-3 text-[10px] font-semibold
+                    cursor-pointer transition whitespace-nowrap
+                    ${optimisticCategory === "worn"
+                        ? "bg-amber-400 text-amber-950"
+                        : "text-gray-400 hover:text-gray-600"
+                    }
+                `}
+            >
+                Worn
+            </button>
+
+            <button
+                type="button"
+                onClick={() => select("consumable")}
+                aria-pressed={optimisticCategory === "consumable"}
+                className={`
+                    rounded-full px-2 py-0.5 max-md:min-h-9 max-md:px-3 text-[10px] font-semibold
+                    cursor-pointer transition whitespace-nowrap
+                    ${optimisticCategory === "consumable"
+                        ? "bg-emerald-400 text-emerald-950"
+                        : "text-gray-400 hover:text-gray-600"
+                    }
+                `}
+            >
+                Consumable
+            </button>
+        </div>
+    );
+}
+
+
+```
+
+### `mobile-update/files/components/builder/QuantityStepper.tsx`
+
+```typescript
+"use client";
+
+import { useOptimistic, useTransition } from "react";
+import { updateQuantity } from "@/app/build/actions";
+
+type Props = {
+    itemId: string;
+    buildId: string;
+    quantity: number;
+};
+
+export default function QuantityStepper({
+    itemId,
+    buildId,
+    quantity,
+}: Props) {
+    const [isPending, startTransition] = useTransition();
+
+    const [optimisticQuantity, setOptimisticQuantity] = useOptimistic(
+        quantity,
+        (_state: number, newValue: number) => newValue
+    );
+
+    function change(delta: number) {
+        const next = Math.max(1, optimisticQuantity + delta);
+
+        startTransition(async () => {
+            setOptimisticQuantity(next);
+
+            const formData = new FormData();
+            formData.append("itemId", itemId);
+            formData.append("buildId", buildId);
+            formData.append("delta", delta.toString());
+
+            await updateQuantity(formData);
+        });
+    }
+
+    return (
+        <div
+            className={`
+            flex items-center rounded-full border border-gray-300 bg-white shrink-0
+            transition
+            ${isPending ? "opacity-60" : ""}
+            `}
+        >
+            <button
+                type="button"
+                onClick={() => change(-1)}
+                disabled={optimisticQuantity <= 1}
+                aria-label="Decrease quantity"
+                className="
+                w-6 h-6 max-md:w-9 max-md:h-9
+                flex items-center justify-center
+                text-gray-500
+                hover:text-red-600
+                disabled:opacity-30
+                disabled:hover:text-gray-500
+                transition
+                cursor-pointer
+                "
+            >
+                −
+            </button>
+
+            <span className="w-6 text-center text-xs font-semibold text-gray-700 select-none">
+                {optimisticQuantity}
+            </span>
+
+            <button
+                type="button"
+                onClick={() => change(1)}
+                aria-label="Increase quantity"
+                className="
+                w-6 h-6 max-md:w-9 max-md:h-9
+                flex items-center justify-center
+                text-gray-500
+                hover:text-green-700
+                transition
+                cursor-pointer
+                "
+            >
+                +
+            </button>
+        </div>
+    );
+}
+
+
+```
+
+### `mobile-update/files/components/builder/ShareBar.tsx`
+
+```typescript
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { Copy, CopyCheck, Plus, Save } from "lucide-react";
+import BuildSettings from "@/components/builder/BuildSettings";
+import BuildDataTools from "@/components/builder/BuildDataTools";
+import { duplicateBuild } from "@/app/build/actions";
+
+type Props = {
+  buildId: string;
+  buildName: string;
+  isPublic: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+const btnClass =
+  "flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:border-gray-400 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50";
+
+export default function ShareBar({ buildId, buildName, isPublic, createdAt, updatedAt }: Props) {
+  const [copied, setCopied] = useState(false);
+  const shareUrl = typeof window !== "undefined" ? `${window.location.origin}/build/${buildId}` : `/build/${buildId}`;
+
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    } catch {
+      // The URL remains selectable if clipboard permission is blocked.
+    }
+  }
+
+  return (
+    <div className="flex flex-wrap items-center gap-2.5 px-5 py-4">
+      <div className="flex min-w-[280px] max-md:min-w-0 max-md:basis-full flex-1 items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 shadow-inner shadow-gray-100/70">
+        <button
+          type="button"
+          onClick={copyLink}
+          title={isPublic ? "Copy public link" : "Copy private link"}
+          className="shrink-0 rounded-md p-1 text-gray-400 transition hover:bg-white hover:text-green-800"
+        >
+          {copied ? <CopyCheck className="h-4 w-4 text-green-700" /> : <Copy className="h-4 w-4" />}
+        </button>
+        <input
+          readOnly
+          value={shareUrl}
+          onFocus={(event) => event.currentTarget.select()}
+          className="w-full max-md:min-w-0 truncate bg-transparent text-sm text-gray-700 outline-none"
+        />
+        <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${isPublic ? "bg-green-100 text-green-800" : "bg-gray-200 text-gray-600"}`}>
+          {isPublic ? "Public" : "Private"}
+        </span>
+      </div>
+
+      <BuildDataTools
+        buildId={buildId}
+        buildName={buildName}
+        createdAt={createdAt}
+        updatedAt={updatedAt}
+        buttonClassName={btnClass}
+      />
+
+      <BuildSettings buildId={buildId} buildName={buildName} isPublic={isPublic} buttonClassName={btnClass} />
+
+      <form action={duplicateBuild}>
+        <input type="hidden" name="buildId" value={buildId} />
+        <button type="submit" className={btnClass}>
+          <Save className="h-4 w-4" aria-hidden="true" />
+          Save As
+        </button>
+      </form>
+
+      <Link href="/build" className={btnClass}>
+        <Plus className="h-4 w-4" aria-hidden="true" />
+        New Build
+      </Link>
+    </div>
+  );
+}
+
+
+
+```
+
+### `mobile-update/files/components/builder/WeightSummary.tsx`
+
+```typescript
+type Props = {
+    base: number;
+    consumable: number;
+    worn: number;
+    total: number;
+    totalCost: number;
+};
+
+function toLb(grams: number) {
+    return (grams / 453.592).toFixed(2);
+}
+
+export default function WeightSummary({
+    base,
+    consumable,
+    worn,
+    total,
+    totalCost,
+}: Props) {
+    const basePct = total > 0 ? (base / total) * 100 : 0;
+    const wornPct = total > 0 ? (worn / total) * 100 : 0;
+    const consumablePct = total > 0 ? (consumable / total) * 100 : 0;
+
+    return (
+        <section className="mt-10 border-t border-gray-200 pt-6">
+            <div className="flex items-end justify-between">
+                <div>
+                    <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+                        Weight Breakdown
+                    </h2>
+
+                    <p className="mt-1 text-3xl font-bold text-gray-900">
+                        {total}
+                        <span className="text-lg font-medium text-gray-900">g</span>
+                        <span className="ml-2 text-base font-medium text-gray-400">
+                            ({toLb(total)} lb)
+                        </span>
+                    </p>
+                </div>
+
+
+            </div>
+
+            <div className="mt-4 flex h-2 w-full overflow-hidden rounded-full bg-gray-100">
+                <div
+                    className="h-full bg-blue-500 transition-all"
+                    style={{ width: `${basePct}%` }}
+                />
+                <div
+                    className="h-full bg-amber-400 transition-all"
+                    style={{ width: `${wornPct}%` }}
+                />
+                <div
+                    className="h-full bg-emerald-400 transition-all"
+                    style={{ width: `${consumablePct}%` }}
+                />
+            </div>
+
+            <div className="mt-4 flex flex-wrap items-center gap-x-8 gap-y-2 text-sm">
+                <Stat dot="bg-blue-500" label="Base" grams={base} />
+                <Stat dot="bg-amber-400" label="Worn" grams={worn} />
+                <Stat dot="bg-emerald-400" label="Consumable" grams={consumable} />
+            </div>
+        </section>
+    );
+}
+
+function Stat({
+    dot,
+    label,
+    grams,
+}: {
+    dot: string;
+    label: string;
+    grams: number;
+}) {
+    return (
+        <div className="flex items-center gap-2 max-md:flex-wrap">
+            <span className={`h-2 w-2 rounded-full ${dot}`} />
+            <span className="text-gray-500">{label}</span>
+            <span className="font-semibold text-gray-900">{grams}g</span>
+            <span className="text-gray-400">({toLb(grams)} lb)</span>
+        </div>
+    );
+}
+
+
+```
+
+### `mobile-update/install.mjs`
+
+```typescript
+import fs from 'node:fs';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
+
+const expected = {
+  "app/build/[id]/page.tsx": [
+    "b0388bbfcf33430722c80a8fb84af01a5c322c8c31a99624e1fa179e9742be2b"
+  ],
+  "components/builder/AddCustomItemForm.tsx": [
+    "a309003df0eac10c971bcc09d46e0102efc2f5311759be8bb1c82599166931fa"
+  ],
+  "components/builder/BuildHeader.tsx": [
+    "4048db95a456eaff2016bdd39d818d488fb7b335e275ba660ef6cb26e30271cf"
+  ],
+  "components/builder/BuildRow.tsx": [
+    "1f732a620c8d897ecfe5b7233db2fc26580863d9579c3fcbd90eef850146481a"
+  ],
+  "components/builder/CompatibilityBar.tsx": [
+    "422f4256cae9edb43879de698128a88b1788d0d43ac0ef9b010ec40c05b38840"
+  ],
+  "components/builder/CostSummary.tsx": [
+    "41fda40a5098ffcc9acf7bdfee524cba24830a3fa8c1147d4e03660791ab065a"
+  ],
+  "components/builder/ItemCategoryToggle.tsx": [
+    "9fc2e8e6c23561ccb5f37addc804e496cd734318bca7a1bac6bdeff133a7af29"
+  ],
+  "components/builder/QuantityStepper.tsx": [
+    "cc658837c7e84013a65515edef95fe3cd3ed564f9210b3b45a8c14343bbe0d66"
+  ],
+  "components/builder/ShareBar.tsx": [
+    "f8a49a428913548e28e3e76aaccc762c6af61274e93c1d107b133b833dccd961"
+  ],
+  "components/builder/WeightSummary.tsx": [
+    "7e1513f4f7ff1b098cc58da6d2b32e055b279d34c93bd666678975d2abf193c2"
+  ]
+};
+const hash = text => createHash('sha256').update(text.replaceAll('\r\n', '\n').trimEnd()).digest('hex');
+const here = path.dirname(fileURLToPath(import.meta.url));
+const root = path.resolve(process.argv[2] || '.');
+try {
+  if (!fs.existsSync(path.join(root, 'package.json')) || !fs.existsSync(path.join(root, 'lib/build-access.ts'))) throw new Error('Run this from your TrailPicker project root.');
+  const changes = [];
+  function collect(directory, relative = '') {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+      const rel = path.join(relative, entry.name);
+      const source = path.join(directory, entry.name);
+      if (entry.isDirectory()) { collect(source, rel); continue; }
+      const key = rel.split(path.sep).join('/');
+      const destination = path.join(root, rel);
+      const next = fs.readFileSync(source, 'utf8');
+      if (fs.existsSync(destination)) {
+        const old = fs.readFileSync(destination, 'utf8');
+        if (hash(old) === hash(next)) continue;
+        if (!expected[key]?.includes(hash(old))) throw new Error(`Your ${key} differs from your latest uploaded project. No files changed. Send the current file or merge files/ manually.`);
+      } else if (key in expected) throw new Error(`Missing ${key}. No files changed.`);
+      changes.push([destination, next]);
+    }
+  }
+  collect(path.join(here, 'files'));
+  for (const [file] of changes) if (fs.existsSync(file + '.before-mobile-layout')) throw new Error(`Backup already exists: ${file}.before-mobile-layout. No files changed.`);
+  for (const [file, text] of changes) {
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    if (fs.existsSync(file)) fs.copyFileSync(file, file + '.before-mobile-layout');
+    fs.writeFileSync(file, text);
+  }
+  console.log(changes.length ? `Installed ${changes.length} mobile layout files. No database migration required.` : 'Mobile layout update already installed.');
+  console.log('Run npm run build, then restart npm run dev.');
+} catch (error) { console.error(error.message); process.exitCode = 1; }
+
+
+
+
+```
+
+### `mobile-update/README.md`
+
+````markdown
+# TrailPicker mobile builder layout
+
+Based on your latest export, Pasted text(20261008-010239).txt. Extract mobile-update into your project root. Stop the dev server and run:
+
+```cmd
+node mobile-update/install.mjs
+npm run build
+npm run dev
+```
+
+No new packages, database changes, or reset. Installer checks all originals before writing, backs them up with .before-mobile-layout, and refuses to overwrite unexpected edits. Delete the extracted mobile-update folder after successful installation if desired. To undo, copy the .before-mobile-layout files back over their originals.
+
+Changes apply only below 768px. Laptop screens retain the original table columns, spacing, text sizes, and controls. The layout at 768px and above is unchanged.
+
+On mobile, BuildRow stacks the category name above its selections. Product names wrap, including long unbroken custom names. Quantity/category controls remain beside or below the name as space allows and have larger tap targets. Weight and price have mobile labels, followed by Buy/Remove. Add Gear and custom-item forms wrap within the available width. The table-wide heading is hidden on phones because each item carries its own labels. Total Cost uses a two-column layout. The share link, compatibility bar, and weight statistics wrap without forcing horizontal page scrolling; long build titles also wrap.
+
+Actions, authorization, calculation logic, links, forms, and desktop appearance are preserved. No server actions, schema, or trip-planner internals were changed.
+
+Verification: browser harness using the actual updated components and a mock catalog/actions. Screenshots were pixel-identical to the original components at 1024px and 1440px. Mobile checks passed at 320, 360, 390, 414, 600, and 767px, including open custom-item forms, long names, tap targets, quantity, worn/consumable, remove, and add payloads. These isolated checks do not replace running npm run build against your real generated Prisma client and environment.
+
+````
+
 ### `next-env.d.ts`
 
 ```typescript
 /// <reference types="next" />
 /// <reference types="next/image-types/global" />
-import "./.next/dev/types/routes.d.ts";
+import "./.next/types/routes.d.ts";
 
 // NOTE: This file should not be edited
 // see https://nextjs.org/docs/app/api-reference/config/typescript for more information.

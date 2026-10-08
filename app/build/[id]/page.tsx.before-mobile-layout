@@ -109,7 +109,7 @@ export default async function BuildPage({
   return (
     <div className="min-h-screen bg-gray-50">
       {canClaim && (
-        <form action={claimCurrentBuild} className="mx-5 mt-4 flex items-center justify-between gap-3 max-md:flex-wrap rounded-md border border-green-200 bg-green-50 p-3 text-sm">
+        <form action={claimCurrentBuild} className="mx-5 mt-4 flex items-center justify-between gap-3 rounded-md border border-green-200 bg-green-50 p-3 text-sm">
           <input type="hidden" name="buildId" value={build.id} />
           <span>This guest build is saved in this browser for 30 days.</span>
           <button type="submit" className="rounded-md bg-green-800 px-3 py-2 font-medium text-white">Save to my account</button>
@@ -170,7 +170,7 @@ export default async function BuildPage({
 
           <>
             <div className="mt-10 overflow-hidden rounded-xl bg-white">
-              <div className="grid max-md:hidden grid-cols-[180px_minmax(0,1fr)_100px_100px_100px] p-3 text-xs bg-gray-50 font-light text-gray-600">
+              <div className="grid grid-cols-[180px_minmax(0,1fr)_100px_100px_100px] p-3 text-xs bg-gray-50 font-light text-gray-600">
                 <div>Component</div>
                 <div>Selection</div>
                 <div className="text-center pr-5">Weight</div>
@@ -220,5 +220,3 @@ export default async function BuildPage({
     </div>
   );
 }
-
-

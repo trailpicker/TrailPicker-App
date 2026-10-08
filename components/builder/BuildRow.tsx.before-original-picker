@@ -1,9 +1,8 @@
-import { openGearSelection } from "@/lib/gear-selection-actions";
 import Link from "next/link";
-import RemoveGearButton from "@/components/builder/RemoveGearButton";
-import QuantityStepper from "@/components/builder/QuantityStepper";
-import AddCustomItemForm from "@/components/builder/AddCustomItemForm";
-import ItemFlagToggle from "@/components/builder/ItemCategoryToggle";
+import RemoveGearButton from "./RemoveGearButton";
+import QuantityStepper from "./QuantityStepper";
+import AddCustomItemForm from "./AddCustomItemForm";
+import ItemFlagToggle from "./ItemCategoryToggle";
 import Image from "next/image";
 
 type Props = {
@@ -49,7 +48,6 @@ export default function BuildRow({
             className="
             grid
             grid-cols-[180px_minmax(0,1fr)_100px_100px_100px]
-            max-md:grid-cols-1 max-md:gap-3
             items-start
             border-t
             border-gray-400
@@ -68,10 +66,12 @@ export default function BuildRow({
                 {name}
             </Link>
 
-            <div className="col-span-4 max-md:col-span-1 max-md:min-w-0">
+            <div className="col-span-4">
                 {items.length === 0 ? (
-                    <div className="flex items-center gap-4 max-md:flex-wrap max-md:items-start max-md:gap-3">
-                        <form action={openGearSelection.bind(null, buildId, selectCategory)}><button type="submit" className="
+                    <div className="flex items-center gap-4">
+                        <Link
+                            href={`/build/${buildId}/select/${selectCategory.toLowerCase()}`}
+                            className="
                 inline-block
                 rounded-lg
                 bg-blue-500
@@ -82,7 +82,9 @@ export default function BuildRow({
                 hover:bg-blue-700
                 transition
             "
-                        >Add Gear</button></form>
+                        >
+                            Add Gear
+                        </Link>
 
                         <AddCustomItemForm
                             buildId={buildId}
@@ -103,9 +105,9 @@ export default function BuildRow({
                                 return (
                                     <div
                                         key={item.id}
-                                        className="grid grid-cols-[minmax(0,1fr)_100px_100px_100px] max-md:grid-cols-2 max-md:gap-x-3 max-md:gap-y-3 items-center py-4 first:pt-0 last:pb-0"
+                                        className="grid grid-cols-[minmax(0,1fr)_100px_100px_100px] items-center py-4 first:pt-0 last:pb-0"
                                     >
-                                        <div className="flex items-center gap-3 min-w-0 max-md:col-span-2 max-md:items-start">
+                                        <div className="flex items-center gap-3 min-w-0">
 
                                             {item.gear?.images[0] && (
                                                 <div className="
@@ -128,16 +130,16 @@ export default function BuildRow({
                                                 </div>
                                             )}
 
-                                            <div className="flex flex-wrap items-center gap-2 min-w-0 max-md:flex-1 max-md:gap-y-2">
+                                            <div className="flex flex-wrap items-center gap-2 min-w-0">
                                                 {item.gear ? (
                                                     <Link
                                                         href={`/gear/${item.gear.id}`}
-                                                        className="block font-bold truncate hover:underline hover:text-blue-600 max-md:w-full max-md:whitespace-normal max-md:break-words max-md:[overflow-wrap:anywhere]"
+                                                        className="block font-bold truncate hover:underline hover:text-blue-600"
                                                     >
                                                         {itemName}
                                                     </Link>
                                                 ) : (
-                                                    <span className="block font-bold italic text-gray-700 truncate max-md:w-full max-md:whitespace-normal max-md:break-words max-md:[overflow-wrap:anywhere]">
+                                                    <span className="block font-bold italic text-gray-700 truncate">
                                                         {itemName}
                                                     </span>
                                                 )}
@@ -158,23 +160,21 @@ export default function BuildRow({
                                             </div>
                                         </div>
 
-                                        <div className="text-center pr-5 max-md:pr-0 max-md:text-left max-md:break-words">
-                                            <span className="hidden max-md:block max-md:text-xs max-md:text-gray-500">Weight</span>
+                                        <div className="text-center pr-5">
                                             {weight != null ? `${weight * item.quantity}g` : "—"}
                                         </div>
 
-                                        <div className="text-center pr-5 max-md:pr-0 max-md:text-left max-md:break-words">
-                                            <span className="hidden max-md:block max-md:text-xs max-md:text-gray-500">Price</span>
+                                        <div className="text-center pr-5">
                                             {price != null
                                                 ? `$${(price * item.quantity).toFixed(2)}`
                                                 : "—"}
                                         </div>
 
-                                        <div className="flex items-center justify-end gap-1 max-md:col-span-2 max-md:gap-2 max-md:[&_button]:min-h-9 max-md:[&_button]:min-w-9">
+                                        <div className="flex items-center justify-end gap-1">
                                             {item.gear && (
                                                 <Link
                                                     href="#"
-                                                    className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700 transition max-md:min-h-9 max-md:inline-flex max-md:items-center"
+                                                    className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700 transition"
                                                 >
                                                     Buy
                                                 </Link>
@@ -186,9 +186,13 @@ export default function BuildRow({
                             })}
                         </div>
 
-                        <div className="mt-2 flex items-center gap-4 max-md:flex-wrap max-md:items-start max-md:gap-3">
-                            <form action={openGearSelection.bind(null, buildId, selectCategory)}><button type="submit" className="inline-block text-sm text-blue-600 hover:underline"
-                            >+ Add Additional</button></form>
+                        <div className="mt-2 flex items-center gap-4">
+                            <Link
+                                href={`/build/${buildId}/select/${selectCategory.toLowerCase()}`}
+                                className="inline-block text-sm text-blue-600 hover:underline"
+                            >
+                                + Add Additional
+                            </Link>
 
                             <AddCustomItemForm buildId={buildId} category={categoryName} />
                         </div>
@@ -198,5 +202,3 @@ export default function BuildRow({
         </div>
     );
 }
-
-

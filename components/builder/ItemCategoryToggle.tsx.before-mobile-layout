@@ -56,9 +56,8 @@ export default function ItemCategoryToggle({
             <button
                 type="button"
                 onClick={() => select("worn")}
-                aria-pressed={optimisticCategory === "worn"}
                 className={`
-                    rounded-full px-2 py-0.5 max-md:min-h-9 max-md:px-3 text-[10px] font-semibold
+                    rounded-full px-2 py-0.5 text-[10px] font-semibold
                     cursor-pointer transition whitespace-nowrap
                     ${optimisticCategory === "worn"
                         ? "bg-amber-400 text-amber-950"
@@ -72,9 +71,8 @@ export default function ItemCategoryToggle({
             <button
                 type="button"
                 onClick={() => select("consumable")}
-                aria-pressed={optimisticCategory === "consumable"}
                 className={`
-                    rounded-full px-2 py-0.5 max-md:min-h-9 max-md:px-3 text-[10px] font-semibold
+                    rounded-full px-2 py-0.5 text-[10px] font-semibold
                     cursor-pointer transition whitespace-nowrap
                     ${optimisticCategory === "consumable"
                         ? "bg-emerald-400 text-emerald-950"
@@ -87,4 +85,3 @@ export default function ItemCategoryToggle({
         </div>
     );
 }
-

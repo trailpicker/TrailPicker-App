@@ -47,8 +47,6 @@ export default function ProfileDropdown({
 
             <button
                 onClick={() => setOpen(!open)}
-                aria-label="Account menu"
-                aria-expanded={open}
                 className="
         flex items-center gap-3
         rounded-full
@@ -89,7 +87,7 @@ export default function ProfileDropdown({
                 )}
 
                 <div className="hidden text-left sm:block">
-                    <p className="max-w-32 truncate text-sm font-semibold text-white leading-none">
+                    <p className="text-sm font-semibold text-white leading-none">
                         {name ?? "Explorer"}
                     </p>
 
@@ -109,8 +107,8 @@ export default function ProfileDropdown({
             {open && (
                 <div
                     className="
-                        fixed right-3 top-16 mt-3 sm:absolute sm:right-0 sm:top-full
-                        w-72 max-w-[calc(100vw-24px)]
+                        absolute right-0 mt-3
+                        w-72
                         overflow-hidden
                         rounded-2xl
                         border border-green-200/20

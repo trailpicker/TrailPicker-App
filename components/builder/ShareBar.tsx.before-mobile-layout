@@ -34,7 +34,7 @@ export default function ShareBar({ buildId, buildName, isPublic, createdAt, upda
 
   return (
     <div className="flex flex-wrap items-center gap-2.5 px-5 py-4">
-      <div className="flex min-w-[280px] max-md:min-w-0 max-md:basis-full flex-1 items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 shadow-inner shadow-gray-100/70">
+      <div className="flex min-w-[280px] flex-1 items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 shadow-inner shadow-gray-100/70">
         <button
           type="button"
           onClick={copyLink}
@@ -47,7 +47,7 @@ export default function ShareBar({ buildId, buildName, isPublic, createdAt, upda
           readOnly
           value={shareUrl}
           onFocus={(event) => event.currentTarget.select()}
-          className="w-full max-md:min-w-0 truncate bg-transparent text-sm text-gray-700 outline-none"
+          className="w-full truncate bg-transparent text-sm text-gray-700 outline-none"
         />
         <span className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-bold uppercase tracking-wide ${isPublic ? "bg-green-100 text-green-800" : "bg-gray-200 text-gray-600"}`}>
           {isPublic ? "Public" : "Private"}
@@ -79,5 +79,3 @@ export default function ShareBar({ buildId, buildName, isPublic, createdAt, upda
     </div>
   );
 }
-
-
