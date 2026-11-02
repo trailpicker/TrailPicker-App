@@ -1,32 +1,22 @@
 type Props = {
-    totalCost: number;
+  totalCost: number;
+  costToBuy: number;
 };
 
-export default function CostSummary({ totalCost }: Props) {
-    return (
-        <div
-            className="
-    grid
-    grid-cols-[180px_minmax(0,1fr)_100px_100px_100px]
-    max-md:grid-cols-[auto_minmax(0,1fr)] max-md:gap-3
-    items-center
-    border-t
-    border-gray-400
-    px-3
-    py-4
-    bg-gray-50
-    "
-        >
-            <div className="col-span-3 text-right pr-5 max-md:col-span-1 max-md:text-left max-md:pr-0 text-lg font-medium text-gray-900">
-                Total Cost:
-            </div>
+const money = (value: number) =>
+  new Intl.NumberFormat("en-CA", { style: "currency", currency: "CAD" }).format(value);
 
-            <div className="text-center pr-5 text-2xl font-bold max-md:text-right max-md:pr-0 max-md:break-words max-md:text-xl">
-                ${totalCost.toFixed(2)}
-            </div>
-
-            <div className="max-md:hidden" />
-        </div>
-    );
+export default function CostSummary({ totalCost, costToBuy }: Props) {
+  return (
+    <div className="flex flex-wrap items-baseline justify-end gap-x-8 gap-y-2 border-t border-gray-400 bg-gray-50 px-4 py-4">
+      <div className="flex items-baseline gap-2 text-sm text-gray-500">
+        <span>Total gear value</span>
+        <span className="font-semibold tabular-nums text-gray-800">{money(totalCost)}</span>
+      </div>
+      <div className="flex items-baseline gap-2 text-sm text-gray-700">
+        <span>To buy</span>
+        <strong className="text-xl font-bold tabular-nums text-gray-900">{money(costToBuy)}</strong>
+      </div>
+    </div>
+  );
 }
-

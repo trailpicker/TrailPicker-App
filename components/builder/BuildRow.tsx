@@ -12,6 +12,7 @@ type Props = {
     selectCategory: string;
     categoryName: string;
     buildId: string;
+    ownedGearIds: ReadonlySet<string>;
 
     items: {
         id: string;
@@ -42,6 +43,7 @@ export default function BuildRow({
     selectCategory,
     categoryName,
     buildId,
+    ownedGearIds,
     items,
 }: Props) {
     return (
@@ -99,6 +101,7 @@ export default function BuildRow({
                                     item.gear?.weight_g ?? item.weightSnapshot;
                                 const price =
                                     item.gear?.price_cad ?? item.priceSnapshot;
+                                const isOwned = Boolean(item.gear && ownedGearIds.has(item.gear.id));
 
                                 return (
                                     <div
@@ -171,14 +174,18 @@ export default function BuildRow({
                                         </div>
 
                                         <div className="flex items-center justify-end gap-1 max-md:col-span-2 max-md:gap-2 max-md:[&_button]:min-h-9 max-md:[&_button]:min-w-9">
-                                            {item.gear && (
+                                            {item.gear && (isOwned ? (
+                                                <span title="Already in My Gear" className="inline-flex items-center rounded-md bg-green-50 px-2.5 py-1.5 text-xs font-semibold text-green-800">
+                                                    Owned
+                                                </span>
+                                            ) : (
                                                 <Link
-                                                    href="#"
+                                                    href={`/gear/${item.gear.id}`}
                                                     className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700 transition max-md:min-h-9 max-md:inline-flex max-md:items-center"
                                                 >
                                                     Buy
                                                 </Link>
-                                            )}
+                                            ))}
                                             <RemoveGearButton itemId={item.id} buildId={buildId} />
                                         </div>
                                     </div>

@@ -1,7 +1,6 @@
 "use server";
 
 import { saveTripDetails, saveTripDay } from "@/lib/trip-planner-actions";
-import { parseDates } from "@/lib/trip-planner";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
@@ -376,6 +375,12 @@ export async function claimCurrentBuild(formData?: FormData) {
 }
 export async function createBuild(formData: FormData) {
   const ownerId = await currentBuildUserId();
+  // Logged-in users may choose a default; guests always start private.
+  const newBuildPublic = ownerId
+    ? (await prisma.userSettings.findUnique({
+        where: { userId: ownerId }, select: { defaultBuildPublic: true },
+      }))?.defaultBuildPublic === true
+    : false;
   const parsed = parseBuildDetails(formData);
   const selected = getDestination(parsed.destinationId);
   const location = selected ? `${selected.name}, ${selected.park}` : parsed.location;
@@ -388,7 +393,7 @@ export async function createBuild(formData: FormData) {
         destinationId: selected?.id ?? null,
         location, locationLat, locationLng, ...parsed.dates,
         people: parsed.people, minTemperature: parsed.minTemperature,
-        conditions: parsed.conditions, userId: ownerId,
+        conditions: parsed.conditions, userId: ownerId, isPublic: newBuildPublic,
       },
     });
     if (created.startDate && created.endDate) {

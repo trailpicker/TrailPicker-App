@@ -23,28 +23,31 @@ model Category {
   name String
   slug String @unique
 
-  gear Gear[]
+  gear          Gear[]
   subcategories Subcategory[]
-  createdAt DateTime @default(now())
+  createdAt     DateTime      @default(now())
 }
+
 model Subcategory {
   id         String   @id @default(cuid())
   name       String
-  slug String
+  slug       String
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
 
-  gear        Gear[]
+  gear Gear[]
 
-  createdAt  DateTime @default(now())
+  createdAt DateTime @default(now())
+
   @@unique([categoryId, slug])
 }
+
 model Gear {
   id String @id @default(cuid())
 
   name        String
   description String?
-  
+
   weight_g Int?
 
   price_cad Float?
@@ -70,34 +73,36 @@ model Gear {
   subcategoryId String?
   subcategory   Subcategory? @relation(fields: [subcategoryId], references: [id])
 
-  images GearImage[]
+  images         GearImage[]
   specifications GearSpecification[]
-  prices Price[]
-  reviews Review[]
-  buildItems BuildItem[]
-  favorites Favorite[]
-  ownedGear OwnedGear[]
+  prices         Price[]
+  reviews        Review[]
+  buildItems     BuildItem[]
+  favorites      Favorite[]
+  ownedGear      OwnedGear[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
 model OwnedGear {
   id String @id @default(cuid())
 
   userId String
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   gearId String
-  gear Gear @relation(fields: [gearId], references: [id], onDelete: Cascade)
+  gear   Gear   @relation(fields: [gearId], references: [id], onDelete: Cascade)
 
   purchasedPrice Float?
-  purchasedAt DateTime?
-  notes String?
+  purchasedAt    DateTime?
+  notes          String?
 
   createdAt DateTime @default(now())
 
   @@unique([userId, gearId])
 }
+
 model GearImage {
   id String @id @default(cuid())
 
@@ -153,23 +158,37 @@ model Price {
 model User {
   id            String    @id @default(cuid())
   name          String?
-  username      String?    @unique
+  username      String?   @unique
   email         String    @unique
   emailVerified DateTime?
   image         String?
 
   bio             String?
   location        String?
-  isProfilePublic Boolean  @default(false)
+  isProfilePublic Boolean @default(false)
 
-  accounts Account[]
-  sessions Session[]
+  accounts  Account[]
+  sessions  Session[]
   builds    Build[]
   reviews   Review[]
   favorites Favorite[]
   ownedGear OwnedGear[]
+  settings  UserSettings?
 
   createdAt DateTime @default(now())
+}
+
+// Account-wide preferences. Defaults keep existing users private and metric.
+model UserSettings {
+  userId String @id
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  weightUnit         String  @default("metric")
+  distanceUnit       String  @default("metric")
+  temperatureUnit    String  @default("c")
+  defaultBuildPublic Boolean @default(false)
+
+  updatedAt DateTime @updatedAt
 }
 
 model Account {
@@ -185,7 +204,8 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@unique([provider, providerAccountId])
 }
 
@@ -194,19 +214,20 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
   identifier String
   token      String   @unique
   expires    DateTime
+
   @@unique([identifier, token])
 }
 
 model Build {
   isPublic Boolean @default(false)
-  id String @id @default(cuid())
+  id       String  @id @default(cuid())
 
   name String
 
@@ -218,7 +239,7 @@ model Build {
   revisions BuildRevision[]
 
   routeWaypoints Json?
-  tripLogistics Json?
+  tripLogistics  Json?
 
   destinationId String?
 
@@ -231,7 +252,7 @@ model Build {
   people Int @default(1)
 
   minTemperature Int?
-  conditions String?
+  conditions     String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -241,7 +262,7 @@ model BuildRevision {
   id String @id @default(cuid())
 
   buildId String
-  build   Build @relation(fields: [buildId], references: [id], onDelete: Cascade)
+  build   Build  @relation(fields: [buildId], references: [id], onDelete: Cascade)
 
   action   String
   summary  String
@@ -260,21 +281,21 @@ model TripDay {
 
   date DateTime
 
-  minTemperature Int?
-  conditions     String?
-  notes          String?
-  startLocation String?
-  endLocation String?
-  distanceKm Float?
-  elevationGainM Int?
-  elevationLossM Int?
+  minTemperature  Int?
+  conditions      String?
+  notes           String?
+  startLocation   String?
+  endLocation     String?
+  distanceKm      Float?
+  elevationGainM  Int?
+  elevationLossM  Int?
   durationMinutes Int?
-  campsite String?
-  reservation String?
-  waterSource String?
-  waterCarryL Float?
+  campsite        String?
+  reservation     String?
+  waterSource     String?
+  waterCarryL     Float?
   trailConditions String?
-  activities String?
+  activities      String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -340,4 +361,3 @@ model Favorite {
 
   @@unique([userId, gearId])
 }
-

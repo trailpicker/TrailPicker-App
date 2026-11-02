@@ -1,7 +1,9 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import ConsumablesTimeline from "@/components/builder/ConsumablesTimeline";
+import { analyzePack, type PackInputItem } from "@/lib/pack-analysis";
 import WeatherPanel from "./WeatherPanel";
 import { weatherPoints } from "@/lib/weather/locations";
 import TripSummaryCard from "./TripSummaryCard";
@@ -14,10 +16,12 @@ import type { CompatibilityIssue } from "@/lib/compatibility";
 export default function TripPlanner({
   build,
   issues,
+  items,
   readOnly = false,
 }: {
   build: PlannerBuild;
   issues: CompatibilityIssue[];
+  items: PackInputItem[];
   readOnly?: boolean;
 }) {
   const [editing, setEditing] = useState(!readOnly && !build.startDate);
@@ -33,7 +37,7 @@ export default function TripPlanner({
   }, [build.id]);
 
   const points = weatherPoints(build);
-
+  const pack = useMemo(() => analyzePack(items), [items]);
   const temperatures = [
     build.minTemperature,
     ...build.days.map((d) => d.minTemperature),
@@ -57,7 +61,8 @@ export default function TripPlanner({
           {[
             "overview",
             "route",
-            "forecast",
+            "weather",
+            "consumables",
             ...(!readOnly ? ["logistics"] : []),
           ].map((section) => (
             <a
@@ -119,6 +124,11 @@ export default function TripPlanner({
             : undefined
         }
       />
+
+      {/* Consumables */}
+      <div id="consumables" className="scroll-mt-20">
+        <ConsumablesTimeline pack={pack} trip={build} />
+      </div>
 
       {/* Logistics */}
       {!readOnly && (

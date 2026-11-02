@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useSyncExternalStore } from "react";
 import type { CompatibilityIssue } from "@/lib/compatibility";
 
 const EVENT = "trailpicker:compatibility-ignored";
@@ -13,43 +13,47 @@ export function issueFingerprint(issue: CompatibilityIssue, context: string) {
 
 export function useIgnoredCompatibility(buildId: string | undefined, issues: readonly CompatibilityIssue[], context: string) {
   const key = buildId ? storageKey(buildId) : null;
-  const [saved, setSaved] = useState<string[]>([]);
-  const [loadedKey, setLoadedKey] = useState<string | null>(null);
   const fingerprints = useMemo(() => new Map(issues.map(issue => [issue.id, issueFingerprint(issue, context)])), [issues, context]);
 
-  useEffect(() => {
-    if (!key) { setSaved([]); setLoadedKey(null); return; }
-    const read = () => {
-      try {
-        const parsed: unknown = JSON.parse(localStorage.getItem(key) || "[]");
-        setSaved(Array.isArray(parsed) ? parsed.filter((v): v is string => typeof v === "string") : []);
-      } catch { setSaved([]); }
-      setLoadedKey(key);
+  const subscribe = useCallback((onChange: () => void) => {
+    if (!key) return () => {};
+    const onStorage = (event: StorageEvent) => { if (event.key === key) onChange(); };
+    window.addEventListener("storage", onStorage);
+    window.addEventListener(EVENT, onChange);
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener(EVENT, onChange);
     };
-    read();
-    window.addEventListener("storage", read);
-    window.addEventListener(EVENT, read);
-    return () => { window.removeEventListener("storage", read); window.removeEventListener(EVENT, read); };
   }, [key]);
 
+  const getSnapshot = useCallback(() => {
+    try { return key ? window.localStorage.getItem(key) ?? "[]" : "[]"; }
+    catch { return "[]"; }
+  }, [key]);
+  const raw = useSyncExternalStore(subscribe, getSnapshot, () => "[]");
   const ignored = useMemo(() => {
+    let saved: unknown;
+    try { saved = JSON.parse(raw); } catch { saved = []; }
     const current = new Set(fingerprints.values());
-    return new Set(loadedKey === key ? saved.filter(value => current.has(value)) : []);
-  }, [saved, fingerprints, loadedKey, key]);
+    return new Set(Array.isArray(saved) ? saved.filter((value): value is string => typeof value === "string" && current.has(value)) : []);
+  }, [raw, fingerprints]);
 
   const toggle = (issue: CompatibilityIssue) => {
     if (!key) return;
     const fingerprint = fingerprints.get(issue.id);
     if (!fingerprint) return;
-    const next = new Set(ignored);
+    // Read the latest storage state to avoid overwriting another mounted panel.
+    let saved: unknown;
+    try { saved = JSON.parse(window.localStorage.getItem(key) ?? "[]"); } catch { saved = []; }
+    const current = new Set(fingerprints.values());
+    const next = new Set<string>(Array.isArray(saved) ? saved.filter((v): v is string => typeof v === "string" && current.has(v)) : []);
     if (next.has(fingerprint)) next.delete(fingerprint);
     else next.add(fingerprint);
     try {
-      localStorage.setItem(key, JSON.stringify([...next]));
-      setSaved([...next]);
+      window.localStorage.setItem(key, JSON.stringify([...next]));
       window.dispatchEvent(new Event(EVENT));
     } catch { /* Storage may be blocked; don't claim a dismissal was saved. */ }
   };
 
-  return { ignored, toggle, fingerprints, canIgnore: Boolean(key), ready: !key || loadedKey === key };
+  return { ignored, toggle, fingerprints, canIgnore: Boolean(key), ready: true };
 }

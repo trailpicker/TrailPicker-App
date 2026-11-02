@@ -164,7 +164,7 @@ export default function ProfileDropdown({
 
 
                         <Link
-                            href="/build"
+                            href="/profile/builds"
                             className="
                                 flex items-center gap-3
                                 rounded-xl

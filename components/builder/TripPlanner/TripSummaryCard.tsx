@@ -10,6 +10,7 @@ import {
     MapPin,
     Pencil,
     Thermometer,
+    Route,
 } from "lucide-react";
 
 import {
@@ -19,6 +20,8 @@ import {
 } from "@/lib/trip";
 
 import type { CompatibilityIssue } from "@/lib/compatibility";
+import { useDisplayPreferences } from "@/components/settings/DisplayPreferencesProvider";
+import { temperatureText, distanceText } from "@/lib/user-preferences";
 
 type Props = {
     build: {
@@ -31,6 +34,7 @@ type Props = {
         people: number;
         minTemperature: number | null;
         conditions: string | null;
+        days?: Array<{ distanceKm: number | null }>;
     };
     issues: CompatibilityIssue[];
     onEdit?: () => void;
@@ -56,6 +60,9 @@ export default function TripSummaryCard({
     issues,
     onEdit,
 }: Props) {
+    const { temperatureUnit, distanceUnit } = useDisplayPreferences();
+    const measuredDays = build.days?.filter(day => day.distanceKm != null) ?? [];
+    const recordedDistanceKm = measuredDays.reduce((sum, day) => sum + (day.distanceKm ?? 0), 0);
     const nights = getNights(
         build.startDate,
         build.endDate,
@@ -148,11 +155,18 @@ export default function TripSummaryCard({
                     </div>
                 )}
 
+                {measuredDays.length > 0 && (
+                    <div className="flex items-center gap-2">
+                        <Route className="h-4 w-4 text-gray-400" />
+                        <span>Recorded distance {distanceText(recordedDistanceKm, distanceUnit)}</span>
+                    </div>
+                )}
+
                 {build.minTemperature != null && (
                     <div className="flex items-center gap-2">
                         <Thermometer className="h-4 w-4 text-gray-400" />
                         <span>
-                            Low {build.minTemperature}°C
+                            Low {temperatureText(build.minTemperature, temperatureUnit)}
                         </span>
                     </div>
                 )}

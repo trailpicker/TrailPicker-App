@@ -37,9 +37,6 @@ function tripNights(build:IntelligenceBuild):number|null {
 function validTemp(n:unknown):n is number { return typeof n === 'number' && Number.isFinite(n) && n >= -80 && n <= 60; }
 const priority:Record<FindingLevel,number> = {critical:0,review:1,opportunity:2,unknown:3};
 
-// Compatibility findings are produced exclusively by evaluateCompatibility.
-// Analysis may add weather, optimization, and planning findings, never a second
-// implementation of the same equipment checks.
 const extraTitles:Record<string,string> = {
   'missing-packs': 'No backpack recorded',
   'missing-shelter': 'No shelter recorded',
@@ -101,13 +98,11 @@ export function evaluatePackIntelligence(build:IntelligenceBuild, items:readonly
   const findings:Finding[] = [];
   const add = (f:Finding) => findings.push(f);
   const active = items.filter(i=>i.quantity>0);
-  const has = (cat:string) => active.some(i=>category(i)===cat);
   const matching = (cat:string) => active.filter(i=>category(i)===cat);
   const nights = tripNights(build);
   const overnight = (nights!==null && nights>0) || days.some(d=>!!d.campsite?.trim());
   const forecastTemps = forecast?.days.map(d=>d.low).filter(validTemp) ?? [];
   const plannedTemps = [build.minTemperature,...days.map(d=>d.minTemperature)].filter(validTemp);
-  // Forecast evidence must never be mixed with or silently replace manually entered trip lows.
   const temps = [...forecastTemps,...plannedTemps];
   const coldest = temps.length?Math.min(...temps):null;
   const weatherSource = forecastTemps.length ? 'forecast' : plannedTemps.length ? 'planned' : 'none';

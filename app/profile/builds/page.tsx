@@ -17,6 +17,10 @@ export default async function BuildsPage({ searchParams }: { searchParams: Promi
     orderBy: params.sort === "trip" ? { startDate: "asc" } : params.sort === "name" ? { name: "asc" } : { updatedAt: "desc" },
     include: { items: { include: { gear: { select: { weight_g: true, price_cad: true } } } } },
   });
+  const account = await prisma.user.findUnique({
+    where: { email: session.user.email }, select: { settings: { select: { weightUnit: true } } },
+  });
+  const weightUnit = account?.settings?.weightUnit === "imperial" ? "imperial" : "metric";
   const visible = params.view && params.view !== "all" ? builds.filter((build) => buildStatus(build) === params.view) : builds;
 
   return (
@@ -28,7 +32,7 @@ export default async function BuildsPage({ searchParams }: { searchParams: Promi
         <select name="sort" defaultValue={params.sort || "recent"} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm"><option value="recent">Recently edited</option><option value="trip">Trip date</option><option value="name">Name</option></select>
         <button className="sr-only">Apply filters</button>
       </form>
-      {visible.length ? <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{visible.map((build) => <BuildCard key={build.id} build={build} />)}</div> : <div className="mt-6 rounded-3xl border border-dashed border-slate-300 bg-white p-12 text-center"><h3 className="text-xl font-bold text-slate-900">No builds found</h3><p className="mt-2 text-sm text-slate-500">Try another filter or create a new backpacking trip.</p></div>}
+      {visible.length ? <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{visible.map((build) => <BuildCard key={build.id} build={build} weightUnit={weightUnit} />)}</div> : <div className="mt-6 rounded-3xl border border-dashed border-slate-300 bg-white p-12 text-center"><h3 className="text-xl font-bold text-slate-900">No builds found</h3><p className="mt-2 text-sm text-slate-500">Try another filter or create a new backpacking trip.</p></div>}
     </div>
   );
 }

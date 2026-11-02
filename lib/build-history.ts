@@ -153,7 +153,7 @@ function summaryGroupKey(summary: string) {
 }
 
 function canCoalesce(action: string, previousAction: string, previousSummary: string, nextSummary: string, previousCreatedAt: Date) {
-  if (["create", "copy", "import", "restore", "history", "baseline", "settings"].includes(action)) return false;
+  if (["create", "copy", "import", "restore", "history", "baseline", "settings", "analysis"].includes(action)) return false;
   if (action !== previousAction) return false;
   if (Date.now() - previousCreatedAt.getTime() > 90_000) return false;
   return summaryGroupKey(previousSummary) === summaryGroupKey(nextSummary);

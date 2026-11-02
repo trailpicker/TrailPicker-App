@@ -45,7 +45,6 @@ export default async function ProfileLayout({ children }: { children: React.Reac
               </div>
             )}
             <div>
-              <p className="text-sm font-medium text-emerald-200">Your TrailPicker</p>
               <h1 className="mt-1 text-3xl font-bold tracking-tight">{displayName}</h1>
               <p className="mt-1 text-sm text-emerald-100/80">
                 {user.username ? `@${user.username}` : "Choose a username"}

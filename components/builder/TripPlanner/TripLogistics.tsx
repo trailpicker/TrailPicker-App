@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   CarFront,
   Check,
@@ -131,9 +131,8 @@ function TripLogisticsEditor({
       ? null
       : "bookings"
   );
-  const [pending, startTransition] = useTransition();
   const [error, setError] = useState("");
-  const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
   const committed = useRef(readLogistics(value));
   const externalReset = useRef(false);
   const serverSignature = JSON.stringify(value ?? null);
@@ -149,7 +148,7 @@ function TripLogisticsEditor({
     if (externalReset.current || JSON.stringify(values) === JSON.stringify(committed.current)) {
       committed.current = next;
       setValues(next);
-      setSaved(false);
+      setSaving(false);
       setError("");
       externalReset.current = false;
     }
@@ -161,30 +160,18 @@ function TripLogisticsEditor({
     buildId,
     resource: "logistics",
     save: saveTripLogistics,
-    onError: setError,
-    onSaved: () => setSaved(true),
+    onError: (message) => {
+      setError(message);
+      if (message) setSaving(false);
+    },
+    onSaved: () => setSaving(false),
   });
   const { formRef } = autosave;
 
   function changeField(key: keyof Logistics, next: string) {
     setValues((current) => ({ ...current, [key]: next }));
-    setSaved(false);
+    setSaving(true);
     setError("");
-  }
-
-  function submit(formData: FormData) {
-    setSaved(false);
-    setError("");
-    startTransition(async () => {
-      try {
-        await autosave.saveNow(formData);
-        setSaved(true);
-      } catch (cause) {
-        setError(
-          cause instanceof Error ? cause.message : "Could not save logistics."
-        );
-      }
-    });
   }
 
   return (
@@ -202,13 +189,24 @@ function TripLogisticsEditor({
             Permits, access details and other practical trip information.
           </p>
         </div>
-        <span className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500">
-          <LockKeyhole aria-hidden="true" className="h-3.5 w-3.5" />
-          Private when sharing
-        </span>
+        <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-gray-500">
+          <span role="status" aria-live="polite" className={error ? "text-red-700" : "inline-flex items-center gap-1.5"}>
+            {error ? (
+              <span role="alert">Couldn’t save. Edit to retry.</span>
+            ) : saving ? (
+              "Saving…"
+            ) : (
+              <><Check aria-hidden="true" className="h-3.5 w-3.5 text-green-700" /> Saved</>
+            )}
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <LockKeyhole aria-hidden="true" className="h-3.5 w-3.5" />
+            Private when sharing
+          </span>
+        </div>
       </header>
 
-      <form ref={formRef} action={submit}>
+      <form ref={formRef}>
         <input type="hidden" name="buildId" value={buildId} />
 
         {/* A single divided list, rather than a collection of separate cards. */}
@@ -294,32 +292,6 @@ function TripLogisticsEditor({
             );
           })}
         </div>
-
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-          <p aria-live="polite" className="min-w-0 text-xs text-gray-500">
-            {error ? (
-              <span role="alert" className="font-medium text-red-700">
-                {error}
-              </span>
-            ) : pending ? (
-              "Saving changes…"
-            ) : saved ? (
-              <span className="inline-flex items-center gap-1.5 font-medium text-green-800">
-                <Check aria-hidden="true" className="h-3.5 w-3.5" />
-                Saved
-              </span>
-            ) : (
-              "Changes save automatically as you type."
-            )}
-          </p>
-          <button
-            type="submit"
-            disabled={pending}
-            className="inline-flex min-h-9 items-center justify-center rounded-lg bg-green-900 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-green-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {pending ? "Saving…" : "Save changes"}
-          </button>
-        </div>
       </form>
     </section>
   );
@@ -333,3 +305,4 @@ export default function TripLogistics(props: {
   // reset the editor and autosave baseline for the new build.
   return <TripLogisticsEditor key={props.buildId} {...props} />;
 }
+

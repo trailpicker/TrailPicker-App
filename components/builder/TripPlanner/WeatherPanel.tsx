@@ -7,6 +7,8 @@ import type { WeatherPoint } from "@/lib/weather/locations";
 import { loadWaypointWeather } from "@/lib/weather/client-cache";
 import { comparePlan, forecastHints, tripDayForecast, localHour, type PlanningInputs } from "@/lib/weather/presentation";
 import { dateKey } from "@/lib/weather/core";
+import { useDisplayPreferences } from "@/components/settings/DisplayPreferencesProvider";
+import { temperatureNumber, windText } from "@/lib/user-preferences";
 
 type Snapshot = { key: string; data?: WeatherResult; error?: string };
 
@@ -71,6 +73,12 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
   planning?: PlanningInputs;
   gearIssueCount?: number;
 }) {
+  const { temperatureUnit, distanceUnit } = useDisplayPreferences();
+  const temp = (value: number | null | undefined, withUnit = false) => {
+    const converted = temperatureNumber(value, temperatureUnit);
+    return converted == null ? "—" : `${Math.round(converted)}°${withUnit ? (temperatureUnit === "f" ? "F" : "C") : ""}`;
+  };
+  const wind = (value: number | null | undefined) => windText(value, distanceUnit);
   const controlId = useId();
   const [selected, setSelected] = useState(defaultPointId || points[0]?.id || "");
   const [revision, setRevision] = useState(0);
@@ -202,7 +210,7 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
                 <SkyIcon kind={condition.kind} className="h-9 w-9 shrink-0" />
                 <div>
                   <p className="text-xl font-semibold tabular-nums tracking-tight text-gray-950">
-                    {number(day.high, "°")} <span className="font-normal text-gray-400">/</span> {number(day.low, "°")}
+                    {temp(day.high)} <span className="font-normal text-gray-400">/</span> {temp(day.low)}
                   </p>
                   <p className="text-xs text-gray-500">{hasNumbers ? condition.label : "Forecast values unavailable"}</p>
                 </div>
@@ -214,7 +222,7 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <Wind aria-hidden="true" className="h-4 w-4 text-gray-500" />
-                  Wind {number(day.wind, " km/h")}
+                  Wind {wind(day.wind)}
                 </span>
               </div>
             </div>
@@ -272,7 +280,7 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
 
   return (
     <section
-      id={!date ? "forecast" : undefined}
+      id={!date ? "weather" : undefined}
       aria-label={date ? `Weather for ${shortDate(date)}` : "Trip forecast"}
       className={`scroll-mt-20 min-w-0 text-sm text-gray-800 ${!date ? "border-b border-gray-200 pb-6" : ""}`}
     >
@@ -417,18 +425,15 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
                 </div>
               </div>
               <p className="mt-6 text-5xl font-semibold tabular-nums tracking-tight text-gray-950 sm:text-6xl">
-                {date ? number(day?.high, "°") : number(nearest?.temperature, "°C")}
+                {date ? temp(day?.high) : temp(nearest?.temperature, true)}
                 {date && (
                   <span className="ml-2 text-2xl font-medium text-gray-400 sm:text-3xl">
-                    / {number(day?.low, "°")}
+                    / {temp(day?.low)}
                   </span>
                 )}
               </p>
               <p className="mt-2 text-sm text-gray-600">
                 {date ? "Sampled high / low" : "Temperature at the next available model time"}
-              </p>
-              <p className="mt-5 text-xs leading-relaxed text-gray-500">
-                Model estimate, not a live observation. Actual conditions may differ.
               </p>
             </div>
             <div className="grid grid-cols-3 border-t border-gray-200 bg-gray-50/60 lg:grid-cols-1 lg:border-l lg:border-t-0">
@@ -437,13 +442,13 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
                   <Wind aria-hidden="true" className="h-4 w-4" /> Wind
                 </p>
                 <p className="mt-2 text-lg font-semibold tabular-nums text-gray-950 sm:text-xl">
-                  {number(date ? day?.wind : nearest?.wind, " km/h")}
+                  {wind(date ? day?.wind : nearest?.wind)}
                 </p>
               </div>
               <div className="min-w-0 border-l border-gray-200 px-3 py-5 sm:px-5 lg:border-l-0 lg:border-t lg:py-4">
                 <p className="text-xs font-medium text-gray-500">Gusts</p>
                 <p className="mt-2 text-lg font-semibold tabular-nums text-gray-950 sm:text-xl">
-                  {number(date ? day?.gust : nearest?.gust, " km/h")}
+                  {wind(date ? day?.gust : nearest?.gust)}
                 </p>
               </div>
               <div className="min-w-0 border-l border-gray-200 px-3 py-5 sm:px-5 lg:border-l-0 lg:border-t lg:py-4">
@@ -457,7 +462,7 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
             </div>
           </div>
           <p className="mt-3 text-xs leading-relaxed text-gray-500">
-            Cloud icons are estimates from sampled GDPS cloud cover. Rain/snow icons mean precipitation is possible based on sampled probability and temperature, not a confirmed type. “—” means unavailable, not zero.
+            TrailPicker provides model-based weather estimates, not live observations or official safety advice. Actual conditions may differ. Terrain and avalanche hazards are not assessed. Cloud cover and precipitation icons are model estimates, not confirmed conditions. “—” means unavailable data.
           </p>
 
           {/* Days use easy-to-scan tiles instead of a dense data table. */}
@@ -482,12 +487,12 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
                         <span className="text-xs leading-tight text-gray-600">{daySky(item.date).label}</span>
                       </div>
                       <p className="mt-3 text-xl font-bold tabular-nums tracking-tight text-gray-950">
-                        {number(item.high, "°")}
-                        <span className="ml-1 text-base font-medium text-gray-400">/ {number(item.low, "°")}</span>
+                        {temp(item.high)}
+                        <span className="ml-1 text-base font-medium text-gray-400">/ {temp(item.low)}</span>
                       </p>
                       <div className="mt-4 space-y-2 border-t border-gray-100 pt-3 text-xs text-gray-600">
                         <p className="flex items-center justify-between gap-2">
-                          <span>Wind</span><span className="font-medium tabular-nums text-gray-800">{number(item.wind, " km/h")}</span>
+                          <span>Wind</span><span className="font-medium tabular-nums text-gray-800">{wind(item.wind)}</span>
                         </p>
                         <p className="flex items-center justify-between gap-2">
                           <span>Precip.</span><span className="font-medium tabular-nums text-gray-800">{number(item.pop, "%")}</span>
@@ -530,16 +535,13 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
               </p>
             )}
             {hints.length > 0 && <p className="mt-3 text-gray-700">{hints.join(" ")}</p>}
-            <p className="mt-4 text-xs leading-relaxed text-gray-500">
-              TrailPicker screening, not ECCC safety advice. Terrain and avalanche hazards are not assessed.
-            </p>
           </section>
 
           {date && planning && (
             <section className="mt-6 rounded-xl border border-gray-200 p-5" aria-label="Plan comparison">
               <h3 className="font-bold text-gray-950">Compared with your trip plan</h3>
               <p className="mt-2 text-gray-600">
-                Planned minimum: {number(planning.minTemperature, "°C")} · Sampled minimum: {number(day?.low, "°C")}
+                Planned minimum: {temp(planning.minTemperature, true)} · Sampled minimum: {temp(day?.low, true)}
               </p>
               {changes.length > 0 && (
                 <ul className="mt-3 list-disc space-y-2 pl-5 text-amber-900">
@@ -593,9 +595,9 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
                           <th scope="row" className="whitespace-nowrap py-3 pr-3 font-medium text-gray-900">
                             {shortDate(dateKey(hour.time, zone))} · {localHour(hour.time, zone)}
                           </th>
-                          <td className="px-3 py-3 tabular-nums">{number(hour.temperature, "°C")}</td>
-                          <td className="px-3 py-3 tabular-nums">{number(hour.wind, " km/h")}</td>
-                          <td className="px-3 py-3 tabular-nums">{number(hour.gust, " km/h")}</td>
+                          <td className="px-3 py-3 tabular-nums">{temp(hour.temperature, true)}</td>
+                          <td className="px-3 py-3 tabular-nums">{wind(hour.wind)}</td>
+                          <td className="px-3 py-3 tabular-nums">{wind(hour.gust)}</td>
                           <td className="px-3 py-3 tabular-nums">{number(hour.pop, "%")}</td>
                           <td className="py-3 pl-3 text-xs text-gray-600">{hour.model}</td>
                         </tr>
@@ -612,7 +614,6 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
           <footer className="mt-6 border-t border-gray-100 pt-4 text-xs leading-relaxed text-gray-500">
             <p>
               Source: Environment and Climate Change Canada (ECCC) GeoMet · {data.modelsAvailable.join(" / ") || "Model unavailable"}.
-              Model-grid elevations are not altitude-corrected. Sky cover is shown only when a verified cloud sample is available; precipitation probability and rain/snow estimates are not observed conditions.
             </p>
             <a
               href="https://eccc-msc.github.io/open-data/msc-geomet/readme_en/"

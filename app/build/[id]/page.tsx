@@ -19,7 +19,6 @@ import {
   evaluateCompatibility,
 } from "@/lib/compatibility";
 import TripPlanner from "@/components/builder/TripPlanner/TripPlanner";
-import PackAnalysis from "@/components/builder/PackAnalysis";
 import { evaluatePackIntelligence, type IntelligenceItem } from "@/lib/pack-intelligence";
 
 export default async function BuildPage({
@@ -37,7 +36,7 @@ export default async function BuildPage({
   const canClaim = view.canEdit && access?.userId === null && !!(await currentBuildUserId());
   const { tab } = await searchParams;
 
-  const activeTab = tab === "trip" ? "trip" : tab === "analysis" ? "analysis" : "gear";
+  const activeTab = tab === "trip" ? "trip" : "gear";
 
   const build = await prisma.build.findUnique({
     where: view.canEdit && access ? { id, userId: access.userId } : { id, isPublic: true },
@@ -63,6 +62,14 @@ export default async function BuildPage({
 
   const { base, consumable, worn, total } = calculateWeightBreakdown(build.items);
   const totalCost = calculateTotalCost(build.items);
+  // Ownership belongs to the signed-in build owner, not the public viewer.
+  const ownedGearIds = view.canEdit && access?.userId
+    ? new Set((await prisma.ownedGear.findMany({
+      where: { userId: access.userId, gearId: { in: build.items.flatMap(item => item.gearId ? [item.gearId] : []) } },
+      select: { gearId: true },
+    })).map(item => item.gearId))
+    : new Set<string>();
+  const costToBuy = calculateTotalCost(build.items.filter(item => !item.gearId || !ownedGearIds.has(item.gearId)));
 
   const compatBuild: BuildForCompat = {
     people: build.people,
@@ -195,11 +202,8 @@ export default async function BuildPage({
               tripLogistics: build.tripLogistics,
             }}
             issues={issues}
+            items={compatItems}
           />
-
-        ) : activeTab === "analysis" ? (
-
-          <PackAnalysis items={compatItems} trip={build} buildId={build.id} />
 
         ) : (
 
@@ -213,24 +217,24 @@ export default async function BuildPage({
                 <div></div>
               </div>
 
-              <BuildRow name="Backpack" gearLink="/gear/packs" selectCategory="packs" categoryName="Packs" buildId={build.id}
+              <BuildRow name="Backpack" gearLink="/gear/packs" selectCategory="packs" categoryName="Packs" buildId={build.id} ownedGearIds={ownedGearIds}
                 items={build.items.filter((i) => i.gear?.category.name === "Packs" || i.customCategory === "Packs")} />
-              <BuildRow name="Shelter" gearLink="/gear/shelter" selectCategory="shelter" categoryName="Shelter" buildId={build.id}
+              <BuildRow name="Shelter" gearLink="/gear/shelter" selectCategory="shelter" categoryName="Shelter" buildId={build.id} ownedGearIds={ownedGearIds}
                 items={build.items.filter((i) => i.gear?.category.name === "Shelter" || i.customCategory === "Shelter")} />
-              <BuildRow name="Sleep System" gearLink="/gear/sleep" selectCategory="sleep" categoryName="Sleep" buildId={build.id}
+              <BuildRow name="Sleep System" gearLink="/gear/sleep" selectCategory="sleep" categoryName="Sleep" buildId={build.id} ownedGearIds={ownedGearIds}
                 items={build.items.filter((i) => i.gear?.category.name === "Sleep" || i.customCategory === "Sleep")} />
-              <BuildRow name="Cooking" gearLink="/gear/cooking" selectCategory="cooking" categoryName="Cooking" buildId={build.id}
+              <BuildRow name="Cooking" gearLink="/gear/cooking" selectCategory="cooking" categoryName="Cooking" buildId={build.id} ownedGearIds={ownedGearIds}
                 items={build.items.filter((i) => i.gear?.category.name === "Cooking" || i.customCategory === "Cooking")} />
-              <BuildRow name="Water" gearLink="/gear/water" selectCategory="water" categoryName="Water" buildId={build.id}
+              <BuildRow name="Water" gearLink="/gear/water" selectCategory="water" categoryName="Water" buildId={build.id} ownedGearIds={ownedGearIds}
                 items={build.items.filter((i) => i.gear?.category.name === "Water" || i.customCategory === "Water")} />
-              <BuildRow name="Clothing" gearLink="/gear/clothing" selectCategory="clothing" categoryName="Clothing" buildId={build.id}
+              <BuildRow name="Clothing" gearLink="/gear/clothing" selectCategory="clothing" categoryName="Clothing" buildId={build.id} ownedGearIds={ownedGearIds}
                 items={build.items.filter((i) => i.gear?.category.name === "Clothing" || i.customCategory === "Clothing")} />
-              <BuildRow name="Electronics" gearLink="/gear/electronics" selectCategory="electronics" categoryName="Electronics" buildId={build.id}
+              <BuildRow name="Electronics" gearLink="/gear/electronics" selectCategory="electronics" categoryName="Electronics" buildId={build.id} ownedGearIds={ownedGearIds}
                 items={build.items.filter((i) => i.gear?.category.name === "Electronics" || i.customCategory === "Electronics")} />
-              <BuildRow name="Miscellaneous" gearLink="/gear/misc" selectCategory="misc" categoryName="Misc" buildId={build.id}
+              <BuildRow name="Miscellaneous" gearLink="/gear/misc" selectCategory="misc" categoryName="Misc" buildId={build.id} ownedGearIds={ownedGearIds}
                 items={build.items.filter((i) => i.gear?.category.name === "Misc" || i.customCategory === "Misc")} />
 
-              <CostSummary totalCost={totalCost} />
+              <CostSummary totalCost={totalCost} costToBuy={costToBuy} />
             </div>
 
             <WeightSummary
@@ -254,3 +258,4 @@ export default async function BuildPage({
     </div>
   );
 }
+

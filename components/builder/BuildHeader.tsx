@@ -10,7 +10,6 @@ type Props = {
 export default function BuildHeader({ buildId, name, active, issueCount }: Props) {
   const tabs = [
     { key: "gear" as const, label: "Gear", href: `/build/${buildId}` },
-    { key: "analysis" as const, label: "Analysis", href: `/build/${buildId}?tab=analysis` },
     { key: "trip" as const, label: "Trip Planner", href: `/build/${buildId}?tab=trip` },
   ];
 

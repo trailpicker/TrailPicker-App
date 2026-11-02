@@ -1,4 +1,5 @@
 import { calculateTotalCost, calculateWeightBreakdown } from "@/lib/calculations";
+import { weightText, type WeightUnit } from "@/lib/user-preferences";
 
 export type ProfileBuild = {
   id: string;
@@ -37,6 +38,6 @@ export function dateRange(start: Date | null, end: Date | null) {
   return end ? `${date(start)} – ${date(end)}` : date(start);
 }
 
-export function weightLabel(grams: number) {
-  return grams >= 1000 ? `${(grams / 1000).toFixed(2)} kg` : `${Math.round(grams)} g`;
+export function weightLabel(grams: number, unit: WeightUnit = "metric") {
+  return weightText(grams, unit);
 }
