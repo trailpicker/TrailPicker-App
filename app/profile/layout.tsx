@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
@@ -9,7 +10,7 @@ const links = [
   { href: "/profile/builds", label: "My Builds", icon: Backpack },
   { href: "/profile/gear", label: "My Gear", icon: UserRound },
   { href: "/profile/favorites", label: "Favorites", icon: Heart },
-  { href: "/profile/reviews", label: "Reviews", icon: Star, disabled: true },
+  { href: "/profile/reviews", label: "Reviews", icon: Star, disabled: false },
 ];
 
 export default async function ProfileLayout({ children }: { children: React.ReactNode }) {
@@ -37,7 +38,7 @@ export default async function ProfileLayout({ children }: { children: React.Reac
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-9 sm:px-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="flex items-center gap-5">
             {user.image ? (
-              <img src={user.image} alt="" className="h-20 w-20 rounded-2xl object-cover ring-4 ring-white/15" />
+              <Image src={user.image} alt="" width={80} height={80} unoptimized className="h-20 w-20 rounded-2xl object-cover ring-4 ring-white/15" />
             ) : (
               <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-600 text-3xl font-bold ring-4 ring-white/15">
                 {displayName.charAt(0).toUpperCase()}
@@ -53,7 +54,7 @@ export default async function ProfileLayout({ children }: { children: React.Reac
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 max-sm:flex-wrap">
             <div className="grid grid-cols-3 gap-2 rounded-2xl border border-white/15 bg-white/10 p-2 backdrop-blur">
               {[
                 [user._count.builds, "Builds"],

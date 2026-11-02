@@ -1,7 +1,7 @@
 "use client";
 
 import { useOptimistic, useTransition } from "react";
-import { setItemCategory } from "@/app/build/actions";
+import { setItemCategory } from "@/lib/tracked-build-actions";
 
 type Category = "base" | "worn" | "consumable";
 
@@ -87,4 +87,3 @@ export default function ItemCategoryToggle({
         </div>
     );
 }
-

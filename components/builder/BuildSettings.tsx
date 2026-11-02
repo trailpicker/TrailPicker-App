@@ -3,8 +3,8 @@
 import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Settings2, X, LockKeyhole, Globe2 } from "lucide-react";
-import { setBuildVisibility } from "@/lib/build-visibility-actions";
-import { renameBuild } from "@/lib/build-settings-actions";
+import { setBuildVisibility } from "@/lib/tracked-build-actions";
+import { renameBuild } from "@/lib/tracked-build-actions";
 
 export default function BuildSettings({ buildId, buildName, isPublic, buttonClassName }: {
   buildId: string;

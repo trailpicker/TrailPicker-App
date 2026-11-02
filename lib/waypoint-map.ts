@@ -32,22 +32,68 @@ export function moveWaypoint(points: Waypoint[], index: number, delta: -1 | 1): 
   return result;
 }
 
+
 export function routeForSave(points: Waypoint[]): Waypoint[] {
-  if (points.length > 200) throw new Error("A route can have up to 200 stops.");
+  if (points.length > 200) {
+    throw new Error("A route can have up to 200 stops.");
+  }
+
   const ids = new Set<string>();
+
   return points.map(point => {
-    if (!point.id || point.id.length > 200 || ids.has(point.id)) throw new Error("One of the stops has an invalid ID. Reload the route and try again.");
+    if (!point.id || point.id.length > 200 || ids.has(point.id)) {
+      throw new Error("One of the stops has an invalid ID. Reload the route and try again.");
+    }
     ids.add(point.id);
-    if (!validCoordinates(point.lat, point.lng)) throw new Error("One of the stops has an invalid map position.");
-    if (!WAYPOINT_TYPES.some(type => type.kind === point.kind)) throw new Error("Choose a valid stop type.");
+
+    if (!validCoordinates(point.lat, point.lng)) {
+      throw new Error("One of the stops has an invalid map position.");
+    }
+
+    if (!WAYPOINT_TYPES.some(type => type.kind === point.kind)) {
+      throw new Error("Choose a valid stop type.");
+    }
+
     const name = point.name.trim();
-    if (!name || name.length > 200) throw new Error("Give each stop a name between 1 and 200 characters.");
-    if (point.elevationM !== null && (!Number.isFinite(point.elevationM) || point.elevationM < -500 || point.elevationM > 9000)) {
+
+    if (!name || name.length > 200) {
+      throw new Error("Give each stop a name between 1 and 200 characters.");
+    }
+
+    if (
+      point.elevationM !== null &&
+      (!Number.isFinite(point.elevationM) ||
+        point.elevationM < -500 ||
+        point.elevationM > 9000)
+    ) {
       throw new Error("Optional elevation must be between -500 and 9000 m.");
     }
-    return { id: point.id, name, kind: point.kind, lat: point.lat, lng: point.lng, elevationM: point.elevationM };
+
+    const time = point.time?.trim() || null;
+    const note = point.note?.trim() || null;
+
+    if (time && !/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) {
+      throw new Error("Stop time must be in HH:MM format.");
+    }
+
+    if (note && note.length > 500) {
+      throw new Error("Stop notes cannot exceed 500 characters.");
+    }
+
+    return {
+      id: point.id,
+      name,
+      kind: point.kind,
+      lat: point.lat,
+      lng: point.lng,
+      elevationM: point.elevationM,
+      ...(point.dayId ? { dayId: point.dayId } : {}),
+      ...(time ? { time } : {}),
+      ...(note ? { note } : {}),
+    };
   });
 }
+
 
 export type PlaceResult = { id: string; name: string; detail: string; lat: number; lng: number };
 const record = (value: unknown): Record<string, unknown> | null => value !== null && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : null;

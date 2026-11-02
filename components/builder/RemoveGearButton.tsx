@@ -1,6 +1,6 @@
 "use client";
 
-import { removeGear } from "@/app/build/actions";
+import { removeGear } from "@/lib/tracked-build-actions";
 
 type Props = {
   itemId: string;

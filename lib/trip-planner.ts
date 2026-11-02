@@ -1,10 +1,20 @@
-export type Waypoint = { id: string; name: string; lat: number; lng: number; elevationM: number | null; kind: "trailhead" | "camp" | "water" | "waypoint" };
+
+export type Waypoint = {
+  id: string;
+  name: string;
+  lat: number;
+  lng: number;
+  elevationM: number | null;
+  dayId?: string | null;
+  time?: string | null;
+  note?: string | null;
+  kind: "trailhead" | "camp" | "water" | "waypoint";
+};
 export type Logistics = { permits: string; reservations: string; transportation: string; parking: string; emergencyContact: string; emergencyPlan: string; notes: string };
 export const emptyLogistics: Logistics = { permits: "", reservations: "", transportation: "", parking: "", emergencyContact: "", emergencyPlan: "", notes: "" };
 export type PlannerDay = { id: string; date: Date; minTemperature: number | null; conditions: string | null; notes: string | null; startLocation: string | null; endLocation: string | null; distanceKm: number | null; elevationGainM: number | null; elevationLossM: number | null; durationMinutes: number | null; campsite: string | null; reservation: string | null; waterSource: string | null; waterCarryL: number | null; trailConditions: string | null; activities: string | null };
 export type PlannerBuild = { id: string; location: string | null; locationLat: number | null; locationLng: number | null; startDate: Date | null; endDate: Date | null; people: number; minTemperature: number | null; conditions: string | null; days: PlannerDay[]; routeWaypoints?: unknown; tripLogistics?: unknown };
 export const dayTextFields = ["startLocation", "endLocation", "campsite", "reservation", "waterSource", "trailConditions", "activities", "notes"] as const;
-export const dayNumberFields = ["distanceKm", "elevationGainM", "elevationLossM", "durationMinutes", "waterCarryL", "minTemperature"] as const;
 export function plannedDay(day: PlannerDay) { return !!(day.startLocation?.trim() && day.endLocation?.trim() && day.distanceKm != null); }
 export function tripTotals(days: PlannerDay[]) {
   const sum = (key: "distanceKm" | "elevationGainM" | "elevationLossM" | "durationMinutes") => days.reduce((n,d) => n + (d[key] ?? 0), 0);
@@ -12,7 +22,7 @@ export function tripTotals(days: PlannerDay[]) {
 }
 export function readWaypoints(value: unknown): Waypoint[] {
   if (!Array.isArray(value)) return [];
-  return value.filter((p): p is Waypoint => !!p && typeof p === "object" && typeof p.id === "string" && typeof p.name === "string" && Number.isFinite(p.lat) && Number.isFinite(p.lng) && Math.abs(p.lat) <= 90 && Math.abs(p.lng) <= 180 && ["trailhead","camp","water","waypoint"].includes(p.kind) && (p.elevationM === null || Number.isFinite(p.elevationM)));
+  return value.filter((p): p is Waypoint => !!p && typeof p === "object" && typeof p.id === "string" && typeof p.name === "string" && Number.isFinite(p.lat) && Number.isFinite(p.lng) && Math.abs(p.lat) <= 90 && Math.abs(p.lng) <= 180 && ["trailhead","camp","water","waypoint"].includes(p.kind) && (p.elevationM === null || Number.isFinite(p.elevationM)) && (p.dayId === undefined || p.dayId === null || (typeof p.dayId === "string" && p.dayId.length > 0 && p.dayId.length <= 200)) && (p.time === undefined || p.time === null || (typeof p.time === "string" && (!p.time || /^([01]\d|2[0-3]):[0-5]\d$/.test(p.time)))) && (p.note === undefined || p.note === null || (typeof p.note === "string" && p.note.length <= 500)));
 }
 export function readLogistics(value: unknown): Logistics {
   const result = { ...emptyLogistics };

@@ -3,7 +3,6 @@ type Props = {
     consumable: number;
     worn: number;
     total: number;
-    totalCost: number;
 };
 
 function toLb(grams: number) {
@@ -15,7 +14,6 @@ export default function WeightSummary({
     consumable,
     worn,
     total,
-    totalCost,
 }: Props) {
     const basePct = total > 0 ? (base / total) * 100 : 0;
     const wornPct = total > 0 ? (worn / total) * 100 : 0;
@@ -83,4 +81,5 @@ function Stat({
         </div>
     );
 }
+
 

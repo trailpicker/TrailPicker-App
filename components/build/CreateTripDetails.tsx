@@ -1,165 +1,331 @@
-// components/build/CreateTripDetails.tsx
+
 "use client";
+
+import { useRef, useState } from "react";
+import { ArrowLeft, Check, MapPin, Pencil, Plus } from "lucide-react";
 import DestinationPicker from "./DestinationPicker";
 import DateRangePicker from "./DateRangePicker";
 
-import { useState } from "react";
-
-const icons = {
-    pin: (
-        <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 21s-7-6.1-7-11a7 7 0 1114 0c0 4.9-7 11-7 11z" />
-            <circle cx="12" cy="10" r="2.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-    ),
-    calendar: (
-        <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
-            <rect x="3" y="5" width="18" height="16" rx="2" strokeLinecap="round" strokeLinejoin="round" />
-            <path strokeLinecap="round" strokeLinejoin="round" d="M8 3v4M16 3v4M3 10h18" />
-        </svg>
-    ),
-    users: (
-        <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M13 7a4 4 0 11-8 0 4 4 0 018 0zM22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
-        </svg>
-    ),
-    thermometer: (
-        <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M14 14.76V3.5a2.5 2.5 0 00-5 0v11.26a4.5 4.5 0 105 0z" />
-        </svg>
-    ),
-    cloud: (
-        <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" stroke="currentColor" className="w-4 h-4">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M17.5 19a4.5 4.5 0 000-9 6 6 0 00-11.4 1.5A4 4 0 006 19h11.5z" />
-        </svg>
-    ),
-    chevron: (
-        <svg viewBox="0 0 24 24" fill="none" strokeWidth="2.5" stroke="currentColor" className="w-3.5 h-3.5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
-        </svg>
-    ),
+type Destination = {
+  id: string;
+  name: string;
+  lat: string;
+  lng: string;
 };
 
-function FieldShell({
-    icon,
-    label,
-    children,
-}: {
-    icon: React.ReactNode;
-    label: string;
-    children: React.ReactNode;
-}) {
-    return (
-        <div className="rounded-lg border bg-white p-2.5 transition focus-within:ring-2 focus-within:ring-green-700 focus-within:border-green-700">
-            <label className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1">
-                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-green-100 text-green-700">
-                    {icon}
-                </span>
-                {label}
-            </label>
-            {children}
-        </div>
-    );
-}
+const emptyDestination: Destination = {
+  id: "",
+  name: "",
+  lat: "",
+  lng: "",
+};
 
-const fieldInputClass = `
-  w-full rounded-md border-0 bg-transparent px-0 py-0.5 text-sm
-  outline-none focus:ring-0 placeholder:text-gray-300
-`;
+const secondaryButton =
+  "inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-3.5 py-2 text-sm font-semibold text-gray-800 transition hover:border-green-300 hover:bg-green-50 hover:text-green-900";
+
+const primaryButton =
+  "inline-flex items-center justify-center gap-2 rounded-lg bg-green-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-green-800";
+
+const labelClass =
+  "mb-1.5 block text-sm font-medium text-gray-700";
+
+const inputClass =
+  "w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-900 outline-none transition focus:border-green-700 focus:ring-2 focus:ring-green-700/10";
 
 export default function CreateTripDetails() {
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [choosingDestination, setChoosingDestination] = useState(false);
+  const [destination, setDestination] =
+    useState<Destination>(emptyDestination);
+  const [pickerSession, setPickerSession] = useState(0);
+  const [pickerError, setPickerError] = useState("");
+  const pickerContainer = useRef<HTMLDivElement>(null);
 
-    return (
-        <div className={`overflow-hidden border ${open ? "rounded-xl" : "rounded-xl"}`}>
-            <button
-                type="button"
-                onClick={() => setOpen(!open)}
-                className="
-                    w-full bg-slate-800 px-6 py-4 flex items-center justify-between
-                    hover:bg-slate-900 transition cursor-pointer
-                "
-            >
-                <span className="flex items-center gap-2">
-                    <p className="text-medium font-semibold text-white">Trip Details</p>
-                    <span className="text-xs font-medium text-white/50">(OPTIONAL)</span>
-                </span>
+  function openPicker() {
+    setPickerError("");
+    setPickerSession((value) => value + 1);
+    setChoosingDestination(true);
+  }
 
-                <span
-                    className={`
-                        flex h-6 w-6 items-center justify-center rounded-full bg-white/10 text-white
-                        transition-transform duration-200 ${open ? "rotate-180" : ""}
-                    `}
-                >
-                    {icons.chevron}
-                </span>
-            </button>
+  function confirmDestination() {
+    const parentForm = pickerContainer.current?.closest("form");
+    if (!parentForm) return;
 
+    const values = new FormData(parentForm);
+
+    const next: Destination = {
+      id: String(
+        values.get("candidateDestinationId") ?? ""
+      ).trim(),
+      name: String(
+        values.get("candidateLocation") ?? ""
+      ).trim(),
+      lat: String(
+        values.get("candidateLat") ?? ""
+      ).trim(),
+      lng: String(
+        values.get("candidateLng") ?? ""
+      ).trim(),
+    };
+
+    if (!next.name) {
+      setPickerError(
+        "Choose a destination or a custom wilderness location first."
+      );
+      return;
+    }
+
+    if (
+      (next.lat === "") !== (next.lng === "") ||
+      (next.lat !== "" &&
+        (!Number.isFinite(Number(next.lat)) ||
+          !Number.isFinite(Number(next.lng)) ||
+          Math.abs(Number(next.lat)) > 90 ||
+          Math.abs(Number(next.lng)) > 180))
+    ) {
+      setPickerError("Choose a location with valid coordinates.");
+      return;
+    }
+
+    setDestination(next);
+    setChoosingDestination(false);
+    setPickerError("");
+  }
+
+  return (
+    <section className="min-w-0">
+      {/* Actual values submitted when creating the trip */}
+      <input
+        type="hidden"
+        name="destinationId"
+        value={destination.id}
+      />
+      <input
+        type="hidden"
+        name="location"
+        value={destination.name}
+      />
+      <input
+        type="hidden"
+        name="locationLat"
+        value={destination.lat}
+      />
+      <input
+        type="hidden"
+        name="locationLng"
+        value={destination.lng}
+      />
+
+      {/* Optional details disclosure */}
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls="additional-trip-details"
+        onClick={() => setOpen((value) => !value)}
+        className="group flex w-full cursor-pointer items-center justify-between border-b border-gray-200 py-3 text-left transition-colors hover:border-gray-400"
+      >
+        <span className="text-sm font-medium text-gray-900">
+          Additional trip details
+          <span className="ml-2 text-xs font-normal text-gray-400">
+            Optional
+          </span>
+        </span>
+
+        <Plus
+          aria-hidden="true"
+          className={`h-4 w-4 text-gray-500 transition-transform duration-300 ease-in-out ${
+            open ? "rotate-45" : "rotate-0"
+          }`}
+        />
+      </button>
+
+      {/* Animated accordion */}
+      <div
+        id="additional-trip-details"
+        className={`grid transition-[grid-template-rows,opacity] duration-500 ease-in-out motion-reduce:transition-none ${
+          open
+            ? "grid-rows-[1fr] opacity-100"
+            : "grid-rows-[0fr] opacity-0"
+        }`}
+        aria-hidden={!open}
+        inert={!open}
+      >
+        <div className="min-h-0 overflow-hidden">
+          <div className="space-y-5 pt-5">
+            {/* Keep dates and travelers mounted while picking a destination */}
             <div
-                className={`
-                transition-all duration-300
-                ${open ? "max-h-[1800px] opacity-100" : "max-h-0 opacity-0"}
-                `}
+              className={
+                choosingDestination ? "hidden" : "space-y-5"
+              }
             >
-                <div className="bg-gray-50 p-5 space-y-4">
-                    <div className="rounded-lg border bg-white p-3">
-                        <label className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-2">
-                            <span className="flex h-4 w-4 items-center justify-center rounded-full bg-green-100 text-green-700">
-                                {icons.pin}
-                            </span>
+              {/* Destination */}
+              <div>
+                <label className={labelClass}>
+                  Destination
+                </label>
 
-                            Location
-                        </label>
+                <div className="flex flex-wrap items-center gap-3 rounded-lg border border-gray-200 bg-gray-50/60 p-3 sm:flex-nowrap">
+                  <MapPin
+                    aria-hidden="true"
+                    className="h-5 w-5 shrink-0 text-green-800"
+                  />
 
-                        <DestinationPicker
-                            destinationField="destinationId"
-                            nameField="location"
-                            latField="locationLat"
-                            lngField="locationLng"
-                        />
-                    </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="break-words text-sm font-semibold text-gray-900">
+                      {destination.name ||
+                        "No destination selected"}
+                    </p>
 
-                    <FieldShell icon={icons.calendar} label="Dates">
-                        <DateRangePicker startName="startDate" endName="endDate" />
-                    </FieldShell>
+                    <p className="mt-0.5 text-xs text-gray-500">
+                      {destination.name
+                        ? destination.id
+                          ? "Popular destination"
+                          : "Custom wilderness location"
+                        : "Optional"}
+                    </p>
+                  </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                        <FieldShell icon={icons.users} label="People">
-                            <input
-                                name="people"
-                                type="number"
-                                min="1"
-                                defaultValue="1"
-                                className={fieldInputClass}
-                            />
-                        </FieldShell>
-
-                        <FieldShell icon={icons.thermometer} label="Lowest Temp">
-                            <div className="flex items-center gap-1">
-                                <input
-                                    name="minTemperature"
-                                    type="number"
-                                    placeholder="-5"
-                                    className={fieldInputClass}
-                                />
-                                <span className="text-sm text-gray-400 shrink-0">°C</span>
-                            </div>
-                        </FieldShell>
-                    </div>
-
-                    <FieldShell icon={icons.cloud} label="Conditions">
-                        <select
-                            name="conditions"
-                            className={`${fieldInputClass} cursor-pointer`}
-                        >
-                            <option value="">Unknown</option>
-                            <option value="dry">Dry</option>
-                            <option value="rain">Rain</option>
-                            <option value="snow">Snow</option>
-                        </select>
-                    </FieldShell>
+                  <button
+                    type="button"
+                    onClick={openPicker}
+                    className={`${secondaryButton} shrink-0`}
+                  >
+                    <Pencil
+                      aria-hidden="true"
+                      className="h-4 w-4"
+                    />
+                    {destination.name ? "Change" : "Choose"}
+                  </button>
                 </div>
+
+                {destination.name && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setDestination(emptyDestination)
+                    }
+                    className="mt-2 text-xs text-gray-500 underline-offset-2 hover:text-gray-800 hover:underline"
+                  >
+                    Remove destination
+                  </button>
+                )}
+              </div>
+
+              {/* Dates and travelers */}
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="min-w-0">
+                  <label className={labelClass}>
+                    Trip dates
+                  </label>
+
+                  <div className="rounded-lg border border-gray-200 bg-white px-3 py-2">
+                    <DateRangePicker
+                      startName="startDate"
+                      endName="endDate"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="create-trip-people"
+                    className={labelClass}
+                  >
+                    Travelers
+                  </label>
+
+                  <input
+                    id="create-trip-people"
+                    name="people"
+                    type="number"
+                    min={1}
+                    max={100}
+                    defaultValue={1}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
             </div>
+
+            {/* Destination selection view */}
+            {choosingDestination && (
+              <div
+                ref={pickerContainer}
+                className="space-y-4 animate-in fade-in duration-300"
+              >
+                <div className="flex items-center justify-between gap-3 border-b border-gray-100 pb-3">
+                  <h3 className="text-base font-semibold text-gray-900">
+                    Choose destination
+                  </h3>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setChoosingDestination(false)
+                    }
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
+                  >
+                    <ArrowLeft className="h-4 w-4" />
+                    Back
+                  </button>
+                </div>
+
+                <DestinationPicker
+                  key={pickerSession}
+                  destinationField="candidateDestinationId"
+                  nameField="candidateLocation"
+                  latField="candidateLat"
+                  lngField="candidateLng"
+                  initialDestinationId={
+                    destination.id || undefined
+                  }
+                  initialName={destination.name}
+                  initialLat={
+                    destination.lat === ""
+                      ? null
+                      : Number(destination.lat)
+                  }
+                  initialLng={
+                    destination.lng === ""
+                      ? null
+                      : Number(destination.lng)
+                  }
+                />
+
+                {pickerError && (
+                  <p
+                    role="alert"
+                    className="text-sm text-red-700"
+                  >
+                    {pickerError}
+                  </p>
+                )}
+
+                <div className="flex flex-wrap justify-end gap-3 border-t border-gray-100 pt-4">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setChoosingDestination(false)
+                    }
+                    className={secondaryButton}
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={confirmDestination}
+                    className={primaryButton}
+                  >
+                    <Check className="h-4 w-4" />
+                    Use this destination
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-    );
+      </div>
+    </section>
+  );
 }

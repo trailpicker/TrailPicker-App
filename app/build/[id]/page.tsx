@@ -17,9 +17,10 @@ import CompatibilityBar from "@/components/builder/CompatibilityBar";
 import CompatibilityDetails from "@/components/builder/CompatibilityDetails";
 import {
   evaluateCompatibility,
-  summarizeCompatibility,
 } from "@/lib/compatibility";
 import TripPlanner from "@/components/builder/TripPlanner/TripPlanner";
+import PackAnalysis from "@/components/builder/PackAnalysis";
+import { evaluatePackIntelligence, type IntelligenceItem } from "@/lib/pack-intelligence";
 
 export default async function BuildPage({
   params,
@@ -36,7 +37,7 @@ export default async function BuildPage({
   const canClaim = view.canEdit && access?.userId === null && !!(await currentBuildUserId());
   const { tab } = await searchParams;
 
-  const activeTab = tab === "trip" ? "trip" : "gear";
+  const activeTab = tab === "trip" ? "trip" : tab === "analysis" ? "analysis" : "gear";
 
   const build = await prisma.build.findUnique({
     where: view.canEdit && access ? { id, userId: access.userId } : { id, isPublic: true },
@@ -49,6 +50,7 @@ export default async function BuildPage({
               category: true,
               subcategory: true,
               images: true,
+              specifications: true, // For explicitly labelled shelter sleeping capacity.
             },
           },
         },
@@ -86,6 +88,7 @@ export default async function BuildPage({
         weight_g: item.gear.weight_g,
         price_cad: item.gear.price_cad,
         capacity_l: item.gear.capacity_l,
+        specifications: item.gear.specifications.map(spec => ({ key: spec.key, value: spec.value, unit: spec.unit })),
         frame_type: item.gear.frame_type,
         waterproof: item.gear.waterproof,
         temperature_rating: item.gear.temperature_rating,
@@ -98,12 +101,40 @@ export default async function BuildPage({
       : null,
   }));
   const issues = evaluateCompatibility(compatBuild, compatItems, build.days);
-  const summary = summarizeCompatibility(issues);
+  const intelligenceFindings = evaluatePackIntelligence(build, compatItems as IntelligenceItem[], build.days).findings;
+  const analysisReviewCount = intelligenceFindings.filter(f => f.level === "critical" || f.level === "review").length;
 
   if (!view.canEdit) {
-    return <PublicBuildView build={{ ...build, tripLogistics: undefined, days: build.days.map(day => ({ ...day, reservation: null })) }} activeTab={activeTab}
+    const publicBuild = {
+      id: build.id, name: build.name,
+      location: build.location, locationLat: build.locationLat, locationLng: build.locationLng,
+      startDate: build.startDate, endDate: build.endDate,
+      people: build.people, minTemperature: build.minTemperature, conditions: build.conditions,
+      routeWaypoints: build.routeWaypoints,
+      days: build.days.map(day => ({
+        id: day.id, date: day.date, minTemperature: day.minTemperature,
+        conditions: day.conditions, notes: null,
+        startLocation: day.startLocation, endLocation: day.endLocation,
+        distanceKm: day.distanceKm, elevationGainM: day.elevationGainM,
+        elevationLossM: day.elevationLossM, durationMinutes: day.durationMinutes,
+        campsite: day.campsite, reservation: null, waterSource: day.waterSource,
+        waterCarryL: day.waterCarryL, trailConditions: day.trailConditions,
+        activities: day.activities,
+      })),
+      items: build.items.map(item => ({
+        id: item.id, quantity: item.quantity, isWorn: item.isWorn,
+        isConsumable: item.isConsumable, customCategory: item.customCategory,
+        gearNameSnapshot: item.gearNameSnapshot, weightSnapshot: item.weightSnapshot,
+        priceSnapshot: item.priceSnapshot,
+        gear: item.gear ? {
+          id: item.gear.id, name: item.gear.name, weight_g: item.gear.weight_g,
+          price_cad: item.gear.price_cad, category: { name: item.gear.category.name },
+        } : null,
+      })),
+    };
+    return <PublicBuildView build={publicBuild} activeTab={activeTab}
       compatBuild={compatBuild} compatItems={compatItems}
-      issueCount={summary.errors + summary.warnings} />;
+      issueCount={analysisReviewCount} />;
   }
 
   return (
@@ -119,16 +150,16 @@ export default async function BuildPage({
         buildId={build.id}
         name={build.name}
         active={activeTab}
-        issueCount={summary.errors + summary.warnings}
+        issueCount={analysisReviewCount}
       />
 
       <div className="mx-auto mt-4 max-w-screen-2xl px-4">
         <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
 
           <CompatibilityBar
-            build={compatBuild}
+            buildId={build.id}
+            trip={build}
             items={compatItems}
-            days={build.days}
             totalWeight={total}
           />
 
@@ -165,6 +196,10 @@ export default async function BuildPage({
             }}
             issues={issues}
           />
+
+        ) : activeTab === "analysis" ? (
+
+          <PackAnalysis items={compatItems} trip={build} buildId={build.id} />
 
         ) : (
 
@@ -203,13 +238,12 @@ export default async function BuildPage({
               consumable={consumable}
               worn={worn}
               total={total}
-              totalCost={totalCost}
             />
 
             <CompatibilityDetails
-              build={compatBuild}
+              buildId={build.id}
+              trip={build}
               items={compatItems}
-              days={build.days}
             />
           </>
 
@@ -220,5 +254,3 @@ export default async function BuildPage({
     </div>
   );
 }
-
-

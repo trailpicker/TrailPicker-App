@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { signOut } from "next-auth/react";
 import {
     User,
@@ -66,8 +67,11 @@ export default function ProfileDropdown({
 
 
                 {image ? (
-                    <img
+                    <Image
                         src={image}
+                        width={36}
+                        height={36}
+                        unoptimized
                         alt=""
                         className="
                             h-9 w-9

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import PackAnalysis from "@/components/builder/PackAnalysis";
 import TripPlanner from "./TripPlanner/TripPlanner";
 import type { PlannerBuild } from "@/lib/trip-planner";
 import { evaluateCompatibility } from "@/lib/compatibility";
@@ -18,7 +19,7 @@ type Build = PlannerBuild & { name: string; items: Item[] };
 
 // Server-rendered display only: no mutation forms or editing components.
 export default function PublicBuildView({ build, activeTab, compatBuild, compatItems, issueCount }: {
-  build: Build; activeTab: "gear" | "trip"; compatBuild: BuildForCompat; compatItems: CompatItem[]; issueCount: number;
+  build: Build; activeTab: "gear" | "analysis" | "trip"; compatBuild: BuildForCompat; compatItems: CompatItem[]; issueCount: number;
 }) {
   const weight = calculateWeightBreakdown(build.items);
   const totalCost = calculateTotalCost(build.items);
@@ -31,7 +32,7 @@ export default function PublicBuildView({ build, activeTab, compatBuild, compatI
           <p>Public build · Read-only · Only the owner can edit.</p>
           <Link href="/build" className="font-semibold underline">Create your own build</Link>
         </div>
-        {activeTab === "gear" ? <>
+        {activeTab === "analysis" ? <PackAnalysis items={compatItems} trip={build} buildId={build.id} readOnly /> : activeTab === "gear" ? <>
           {categories.length === 0 && <p className="rounded-xl bg-white p-6 text-gray-500">No gear added yet.</p>}
           {categories.map(category => <section key={category} className="rounded-xl border border-gray-200 bg-white p-5">
             <h2 className="mb-3 text-lg font-semibold">{category}</h2>
@@ -50,12 +51,18 @@ export default function PublicBuildView({ build, activeTab, compatBuild, compatI
             </ul>
           </section>)}
           <p className="text-lg font-semibold">Total cost: CAD ${totalCost.toFixed(2)}</p>
-          <WeightSummary {...weight} totalCost={totalCost} />
-          <CompatibilityDetails build={compatBuild} items={compatItems} days={build.days} />
-        </> : <TripPlanner build={{ ...build, tripLogistics: undefined, days: build.days.map(day=>({...day,reservation:null})) }} issues={evaluateCompatibility(compatBuild,compatItems,build.days)} readOnly />}
+          <WeightSummary {...weight} />
+          <CompatibilityDetails
+            trip={build}
+            items={compatItems}
+            readOnly
+          />
+        </> : <TripPlanner build={{ ...build, tripLogistics: undefined, days: build.days.map(day => ({ ...day, reservation: null })) }} issues={evaluateCompatibility(compatBuild, compatItems, build.days)} readOnly />}
 
       </main>
     </div>
   );
 }
+
+
 

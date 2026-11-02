@@ -1,87 +1,29 @@
+"use client";
+
 import Link from "next/link";
-import { Backpack, Heart, PackageCheck, Scale, Trash2 } from "lucide-react";
-import {
-  addGearToCurrentBuild,
-  removeFavorite,
-  removeOwnedGear,
-  moveFavoriteToGear,
-} from "@/app/profile/gear/actions";
+import Image from "next/image";
+import { useState, useTransition } from "react";
+import { Backpack, Heart, PackageCheck, Scale, Trash2, Pencil } from "lucide-react";
+import { addGearToCurrentBuild, removeFavorite, removeOwnedGear, moveFavoriteToGear, updateOwnedGearDetails } from "@/app/profile/gear/actions";
+import { gearMoney, gearWeight, safeGearUrl } from "@/lib/gear-display";
 
-type Gear = {
-  id: string;
-  name: string;
-  weight_g: number | null;
-  price_cad: number | null;
-  brand: { name: string };
-  category: { name: string; slug: string };
-  images: Array<{ url: string; isPrimary: boolean }>;
-};
+type Gear={id:string;name:string;weight_g:number|null;price_cad:number|null;brand:{name:string};category:{name:string;slug:string};images:Array<{url:string;isPrimary:boolean}>};
+type Details={purchasedPrice:number|null;purchasedAt:Date|null;notes:string|null};
+type Props={gear:Gear;mode:"owned"|"favorite";addedAt:Date;hasCurrentBuild?:boolean;details?:Details};
+const button="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-gray-200 px-3 py-2 text-xs font-semibold hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50";
+const field="mt-1 block w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm";
 
-type Props = {
-  gear: Gear;
-  mode: "owned" | "favorite";
-  addedAt: Date;
-  hasCurrentBuild?: boolean;
-};
-
-export default function GearLibraryCard({ gear, mode, addedAt, hasCurrentBuild = false }: Props) {
-  const image = gear.images.find((item) => item.isPrimary)?.url || gear.images[0]?.url;
-
-  return (
-    <article className="flex overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-emerald-300 hover:shadow-md">
-      <Link href={`/gear/${gear.id}`} className="flex w-28 shrink-0 items-center justify-center bg-slate-50 sm:w-36">
-        {image ? (
-          <img src={image} alt="" className="h-full max-h-44 w-full object-contain p-3" />
-        ) : (
-          <Backpack className="h-10 w-10 text-slate-300" />
-        )}
-      </Link>
-
-      <div className="min-w-0 flex-1 p-4">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-wide text-green-700">{gear.brand.name}</p>
-            <Link href={`/gear/${gear.id}`} className="mt-1 block truncate text-lg font-bold text-slate-950 hover:text-green-800">
-              {gear.name}
-            </Link>
-            <p className="mt-1 text-xs text-slate-500">{gear.category.name} · Added {addedAt.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}</p>
-          </div>
-          <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">{gear.category.name}</span>
-        </div>
-
-        <div className="mt-4 flex flex-wrap gap-4 text-sm text-slate-600">
-          <span className="flex items-center gap-1.5"><Scale className="h-4 w-4 text-slate-400" />{gear.weight_g == null ? "Weight unknown" : gear.weight_g >= 1000 ? `${(gear.weight_g / 1000).toFixed(2)} kg` : `${gear.weight_g} g`}</span>
-          <span>{gear.price_cad == null ? "Price unknown" : `$${gear.price_cad.toFixed(2)} CAD`}</span>
-        </div>
-
-        <div className="mt-4 flex flex-wrap gap-2">
-          {mode === "owned" ? (
-            <>
-              <form action={addGearToCurrentBuild}>
-                <input type="hidden" name="gearId" value={gear.id} />
-                <button disabled={!hasCurrentBuild} title={hasCurrentBuild ? "Add to your current build" : "Open or create a build first"} className="flex items-center gap-2 rounded-lg bg-green-900 px-3 py-2 text-xs font-semibold text-white hover:bg-green-800 disabled:cursor-not-allowed disabled:bg-slate-300">
-                  <Backpack className="h-3.5 w-3.5" />Add to current build
-                </button>
-              </form>
-              <form action={removeOwnedGear}>
-                <input type="hidden" name="gearId" value={gear.id} />
-                <button className="flex items-center gap-2 rounded-lg border border-red-100 px-3 py-2 text-xs font-semibold text-red-600 hover:bg-red-50"><Trash2 className="h-3.5 w-3.5" />Remove</button>
-              </form>
-            </>
-          ) : (
-            <>
-              <form action={moveFavoriteToGear}>
-                <input type="hidden" name="gearId" value={gear.id} />
-                <button className="flex items-center gap-2 rounded-lg bg-green-900 px-3 py-2 text-xs font-semibold text-white hover:bg-green-800"><PackageCheck className="h-3.5 w-3.5" />I own this</button>
-              </form>
-              <form action={removeFavorite}>
-                <input type="hidden" name="gearId" value={gear.id} />
-                <button className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-50"><Heart className="h-3.5 w-3.5" />Unfavorite</button>
-              </form>
-            </>
-          )}
-        </div>
-      </div>
-    </article>
-  );
+export default function GearLibraryCard({gear,mode,addedAt,hasCurrentBuild=false,details}:Props){
+  const [pending,start]=useTransition(),[error,setError]=useState(""),[editing,setEditing]=useState(false),[imageFailed,setImageFailed]=useState(false);
+  const image=safeGearUrl(gear.images.find(item=>item.isPrimary)?.url??gear.images[0]?.url);
+  function run(action:(data:FormData)=>Promise<void>,data?:FormData){const form=data??new FormData();form.set("gearId",gear.id);setError("");start(async()=>{try{await action(form);if(action===updateOwnedGearDetails)setEditing(false);}catch(e){if(e&&typeof e==="object"&&"digest" in e&&typeof e.digest==="string"&&e.digest.startsWith("NEXT_REDIRECT;"))throw e;setError(e instanceof Error?e.message:"Could not update gear.");}});}
+  return <article className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <div className="flex items-start"><Link href={`/gear/${gear.id}`} className="relative m-3 flex h-24 w-20 shrink-0 items-center justify-center rounded-xl bg-slate-50 sm:h-32 sm:w-28">{image&&!imageFailed?<Image src={image} alt={gear.name} fill sizes="112px" className="object-contain p-2" onError={()=>setImageFailed(true)}/>:<Backpack className="h-9 w-9 text-slate-300"/>}</Link>
+      <div className="min-w-0 flex-1 p-4 pl-1"><p className="text-[10px] font-semibold uppercase tracking-wide text-green-700">{gear.brand.name}</p><Link href={`/gear/${gear.id}`} className="mt-1 block break-words text-base font-bold text-slate-950 hover:text-green-800">{gear.name}</Link><p className="mt-1 text-xs text-slate-500">{gear.category.name}</p><div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600"><span className="inline-flex items-center gap-1"><Scale className="h-3.5 w-3.5"/>{gearWeight(gear.weight_g)}</span><span>{gearMoney(gear.price_cad)}</span></div><p className="mt-2 text-[10px] text-slate-400">Added {addedAt.toLocaleDateString("en-CA",{month:"short",day:"numeric",year:"numeric",timeZone:"UTC"})}</p></div>
+    </div>
+    {mode==="owned"&&details&&(details.purchasedPrice!==null||details.purchasedAt||details.notes)&&<div className="mx-4 mb-3 rounded-lg bg-slate-50 p-3 text-xs text-slate-600">{details.purchasedPrice!==null&&<p>Paid {gearMoney(details.purchasedPrice)}</p>}{details.purchasedAt&&<p className="mt-1">Purchased {details.purchasedAt.toLocaleDateString("en-CA",{timeZone:"UTC"})}</p>}{details.notes&&<p className="mt-2 whitespace-pre-wrap break-words">{details.notes}</p>}</div>}
+    <div className="flex flex-wrap gap-2 border-t border-slate-100 p-4">{mode==="owned"?<><button type="button" disabled={pending||!hasCurrentBuild} title={hasCurrentBuild?"Add to your current build":"Open or create an account build first"} onClick={()=>run(addGearToCurrentBuild)} className={`${button} border-green-900 bg-green-900 text-white hover:bg-green-800`}><Backpack className="h-3.5 w-3.5"/>Add to build</button><button type="button" disabled={pending} onClick={()=>setEditing(!editing)} className={button}><Pencil className="h-3.5 w-3.5"/>Details</button><button type="button" disabled={pending} onClick={()=>run(removeOwnedGear)} className={`${button} text-red-600`}><Trash2 className="h-3.5 w-3.5"/>Remove</button></>:<><button type="button" disabled={pending} onClick={()=>run(moveFavoriteToGear)} className={`${button} border-green-900 bg-green-900 text-white hover:bg-green-800`}><PackageCheck className="h-3.5 w-3.5"/>I own this</button><button type="button" disabled={pending} onClick={()=>run(removeFavorite)} className={button}><Heart className="h-3.5 w-3.5"/>Unfavorite</button></>}{pending&&<span role="status" className="self-center text-xs text-gray-500">Saving…</span>}</div>
+    {editing&&mode==="owned"&&<form action={data=>run(updateOwnedGearDetails,data)} className="border-t border-gray-100 bg-gray-50 p-4"><fieldset disabled={pending} className="space-y-3"><legend className="sr-only">Purchase details</legend><div className="grid gap-3 sm:grid-cols-2"><label className="text-xs font-medium text-gray-600">Purchase price (CAD)<input type="number" name="purchasedPrice" min="0" max="1000000" step="0.01" defaultValue={details?.purchasedPrice??""} className={field}/></label><label className="text-xs font-medium text-gray-600">Purchase date<input type="date" name="purchasedAt" defaultValue={details?.purchasedAt?.toISOString().slice(0,10)??""} className={`${field} min-w-0`}/></label></div><label className="block text-xs font-medium text-gray-600">Private notes<textarea name="notes" rows={3} maxLength={2000} defaultValue={details?.notes??""} className={field}/></label><div className="flex gap-2"><button className={`${button} bg-green-900 text-white hover:bg-green-800`}>Save details</button><button type="button" onClick={()=>setEditing(false)} className={button}>Cancel</button></div></fieldset></form>}
+    {error&&<p role="alert" className="px-4 pb-4 text-sm text-red-700">{error}</p>}
+  </article>;
 }

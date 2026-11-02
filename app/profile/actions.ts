@@ -1,11 +1,11 @@
 "use server";
 
-import { setCurrentBuild } from "@/lib/build-access";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { ensureBuildRevisionBaseline, recordBuildRevision } from "@/lib/build-history";
+import { mutateBuildWithRevision } from "@/lib/build-history";
+import { duplicateBuild } from "@/app/build/actions";
 
 async function currentUser() {
   const session = await auth();
@@ -28,9 +28,10 @@ export async function renameBuild(formData: FormData) {
   const buildId = String(formData.get("buildId") || "");
   const name = String(formData.get("name") || "").trim();
   if (!name) throw new Error("Build name is required.");
-  await ensureBuildRevisionBaseline(buildId, user.id);
-  await prisma.build.updateMany({ where: { id: buildId, userId: user.id }, data: { name: name.slice(0, 80) } });
-  await recordBuildRevision(buildId, user.id, "settings", "Renamed build");
+  await mutateBuildWithRevision(buildId, user.id, "settings", "Renamed build", async tx => {
+    const result = await tx.build.updateMany({ where: { id: buildId, userId: user.id }, data: { name: name.slice(0, 80) } });
+    if (result.count !== 1) throw new Error("Build not found.");
+  });
   revalidatePath("/profile");
   revalidatePath("/profile/builds");
 }
@@ -38,47 +39,11 @@ export async function renameBuild(formData: FormData) {
 export async function duplicateProfileBuild(formData: FormData) {
   const user = await currentUser();
   const buildId = String(formData.get("buildId") || "");
-  const original = await prisma.build.findFirst({ where: { id: buildId, userId: user.id }, include: { items: true, days: true } });
-  if (!original) throw new Error("Build not found.");
-  const copy = await prisma.build.create({
-    data: {
-      name: `${original.name} (copy)`,
-      userId: user.id,
-      location: original.location,
-      locationLat: original.locationLat,
-      locationLng: original.locationLng,
-      startDate: original.startDate,
-      endDate: original.endDate,
-      people: original.people,
-      minTemperature: original.minTemperature,
-      conditions: original.conditions,
-      items: {
-        create: original.items.map(
-          ({ gearId, quantity, isConsumable, isWorn, customCategory, gearNameSnapshot, weightSnapshot, priceSnapshot }) => ({
-            gearId,
-            quantity,
-            isConsumable,
-            isWorn,
-            customCategory,
-            gearNameSnapshot,
-            weightSnapshot,
-            priceSnapshot,
-          }),
-        ),
-      },
-      days: {
-        create: original.days.map(({ date, minTemperature, conditions, notes }) => ({
-          date,
-          minTemperature,
-          conditions,
-          notes,
-        })),
-      },
-    },
-  });
-  await recordBuildRevision(copy.id, user.id, "copy", `Created from ${original.name}`);
-  await setCurrentBuild(copy.id);
-  redirect(`/build/${copy.id}`);
+  // Reuse the canonical copy implementation, preserving routes, all day fields,
+  // logistics and remapped day IDs. Never maintain a second partial copy path.
+  const owned = await prisma.build.findFirst({ where: { id: buildId, userId: user.id }, select: { id: true } });
+  if (!owned) throw new Error("Build not found.");
+  return duplicateBuild(formData);
 }
 
 export async function updateProfile(formData: FormData) {

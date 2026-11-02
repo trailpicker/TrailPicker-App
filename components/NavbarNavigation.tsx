@@ -8,7 +8,7 @@ import { ChevronDown, ChevronRight, Menu, Tent, X } from "lucide-react";
 type Category = { id: string; name: string; slug: string; subcategories: { id: string; name: string; slug: string }[] };
 const links = [{ name: "Marketplace", href: "/marketplace" }, { name: "Community", href: "/community" }, { name: "Guides", href: "/guide" }];
 
-export default function NavbarNavigation({ builderHref, categories, account }: {
+function NavbarNavigationContent({ builderHref, categories, account }: {
   builderHref: string; categories: Category[]; account: ReactNode;
 }) {
   const [panel, setPanel] = useState<"gear" | "mobile" | null>(null);
@@ -18,10 +18,8 @@ export default function NavbarNavigation({ builderHref, categories, account }: {
   const headerRef = useRef<HTMLElement>(null);
   const gearRef = useRef<HTMLButtonElement>(null);
   const mobileRef = useRef<HTMLButtonElement>(null);
-  const pathname = usePathname();
 
   function close() { setPanel(null); setMobileGear(false); }
-  useEffect(() => { setPanel(null); setMobileGear(false); }, [pathname]);
   useEffect(() => {
     if (!panel) return;
     function outside(event: PointerEvent) {
@@ -98,4 +96,13 @@ export default function NavbarNavigation({ builderHref, categories, account }: {
       </div>
     </nav>}
   </header>;
+}
+export default function NavbarNavigation(props: {
+  builderHref: string;
+  categories: Category[];
+  account: ReactNode;
+}) {
+  const pathname = usePathname();
+
+  return <NavbarNavigationContent key={pathname} {...props} />;
 }

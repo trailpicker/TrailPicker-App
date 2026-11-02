@@ -1,4 +1,4 @@
-import OriginalGearPicker, { type GearBrowseSearch } from "@/components/builder/OriginalGearPicker";
+import OriginalGearPicker, { type GearBrowseSearch } from "@/components/builder/GearPicker";
 
 export default async function GearSubcategoryPage({ params, searchParams }: {
   params: Promise<{ id: string; subcategory: string }>;

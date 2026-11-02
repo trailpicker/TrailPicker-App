@@ -1,6 +1,6 @@
 "use client";
 
-import { addGear } from "@/app/build/actions";
+import { addGear } from "@/lib/tracked-build-actions";
 
 
 export default function AddGearButton({

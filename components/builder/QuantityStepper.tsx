@@ -1,7 +1,7 @@
 "use client";
 
 import { useOptimistic, useTransition } from "react";
-import { updateQuantity } from "@/app/build/actions";
+import { updateQuantity } from "@/lib/tracked-build-actions";
 
 type Props = {
     itemId: string;
@@ -85,4 +85,3 @@ export default function QuantityStepper({
         </div>
     );
 }
-

@@ -1,52 +1,50 @@
-import {
-    evaluateCompatibility,
-    type BuildForCompat,
-    type CompatItem,
-    type CompatibilityIssue,
-    type TripDayForCompat,
-} from "@/lib/compatibility";
-//components/builder/CompatibilityDetails.tsx
+"use client";
+
+import { useState } from "react";
+import type { CompatItem } from "@/lib/compatibility";
+import type { PlannerBuild } from "@/lib/trip-planner";
+import { evaluatePackIntelligence, type IntelligenceItem } from "@/lib/pack-intelligence";
+import { FindingList } from "./AnalysisFindingCard";
+import { useIgnoredFindings } from "./useIgnoredFindings";
+
 type Props = {
-    build: BuildForCompat;
-    items: CompatItem[];
-    days?: TripDayForCompat[];
+  buildId?: string;
+  trip: PlannerBuild;
+  items: CompatItem[];
+  readOnly?: boolean;
 };
 
-const severityStyles: Record<CompatibilityIssue["severity"], string> = {
-    error: "border-red-200 bg-red-50 text-red-900",
-    warning: "border-amber-200 bg-amber-50 text-amber-900",
-    info: "border-gray-200 bg-gray-50 text-gray-700",
-};
+export default function CompatibilityDetails({ buildId, trip, items, readOnly = false }: Props) {
+  const findings = evaluatePackIntelligence(trip, items as IntelligenceItem[], trip.days).findings;
+  const { ignoredIds, toggleIgnore, storageError } = useIgnoredFindings(buildId ?? "", findings, !!buildId && !readOnly);
+  const [showIgnored, setShowIgnored] = useState(false);
+  const active = findings.filter(f => !ignoredIds.has(f.id));
+  const shown = showIgnored ? findings : active;
 
-const severityLabel: Record<CompatibilityIssue["severity"], string> = {
-    error: "Issue",
-    warning: "Warning",
-    info: "Note",
-};
-
-export default function CompatibilityDetails({ build, items, days = [] }: Props) {
-    const issues = evaluateCompatibility(build, items, days);
-
-    return (
-        <section id="compatibility-details" className="mt-10 scroll-mt-24">
-            <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-400">
-                Compatibility Check
-            </h2>
-
-            {issues.length === 0 ? (
-                <p className="mt-3 text-sm text-gray-500">No compatibility issues found for this build.</p>
-            ) : (
-                <div className="mt-3 space-y-2">
-                    {issues.map((issue) => (
-                        <div key={issue.id} className={`rounded-lg border px-4 py-3 text-sm ${severityStyles[issue.severity]}`}>
-                            <span className="mr-2 rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide">
-                                {severityLabel[issue.severity]} · {issue.category}
-                            </span>
-                            {issue.message}
-                        </div>
-                    ))}
-                </div>
-            )}
-        </section>
-    );
+  return (
+    <section id="compatibility-details" className="mt-10 scroll-mt-24" aria-labelledby="compatibility-title">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-200 pt-8">
+        <div>
+          <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+            Compatibility
+          </h2>
+          <p className="mt-1 text-sm text-gray-600">
+            {active.length} active · {ignoredIds.size} acknowledged. Ignoring a finding does not make the equipment compatible.
+          </p>
+        </div>
+        {!readOnly && ignoredIds.size > 0 && <button type="button" onClick={() => setShowIgnored(v => !v)} className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50">
+          {showIgnored ? "Hide ignored" : `Show ignored (${ignoredIds.size})`}
+        </button>}
+      </div>
+      {storageError && <p role="alert" className="mt-3 text-sm text-amber-800">Could not save ignored findings in this browser.</p>}
+      <div className="mt-4">
+        <FindingList
+          findings={shown}
+          ignoredIds={ignoredIds}
+          onToggleIgnore={!readOnly && buildId ? toggleIgnore : undefined}
+          empty={findings.length ? "All current findings are acknowledged. They may still need attention." : "No analysis findings flagged this build."}
+        />
+      </div>
+    </section>
+  );
 }

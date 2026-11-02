@@ -1,137 +1,23 @@
-import OriginalGearPicker, { type GearBrowseSearch } from "@/components/builder/OriginalGearPicker";
+import GearPicker, { type GearBrowseSearch } from "@/components/builder/GearPicker";
+import ProductDetails from "@/components/gear/ProductDetails";
+import { currentBuildUserId, findAccessibleBuild } from "@/lib/build-access";
 import { prisma } from "@/lib/prisma";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-  
 
-export default async function GearDetailPage({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ id: string }>;
-  searchParams: Promise<GearBrowseSearch>;
-}) {
-
-  const { id } = await params;
-  const category = await prisma.category.findUnique({ where: { slug: id.toLowerCase() }, select: { id: true } });
-  if (category) return <OriginalGearPicker categorySlug={id} filters={await searchParams} />;
-
-
-  const gear = await prisma.gear.findUnique({
-    where: {
-      id,
-    },
-    include: {
-      brand: true,
-      category: true,
-      prices: {
-        include: {
-          retailer: true,
-        },
-      },
-      reviews: true,
-      specifications: true,
-    },
-  });
-
-
-  if (!gear) {
-    notFound();
-  }
-
-
-  return (
-    <main className="max-w-7xl mx-auto p-8">
-
-      <h1 className="text-4xl font-bold">
-        {gear.name}
-      </h1>
-
-      <div className="mt-8 divide-y border-y">
-
-        <p>
-          Category:
-          {" "}
-          {gear.category.name}
-        </p>
-
-
-        <p>
-          Weight:
-          {" "}
-          {gear.weight_g ?? "Unknown"}g
-        </p>
-
-
-        <p>
-          Price:
-          {" "}
-          {gear.price_cad
-            ? `$${gear.price_cad} CAD`
-            : "Unknown"}
-        </p>
-
-
-        <p>
-          Capacity:
-          {" "}
-          {gear.capacity_l
-            ? `${gear.capacity_l}L`
-            : "Unknown"}
-        </p>
-
-
-        <p>
-          Season:
-          {" "}
-          {gear.season ?? "Unknown"}
-        </p>
-
-      </div>
-
-
-      {gear.description && (
-        <section className="mt-8">
-
-          <h2 className="text-2xl font-bold">
-            Description
-          </h2>
-
-          <p className="mt-2">
-            {gear.description}
-          </p>
-
-        </section>
-      )}
-
-
-      {gear.prices.length > 0 && (
-        <section className="mt-8">
-
-          <h2 className="text-2xl font-bold">
-            Retailers
-          </h2>
-
-
-          {gear.prices.map((price)=>(
-            <div
-              key={price.id}
-              className="border rounded-lg p-4 mt-3"
-            >
-
-              <p>
-                {price.retailer.name}
-              </p>
-
-              <p>
-                ${price.price} {price.currency}
-              </p>
-
-            </div>
-          ))}
-
-        </section>
-      )}
-
-    </main>
-  );
+export default async function GearDetailPage({params,searchParams}:{params:Promise<{id:string}>;searchParams:Promise<GearBrowseSearch>}) {
+  const {id}=await params;
+  const category=await prisma.category.findUnique({where:{slug:id.toLowerCase()},select:{id:true}});
+  if(category)return <GearPicker categorySlug={id} filters={await searchParams}/>;
+  const gear=await prisma.gear.findUnique({where:{id},include:{brand:true,category:true,subcategory:true,images:{orderBy:[{isPrimary:"desc"},{id:"asc"}]},prices:{include:{retailer:true}},specifications:true,reviews:{orderBy:{createdAt:"desc"},include:{user:{select:{name:true,username:true}}}}}});
+  if(!gear)notFound();
+  const userId=await currentBuildUserId();
+  const candidate=(await cookies()).get("currentBuild")?.value;
+  const access=candidate?await findAccessibleBuild(candidate):null;
+  const [owned,favorite,build]=await Promise.all([
+    userId?prisma.ownedGear.findUnique({where:{userId_gearId:{userId,gearId:id}},select:{id:true}}):null,
+    userId?prisma.favorite.findUnique({where:{userId_gearId:{userId,gearId:id}},select:{id:true}}):null,
+    access?prisma.build.findUnique({where:{id:access.id,userId:access.userId},select:{id:true,name:true}}):null,
+  ]);
+  return <ProductDetails gear={gear} userId={userId} owned={Boolean(owned)} favorite={Boolean(favorite)} build={build}/>;
 }

@@ -1,0 +1,27 @@
+{
+
+  "type": "FeatureCollection",
+  "layer": "RDPS_10km_AirTemp_2m",
+  "features": [
+    
+    {
+      "type": "Feature",
+      "id": "RDPS_10km_AirTemp_2m(-116.29799,51.427015)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -116.2980,51.4270
+        ]
+      },
+      "properties": {
+        "value": -6.3080812,
+        "class": "-10 -5",
+        "title_en": "RDPS - Air temperature at 2m above ground [°C]",
+        "title_fr": "SRPD - Température de l'air à 2m au dessus de la surface [°C]",
+        "time": "2026-10-25T17:00:00Z",
+        "dim_reference_time": "2026-10-25T12:00:00Z"
+      }
+    }
+  ]
+
+}

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Copy, CopyCheck, Plus, Save } from "lucide-react";
 import BuildSettings from "@/components/builder/BuildSettings";
 import BuildDataTools from "@/components/builder/BuildDataTools";
-import { duplicateBuild } from "@/app/build/actions";
+import { duplicateBuild } from "@/lib/tracked-build-actions";
 
 type Props = {
   buildId: string;
@@ -79,5 +79,3 @@ export default function ShareBar({ buildId, buildName, isPublic, createdAt, upda
     </div>
   );
 }
-
-

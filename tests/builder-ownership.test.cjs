@@ -35,26 +35,29 @@ function harness() {
       findUnique: async ({ where }) => state.builds.find(b => matches(b, where)) || null,
       create: write('build.create'), update: write('build.update'),
       updateMany: async ({ where, data }) => { const b = state.builds.find(b => matches(b, where)); if (!b) return {count:0}; state.writes.push({type:'claim'}); Object.assign(b, data); return {count:1}; } },
-    buildItem: { findFirst: async ({ where }) => {
+    buildItem: { findUnique: async () => null, updateMany: async args => { state.writes.push({type:'item.updateMany',args}); return {count:1}; }, findFirst: async ({ where }) => {
       const buildId = where.id === 'item-a' ? 'a' : where.id === 'item-b' ? 'b' : null;
       return buildId === where.buildId ? { id: where.id, buildId, quantity: 2 } : null;
     }, update: write('item.update'), delete: write('item.delete'), create: write('item.create'), upsert: write('item.upsert') },
     tripDay: { findFirst: async ({ where }) => where.id === 'day-a' && where.buildId === 'a' ? { id: 'day-a', buildId: 'a' } : null,
       update: write('day.update'), createMany: write('day.createMany'), deleteMany: write('day.deleteMany') },
   };
+  prisma.$transaction = async fn => fn(prisma);
   const navigation = { notFound: () => { throw new Error('404'); }, redirect: url => { throw new Error(`REDIRECT:${url}`); } };
   const access = load('lib/build-access.ts', { '@/auth': {auth: async () => state.email ? {user:{email:state.email}} : null},
     '@/lib/prisma': { prisma }, 'next/headers': {cookies:async()=>cookieStore}, 'next/navigation': navigation, '@/lib/guest-build-token': token });
   const planner = load('lib/trip-planner.ts');
-  const history = { ensureBuildRevisionBaseline: async () => {}, recordBuildRevision: async () => {}, getBuildSnapshot: async (buildId, userId) => {
+  const history = { lockBuild: async()=>{}, mutateBuildWithRevision: async (buildId,userId,action,summary,mutate)=>mutate(prisma), ensureBuildRevisionBaseline: async () => {}, recordBuildRevision: async () => {}, getBuildSnapshot: async (buildId, userId) => {
     const b = state.builds.find(build => build.id === buildId && build.userId === userId);
     if (!b) throw new Error('Build not found.');
     return { name:b.name, destinationId:null, location:null, locationLat:null, locationLng:null, startDate:null, endDate:null, people:1, minTemperature:null, conditions:null, routeWaypoints:null, tripLogistics:null, items:b.items || [], days:b.days || [] };
   } };
-  const plannerActions = load('lib/trip-planner-actions.ts', { '@/lib/prisma':{prisma}, '@/lib/build-access':access, 'next/cache':{revalidatePath:()=>{}}, '@/lib/destinations':{getDestination:()=>null}, '@/lib/trip':{getDateRange:()=>[]}, '@/lib/trip-planner':planner, '@/lib/build-history':history });
+  const validation = load('lib/build-validation.ts', {'./trip-planner': planner});
+  const itinerary = { validatedRoute: () => null, remapRouteDays: () => ({ points:null, unassignedCount:0 }) };
+  const plannerActions = load('lib/trip-planner-actions.ts', { '@/lib/prisma':{prisma}, '@/lib/build-access':access, 'next/cache':{revalidatePath:()=>{}}, '@/lib/destinations':{getDestination:()=>null}, '@/lib/trip':{getDateRange:()=>[]}, '@/lib/trip-planner':planner, '@/lib/build-history':history, '@/lib/build-validation':validation, '@/lib/itinerary-links':itinerary });
   const actions = load('app/build/actions.ts', {'@/lib/prisma':{prisma}, '@/lib/trip-planner-actions':plannerActions, '@/lib/trip-planner':planner, 'next/navigation': navigation,
     'next/headers':{cookies:async()=>cookieStore}, 'next/cache':{revalidatePath:()=>{}}, '@/lib/trip':{getDateRange:()=>[]},
-    '@/lib/build-access':access, '@/lib/guest-build-token':token, '@/lib/destinations':{getDestination:()=>null}, '@/lib/build-history':history, '@/app/generated/prisma/client':{Prisma:{DbNull:null}} });
+    '@/lib/build-access':access, '@/lib/guest-build-token':token, '@/lib/destinations':{getDestination:()=>null}, '@/lib/build-history':history, '@/lib/build-validation':validation, '@/lib/itinerary-links':itinerary, '@/app/generated/prisma/client':{Prisma:{DbNull:null}} });
   return { state, access, actions };
 }
 function form(values) { const f = new FormData(); for (const [key,value] of Object.entries(values)) f.set(key, String(value)); return f; }
@@ -85,14 +88,14 @@ for (const email of ['a@test', null]) {
 for (const name of ['importBuildItems','duplicateBuild','addCustomItem','addGear','updateTripDetails','setItemCategory','updateQuantity','removeGear','updateTripDay']) {
   test(`${name} rejects another user's build before any write`, async () => {
     const {state,actions}=harness();
-    await assert.rejects(actions[name](form({buildId:'b', itemId:'item-b', dayId:'day-b', payload:'invalid JSON', delta:1})), /Build not found/);
+    await assert.rejects(actions[name](form({buildId:'b', itemId:'item-b', dayId:'day-b', payload:'invalid JSON', delta:1, gearId:'gear-one', category:'base'})), /Build not found/);
     assert.deepEqual(state.writes, []);
   });
 }
 for (const name of ['setItemCategory','updateQuantity','removeGear']) {
   test(`${name} rejects another build's item paired with owned build`, async () => {
     const {state,actions}=harness();
-    await assert.rejects(actions[name](form({buildId:'a',itemId:'item-b',delta:1})), /Item not found/);
+    await assert.rejects(actions[name](form({buildId:'a',itemId:'item-b',delta:1, category:'base'})), /Item not found/);
     assert.deepEqual(state.writes,[]);
   });
 }
@@ -136,12 +139,12 @@ for (const email of ['a@test',null]) {
 }
 test('owner can mutate own item', async () => {
   const {state,actions}=harness(); await actions.updateQuantity(form({buildId:'a',itemId:'item-a',delta:1}));
-  assert.equal(state.writes[0].args.data.quantity,3);
+  assert.deepEqual(state.writes[0].args.data.quantity,{increment:1});
 });
 for (const name of ['getBuildExport','importBuildItems','duplicateBuild','addCustomItem','addGear','updateTripDetails','setItemCategory','updateQuantity','removeGear','updateTripDay']) {
   test(`${name} rejects anonymous access to account build`, async () => {
     const {state,actions}=harness();state.email=null;state.cookies.set('currentBuild','a');
-    const input = name === 'getBuildExport' ? 'a' : form({buildId:'a',itemId:'item-a',dayId:'day-a',payload:'{}',delta:1});
+    const input = name === 'getBuildExport' ? 'a' : form({buildId:'a',itemId:'item-a',dayId:'day-a',payload:'{}',delta:1,gearId:'gear-one',category:'base'});
     await assert.rejects(actions[name](input), /Build not found/);
     assert.deepEqual(state.writes,[]);
   });
@@ -167,4 +170,3 @@ test('claim uses the submitted authorized build even when currentBuild points el
   assert.equal(state.builds[2].userId,'user-a');
   assert.equal(state.builds[1].userId,'user-b');
 });
-

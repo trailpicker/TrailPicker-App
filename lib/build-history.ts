@@ -1,6 +1,16 @@
 import "server-only";
 
 import { prisma } from "@/lib/prisma";
+import type { Prisma } from "@/app/generated/prisma/client";
+
+export type BuildDb = Prisma.TransactionClient;
+
+// All build mutations take this lock before touching a build. One lock per build,
+// released automatically at COMMIT/ROLLBACK; no migration required.
+export async function lockBuild(tx: BuildDb, buildId: string) {
+  await tx.$queryRaw`SELECT 1 AS locked FROM pg_advisory_xact_lock(hashtextextended(${buildId}, 0))`;
+}
+
 
 export type BuildSnapshotItem = {
   gearId: string | null;
@@ -15,6 +25,8 @@ export type BuildSnapshotItem = {
 };
 
 export type BuildSnapshotDay = {
+  // Optional for history entries made before v0.3 link preservation.
+  id?: string;
   date: string;
   minTemperature: number | null;
   conditions: string | null;
@@ -147,8 +159,8 @@ function canCoalesce(action: string, previousAction: string, previousSummary: st
   return summaryGroupKey(previousSummary) === summaryGroupKey(nextSummary);
 }
 
-export async function getBuildSnapshot(buildId: string, userId: string | null): Promise<BuildSnapshot> {
-  const build = await prisma.build.findUnique({
+export async function getBuildSnapshot(buildId: string, userId: string | null, db: BuildDb | typeof prisma = prisma): Promise<BuildSnapshot> {
+  const build = await db.build.findUnique({
     where: { id: buildId, userId },
     include: {
       items: {
@@ -186,6 +198,7 @@ export async function getBuildSnapshot(buildId: string, userId: string | null): 
       priceSnapshot: item.priceSnapshot,
     })),
     days: build.days.map((day) => ({
+      id: day.id,
       date: day.date.toISOString(),
       minTemperature: day.minTemperature,
       conditions: day.conditions,
@@ -206,18 +219,42 @@ export async function getBuildSnapshot(buildId: string, userId: string | null): 
   };
 }
 
-export async function ensureBuildRevisionBaseline(buildId: string, userId: string | null) {
-  const count = await prisma.buildRevision.count({ where: { buildId } });
-  if (count > 0) return;
-  const snapshot = await getBuildSnapshot(buildId, userId);
-  await prisma.buildRevision.create({
-    data: {
-      buildId,
-      action: "baseline",
-      summary: "First saved version",
-      snapshot: JSON.parse(JSON.stringify(snapshot)),
-    },
+// Calling this directly is safe too: it acquires the same lock as mutation actions.
+export async function ensureBuildRevisionBaseline(buildId: string, userId: string | null, db?: BuildDb): Promise<void> {
+  if (!db) {
+    await prisma.$transaction(async (tx) => {
+      await lockBuild(tx, buildId);
+      await ensureBuildRevisionBaseline(buildId, userId, tx);
+    });
+    return;
+  }
+  const exists = await db.buildRevision.findFirst({ where: { buildId }, select: { id: true } });
+  if (exists) return;
+  const snapshot = await getBuildSnapshot(buildId, userId, db);
+  await db.buildRevision.create({
+    data: { buildId, action: "baseline", summary: "First saved version", snapshot: JSON.parse(JSON.stringify(snapshot)) },
   });
+}
+
+/** Change, baseline and resulting revision are committed or rolled back together.
+ * PostgreSQL transaction-scoped advisory locks serialize writers for one build.
+ */
+export async function mutateBuildWithRevision<T>(
+  buildId: string,
+  userId: string | null,
+  action: string,
+  summary: string,
+  mutate: (tx: BuildDb) => Promise<T>,
+): Promise<T> {
+  return prisma.$transaction(async (tx) => {
+    await lockBuild(tx, buildId);
+    const build = await tx.build.findUnique({ where: { id: buildId, userId }, select: { id: true } });
+    if (!build) throw new Error("Build access changed. Refresh and try again.");
+    await ensureBuildRevisionBaseline(buildId, userId, tx);
+    const result = await mutate(tx);
+    await recordBuildRevision(buildId, userId, action, summary, tx);
+    return result;
+  }, { timeout: 60_000 });
 }
 
 export async function recordBuildRevision(
@@ -225,37 +262,40 @@ export async function recordBuildRevision(
   userId: string | null,
   action: string,
   requestedSummary: string,
-) {
-  await prisma.build.update({ where: { id: buildId, userId }, data: { updatedAt: new Date() } });
+  db?: BuildDb,
+): Promise<string> {
+  if (!db) {
+    return prisma.$transaction(async (tx) => {
+      await lockBuild(tx, buildId);
+      return recordBuildRevision(buildId, userId, action, requestedSummary, tx);
+    });
+  }
 
-  const last = await prisma.buildRevision.findFirst({
+  await db.build.update({ where: { id: buildId, userId }, data: { updatedAt: new Date() } });
+  const last = await db.buildRevision.findFirst({
     where: { buildId },
     orderBy: [{ createdAt: "desc" }, { id: "desc" }],
     select: { id: true, action: true, summary: true, snapshot: true, createdAt: true },
   });
   const previous = last?.snapshot && typeof last.snapshot === "object" && !Array.isArray(last.snapshot)
-    ? last.snapshot as unknown as BuildSnapshot
-    : null;
-  const snapshot = await getBuildSnapshot(buildId, userId);
+    ? last.snapshot as unknown as BuildSnapshot : null;
+  const snapshot = await getBuildSnapshot(buildId, userId, db);
   const summary = summarizeChange(previous, snapshot, action, requestedSummary).slice(0, 240);
   const safeAction = action.slice(0, 50);
   const jsonSnapshot = JSON.parse(JSON.stringify(snapshot));
 
   if (last && canCoalesce(safeAction, last.action, last.summary, summary, last.createdAt)) {
-    await prisma.buildRevision.update({
+    await db.buildRevision.update({
       where: { id: last.id },
-      data: { summary, snapshot: jsonSnapshot, createdAt: new Date() },
+      // Preserve the original timestamp so the display and coalescing window
+      // describe when this group started, rather than resetting every save.
+      data: { summary, snapshot: jsonSnapshot },
     });
     return last.id;
   }
 
-  const revision = await prisma.buildRevision.create({
-    data: {
-      buildId,
-      action: safeAction,
-      summary,
-      snapshot: jsonSnapshot,
-    },
+  const revision = await db.buildRevision.create({
+    data: { buildId, action: safeAction, summary, snapshot: jsonSnapshot },
     select: { id: true },
   });
   return revision.id;

@@ -3,10 +3,14 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@/app/generated/prisma/client";
+import { randomUUID } from "node:crypto";
+import { remapRouteDays, validatedRoute } from "@/lib/itinerary-links";
 import { requireBuildAccess } from "@/lib/build-access";
+import { parseLogistics } from "@/lib/build-validation";
 import {
   ensureBuildRevisionBaseline,
   getBuildSnapshot,
+  mutateBuildWithRevision,
   recordBuildRevision,
   snapshotsEqual,
   type BuildSnapshot,
@@ -49,7 +53,9 @@ function safeItem(item: BuildSnapshotItem) {
 function safeDay(day: BuildSnapshotDay) {
   const date = new Date(day.date);
   if (Number.isNaN(date.getTime())) throw new Error("This history entry contains an invalid itinerary date.");
-  return { ...day, date };
+  const { id: sourceId, ...fields } = day;
+  void sourceId;
+  return { ...fields, date, id: randomUUID() };
 }
 
 function snapshotMeta(value: unknown) {
@@ -84,35 +90,49 @@ export async function getBuildHistory(buildId: string) {
 
 async function restoreSnapshot(
   access: { id: string; userId: string | null },
-  revision: { id: string; snapshot: unknown; createdAt: Date; summary: string },
+  revisionId: string,
   summary: string,
+  expectedLatestId?: string,
+  expectedLatestSnapshot?: unknown,
 ) {
-  const snapshot = parseSnapshot(revision.snapshot);
-  if (snapshot.items.length > 1000 || snapshot.days.length > 366) {
-    throw new Error("This history entry is too large to restore.");
-  }
+  let unassignedStops = 0;
+  await mutateBuildWithRevision(access.id, access.userId, "restore", summary, async tx => {
+    const revision = await tx.buildRevision.findFirst({
+      where: { id: revisionId, buildId: access.id }, select: { snapshot: true },
+    });
+    if (!revision) throw new Error("History entry not found.");
+    const snapshot = parseSnapshot(revision.snapshot);
+    if (snapshot.items.length > 1000 || snapshot.days.length > 366) throw new Error("This history entry is too large to restore.");
 
-  // Normally the latest revision already represents the current state. If some
-  // future mutation forgets to write history, keep a safety copy before restore.
-  const current = await getBuildSnapshot(access.id, access.userId);
-  const latest = await prisma.buildRevision.findFirst({
-    where: { buildId: access.id },
-    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
-    select: { snapshot: true },
-  });
-  if (!latest || !isRecord(latest.snapshot) || !snapshotsEqual(current, parseSnapshot(latest.snapshot))) {
-    await recordBuildRevision(access.id, access.userId, "history", "Saved before restore");
-  }
+    const items = snapshot.items.map(safeItem);
+    const days = snapshot.days.map(safeDay);
+    const linked = remapRouteDays(
+      validatedRoute(snapshot.routeWaypoints),
+      snapshot.days.map(day => ({ id: day.id, date: day.date })),
+      days,
+    );
+    unassignedStops = linked.unassignedCount;
+    const logistics = parseLogistics(snapshot.tripLogistics);
 
-  const items = snapshot.items.map(safeItem);
-  const days = snapshot.days.map(safeDay);
-  const requestedGearIds = [...new Set(items.map((item) => item.gearId).filter((id): id is string => Boolean(id)))];
-  const existingGear = requestedGearIds.length
-    ? await prisma.gear.findMany({ where: { id: { in: requestedGearIds } }, select: { id: true } })
-    : [];
-  const existingGearIds = new Set(existingGear.map((gear) => gear.id));
+    const latest = await tx.buildRevision.findFirst({
+      where: { buildId: access.id },
+      orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+      select: { id: true, snapshot: true },
+    });
+    if (expectedLatestId && (latest?.id !== expectedLatestId || JSON.stringify(latest?.snapshot) !== JSON.stringify(expectedLatestSnapshot))) {
+      throw new Error("Build history changed. Refresh before undoing.");
+    }
+    const current = await getBuildSnapshot(access.id, access.userId, tx);
+    if (!latest || !isRecord(latest.snapshot) || !snapshotsEqual(current, parseSnapshot(latest.snapshot))) {
+      // Both the safety snapshot and restore are in the SAME transaction.
+      await recordBuildRevision(access.id, access.userId, "history", "Saved before restore", tx);
+    }
 
-  await prisma.$transaction(async (tx) => {
+    const requestedGearIds = [...new Set(items.map(item => item.gearId).filter((id): id is string => Boolean(id)))];
+    const existingGear = requestedGearIds.length
+      ? await tx.gear.findMany({ where: { id: { in: requestedGearIds } }, select: { id: true } }) : [];
+    const existingGearIds = new Set(existingGear.map(gear => gear.id));
+
     await tx.build.update({
       where: { id: access.id, userId: access.userId },
       data: {
@@ -126,42 +146,31 @@ async function restoreSnapshot(
         people: Number.isInteger(snapshot.people) && snapshot.people > 0 ? Math.min(snapshot.people, 100) : 1,
         minTemperature: Number.isFinite(snapshot.minTemperature) ? snapshot.minTemperature : null,
         conditions: snapshot.conditions ?? null,
-        routeWaypoints: snapshot.routeWaypoints == null ? Prisma.DbNull : JSON.parse(JSON.stringify(snapshot.routeWaypoints)),
-        tripLogistics: snapshot.tripLogistics == null ? Prisma.DbNull : JSON.parse(JSON.stringify(snapshot.tripLogistics)),
+        routeWaypoints: linked.points == null ? Prisma.DbNull : JSON.parse(JSON.stringify(linked.points)),
+        tripLogistics: logistics == null ? Prisma.DbNull : logistics,
       },
     });
-
     await tx.buildItem.deleteMany({ where: { buildId: access.id } });
     for (const item of items) {
       const gearId = item.gearId && existingGearIds.has(item.gearId) ? item.gearId : null;
       await tx.buildItem.create({
         data: {
-          buildId: access.id,
-          gearId,
-          quantity: item.quantity,
-          isConsumable: item.isConsumable,
-          isWorn: item.isWorn,
+          buildId: access.id, gearId, quantity: item.quantity,
+          isConsumable: item.isConsumable, isWorn: item.isWorn,
           customCategory: item.customCategory,
           gearNameSnapshot: gearId ? item.gearNameSnapshot : item.gearNameSnapshot ?? item.gearName ?? "Restored item",
-          weightSnapshot: item.weightSnapshot,
-          priceSnapshot: item.priceSnapshot,
+          weightSnapshot: item.weightSnapshot, priceSnapshot: item.priceSnapshot,
         },
       });
     }
-
     await tx.tripDay.deleteMany({ where: { buildId: access.id } });
     if (days.length) {
-      await tx.tripDay.createMany({
-        data: days.map((day) => ({ ...day, buildId: access.id })),
-      });
+      await tx.tripDay.createMany({ data: days.map(day => ({ ...day, buildId: access.id })) });
     }
   });
-
-  await recordBuildRevision(access.id, access.userId, "restore", summary);
   revalidatePath(`/build/${access.id}`);
   revalidatePath("/profile/builds");
-
-  return { ok: true };
+  return { ok: true, unassignedStops };
 }
 
 export async function restoreBuildRevision(buildId: string, revisionId: string) {
@@ -182,7 +191,7 @@ export async function restoreBuildRevision(buildId: string, revisionId: string) 
     hour: "numeric",
     minute: "2-digit",
   });
-  return restoreSnapshot(access, revision, `Restored ${restoredDate}`);
+  return restoreSnapshot(access, revision.id, `Restored ${restoredDate}`);
 }
 
 export async function undoLastBuildChange(buildId: string) {
@@ -198,6 +207,6 @@ export async function undoLastBuildChange(buildId: string) {
   if (revisions.length < 2) throw new Error("Nothing to undo yet.");
 
   const target = revisions[1];
-  await restoreSnapshot(access, target, `Undid: ${revisions[0].summary}`);
-  return { ok: true, undone: revisions[0].summary };
+  const result = await restoreSnapshot(access, target.id, `Undid: ${revisions[0].summary}`, revisions[0].id, revisions[0].snapshot);
+  return { ...result, undone: revisions[0].summary };
 }

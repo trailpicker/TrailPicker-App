@@ -39,10 +39,9 @@ export default function BuildPage() {
         backgroundPosition: "center 30%",
       }}
     >
-      <div className="w-full max-w-6xl mx-auto grid lg:grid-cols-[1fr_1.05fr] gap-14 items-center">
-
+      <div className="mx-auto grid w-full max-w-6xl items-start gap-14 lg:grid-cols-[1fr_1.05fr]">
         {/* Left — pitch */}
-        <div>
+        <div className="lg:sticky lg:top-40 lg:self-start">
           <span className="inline-block rounded-full border border-white/30 bg-white/10 backdrop-blur px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-white">
             Trip Builder
           </span>
@@ -72,7 +71,7 @@ export default function BuildPage() {
         </div>
 
         {/* Right — form card */}
-        <div className="rounded-3xl bg-white shadow-2xl border overflow-hidden">
+        <div className="self-start min-w-0 rounded-3xl bg-white shadow-2xl border overflow-hidden">
           <div className="bg-green-900 px-8 py-5 flex items-center justify-between">
             <p className="trip-card text-lg font-bold text-white">Set Up Your Trip</p>
           </div>

@@ -1,0 +1,11 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { Star } from "lucide-react";
+import { currentBuildUserId } from "@/lib/build-access";
+import { prisma } from "@/lib/prisma";
+
+export default async function MyReviewsPage(){
+  const userId=await currentBuildUserId();if(!userId)redirect("/api/auth/signin?callbackUrl=/profile/reviews");
+  const reviews=await prisma.review.findMany({where:{userId},orderBy:{createdAt:"desc"},include:{gear:{select:{id:true,name:true,brand:{select:{name:true}}}}}});
+  return <div><p className="text-sm font-semibold text-green-700">Your experience</p><h2 className="mt-1 text-3xl font-bold tracking-tight text-slate-950">My Reviews</h2><p className="mt-2 text-sm text-slate-500">Manage the reviews you’ve shared with other TrailPicker members.</p>{reviews.length?<div className="mt-6 space-y-4">{reviews.map(review=><article key={review.id} className="rounded-2xl border border-gray-200 bg-white p-5"><p className="text-xs text-green-700">{review.gear.brand.name}</p><Link href={`/gear/${review.gearId}`} className="mt-1 block font-semibold hover:text-green-800">{review.gear.name}</Link><p className="mt-3 flex items-center gap-1 text-sm"><Star className="h-4 w-4 fill-amber-400 text-amber-400"/>{review.rating} / 5 <span className="ml-2 text-xs text-gray-400">{review.createdAt.toLocaleDateString("en-CA",{timeZone:"UTC"})}</span></p>{review.title&&<h3 className="mt-3 break-words text-sm font-semibold">{review.title}</h3>}{review.body&&<p className="mt-2 whitespace-pre-wrap break-words text-sm leading-6 text-gray-600">{review.body}</p>}<Link href={`/gear/${review.gearId}#reviews`} className="mt-4 inline-block text-sm font-semibold text-green-800 hover:underline">Edit or delete review</Link></article>)}</div>:<div className="mt-6 rounded-2xl border border-dashed border-gray-200 bg-white p-8 text-center"><Star className="mx-auto h-8 w-8 text-gray-300"/><p className="mt-3 font-semibold">No reviews yet</p><p className="mt-2 text-sm text-gray-500">Open a product you’ve used and share your experience.</p><Link href="/gear/packs" className="mt-4 inline-block text-sm font-semibold text-green-800">Browse gear</Link></div>}</div>;
+}

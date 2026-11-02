@@ -1,0 +1,34 @@
+name: TrailPicker checks
+on:
+  push:
+  pull_request:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://trailpicker:trailpicker@localhost:5432/trailpicker
+      AUTH_SECRET: local-ci-placeholder-not-for-production-123456
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: trailpicker
+          POSTGRES_PASSWORD: trailpicker
+          POSTGRES_DB: trailpicker
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U trailpicker -d trailpicker"
+          --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # Export did not include package-lock.json. Once committed, prefer npm ci.
+      - run: npm install
+      - run: npx prisma generate
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build

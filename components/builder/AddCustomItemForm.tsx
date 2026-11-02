@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { addCustomItem } from "@/app/build/actions";
+import { addCustomItem } from "@/lib/tracked-build-actions";
 
 type Props = {
     buildId: string;
@@ -75,4 +75,3 @@ export default function AddCustomItemForm({
         </form>
     );
 }
-

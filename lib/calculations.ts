@@ -45,10 +45,6 @@ export function calculateWeightBreakdown(items: CalcItem[]) {
   };
 }
 
-export function gramsToPounds(grams: number) {
-  return grams / 453.592;
-}
-
 export function calculateTotalCost(items: CalcItem[]) {
   return items.reduce((total, item) => total + itemPrice(item), 0);
 }

@@ -3,13 +3,14 @@ import Link from "next/link";
 type Props = {
   buildId: string;
   name: string;
-  active: "gear" | "trip";
+  active: "gear" | "analysis" | "trip";
   issueCount: number;
 };
 
 export default function BuildHeader({ buildId, name, active, issueCount }: Props) {
   const tabs = [
     { key: "gear" as const, label: "Gear", href: `/build/${buildId}` },
+    { key: "analysis" as const, label: "Analysis", href: `/build/${buildId}?tab=analysis` },
     { key: "trip" as const, label: "Trip Planner", href: `/build/${buildId}?tab=trip` },
   ];
 
@@ -18,13 +19,13 @@ export default function BuildHeader({ buildId, name, active, issueCount }: Props
       <div className="max-w-screen-2xl mx-auto px-6 pt-6 pb-0">
         <h1 className="text-3xl font-bold text-white text-center mb-5 max-md:break-words max-md:[overflow-wrap:anywhere]">{name}</h1>
 
-        <div className="flex justify-center gap-2">
+        <div className="flex flex-wrap justify-center gap-1 sm:gap-2">
           {tabs.map((t) => (
             <Link
               key={t.key}
               href={t.href}
               className={`
-                relative px-5 py-2.5 text-sm font-semibold rounded-t-lg transition
+                relative px-3 py-2.5 text-sm sm:px-5 font-semibold rounded-t-lg transition
                 ${active === t.key
                   ? "bg-gray-50 text-green-800"
                   : "text-white/80 hover:text-white hover:bg-white/10"}
@@ -43,4 +44,5 @@ export default function BuildHeader({ buildId, name, active, issueCount }: Props
     </div>
   );
 }
+
 

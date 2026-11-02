@@ -15,6 +15,8 @@ type Props = {
   onSelect?: (id: string) => void;
   onMove?: (id: string, lat: number, lng: number) => void;
   selectedId?: string | null;
+  activeDayId?: string | null;
+  compact?: boolean;
   focus?: MapFocus | null;
 };
 
@@ -37,6 +39,67 @@ function Controls({ points, onPick, focus }: Pick<Props, "points" | "onPick" | "
     container.style.cursor = onPick ? "crosshair" : "";
     return () => { container.style.cursor = previous; };
   }, [map, onPick]);
+  return null;
+}
+
+/**
+ * Wheel input scrolls the page normally. Holding Ctrl zooms the map at the
+ * pointer instead, without triggering the browser's Ctrl+wheel page zoom.
+ * Uses a non-passive native listener because preventDefault is required.
+ */
+function CtrlWheelZoom() {
+  const map = useMap();
+  const accumulated = useRef(0);
+
+  useEffect(() => {
+    const container = map.getContainer();
+    const onWheel = (event: WheelEvent) => {
+      if (!event.ctrlKey) {
+        accumulated.current = 0;
+        return; // leave ordinary scrolling completely untouched
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+      const delta = event.deltaY * (
+        event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? container.clientHeight : 1
+      );
+      accumulated.current += delta;
+      if (Math.abs(accumulated.current) < 60) return;
+
+      // One zoom notch per normal mouse-wheel detent; also supports trackpads.
+      const steps = Math.trunc(accumulated.current / 100) || Math.sign(accumulated.current);
+      accumulated.current -= steps * 100;
+      const zoom = Math.max(map.getMinZoom(), Math.min(map.getMaxZoom(), map.getZoom() - steps));
+      if (zoom !== map.getZoom()) {
+        map.setZoomAround(map.mouseEventToContainerPoint(event), zoom, { animate: false });
+      }
+    };
+    container.addEventListener("wheel", onWheel, { capture: true, passive: false });
+    return () => container.removeEventListener("wheel", onWheel, true);
+  }, [map]);
+
+  return <div className="pointer-events-none absolute bottom-5 left-3 z-[800] rounded-md bg-white/90 px-2.5 py-1.5 text-[11px] font-medium text-gray-700 shadow-sm">
+    Ctrl + scroll to zoom
+  </div>;
+}
+
+/** Leaflet needs an explicit size refresh when the resizable panel changes width. */
+function RefreshMapOnResize() {
+  const map = useMap();
+  useEffect(() => {
+    if (typeof ResizeObserver === "undefined") return;
+    let frame = 0;
+    const observer = new ResizeObserver(() => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => map.invalidateSize({ pan: false }));
+    });
+    observer.observe(map.getContainer());
+    return () => {
+      observer.disconnect();
+      window.cancelAnimationFrame(frame);
+    };
+  }, [map]);
   return null;
 }
 
@@ -87,13 +150,15 @@ function StopMarker({ point, order, selected, onSelect, onMove }: {
   </Marker>;
 }
 
-export default function RouteMapInner({ points, fallback, onPick, onSelect, onMove, selectedId, focus }: Props) {
-  return <MapContainer center={fallback ?? [49.7, -123.1]} zoom={fallback ? 12 : 9} scrollWheelZoom={false} className="relative z-0 h-[420px] w-full sm:h-[480px]">
+export default function RouteMapInner({ points, fallback, onPick, onSelect, onMove, selectedId, activeDayId, compact = false, focus }: Props) {
+  return <MapContainer center={fallback ?? [49.7, -123.1]} zoom={fallback ? 12 : 9} scrollWheelZoom={false} className={compact ? "relative z-0 h-[480px] w-full sm:h-[580px] xl:h-[min(75vh,760px)]" : "relative z-0 h-[420px] w-full sm:h-[480px]"}>
     <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' />
     <Controls points={points} onPick={onPick} focus={focus} />
+    <RefreshMapOnResize />
+    <CtrlWheelZoom />
     <FitRoute points={points} fallback={fallback} />
     {points.length > 1 && <Polyline interactive={false} positions={points.map(p => [p.lat, p.lng])} pathOptions={{ color: "#166534", weight: 3, dashArray: "6 8", opacity: 0.7 }} />}
-    {points.map((point, index) => <StopMarker key={point.id} point={point} order={index + 1} selected={selectedId === point.id} onSelect={onSelect} onMove={onMove} />)}
+    {points.map((point, index) => <StopMarker key={point.id} point={point} order={index + 1} selected={selectedId === point.id || (!!activeDayId && point.dayId === activeDayId)} onSelect={onSelect} onMove={onMove} />)}
     {!points.length && fallback && <Marker position={fallback} icon={divIcon({ html: waypointMarkerHtml("waypoint", 1, false), className: "trailpicker-stop-icon", iconSize: [34, 34], iconAnchor: [17, 17] })} title="Trip location"><Popup>Trip location · add your first route stop here or explore the map.</Popup></Marker>}
   </MapContainer>;
 }

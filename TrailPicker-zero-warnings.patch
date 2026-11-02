@@ -1,0 +1,82 @@
+--- a/app/build/actions.ts
++++ b/app/build/actions.ts
+@@ -180,7 +180,10 @@
+       await tx.tripDay.deleteMany({ where: { buildId: access.id } });
+ 
+       if (importedRows.length) {
+-        await tx.tripDay.createMany({ data: importedRows.map(({ sourceId: _sourceId, ...row }) => row) });
++        await tx.tripDay.createMany({ data: importedRows.map(({ sourceId, ...row }) => {
++          void sourceId;
++          return row;
++        }) });
+       }
+     }
+ 
+@@ -265,7 +268,14 @@
+       conditions: original.conditions,
+       routeWaypoints: mappedRoute.points == null ? undefined : JSON.parse(JSON.stringify(mappedRoute.points)),
+       tripLogistics: original.tripLogistics ?? undefined,
+-      days: { create: copiedDays.map(({ id: _id, newId, buildId: _buildId, createdAt: _createdAt, updatedAt: _updatedAt, ...day }) => ({ ...day, id: newId })) },
++      days: { create: copiedDays.map(({ id, newId, buildId, createdAt, updatedAt, ...day }) => {
++          // These fields belong to the original day, not the duplicated day.
++          void id;
++          void buildId;
++          void createdAt;
++          void updatedAt;
++          return { ...day, id: newId };
++        }) },
+       items: {
+         create: original.items.map((item) => ({
+           gearId: item.gearId,
+--- a/lib/build-history-actions.ts
++++ b/lib/build-history-actions.ts
+@@ -51,7 +51,8 @@
+ function safeDay(day: BuildSnapshotDay) {
+   const date = new Date(day.date);
+   if (Number.isNaN(date.getTime())) throw new Error("This history entry contains an invalid itinerary date.");
+-  const { id: _sourceId, ...fields } = day;
++  const { id: sourceId, ...fields } = day;
++  void sourceId;
+   return { ...fields, date, id: randomUUID() };
+ }
+ 
+--- a/app/profile/layout.tsx
++++ b/app/profile/layout.tsx
+@@ -1,4 +1,5 @@
+ import Link from "next/link";
++import Image from "next/image";
+ import { redirect } from "next/navigation";
+ import { auth } from "@/auth";
+ import { prisma } from "@/lib/prisma";
+@@ -37,7 +38,7 @@
+         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-9 sm:px-8 lg:flex-row lg:items-end lg:justify-between">
+           <div className="flex items-center gap-5">
+             {user.image ? (
+-              <img src={user.image} alt="" className="h-20 w-20 rounded-2xl object-cover ring-4 ring-white/15" />
++              <Image src={user.image} alt="" width={80} height={80} unoptimized className="h-20 w-20 rounded-2xl object-cover ring-4 ring-white/15" />
+             ) : (
+               <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-600 text-3xl font-bold ring-4 ring-white/15">
+                 {displayName.charAt(0).toUpperCase()}
+--- a/components/ProfileDropdown.tsx
++++ b/components/ProfileDropdown.tsx
+@@ -2,6 +2,7 @@
+ 
+ import { useState, useEffect, useRef } from "react";
+ import Link from "next/link";
++import Image from "next/image";
+ import { signOut } from "next-auth/react";
+ import {
+     User,
+@@ -66,8 +67,11 @@
+ 
+ 
+                 {image ? (
+-                    <img
++                    <Image
+                         src={image}
++                        width={36}
++                        height={36}
++                        unoptimized
+                         alt=""
+                         className="
+                             h-9 w-9
