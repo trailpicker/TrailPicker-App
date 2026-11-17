@@ -3,7 +3,9 @@
  */
 import { analyzePack, type PackAnalysis, type PackInputItem } from './pack-analysis';
 import { evaluateCompatibility, type CompatibilityIssue, type CompatItem, type BuildForCompat } from './compatibility';
-import type { PlannerDay } from './trip-planner';
+import { readWaypoints, type PlannerDay } from './trip-planner';
+import { analyzeItineraryTimings, ITINERARY_DEFAULT_BREAKS } from './itinerary-timing';
+import type { BreakSettings } from './route-analysis-insights';
 
 export type FindingLevel = 'critical' | 'review' | 'opportunity' | 'unknown';
 export type FindingSection = 'compatibility' | 'weather' | 'optimization' | 'planning';
@@ -17,8 +19,8 @@ export type Finding = {
   basis: string;
   itemIds: string[];
 };
-export type IntelligenceBuild = Pick<BuildForCompat,'people'|'minTemperature'|'conditions'|'startDate'|'endDate'>;
-export type IntelligenceDay = Pick<PlannerDay,'date'|'minTemperature'|'conditions'|'waterCarryL'|'waterSource'|'distanceKm'|'elevationGainM'|'campsite'>;
+export type IntelligenceBuild = Pick<BuildForCompat,'people'|'minTemperature'|'conditions'|'startDate'|'endDate'> & {routeWaypoints?: unknown};
+export type IntelligenceDay = Pick<PlannerDay,'date'|'minTemperature'|'conditions'|'waterCarryL'|'waterSource'|'distanceKm'|'elevationGainM'|'campsite'> & {id?: string};
 export type IntelligenceItem = CompatItem & PackInputItem;
 export type ForecastPoint = { name:string; lat:number; lng:number; elevationM:number|null };
 export type ForecastDay = {date:string; low:number|null; high:number|null; wind:number|null; gust:number|null; pop:number|null; model:string; samples:number};
@@ -93,7 +95,7 @@ export function compatibilityIssueToFinding(issue:CompatibilityIssue):Finding {
   };
 }
 
-export function evaluatePackIntelligence(build:IntelligenceBuild, items:readonly IntelligenceItem[], days:readonly IntelligenceDay[], forecast:ForecastEvidence|null=null):IntelligenceResult {
+export function evaluatePackIntelligence(build:IntelligenceBuild, items:readonly IntelligenceItem[], days:readonly IntelligenceDay[], forecast:ForecastEvidence|null=null, timing?: {paceKmh:number; breaks:BreakSettings}):IntelligenceResult {
   const pack = analyzePack(items);
   const findings:Finding[] = [];
   const add = (f:Finding) => findings.push(f);
@@ -108,6 +110,21 @@ export function evaluatePackIntelligence(build:IntelligenceBuild, items:readonly
   const weatherSource = forecastTemps.length ? 'forecast' : plannedTemps.length ? 'planned' : 'none';
   const windy = !!forecast?.days.some(d=>positive(d.gust) && d.gust>=60);
   const activeAlerts = forecast?.alertsStatus==='ok' ? forecast.alerts : [];
+
+  // Daylight and stop scheduling are evaluated from recorded route evidence,
+  // using the same pure itinerary logic shown beside individual stops.
+  // No departure time / no mapped leg means no invented arrival warning.
+  const savedPoints = readWaypoints(build.routeWaypoints);
+  const datedDays = days.filter((day): day is IntelligenceDay & {id:string} => typeof day.id === 'string' && day.id.length > 0);
+  if (savedPoints.length && datedDays.length) {
+    const result = analyzeItineraryTimings(savedPoints, datedDays,
+      timing?.paceKmh ?? 4, timing?.breaks ?? ITINERARY_DEFAULT_BREAKS);
+    for (const issue of result.issues) add({
+      id:issue.id, section:'planning', level:issue.severity==='warning'?'review':'opportunity',
+      title:issue.title, detail:issue.message, action:issue.action,
+      basis:'Mapped trail segments, scheduled stop times, estimated hiking pace and approximate solar times', itemIds:[],
+    });
+  }
 
   const sleepItems = matching('sleep').filter(i => !i.isConsumable);
   const rated = sleepItems.filter(i => validTemp(i.gear?.temperature_rating));
@@ -173,4 +190,5 @@ export function projectConsumables(totalGrams:number, nights:number, dailyFracti
   const fraction=Math.max(0,Math.min(1,Number.isFinite(dailyFraction)?dailyFraction:0));
   return Array.from({length:days},(_,idx)=>({day:idx+1,remainingGrams:Math.round(Math.max(0,totalGrams*(1-idx*fraction))*100)/100}));
 }
+
 

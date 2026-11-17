@@ -1,4 +1,7 @@
 import { emptyLogistics, nullableNumber, parseDates, type Logistics } from "./trip-planner";
+import { validatePrivateResources, type PrivateTripResources } from "./trip-resources";
+import { validateFoodPlan, type FoodPlan } from "./food-plan";
+import { validateArrangements, type TripArrangement } from "./trip-arrangements";
 
 export const MAX_GEAR_QUANTITY = 999;
 
@@ -35,13 +38,13 @@ export function parseBuildDetails(form: FormData) {
   };
 }
 
-export function parseLogistics(value: unknown): Logistics | null {
+export function parseLogistics(value: unknown, validDayIds: string[] = [], validCampIds: string[] = [], validResupplyIds: string[] = []): (Logistics & { phase6?: PrivateTripResources; phase7?: FoodPlan; arrangements?: TripArrangement[] }) | null {
   if (value == null) return null;
   if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("Invalid trip logistics.");
   const object = value as Record<string, unknown>;
   const result = { ...emptyLogistics };
   for (const key of Object.keys(object)) {
-    if (!Object.prototype.hasOwnProperty.call(result, key)) throw new Error(`Unknown trip logistics field: ${key}.`);
+    if (key !== "phase6" && key !== "phase7" && key !== "arrangements" && !Object.prototype.hasOwnProperty.call(result, key)) throw new Error(`Unknown trip logistics field: ${key}.`);
   }
   for (const key of Object.keys(result) as (keyof Logistics)[]) {
     const text = object[key];
@@ -50,7 +53,11 @@ export function parseLogistics(value: unknown): Logistics | null {
     }
     result[key] = (text ?? "") as string;
   }
-  return result;
+  return { ...result,
+    ...(object.phase6 === undefined ? {} : { phase6: validatePrivateResources(object.phase6, validDayIds, validCampIds) }),
+    ...(object.phase7 === undefined ? {} : { phase7: validateFoodPlan(object.phase7, validDayIds, validResupplyIds.map(id=>({id,kind:"resupply" as const}))) }),
+    ...(object.arrangements === undefined ? {} : { arrangements: validateArrangements(object.arrangements, validDayIds.length ? validDayIds : undefined, validCampIds.length ? validCampIds : undefined) }),
+  };
 }
 
 export function combinedQuantity(current: number, incoming: number): number {
@@ -59,3 +66,5 @@ export function combinedQuantity(current: number, incoming: number): number {
   }
   return current + incoming;
 }
+
+

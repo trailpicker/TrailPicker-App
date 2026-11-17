@@ -19,6 +19,10 @@ export const updateTripDetails = (form: FormData) => trackBuildSave(id(form), "t
 export const updateTripDay = (form: FormData) => trackBuildSave(id(form), `trip-day:${String(form.get("dayId") ?? "")}`, () => gear.updateTripDay(form));
 export const updateTripDayNote = (form: FormData) => trackBuildSave(id(form), `trip-day-note:${String(form.get("dayId") ?? "")}`, () => trip.saveTripDayNote(form));
 export const saveTripLogistics = (form: FormData) => trackBuildSave(id(form), "logistics", () => trip.saveTripLogistics(form));
+export const saveTripBooking = (form: FormData) => trackBuildSave(id(form), "logistics:bookings", () => trip.saveTripBooking(form));
+export const addBookingCampsiteStop = (form: FormData) => trackBuildSave(id(form), "route", () => trip.addBookingCampsiteStop(form));
+export const saveTripResources = (form: FormData) => trackBuildSave(id(form), "logistics:resources", () => trip.saveTripResources(form));
+export const saveTripWaterSettings = (form: FormData) => trackBuildSave(id(form), "logistics:water", () => trip.saveTripWaterSettings(form));
 export const saveTripRoute = (form: FormData) => trackBuildSave(id(form), "route", () => trip.saveTripRoute(form));
 export const renameBuild = (buildId: string, name: string) => trackBuildSave(buildId, "rename", () => rename(buildId, name));
 export const setBuildVisibility = (buildId: string, isPublic: boolean) => trackBuildSave(buildId, "visibility", () => visibility(buildId, isPublic));
@@ -29,3 +33,10 @@ export { getBuildExport } from "@/app/build/actions";
 export { getBuildHistory } from "@/lib/build-history-actions";
 
 export const updateTripDaySummary = (form: FormData) => trackBuildSave(id(form), `trip-day-summary:${String(form.get("dayId") ?? "")}`, () => trip.saveTripDaySummary(form));
+
+
+export const saveTripFoodPlan = (form: FormData) => trackBuildSave(id(form), "logistics:food", () => trip.saveTripFoodPlan(form));
+
+
+export const saveRouteTimingPreferences = (form: FormData) => trackBuildSave(id(form), "route-timing", () => trip.saveRouteTimingPreferences(form));
+

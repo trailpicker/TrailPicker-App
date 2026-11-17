@@ -86,3 +86,18 @@ input:is([type="button"], [type="submit"], [type="reset"]):is(:disabled, [aria-d
   cursor: not-allowed;
 }
 
+
+
+/* Elevation is a map overlay. Move all lower map chrome above the drawer:
+   Leaflet zoom/attribution and the Ctrl+wheel hint use the *same* inset.
+   Override Leaflet's own bottom: 0 independently of CSS import order. */
+.leaflet-container.trailpicker-route-map .leaflet-bottom {
+  bottom: calc(var(--route-profile-inset, 0px) + 8px) !important;
+}
+.leaflet-container.trailpicker-route-map .trailpicker-ctrl-wheel-hint {
+  bottom: calc(var(--route-profile-inset, 0px) + 1.25rem) !important;
+}
+/* Keep attribution readable at the edge of the visible map, not below the drawer. */
+.leaflet-container.trailpicker-route-map .leaflet-control-attribution {
+  background: rgb(255 255 255 / 85%);
+}

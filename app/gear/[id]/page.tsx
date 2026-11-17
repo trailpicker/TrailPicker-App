@@ -1,5 +1,6 @@
 import GearPicker, { type GearBrowseSearch } from "@/components/builder/GearPicker";
 import ProductDetails from "@/components/gear/ProductDetails";
+import GearCompareSelection from "@/components/gear/GearCompareSelection";
 import { currentBuildUserId, findAccessibleBuild } from "@/lib/build-access";
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
@@ -19,5 +20,6 @@ export default async function GearDetailPage({params,searchParams}:{params:Promi
     userId?prisma.favorite.findUnique({where:{userId_gearId:{userId,gearId:id}},select:{id:true}}):null,
     access?prisma.build.findUnique({where:{id:access.id,userId:access.userId},select:{id:true,name:true}}):null,
   ]);
-  return <ProductDetails gear={gear} userId={userId} owned={Boolean(owned)} favorite={Boolean(favorite)} build={build}/>;
+  return <GearCompareSelection buildId={build?.id}><ProductDetails gear={gear} userId={userId} owned={Boolean(owned)} favorite={Boolean(favorite)} build={build}/></GearCompareSelection>;
 }
+

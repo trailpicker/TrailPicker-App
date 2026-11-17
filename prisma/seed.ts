@@ -1,7 +1,7 @@
 /**
  * TrailPicker v0.3 development seed
  *
- * - Preserves the four real gear examples from the existing seed (create only if absent).
+ * - Preserves existing real gear while correcting only two known legacy tent-volume values.
  * - Adds fictional, clearly labeled catalog examples for exercising the UI and analytics.
  * - Does NOT create affiliate links, retailer offers, users, reviews, or public builds.
  * - Re-runnable: categories/subcategories are upserted; demo gear uses stable IDs.
@@ -116,9 +116,9 @@ const demoGear: DemoGear[] = [
   { slug:"liner-basic", name:"Sleep Liner", category:"sleep", subcategory:"liner", weight_g:210, price_cad:35 },
 
   // COOKING — cookware capacity_l represents usable liquid volume.
-  { slug:"stove-canister-mini", name:"Compact Canister Stove", category:"cooking", subcategory:"stove", weight_g:89, price_cad:55 },
+  { slug:"stove-canister-mini", name:"Compact Canister Stove", category:"cooking", subcategory:"stove", weight_g:89, price_cad:55, specs:[{key:"Fuel type",value:"Canister"}] },
   { slug:"stove-integrated", name:"Integrated Stove System", category:"cooking", subcategory:"stove", weight_g:420, price_cad:175 },
-  { slug:"stove-liquid-fuel", name:"Liquid-Fuel Stove", category:"cooking", subcategory:"stove", weight_g:340, price_cad:145 },
+  { slug:"stove-liquid-fuel", name:"Liquid-Fuel Stove", category:"cooking", subcategory:"stove", weight_g:340, price_cad:145, specs:[{key:"Fuel type",value:"Liquid fuel"}] },
   { slug:"pot-solo-065", name:"Solo Pot 650 mL", category:"cooking", subcategory:"cookware", weight_g:120, price_cad:54, capacity_l:0.65 },
   { slug:"pot-group-14", name:"Group Pot 1.4 L", category:"cooking", subcategory:"cookware", weight_g:245, price_cad:75, capacity_l:1.4 },
   { slug:"pot-group-25", name:"Large Pot 2.5 L", category:"cooking", subcategory:"cookware", weight_g:390, price_cad:92, capacity_l:2.5 },
@@ -126,9 +126,9 @@ const demoGear: DemoGear[] = [
   { slug:"fuel-canister-demo", name:"Sample Fuel Canister", category:"cooking", subcategory:"fuel", weight_g:360, price_cad:12, note:"Illustrative total canister weight; consumable flag belongs to BuildItem." },
 
   // WATER — capacity_l represents *storage* volume for bottles/reservoirs.
-  { slug:"filter-squeeze", name:"Compact Squeeze Filter", category:"water", subcategory:"filter", weight_g:75, price_cad:52 },
-  { slug:"filter-pump", name:"Pump Water Filter", category:"water", subcategory:"filter", weight_g:440, price_cad:125 },
-  { slug:"filter-gravity", name:"Gravity Filter System", category:"water", subcategory:"filter", weight_g:265, price_cad:150 },
+  { slug:"filter-squeeze", name:"Compact Squeeze Filter", category:"water", subcategory:"filter", weight_g:75, price_cad:52, specs:[{key:"Filter type",value:"Squeeze"}] },
+  { slug:"filter-pump", name:"Pump Water Filter", category:"water", subcategory:"filter", weight_g:440, price_cad:125, specs:[{key:"Filter type",value:"Pump"}] },
+  { slug:"filter-gravity", name:"Gravity Filter System", category:"water", subcategory:"filter", weight_g:265, price_cad:150, specs:[{key:"Filter type",value:"Gravity"}] },
   { slug:"bottle-1l", name:"Trail Bottle 1 L", category:"water", subcategory:"bottle", weight_g:165, price_cad:24, capacity_l:1 },
   { slug:"bottle-15l", name:"Wide-Mouth Bottle 1.5 L", category:"water", subcategory:"bottle", weight_g:210, price_cad:29, capacity_l:1.5 },
   { slug:"reservoir-2l", name:"Hydration Reservoir 2 L", category:"water", subcategory:"reservoir", weight_g:195, price_cad:42, capacity_l:2 },
@@ -215,8 +215,8 @@ async function main() {
     }
   }
 
-  // Keep all four pre-existing example products, without changing existing rows.
-  // Their original data is preserved exactly from your v0.3 seed snapshot.
+  // Preserve existing products. Only the two exact legacy tent rows below need
+  // a narrow liters-as-persons correction and explicit Sleeping capacity metadata.
   const oldBrands = [
     { name: "Durston", website: "https://durstongear.com" },
     { name: "Big Agnes", website: "https://www.bigagnes.com" },
@@ -230,8 +230,8 @@ async function main() {
     brandIds.set(brand.name, row.id);
   }
   const originals = [
-    { name:"Durston X-Mid 1", brand:"Durston", category:"shelter", subcategory:"tent", weight_g:795, price_cad:320, capacity_l:1, season:"3-season", description:"Ultralight trekking pole supported backpacking tent.", image:"https://durstongear.com/cdn/shop/files/Durston-X-Mid-1-2025-Ultralight-Backpacking-Tent-Main-Viewb_07dd109f-fff5-4c33-9a7d-b161ac0bbf19.jpg?v=1741358977&width=800" },
-    { name:"Big Agnes Copper Spur HV UL2", brand:"Big Agnes", category:"shelter", subcategory:"tent", weight_g:1474, price_cad:700, capacity_l:2, season:"3-season", description:"Lightweight freestanding two-person tent.", image:"https://gearinstitute.com/wp-content/uploads/Copper_Spur_HV_UL_2_TentWithFly_HalfOpen-0-800x457.jpg" },
+    { name:"Durston X-Mid 1", brand:"Durston", category:"shelter", subcategory:"tent", weight_g:795, price_cad:320, capacity_l:null, sleepingCapacity:1, season:"3-season", description:"Ultralight trekking pole supported backpacking tent.", image:"https://durstongear.com/cdn/shop/files/Durston-X-Mid-1-2025-Ultralight-Backpacking-Tent-Main-Viewb_07dd109f-fff5-4c33-9a7d-b161ac0bbf19.jpg?v=1741358977&width=800" },
+    { name:"Big Agnes Copper Spur HV UL2", brand:"Big Agnes", category:"shelter", subcategory:"tent", weight_g:1474, price_cad:700, capacity_l:null, sleepingCapacity:2, season:"3-season", description:"Lightweight freestanding two-person tent.", image:"https://gearinstitute.com/wp-content/uploads/Copper_Spur_HV_UL_2_TentWithFly_HalfOpen-0-800x457.jpg" },
     { name:"Hyperlite Mountain Gear Southwest 40", brand:"Hyperlite Mountain Gear", category:"packs", subcategory:"frameless", weight_g:907, price_cad:500, capacity_l:40, season:null, description:"Ultralight backpacking pack.", image:"https://hyperlitemountaingear.com/cdn/shop/files/hyperlite-mountain-gear-packs-southwest-40l-extra-sm-white-1190868899.jpg?v=1759479162&width=832" },
     { name:"Therm-a-Rest NeoAir XLite NXT", brand:"Therm-a-Rest", category:"sleep", subcategory:"sleeping-pad", weight_g:370, price_cad:null, capacity_l:null, season:null, description:"Ultralight backpacking sleeping pad.", image:"https://cascadedesigns.com/cdn/shop/files/11627_thermarest_neoair_xlite_nxt_solarflare_regular_angle.jpg?v=1724820257&width=493" },
   ] as const;
@@ -239,7 +239,29 @@ async function main() {
   let keptOriginals = 0;
   for (const gear of originals) {
     const existing = await prisma.gear.findFirst({ where: { name: gear.name, brand: { name: gear.brand } } });
-    if (existing) { keptOriginals++; continue; }
+    if (existing) {
+      keptOriginals++;
+      // Guard by exact product, category, subcategory AND legacy numeric value.
+      // Do not touch arbitrary real product specs, prices, descriptions, or images.
+      if ("sleepingCapacity" in gear &&
+          (existing.capacity_l === gear.sleepingCapacity || existing.capacity_l === null) &&
+          existing.categoryId === categoryIds.get("shelter") &&
+          existing.subcategoryId === subcategoryIds.get("shelter/tent")) {
+        if (existing.capacity_l !== null) {
+          await prisma.gear.update({ where: { id: existing.id }, data: { capacity_l: null } });
+        }
+        const specs = await prisma.gearSpecification.findMany({
+          where: { gearId: existing.id }, select: { key: true },
+        });
+        const occupancyKeys = new Set(["sleeping capacity", "person capacity", "capacity persons", "occupancy", "sleeps"]);
+        const hasOccupancy = specs.some((spec: { key: string }) => occupancyKeys.has(spec.key.trim().toLowerCase().replace(/[_-]+/g, " ")));
+        if (!hasOccupancy) await prisma.gearSpecification.create({
+          data: { gearId: existing.id, key: "Sleeping capacity", value: String(gear.sleepingCapacity), unit: gear.sleepingCapacity === 1 ? "person" : "people" },
+        });
+        console.log(`Checked legacy tent occupancy: ${gear.name}`);
+      }
+      continue;
+    }
     await prisma.gear.create({
       data: {
         name: gear.name,
@@ -252,6 +274,9 @@ async function main() {
         categoryId: categoryIds.get(gear.category)!,
         subcategoryId: subcategoryIds.get(`${gear.category}/${gear.subcategory}`)!,
         images: { create: [{ url: gear.image, isPrimary: true }] },
+        ...("sleepingCapacity" in gear ? { specifications: { create: [{
+          key: "Sleeping capacity", value: String(gear.sleepingCapacity), unit: gear.sleepingCapacity === 1 ? "person" : "people",
+        }] } } : {}),
       },
     });
   }

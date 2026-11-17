@@ -15,8 +15,7 @@ export default function WaypointSearch({ near, onChoose, disabled = false }: Pro
   const lastSearch = useRef(0);
   useEffect(() => () => { request.current?.abort(); request.current = null; }, []);
 
-  async function search(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  async function search() {
     const text = query.trim();
     if (disabled || busy || text.length < 2) return;
     request.current?.abort();
@@ -54,19 +53,19 @@ export default function WaypointSearch({ near, onChoose, disabled = false }: Pro
   }
 
   return <div className="space-y-2">
-    <form onSubmit={search} className="flex gap-2">
+    <div role="search" className="flex gap-2">
       <label className="relative min-w-0 flex-1">
         <span className="sr-only">Search for a place</span>
         <Search className="pointer-events-none absolute left-3 top-3 h-4 w-4 text-gray-400" aria-hidden="true" />
         <input type="search" value={query} maxLength={200} onChange={e => {
           setQuery(e.target.value); setResults([]); setMessage("");
           request.current?.abort(); request.current = null; setBusy(false);
-        }} disabled={disabled} placeholder="Lake, campground, trailhead…" className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-9 pr-3 text-sm outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/10" />
+        }} disabled={disabled} onKeyDown={event => { if (event.key === "Enter") { event.preventDefault(); void search(); } }} placeholder="Lake, campground, trailhead…" className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-9 pr-3 text-sm outline-none focus:border-green-700 focus:ring-2 focus:ring-green-700/10" />
       </label>
-      <button type="submit" disabled={disabled || busy || query.trim().length < 2} aria-label="Search places" className="rounded-xl bg-green-900 px-3 text-sm font-semibold text-white disabled:opacity-40">
+      <button type="button" onClick={() => void search()} disabled={disabled || busy || query.trim().length < 2} aria-label="Search places" className="rounded-xl bg-green-900 px-3 text-sm font-semibold text-white disabled:opacity-40">
         {busy ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : "Search"}
       </button>
-    </form>
+    </div>
     <p role="status" aria-live="polite" className="text-xs text-gray-500">{busy ? "Searching…" : message}</p>
     {results.length > 0 && <ul aria-label="Place search results" className="overflow-hidden rounded-xl border border-gray-200 bg-white divide-y divide-gray-100">
       {results.map(place => <li key={place.id}><button type="button" disabled={disabled} onClick={() => { onChoose(place); setResults([]); }} className="flex w-full items-start gap-2 px-3 py-3 text-left hover:bg-green-50 disabled:opacity-40">
@@ -77,3 +76,4 @@ export default function WaypointSearch({ near, onChoose, disabled = false }: Pro
     <p className="text-[10px] text-gray-400">Place search: <a href="https://photon.komoot.io/" target="_blank" rel="noreferrer" className="underline">Photon</a> / <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer" className="underline">OpenStreetMap</a></p>
   </div>;
 }
+

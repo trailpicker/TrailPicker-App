@@ -52,14 +52,18 @@ function DestinationCard({
   onSelect: () => void;
 }) {
   const toiletLabel =
-    destination.toilet === "yes"
+    destination.toilet === null
+      ? null
+      : destination.toilet === "yes"
       ? "Toilet"
       : destination.toilet === "no"
         ? "No toilet"
         : "Toilet: check";
 
   const storageLabel =
-    destination.foodStorage === "yes"
+    destination.foodStorage === null
+      ? null
+      : destination.foodStorage === "yes"
       ? "Food storage"
       : destination.foodStorage === "seasonal"
         ? "Seasonal storage"
@@ -125,13 +129,17 @@ function DestinationCard({
           </span>
         )}
 
-        <span className="rounded-full bg-gray-100 px-2 py-1">
-          {toiletLabel}
-        </span>
+        {toiletLabel && (
+          <span className="rounded-full bg-gray-100 px-2 py-1">
+            {toiletLabel}
+          </span>
+        )}
 
-        <span className="rounded-full bg-gray-100 px-2 py-1">
-          {storageLabel}
-        </span>
+        {storageLabel && (
+          <span className="rounded-full bg-gray-100 px-2 py-1">
+            {storageLabel}
+          </span>
+        )}
 
         <span className="rounded-full bg-gray-100 px-2 py-1">
           {dogLabels[destination.dogs]}

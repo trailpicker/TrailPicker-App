@@ -15,20 +15,26 @@ export type ReservationPolicy =
   | "check-current-rules";
 
 export type Difficulty = "easy" | "moderate" | "hard";
+export type DestinationKind = "campground" | "lake" | "trail" | "summit" | "waterfall" | "viewpoint" | "coastal" | "backcountry-area" | "meadow" | "hut";
+export type DestinationActivity = "hiking" | "backpacking" | "camping" | "paddling";
+export type DistanceType = "one-way" | "round-trip" | "loop";
 
 export type Destination = {
   id: string;
+  kind: DestinationKind;
+  activities: DestinationActivity[];
+  distanceType: DistanceType | null;
   name: string;
   park: string;
   region: string;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
   distanceKm: number | null;
   elevationGainM: number | null;
   difficulty: Difficulty;
   tentSites: number | null;
-  toilet: FacilityStatus;
-  foodStorage: FacilityStatus;
+  toilet: FacilityStatus | null;
+  foodStorage: FacilityStatus | null;
   dogs: DogPolicy;
   reservations: ReservationPolicy;
   featured: boolean;
@@ -55,3 +61,4 @@ export function getDestinationRegions() {
     ),
   ].sort();
 }
+

@@ -173,6 +173,8 @@ model User {
   reviews   Review[]
   favorites Favorite[]
   ownedGear OwnedGear[]
+  savedBuilds SavedBuild[]
+  savedDestinations SavedDestination[]
   settings  UserSettings?
 
   createdAt DateTime @default(now())
@@ -237,6 +239,7 @@ model Build {
   items     BuildItem[]
   days      TripDay[]
   revisions BuildRevision[]
+  savedBy   SavedBuild[]
 
   routeWaypoints Json?
   tripLogistics  Json?
@@ -256,6 +259,34 @@ model Build {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([isPublic, createdAt])
+  @@index([isPublic, updatedAt])
+}
+
+model SavedBuild {
+  userId    String
+  buildId   String
+  createdAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  build Build @relation(fields: [buildId], references: [id], onDelete: Cascade)
+
+  @@id([userId, buildId])
+  @@index([buildId])
+}
+
+// Bookmarks for catalog destinations. Catalog IDs live in data/destinations.json,
+// not in a Prisma table, so destinationId is intentionally not a foreign key.
+model SavedDestination {
+  userId        String
+  destinationId String
+  createdAt     DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, destinationId])
+  @@index([destinationId])
 }
 
 model BuildRevision {
@@ -361,3 +392,5 @@ model Favorite {
 
   @@unique([userId, gearId])
 }
+
+

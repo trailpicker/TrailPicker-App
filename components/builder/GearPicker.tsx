@@ -9,6 +9,8 @@ import BrandFilter from "@/components/filters/BrandFilter";
 import FilterSection from "@/components/filters/FilterSection";
 import RangeFilter from "@/components/filters/RangeFilter";
 import SortHeader from "@/components/filters/SortHeader";
+import GearCompareSelection, { GearCompareButton } from "@/components/gear/GearCompareSelection";
+import { gearBrowseColumnsForItems, gearColumnValue } from "@/lib/gear-spec-display";
 
 export type GearBrowseSearch = Record<string, string | string[] | undefined>;
 const first = (value: string | string[] | undefined) => (Array.isArray(value) ? value[0] : value) ?? "";
@@ -60,9 +62,11 @@ export default async function OriginalGearPicker({ categorySlug, subcategorySlug
         ...(maxPrice !== undefined ? { price_cad: { lte: maxPrice } } : {}),
       },
       orderBy: sort === "weight" ? { weight_g: direction } : sort === "price" ? { price_cad: direction } : undefined,
-      include: { brand: true, reviews: true, images: true },
+      include: { brand: true, reviews: true, images: true, subcategory: true, specifications: true },
     }),
   ]);
+  const displayColumns = gearBrowseColumnsForItems(categoryData.slug, selected?.slug, gear.map(item => ({ ...item, category: { slug: categoryData.slug } })));
+  const tableGrid = "grid-cols-[minmax(240px,2.5fr)_95px_repeat(3,minmax(105px,1fr))_80px_95px_190px]";
   const base = `/gear/${encodeURIComponent(categoryData.slug)}`;
   function typeHref(slug: string) {
     const query = new URLSearchParams();
@@ -87,6 +91,7 @@ export default async function OriginalGearPicker({ categorySlug, subcategorySlug
     </div>
   </nav> : null;
     return (
+        <GearCompareSelection buildId={build?.id}>
         <div className="min-h-screen bg-gray-50">
             <main className="max-w-[110rem] mx-auto px-8 py-8">
 
@@ -137,17 +142,15 @@ export default async function OriginalGearPicker({ categorySlug, subcategorySlug
                     {/* Gear */}
                     <div role="region" aria-label="Products" className="min-w-0 overflow-x-auto rounded-lg">
                         <p className="mb-8 text-lg font-bold text-black">
-                            {gear.length} Compatible Products
+                            {gear.length} Products
                         </p>
-                        <div className="grid min-w-[850px] grid-cols-[2.3fr_90px_90px_100px_90px_90px_90px_90px] px-5 py-3 text-xs font-semibold tracking-wide text-gray-500 border-b border-gray-400">
+                        <div className={`grid min-w-[1120px] ${tableGrid} px-5 py-3 text-xs font-semibold tracking-wide text-gray-500 border-b border-gray-400`}>
                             <div>Product</div>
                             <SortHeader
                                 label="Weight"
                                 value="weight"
                             />
-                            <div className="text-center">Capacity</div>
-                            <div className="text-center">Frame</div>
-                            <div className="text-center">Waterproof</div>
+                            {displayColumns.map(column => <div key={column.key} className="text-center">{column.label}</div>)}
                             <div className="text-center">Rating</div>
                             <SortHeader
                                 label="Price"
@@ -171,7 +174,7 @@ export default async function OriginalGearPicker({ categorySlug, subcategorySlug
                                 return (
                                     <div
                                         key={item.id}
-                                        className="grid grid-cols-[2.3fr_90px_90px_100px_90px_90px_90px_90px] items-center px-5 py-2 hover:bg-gray-50"
+                                        className={`grid min-w-[1120px] ${tableGrid} items-center px-5 py-2 hover:bg-gray-50`}
                                     >
                                         <div className="flex items-center gap-3">
 
@@ -210,35 +213,24 @@ export default async function OriginalGearPicker({ categorySlug, subcategorySlug
                                         </div>
 
                                         <div className="text-center">
-                                            {item.weight_g ?? "—"}g
+                                            {item.weight_g === null ? "—" : `${item.weight_g} g`}
                                         </div>
 
-                                        <div className="text-center">
-                                            {item.capacity_l ?? "—"}L
-                                        </div>
-
-                                        <div className="text-center">
-                                            {item.frame_type ?? "—"}
-                                        </div>
-
-                                        <div className="text-center">
-                                            {item.waterproof === null || item.waterproof === undefined
-                                                ? "—"
-                                                : item.waterproof
-                                                    ? "Yes"
-                                                    : "No"}
-                                        </div>
+                                        {displayColumns.map(column => <div key={column.key} className="text-center">
+                                            {gearColumnValue({ ...item, category: { slug: categoryData.slug } }, column.key) ?? "—"}
+                                        </div>)}
                                         <div className="text-center">
                                             {averageRating
                                                 ? `★ ${averageRating}`
                                                 : "—"}
                                         </div>
                                         <div className="text-center">
-                                            ${item.price_cad ?? "—"}
+                                            {item.price_cad == null ? "—" : new Intl.NumberFormat("en-CA", { style: "currency", currency: "CAD" }).format(item.price_cad)}
                                         </div>
 
-                                        <div className="flex justify-end">
-                                            {build ? <AddGearButton buildId={build.id} gearId={item.id} /> : <Link href="/build" className="text-sm text-blue-600 hover:underline">Create build</Link>}
+                                        <div className="flex items-center justify-end gap-2">
+                                            <GearCompareButton product={{ id: item.id, name: item.name, categoryId: item.categoryId, categoryName: categoryData.name }} />
+                                            {build ? <AddGearButton buildId={build.id} gearId={item.id} /> : null}
                                         </div>
                                     </div>
                                 );
@@ -248,5 +240,7 @@ export default async function OriginalGearPicker({ categorySlug, subcategorySlug
                 </div>
             </main>
         </div>
+        </GearCompareSelection>
     );
 }
+

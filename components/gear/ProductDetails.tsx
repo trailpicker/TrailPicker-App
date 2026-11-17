@@ -5,10 +5,12 @@ import GearLibraryActions from "@/components/gear/GearLibraryActions";
 import ReviewEditor from "@/components/gear/ReviewEditor";
 import ProductBuildButton from "@/components/gear/ProductBuildButton";
 import { gearMoney, gearWeight, reviewStats, safeGearUrl } from "@/lib/gear-display";
+import { GearCompareButton } from "@/components/gear/GearCompareSelection";
+import { gearDetailRows } from "@/lib/gear-spec-display";
 
 export type Product = {
   id:string;name:string;description:string|null;weight_g:number|null;price_cad:number|null;capacity_l:number|null;frame_type:string|null;waterproof:boolean|null;temperature_rating:number|null;season:string|null;material:string|null;
-  brand:{name:string};category:{name:string;slug:string};subcategory:{name:string;slug:string}|null;
+  brand:{name:string};category:{id:string;name:string;slug:string};subcategory:{name:string;slug:string}|null;
   images:Array<{id:string;url:string;isPrimary:boolean}>;
   specifications:Array<{id:string;key:string;value:string;unit:string|null}>;
   prices:Array<{id:string;price:number;currency:string;url:string|null;inStock:boolean;lastUpdated:Date;retailer:{name:string}}>;
@@ -24,15 +26,7 @@ export default function ProductDetails({gear,userId,owned,favorite,build}:{gear:
   const cadPrices=prices.filter(price=>price.currency==="CAD"&&price.inStock);
   const best=cadPrices[0]?.price??gear.price_cad;
   const categoryHref=`/gear/${encodeURIComponent(gear.category.slug)}`;
-  const specs:Array<[string,string]>=[];
-  if(gear.weight_g!==null)specs.push(["Weight",gearWeight(gear.weight_g)]);
-  if(gear.capacity_l!==null)specs.push(["Capacity",`${gear.capacity_l} L`]);
-  if(gear.frame_type)specs.push(["Frame",gear.frame_type]);
-  if(gear.waterproof!==null)specs.push(["Waterproof",gear.waterproof?"Yes":"No"]);
-  if(gear.temperature_rating!==null)specs.push(["Temperature rating",`${gear.temperature_rating} °C`]);
-  if(gear.season)specs.push(["Season",gear.season]);
-  if(gear.material)specs.push(["Material",gear.material]);
-  for(const spec of gear.specifications){if(!specs.some(([key])=>key.toLowerCase()===spec.key.toLowerCase()))specs.push([spec.key,`${spec.value}${spec.unit?` ${spec.unit}`:""}`]);}
+  const specs = gearDetailRows(gear);
   return <div className="min-h-screen bg-gray-50"><main className="mx-auto max-w-7xl px-4 py-6 sm:px-8 sm:py-8">
     <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap gap-2 text-xs text-gray-500"><Link href={categoryHref} className="hover:text-green-800">{gear.category.name}</Link>{gear.subcategory&&<><span aria-hidden="true">/</span><Link href={`${categoryHref}/${encodeURIComponent(gear.subcategory.slug)}`} className="hover:text-green-800">{gear.subcategory.name}</Link></>}<span aria-hidden="true">/</span><span aria-current="page" className="text-gray-800">{gear.name}</span></nav>
     <div className="grid items-start gap-7 md:grid-cols-2 lg:gap-12">
@@ -41,7 +35,7 @@ export default function ProductDetails({gear,userId,owned,favorite,build}:{gear:
         <Link href="#reviews" className="mt-4 inline-flex items-center gap-2 text-sm hover:underline"><Star className="h-4 w-4 fill-amber-400 text-amber-400"/>{stats.count?<><b>{stats.average.toFixed(1)}</b><span className="text-gray-500">({stats.count} review{stats.count===1?"":"s"})</span></>:<span className="text-gray-500">No reviews yet</span>}</Link>
         <div className="mt-6 border-y border-gray-200 py-5"><p className="text-3xl font-bold tracking-tight">{gearMoney(best)}</p><p className="mt-1 text-xs text-gray-500">{cadPrices.length?"Lowest listed in-stock CAD offer. Shipping and taxes may vary.":best!==null?"Catalog price · retailer prices may vary":"No price has been added for this product."}</p><p className="mt-4 flex items-center gap-2 text-sm text-gray-600"><Scale className="h-4 w-4"/>{gearWeight(gear.weight_g)}</p></div>
         <div className="mt-5">{build?<><p className="mb-2 text-xs text-gray-500">Adding to <Link href={`/build/${build.id}`} className="font-medium text-green-800 hover:underline">{build.name}</Link></p><ProductBuildButton buildId={build.id} gearId={gear.id}/></>:<Link href="/build" className="inline-flex w-full justify-center rounded-lg bg-green-900 px-5 py-3 text-sm font-semibold text-white hover:bg-green-800">Create a build</Link>}</div>
-        <div className="mt-3"><GearLibraryActions gearId={gear.id} signedIn={Boolean(userId)} owned={owned} favorite={favorite}/></div>
+        <div className="mt-3 flex flex-wrap items-start gap-3"><GearCompareButton product={{ id: gear.id, name: gear.name, categoryId: gear.category.id, categoryName: gear.category.name }} className="px-4 py-3"/><GearLibraryActions gearId={gear.id} signedIn={Boolean(userId)} owned={owned} favorite={favorite}/></div>
         <div className="mt-5 flex flex-wrap gap-4 text-xs text-gray-500"><Link href="/profile/gear" className="hover:text-green-800">My Gear</Link><Link href="/profile/favorites" className="hover:text-green-800">Favorites</Link><Link href="#retailers" className="hover:text-green-800">Compare prices</Link><Link href="#specifications" className="hover:text-green-800">Specifications</Link></div>
       </div>
     </div>
@@ -58,3 +52,4 @@ export default function ProductDetails({gear,userId,owned,favorite,build}:{gear:
     </div></section>
   </main></div>;
 }
+

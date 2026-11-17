@@ -1,0 +1,1495 @@
+{
+  "retrieved": "2026-11-10",
+  "sources": {
+    "helmet-ochre-junction-rockwall": {
+      "source": "https://parks.canada.ca/pn-np/bc/kootenay/activ/arrierepays-backcountry",
+      "trailhead": "Paint Pots parking lot",
+      "oneWayDistanceKm": 5.8,
+      "ascentM": 235,
+      "changes": {
+        "elevationGainM": [
+          null,
+          235
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "tumbling-creek-rockwall": {
+      "source": "https://parks.canada.ca/pn-np/bc/kootenay/activ/arrierepays-backcountry",
+      "trailhead": "Paint Pots parking lot",
+      "oneWayDistanceKm": 10.2,
+      "ascentM": 700,
+      "changes": {
+        "distanceKm": [
+          null,
+          10.2
+        ],
+        "elevationGainM": [
+          null,
+          700
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "helmet-falls-rockwall": {
+      "source": "https://parks.canada.ca/pn-np/bc/kootenay/activ/arrierepays-backcountry",
+      "trailhead": "Paint Pots parking lot",
+      "oneWayDistanceKm": 14.2,
+      "ascentM": 795,
+      "changes": {
+        "elevationGainM": [
+          null,
+          795
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "numa-creek-rockwall": {
+      "source": "https://parks.canada.ca/pn-np/bc/kootenay/activ/arrierepays-backcountry",
+      "trailhead": "Numa Falls parking lot",
+      "oneWayDistanceKm": 6.3,
+      "ascentM": 385,
+      "changes": {
+        "distanceKm": [
+          null,
+          6.3
+        ],
+        "elevationGainM": [
+          null,
+          385
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "circlet-lake-strathcona": {
+      "distanceKm": 10.6,
+      "elevationGainM": 350,
+      "distanceType": "one-way",
+      "source": "https://strathconapark.org/park-maps-access/",
+      "note": "BC Parks gives 9.5 km / 270 m ONLY from Lake Helen MacKenzie, not from parking. Retain existing 10.6 km / 350 m from Strathcona Wilderness Institute to Circlet campground. Do not mix trailheads.",
+      "additionalSource": "https://bcparks.ca/strathcona-park/forbidden-plateau-area/"
+    },
+    "eric-lake-cape-scott": {
+      "distanceKm": 3.0,
+      "distanceType": "one-way",
+      "tentSites": 11,
+      "source": "https://bcparks.ca/cape-scott-park/hiking/",
+      "note": "BC Parks official hiking page conflicts internally: 11 tent pads in the Eric Lake summary, eight in the North Coast Trail section. Keep existing 11 as prominently listed; check before planning.",
+      "changes": {
+        "caution": [
+          "Backcountry camping fee permit is not a tent-pad reservation. BC Parks pages disagree on tent pad counts (11 on park overview; 8 on hiking page); count left blank pending confirmation.",
+          "Official BC Parks page is inconsistent: Eric Lake lists 11 tent pads in the main trail section but eight in another hiking section. Existing count is 11; confirm current capacity before travel."
+        ]
+      }
+    },
+    "fisherman-river-cape-scott": {
+      "distanceKm": 9.3,
+      "distanceType": "one-way",
+      "source": "https://bcparks.ca/cape-scott-park/hiking/",
+      "note": "From Cape Scott trailhead to Fisherman River"
+    },
+    "nissen-bight-cape-scott": {
+      "distanceKm": 15.0,
+      "distanceType": "one-way",
+      "source": "https://bcparks.ca/cape-scott-park/hiking/",
+      "note": "From Cape Scott trailhead to Nissen Bight; OSM point is western campground area"
+    },
+    "nels-bight-cape-scott": {
+      "distanceKm": 16.8,
+      "distanceType": "one-way",
+      "source": "https://bcparks.ca/cape-scott-park/hiking/",
+      "note": "From Cape Scott trailhead to Nels Bight"
+    },
+    "san-josef-bay-cape-scott": {
+      "distanceType": "one-way",
+      "source": "https://bcparks.ca/cape-scott-park/hiking/",
+      "note": "Existing 2.5 km distance is the one-way walk from the San Josef Bay trailhead"
+    },
+    "wedgemount-lake": {
+      "distanceType": "one-way",
+      "source": "https://bcparks.ca/garibaldi-park/wedgemount-lake/",
+      "note": "BC Parks lists 7 km one-way with 1,200 m elevation change.",
+      "trailhead": "Wedgemount Lake parking lot"
+    },
+    "balu-pass": {
+      "source": "https://parks.canada.ca/pn-np/bc/glacier/activ/randonee-hiking/journee-day",
+      "description": "Balu Pass trail, from Rogers Pass Discovery Centre",
+      "trailhead": "Rogers Pass Discovery Centre",
+      "returnDistanceKm": 12.8,
+      "ascentM": 780,
+      "estimatedHikingHours": 4,
+      "changes": {
+        "distanceKm": [
+          10,
+          12.8
+        ],
+        "elevationGainM": [
+          null,
+          780
+        ],
+        "dogs": [
+          "check-current-rules",
+          "not-allowed"
+        ],
+        "sourceUrl": [
+          "https://www.parks.canada.ca/pn-np/bc/revelstoke/activ/itineraries",
+          "https://parks.canada.ca/pn-np/bc/glacier/activ/randonee-hiking/journee-day"
+        ],
+        "caution": [
+          "Seasonal wildlife restrictions can require groups of four adults; verify current notices before visiting.",
+          "Parks Canada prohibits dogs on this trail. Groups of four or more adults are required July 15–September 30; verify seasonal bridges, wildlife notices, and current trail conditions."
+        ]
+      }
+    },
+    "avalanche-crest": {
+      "source": "https://parks.canada.ca/pn-np/bc/glacier/activ/randonee-hiking/journee-day",
+      "description": "Avalanche Crest day hike ending in an alpine basin, not the summit",
+      "trailhead": "Illecillewaet Valley or Campground",
+      "returnDistanceKm": 10.2,
+      "ascentM": 795,
+      "estimatedHikingHours": 5,
+      "changes": {
+        "distanceKm": [
+          null,
+          10.2
+        ],
+        "elevationGainM": [
+          null,
+          795
+        ],
+        "distanceType": [
+          null,
+          "round-trip"
+        ],
+        "sourceUrl": [
+          "https://www.parks.canada.ca/pn-np/bc/revelstoke/activ/itineraries",
+          "https://parks.canada.ca/pn-np/bc/glacier/activ/randonee-hiking/journee-day"
+        ]
+      }
+    },
+    "asulkan-trail": {
+      "source": "https://parks.canada.ca/pn-np/bc/glacier/activ/randonee-hiking/journee-day",
+      "description": "Asulkan Valley day hike to Asulkan Cabin",
+      "trailhead": "Illecillewaet Valley or Campground",
+      "returnDistanceKm": 15.8,
+      "ascentM": 870,
+      "estimatedHikingHours": 6,
+      "changes": {
+        "distanceKm": [
+          13,
+          15.8
+        ],
+        "elevationGainM": [
+          null,
+          870
+        ],
+        "sourceUrl": [
+          "https://www.parks.canada.ca/pn-np/bc/revelstoke/activ/itineraries",
+          "https://parks.canada.ca/pn-np/bc/glacier/activ/randonee-hiking/journee-day"
+        ],
+        "caution": [
+          "13 km is return to the Asulkan Cabin area; overnight cabin arrangements are separate.",
+          "Parks Canada measures 15.8 km return from the Illecillewaet Valley trailhead to the Asulkan Cabin area; from Illecillewaet Campground, subtract 2 km. Cabin reservations are separate."
+        ]
+      }
+    },
+    "hermit-meadows-glacier": {
+      "source": "https://parks.canada.ca/pn-np/bc/glacier/activ/randonee-hiking/journee-day",
+      "description": "Hermit Backcountry Campground trail",
+      "trailhead": "1.5 km east of Rogers Pass Discovery Centre",
+      "returnDistanceKm": 6.4,
+      "ascentM": 820,
+      "estimatedHikingHours": 4,
+      "changes": {
+        "distanceKm": [
+          null,
+          6.4
+        ],
+        "elevationGainM": [
+          null,
+          820
+        ],
+        "distanceType": [
+          null,
+          "round-trip"
+        ]
+      }
+    },
+    "garibaldi-lake": {
+      "source": "https://bcparks.ca/garibaldi-park/black-tusk-garibaldi-lake-area/",
+      "trailhead": "Rubble Creek / Garibaldi Lake parking lot",
+      "note": "9 km from the stated parking lot; hiking approach, not a full return trip.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "taylor-meadows": {
+      "source": "https://bcparks.ca/garibaldi-park/black-tusk-garibaldi-lake-area/",
+      "trailhead": "Rubble Creek / Garibaldi Lake parking lot",
+      "note": "7.5 km from the stated parking lot; hiking approach, not a full return trip.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "helm-creek": {
+      "source": "https://bcparks.ca/garibaldi-park/cheakamus-lake-area/",
+      "trailhead": "Cheakamus Lake parking lot",
+      "note": "8.5 km from the stated parking lot; hiking approach, not a full return trip.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "cheakamus-lake": {
+      "source": "https://bcparks.ca/garibaldi-park/cheakamus-lake-area/",
+      "trailhead": "Cheakamus Lake parking lot",
+      "note": "3 km from the stated parking lot; hiking approach, not a full return trip.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "singing-creek": {
+      "source": "https://bcparks.ca/garibaldi-park/cheakamus-lake-area/",
+      "trailhead": "Cheakamus Lake parking lot",
+      "note": "7 km from the stated parking lot; hiking approach, not a full return trip.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "elfin-lakes": {
+      "source": "https://bcparks.ca/garibaldi-park/diamond-head-area/",
+      "trailhead": "Diamond Head parking lot",
+      "note": "BC Parks lists 11 km one-way and 600 m elevation change to Elfin Lakes.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ],
+        "elevationGainM": [
+          null,
+          600
+        ]
+      }
+    },
+    "russet-lake": {
+      "source": "https://bcparks.ca/garibaldi-park/singing-pass-area/",
+      "trailhead": "Whistler Village / Singing Pass",
+      "note": "Singing Pass approach: 11.5 km + 3 km to Russet Lake; 1,000 m + 250 m climbing elevation change. Alternative lift approaches vary.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "red-heather": {
+      "source": "https://bcparks.ca/garibaldi-park/diamond-head-area/",
+      "note": "About 5 km one-way from Diamond Head parking lot. Campground for winter season only.",
+      "trailhead": "Diamond Head parking lot",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "rampart-ponds": {
+      "source": "https://bcparks.ca/garibaldi-park/diamond-head-area/",
+      "note": "BC Parks 2026-03-26 advisory: trail is washed out at Zig Zag Creek, approximately 1 km before Rampart Ponds; do not attempt access.",
+      "statusAsOf2026-11-10": "closed until further notice",
+      "changes": {
+        "caution": [
+          "Located roughly 10 km beyond the Elfin Lakes shelter; full approach varies by route.",
+          "CLOSED UNTIL FURTHER NOTICE (BC Parks advisory, March 26, 2026): washed-out crossing at Zig Zag Creek; no alternate access route. Do not plan a stay; check current park advisories."
+        ]
+      }
+    },
+    "garibaldi-lake-destination": {
+      "source": "https://bcparks.ca/garibaldi-park/black-tusk-garibaldi-lake-area/",
+      "trailhead": "Rubble Creek / Garibaldi Lake parking lot",
+      "note": "9 km one-way to Garibaldi Lake via the main park approach.",
+      "changes": {
+        "distanceKm": [
+          null,
+          9
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "elfin-lakes-destination": {
+      "source": "https://bcparks.ca/garibaldi-park/diamond-head-area/",
+      "trailhead": "Diamond Head parking lot",
+      "note": "Main route is 11 km one-way, 600 m elevation change.",
+      "changes": {
+        "distanceKm": [
+          null,
+          11
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ],
+        "elevationGainM": [
+          null,
+          600
+        ]
+      }
+    },
+    "cheakamus-lake-destination": {
+      "source": "https://bcparks.ca/garibaldi-park/cheakamus-lake-area/",
+      "trailhead": "Cheakamus Lake parking lot",
+      "note": "3 km to the lake/campground, one-way.",
+      "changes": {
+        "distanceKm": [
+          null,
+          3
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "wedgemount-lake-destination": {
+      "source": "https://bcparks.ca/garibaldi-park/wedgemount-lake/",
+      "trailhead": "Wedgemount Lake parking lot",
+      "note": "Main approach is 7 km one-way with 1,200 m climbing.",
+      "changes": {
+        "distanceKm": [
+          null,
+          7
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ],
+        "elevationGainM": [
+          null,
+          1200
+        ]
+      }
+    },
+    "russet-lake-destination": {
+      "source": "https://bcparks.ca/garibaldi-park/singing-pass-area/",
+      "trailhead": "Whistler Village via Singing Pass",
+      "note": "11.5 km to Singing Pass, then 3 km to Russet Lake; total 14.5 km one-way, 1,250 m elevation change, not including route variations.",
+      "changes": {
+        "distanceKm": [
+          null,
+          14.5
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ],
+        "elevationGainM": [
+          null,
+          1250
+        ]
+      }
+    },
+    "viewpoint-beach": {
+      "source": "https://bcparks.ca/golden-ears-park/",
+      "trailhead": "West Canyon Trail",
+      "note": "Campground distance is the named approach trail kilometre marker from BC Parks, not a return-trip length.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "hikers-beach": {
+      "source": "https://bcparks.ca/golden-ears-park/",
+      "trailhead": "West Canyon Trail",
+      "note": "BC Parks campground facilities table confirms bear cache but does not identify a toilet at Hiker’s Beach. Keep toilet unknown until verified.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ],
+        "toilet": [
+          "yes",
+          null
+        ],
+        "caution": [
+          "Pit toilets are confirmed by the park-wide backcountry facilities statement.",
+          "BC Parks lists 20 pads and a bear cache at Hiker’s Beach, but does not confirm a toilet at this specific campground. Check current facilities; no campfires in the hike-in backcountry."
+        ]
+      }
+    },
+    "alder-flats": {
+      "source": "https://bcparks.ca/golden-ears-park/",
+      "trailhead": "West Canyon Trail",
+      "note": "Campground distance is the named approach trail kilometre marker from BC Parks, not a return-trip length.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "halfmoon-beach": {
+      "source": "https://bcparks.ca/golden-ears-park/",
+      "trailhead": "East Canyon Trail",
+      "note": "Campground distance is the named approach trail kilometre marker from BC Parks, not a return-trip length.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "panorama-ridge-golden-ears": {
+      "source": "https://bcparks.ca/golden-ears-park/",
+      "trailhead": "Golden Ears Trail",
+      "note": "Campground distance is the named approach trail kilometre marker from BC Parks, not a return-trip length.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "buckhorn": {
+      "source": "https://bcparks.ca/ec-manning-park/backcountry-camping/",
+      "trailhead": "Upper Alpine parking lot, Heather Trail",
+      "note": "BC Parks backcountry camping guide lists distance from the named trailhead; not the full return distance.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "kicking-horse-manning": {
+      "source": "https://bcparks.ca/ec-manning-park/backcountry-camping/",
+      "trailhead": "Upper Alpine parking lot, Heather Trail",
+      "note": "BC Parks backcountry camping guide lists distance from the named trailhead; not the full return distance.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "frosty-creek": {
+      "source": "https://bcparks.ca/ec-manning-park/backcountry-camping/",
+      "trailhead": "Lightning Lake day-use area, Frosty Mountain Trail",
+      "note": "BC Parks backcountry camping guide lists distance from the named trailhead; not the full return distance.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "nicomen-lake": {
+      "source": "https://bcparks.ca/ec-manning-park/backcountry-camping/",
+      "trailhead": "Upper Alpine parking lot, Heather Trail",
+      "note": "BC Parks backcountry camping guide lists distance from the named trailhead; not the full return distance.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "poland-lake-manning": {
+      "source": "https://bcparks.ca/ec-manning-park/backcountry-camping/",
+      "trailhead": "Strawberry Flats parking lot",
+      "note": "BC Parks backcountry camping guide lists distance from the named trailhead; not the full return distance.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "mowich-manning": {
+      "source": "https://bcparks.ca/ec-manning-park/backcountry-camping/",
+      "trailhead": "Strawberry Flats parking lot",
+      "note": "BC Parks backcountry camping guide lists distance from the named trailhead; not the full return distance.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "pacific-crest-manning": {
+      "source": "https://bcparks.ca/ec-manning-park/backcountry-camping/",
+      "trailhead": "Windy Joe-Frosty Mountain trailhead parking lot",
+      "note": "BC Parks backcountry camping guide lists distance from the named trailhead; not the full return distance.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "grainger-creek-manning": {
+      "source": "https://bcparks.ca/ec-manning-park/backcountry-camping/",
+      "trailhead": "Cayuse Flats via Hope Pass Trail",
+      "note": "BC Parks backcountry camping guide lists distance from the named trailhead; not the full return distance.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ],
+        "distanceKm": [
+          null,
+          7.1
+        ]
+      }
+    },
+    "monument-78-manning": {
+      "source": "https://bcparks.ca/ec-manning-park/",
+      "trailhead": "Monument 78/83 parking lot",
+      "note": "Monument 78 Trail: 12 km one-way, 200 m elevation change from Monument 78/83 parking lot.",
+      "changes": {
+        "distanceKm": [
+          null,
+          12
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ],
+        "elevationGainM": [
+          null,
+          200
+        ]
+      }
+    },
+    "lightning-lake": {
+      "source": "https://bcparks.ca/ec-manning-park/",
+      "trailhead": "Lightning Lake day-use area",
+      "note": "Complete popular Lightning Lake shoreline loop: 9 km total; shorter Rainbow Bridge loop possible.",
+      "changes": {
+        "distanceKm": [
+          null,
+          9
+        ],
+        "distanceType": [
+          null,
+          "loop"
+        ]
+      }
+    },
+    "upper-joffre-lake": {
+      "source": "https://bcparks.ca/joffre-lakes-park/",
+      "trailhead": "Joffre Lakes parking lot",
+      "note": "4.5 km one-way to Upper Joffre Lake Campground; roughly 400 m elevation gain.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ],
+        "elevationGainM": [
+          null,
+          400
+        ]
+      }
+    },
+    "lindeman-lake-chilliwack": {
+      "source": "https://bcparks.ca/sxotsaqel-chilliwack-lake-park/",
+      "trailhead": "Post Creek parking lot",
+      "note": "BC Parks camping location distances are one-way; day hiking return trail distances may differ slightly.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "greendrop-lake-chilliwack": {
+      "source": "https://bcparks.ca/sxotsaqel-chilliwack-lake-park/",
+      "trailhead": "Post Creek parking lot",
+      "note": "BC Parks camping location distances are one-way; day hiking return trail distances may differ slightly.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "flora-lake-chilliwack": {
+      "source": "https://bcparks.ca/sxotsaqel-chilliwack-lake-park/",
+      "trailhead": "Post Creek parking lot",
+      "note": "BC Parks camping location distances are one-way; day hiking return trail distances may differ slightly.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "radium-lake-chilliwack": {
+      "source": "https://bcparks.ca/sxotsaqel-chilliwack-lake-park/",
+      "trailhead": "Chilliwack Lake Campground area",
+      "note": "BC Parks camping location distances are one-way; day hiking return trail distances may differ slightly.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "floe-lake-rockwall": {
+      "source": "https://parks.canada.ca/pn-np/bc/kootenay/activ/randonnee-hike/jour-day",
+      "trailhead": "Floe Lake parking lot",
+      "note": "Parks Canada day hiking table: 10.8 km one-way, 1,120 m total elevation gain. Older Rockwall matrix uses 10.5 km; trail descriptions can differ by measurement.",
+      "changes": {
+        "distanceKm": [
+          10.5,
+          10.8
+        ],
+        "elevationGainM": [
+          null,
+          1120
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "floe-lake-destination": {
+      "source": "https://parks.canada.ca/pn-np/bc/kootenay/activ/randonnee-hike/jour-day",
+      "trailhead": "Floe Lake parking lot",
+      "note": "Parks Canada day hiking table: 10.8 km one-way, 1,120 m total elevation gain. Older Rockwall matrix uses 10.5 km; trail descriptions can differ by measurement.",
+      "changes": {
+        "distanceKm": [
+          null,
+          10.8
+        ],
+        "elevationGainM": [
+          null,
+          1120
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "lake-ohara-yoho": {
+      "source": "https://parks.canada.ca/pn-np/bc/yoho/activ/randonnee-hike/ohara/visit",
+      "trailhead": "Lake O'Hara road junction",
+      "note": "11 km one-way on the Lake O’Hara ACCESS ROAD; reserved shuttle access is distinct from hiking routes around the lake.",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "lake-ohara-destination": {
+      "source": "https://parks.canada.ca/pn-np/bc/yoho/activ/randonnee-hike/ohara/visit",
+      "trailhead": "Lake O'Hara road junction",
+      "note": "11 km one-way access ROAD from the highway. NOT a 11 km circuit around Lake O’Hara.",
+      "changes": {
+        "distanceKm": [
+          null,
+          11
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ],
+        "caution": [
+          "Limited access: Parks Canada shuttle and campground have reservation systems; plan well ahead.",
+          "11 km is the access road from the Lake O’Hara highway junction, not a lakeshore hike. Seasonal shuttle and campground access require advance reservations; check current Parks Canada information."
+        ]
+      }
+    },
+    "mystic-beach-jdf": {
+      "source": "https://bcparks.ca/juan-de-fuca-park/day-use-areas/",
+      "trailhead": "Juan de Fuca East / China Beach trailhead",
+      "note": "2.5 km from the eastern trailhead to Mystic Beach. Does not represent the longer multi-day marine trail section.",
+      "changes": {
+        "distanceKm": [
+          null,
+          2.5
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "sombrio-beach-jdf": {
+      "source": "https://bcparks.ca/juan-de-fuca-park/day-use-areas/",
+      "trailhead": "Sombrio Beach day-use access parking lot",
+      "note": "0.25 km short access trail from the Sombrio Beach parking lot; distinct from the multi-day through-trail mileage.",
+      "changes": {
+        "distanceKm": [
+          null,
+          0.25
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "juan-de-fuca-marine-trail": {
+      "source": "https://bcparks.ca/juan-de-fuca-park/",
+      "note": "BC Parks advisory posted 2026-10-06 prohibits through travel between Bear Beach and Chin Beach. Listed 47 km is entire route, not currently passable end to end.",
+      "statusAsOf2026-11-10": "section closed Bear Beach–Chin Beach as of 2026-11-10"
+    },
+    "west-coast-trail": {
+      "source": "https://parks.canada.ca/pn-np/bc/pacificrim/activ/sco-wct",
+      "trailhead": "Pachena Bay or Gordon River",
+      "note": "Parks Canada lists the West Coast Trail as 75 km point to point, typically 6–8 days.",
+      "changes": {
+        "distanceKm": [
+          null,
+          75
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "guise-bay-cape-scott": {
+      "source": "https://bcparks.ca/cape-scott-park/hiking/",
+      "trailhead": "Cape Scott trailhead",
+      "note": "Official hiking page measures Guise Bay at 20.7 km from the Cape Scott trailhead.",
+      "changes": {
+        "distanceKm": [
+          null,
+          20.7
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "bedwell-lake-strathcona": {
+      "source": "https://bcparks.ca/strathcona-park/buttle-lake-trails/",
+      "trailhead": "Jim Mitchell Lake Road / Bedwell Lake trailhead",
+      "note": "BC Parks lists Bedwell Lake at 6 km one-way and 600 m elevation change.",
+      "changes": {
+        "distanceKm": [
+          null,
+          6
+        ],
+        "elevationGainM": [
+          null,
+          600
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "bedwell-lake-destination": {
+      "source": "https://bcparks.ca/strathcona-park/buttle-lake-trails/",
+      "trailhead": "Jim Mitchell Lake Road / Bedwell Lake trailhead",
+      "note": "BC Parks lists Bedwell Lake at 6 km one-way and 600 m elevation change."
+    },
+    "paradise-meadows-loop": {
+      "source": "https://bcparks.ca/strathcona-park/forbidden-plateau-area/",
+      "trailhead": "Paradise Meadows parking at Mount Washington",
+      "note": "Official park lists the whole Paradise Meadows loop as 4.2 km return.",
+      "changes": {
+        "distanceType": [
+          "round-trip",
+          "loop"
+        ]
+      }
+    },
+    "della-falls": {
+      "source": "https://bcparks.ca/strathcona-park/hiking/",
+      "trailhead": "Western shore of Great Central Lake (boat/plane access)",
+      "note": "16 km one-way, 350 m elevation change; remote trailhead requires a boat or floatplane."
+    },
+    "lower-myra-falls": {
+      "source": "https://bcparks.ca/strathcona-park/hiking/",
+      "trailhead": "Lower Myra Falls parking area",
+      "note": "1 km one-way trail from the park hiking guide."
+    },
+    "tanal-lake-kokanee": {
+      "source": "https://bcparks.ca/kokanee-glacier-park/hiking/",
+      "trailhead": "Enterprise Creek trailhead",
+      "note": "6.4 km one-way, 409 m elevation gain; trail no longer regularly maintained.",
+      "changes": {
+        "elevationGainM": [
+          null,
+          409
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "kaslo-lake-kokanee": {
+      "source": "https://bcparks.ca/kokanee-glacier-park/hiking/",
+      "trailhead": "Kokanee Lake",
+      "note": "3 km ONE-WAY FROM KOKANEE LAKE to Kaslo Lake, not from Gibson Lake trailhead.",
+      "changes": {
+        "distanceKm": [
+          null,
+          3
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "kaslo-lake-destination": {
+      "source": "https://bcparks.ca/kokanee-glacier-park/hiking/",
+      "trailhead": "Kokanee Lake",
+      "note": "3 km one-way from Kokanee Lake to Kaslo Lake; does not measure entire car park approach.",
+      "changes": {
+        "distanceKm": [
+          null,
+          3
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "gibson-lake-loop": {
+      "source": "https://bcparks.ca/kokanee-glacier-park/hiking/",
+      "trailhead": "Gibson Lake parking lot",
+      "note": "2.5 km total loop; not an outbound-only distance."
+    },
+    "iceline-trail-yoho": {
+      "source": "https://parks.canada.ca/pn-np/bc/yoho/activ/randonnee-hike/jour-day",
+      "trailhead": "Takakkaw Falls parking lot",
+      "note": "Popular Iceline via Little Yoho complete loop: 20.3 km and 1,090 m total ascent; Celeste Lake option 17.4 km / 970 m.",
+      "changes": {
+        "distanceKm": [
+          null,
+          20.3
+        ],
+        "elevationGainM": [
+          null,
+          1090
+        ],
+        "distanceType": [
+          null,
+          "loop"
+        ]
+      }
+    },
+    "miller-lake": {
+      "source": "https://parks.canada.ca/pn-np/bc/revelstoke/activ/itineraries",
+      "trailhead": "Meadows in the Sky Parkway summit area",
+      "note": "Parks Canada itinerary describes Eva and Miller Lakes as approximately 6 km from the Parkway access; actual individual route variations differ.",
+      "changes": {
+        "distanceKm": [
+          null,
+          6
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "eva-lake": {
+      "source": "https://parks.canada.ca/pn-np/bc/revelstoke/activ/itineraries",
+      "trailhead": "Meadows in the Sky Parkway summit area",
+      "note": "Parks Canada itinerary describes Eva and Miller Lakes as approximately 6 km from parkway access; approximate."
+    },
+    "trophy-mountain-meadows": {
+      "source": "https://bcparks.ca/wells-gray-park/trophy-mountain/",
+      "trailhead": "Trophy Meadows Trail parking lot",
+      "note": "Official park entry: 1 km one-way and approximately 200 m ascent to subalpine meadow.",
+      "changes": {
+        "distanceKm": [
+          null,
+          1
+        ],
+        "elevationGainM": [
+          null,
+          200
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "lake-of-the-woods-cathedral": {
+      "source": "https://bcparks.ca/cathedral-park/hiking/",
+      "trailhead": "Quiniscoe Lake Campground / Pyramid Lake trail network",
+      "note": "2 km total Quiniscoe/Lake of the Woods/Pyramid loop; 30 m elevation change."
+    },
+    "diamond-trail-cathedral": {
+      "source": "https://bcparks.ca/cathedral-park/hiking/",
+      "note": "BC Parks lists the Diamond Trail around Scout Mountain as 8 km, 250 m ascent."
+    },
+    "stone-city-cathedral": {
+      "source": "https://bcparks.ca/cathedral-park/hiking/",
+      "note": "BC Parks describes Stone City/Giant Cleft route as 12 km and 500 m elevation change; this is the chosen loop/backtrack itinerary."
+    },
+    "divide-lake-okanagan": {
+      "source": "https://bcparks.ca/okanagan-mountain-park/",
+      "trailhead": "Okanagan Mountain south parking lot (Mountain Goat Trail)",
+      "note": "5 km one-way via Mountain Goat Trail from south parking. Alternative north access is 8 km via restricted road.",
+      "changes": {
+        "distanceKm": [
+          null,
+          5
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "spectrum-lake": {
+      "source": "https://bcparks.ca/monashee-park/",
+      "trailhead": "Spectrum Creek parking lot",
+      "note": "Main maintained approach: 6 km one-way.",
+      "changes": {
+        "distanceKm": [
+          null,
+          6
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "big-peters-lake": {
+      "source": "https://bcparks.ca/monashee-park/",
+      "trailhead": "Spectrum Lake (not the Spectrum Creek car park)",
+      "note": "9 km one-way from Spectrum Lake via Little Peters trail, 800 m elevation change. ADD approximately 6 km for the approach from Spectrum Creek parking lot.",
+      "changes": {
+        "distanceKm": [
+          null,
+          9
+        ],
+        "elevationGainM": [
+          null,
+          800
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "hunlen-falls": {
+      "source": "https://bcparks.ca/tweedsmuir-park/hiking/",
+      "trailhead": "Tote Road 4x4 trailhead near Stillwater Lake",
+      "note": "BC Parks lists 16.4 km, 800 m ascent, 6–9 h one-way to Hunlen Falls.",
+      "changes": {
+        "distanceKm": [
+          null,
+          16.4
+        ],
+        "elevationGainM": [
+          null,
+          800
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "octopus-lake-trail": {
+      "source": "https://bcparks.ca/tweedsmuir-park/hiking/",
+      "trailhead": "Rainbow Range trailhead on Highway 20",
+      "note": "BC Parks lists 14 km one-way; elevation change described as minimal, so numerical gain remains unknown."
+    },
+    "rainbow-range-trail": {
+      "source": "https://bcparks.ca/tweedsmuir-park/hiking/",
+      "trailhead": "Rainbow Range Trailhead on Highway 20",
+      "note": "BC Parks describes 7 km one-way to an unnamed alpine lake and 300 m ascent."
+    },
+    "monkman-lake-trail": {
+      "source": "https://bcparks.ca/monkman-park/",
+      "trailhead": "Monkman Lake Trailhead south of Kinuseo Falls Campground",
+      "note": "Monkman Lake backcountry campground sits at route kilometre 25; 63 km is a longer Monkman route continuing beyond lake.",
+      "changes": {
+        "distanceKm": [
+          null,
+          25
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "kinuseo-falls": {
+      "source": "https://bcparks.ca/monkman-park/",
+      "note": "BC Parks reported the main viewing platform closed for 2026 because of structural issues; upper viewpoints remain open. Do not use a 3 km campground-to-falls optional route as the default distance.",
+      "statusAsOf2026-11-10": "Kinuseo Falls viewing platform closed for 2026",
+      "changes": {
+        "caution": [
+          "The main Kinuseo Falls viewing platform is CLOSED for the 2026 season; check which other viewpoints are accessible.",
+          "Kinuseo Falls viewing platform closed for 2026 under BC Parks advisory (February 3, 2026); the upper viewpoints remain accessible. Check whether the platform has reopened before visiting."
+        ]
+      }
+    },
+    "wapiti-lake": {
+      "source": "https://bcparks.ca/wapiti-lake-park/",
+      "trailhead": "Wapiti Lake trailhead from Ojay Main Road",
+      "note": "Official Wapiti Lake route is about 19 km one-way, reaching the lakeside camping area."
+    },
+    "munro-lake-pinecone-burke": {
+      "source": "https://bcparks.ca/pinecone-burke-park/",
+      "note": "BC Parks specifies all pets must be leashed; route lengths are omitted without an identified, safely mapped trailhead."
+    },
+    "dennett-lake-pinecone-burke": {
+      "source": "https://bcparks.ca/pinecone-burke-park/",
+      "note": "BC Parks specifies all pets must be leashed; route lengths are omitted without an identified, safely mapped trailhead."
+    },
+    "ted-kay-lake-pinecone-burke": {
+      "source": "https://bcparks.ca/pinecone-burke-park/",
+      "note": "BC Parks specifies all pets must be leashed; route lengths are omitted without an identified, safely mapped trailhead."
+    },
+    "burke-mountain-plateau": {
+      "source": "https://bcparks.ca/pinecone-burke-park/",
+      "note": "BC Parks specifies all pets must be leashed; route lengths are omitted without an identified, safely mapped trailhead."
+    },
+    "widgeon-falls-pinecone-burke": {
+      "source": "https://bcparks.ca/pinecone-burke-park/",
+      "note": "BC Parks discourages use of old Widgeon Falls Trail due to deteriorated footbridges and stairs; park instead recommends old road. Access normally requires a paddle via Widgeon Slough.",
+      "changes": {
+        "caution": [
+          "Reaching the Widgeon Valley trail system requires water access. BC Parks advises using the old road rather than the deteriorated Widgeon Falls Trail; no facilities are listed at the falls.",
+          "BC Parks advises AGAINST the old Widgeon Falls Trail due to unsafe bridges/stairs. Use the signed old road approach where accessible; canoe/kayak access via Widgeon Slough is normally necessary."
+        ]
+      }
+    },
+    "widgeon-lake-pinecone-burke": {
+      "source": "https://bcparks.ca/pinecone-burke-park/",
+      "note": "BC Parks specifies all pets must be leashed; route lengths are omitted without an identified, safely mapped trailhead."
+    },
+    "widgeon-creek-campground-pinecone-burke": {
+      "source": "https://bcparks.ca/pinecone-burke-park/",
+      "note": "~10 designated tent pads, pit toilets and bear cache. Boat access via Widgeon Slough; no camping fees or advance reservations.",
+      "changes": {
+        "caution": [
+          "Access is by canoe or kayak through Widgeon Slough from Grant Narrows. First come, first served; BC Parks states there is no reservation or permit requirement. No campfires or garbage facilities.",
+          "Boat-access backcountry campground via Widgeon Slough (approximately two hours paddling from Grant Narrows). About 10 pads, pit toilets and food cache. First come, first served; no reservation system or permit required."
+        ]
+      }
+    },
+    "dark-creek-campground-pinecone-burke": {
+      "source": "https://bcparks.ca/pinecone-burke-park/",
+      "note": "Marine access only; no camping fees, reservations or backcountry permit required.",
+      "changes": {
+        "caution": [
+          "Boat access only. BC Parks lists a pit toilet and no other facilities; there is no provided food cache. First come, first served with no reservation or permit requirement. Campfires prohibited.",
+          "Marine-access campground on Pitt Lake; no advance reservations, permit or camping fees under current BC Parks rules. Facilities are limited and must be checked before travel."
+        ]
+      }
+    },
+    "spahats-falls": {
+      "source": "https://bcparks.ca/wells-gray-park/corridor-area/",
+      "note": "2026 fall construction: Spahats Falls parking closed after Sep 8; alternate Shaden Viewpoint approach is ~1 km while works continue.",
+      "statusAsOf2026-11-10": "parking-lot fall 2026 construction",
+      "changes": {
+        "caution": [
+          "Use designated viewpoints; check BC Parks access advisories.",
+          "BC Parks posted Spahats Falls parking lot closure for fall 2026 construction. Alternate access from Shaden Viewpoint is approximately 1 km; verify the latest road/parking notice before visiting."
+        ]
+      }
+    },
+    "helmcken-falls": {
+      "source": "https://bcparks.ca/wells-gray-park/corridor-area/",
+      "note": "BC Parks reports reduced Helmcken Falls parking availability beginning Aug 31, 2026 for construction.",
+      "statusAsOf2026-11-10": "fall 2026 reduced parking",
+      "changes": {
+        "caution": [
+          "Stay at designated fenced viewpoints and check road access.",
+          "Reduced Helmcken Falls parking during fall 2026 construction; check current BC Parks advisories before travelling."
+        ]
+      }
+    },
+    "kinney-lake-robson": {
+      "source": "https://offtracktravel.ca/berg-lake-trail-guide/",
+      "note": "Approx. 6.5 km one-way on the reconstructed trail alignment reopened 2025. Older official park PDF gives higher distances; do not mix or present this estimate as a BC Parks official measurement.",
+      "trailhead": "Berg Lake Trailhead at Kinney Lake Road",
+      "legacySource": "https://nrs.objectstore.gov.bc.ca/kuwyyf/berg_lake_trail_map_fce7c2b377.pdf",
+      "metricQuality": "2026 independently reported route estimate, not official GPS track",
+      "changes": {
+        "distanceKm": [
+          null,
+          6.5
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "whitehorn-robson": {
+      "source": "https://offtracktravel.ca/berg-lake-trail-guide/",
+      "note": "Approx. 10.5 km one-way on the reconstructed trail alignment reopened 2025. Older official park PDF gives higher distances; do not mix or present this estimate as a BC Parks official measurement.",
+      "trailhead": "Berg Lake Trailhead at Kinney Lake Road",
+      "legacySource": "https://nrs.objectstore.gov.bc.ca/kuwyyf/berg_lake_trail_map_fce7c2b377.pdf",
+      "metricQuality": "2026 independently reported route estimate, not official GPS track",
+      "changes": {
+        "distanceKm": [
+          null,
+          10.5
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "emperor-falls-robson": {
+      "source": "https://offtracktravel.ca/berg-lake-trail-guide/",
+      "note": "Approx. 15 km one-way on the reconstructed trail alignment reopened 2025. Older official park PDF gives higher distances; do not mix or present this estimate as a BC Parks official measurement.",
+      "trailhead": "Berg Lake Trailhead at Kinney Lake Road",
+      "legacySource": "https://nrs.objectstore.gov.bc.ca/kuwyyf/berg_lake_trail_map_fce7c2b377.pdf",
+      "metricQuality": "2026 independently reported route estimate, not official GPS track",
+      "changes": {
+        "distanceKm": [
+          null,
+          15
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "marmot-robson": {
+      "source": "https://offtracktravel.ca/berg-lake-trail-guide/",
+      "note": "Approx. 17.5 km one-way on the reconstructed trail alignment reopened 2025. Older official park PDF gives higher distances; do not mix or present this estimate as a BC Parks official measurement.",
+      "trailhead": "Berg Lake Trailhead at Kinney Lake Road",
+      "legacySource": "https://nrs.objectstore.gov.bc.ca/kuwyyf/berg_lake_trail_map_fce7c2b377.pdf",
+      "metricQuality": "2026 independently reported route estimate, not official GPS track",
+      "changes": {
+        "distanceKm": [
+          null,
+          17.5
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "berg-lake-robson": {
+      "source": "https://offtracktravel.ca/berg-lake-trail-guide/",
+      "note": "Approx. 19.5 km one-way on the reconstructed trail alignment reopened 2025. Older official park PDF gives higher distances; do not mix or present this estimate as a BC Parks official measurement.",
+      "trailhead": "Berg Lake Trailhead at Kinney Lake Road",
+      "legacySource": "https://nrs.objectstore.gov.bc.ca/kuwyyf/berg_lake_trail_map_fce7c2b377.pdf",
+      "metricQuality": "2026 independently reported route estimate, not official GPS track",
+      "changes": {
+        "distanceKm": [
+          null,
+          19.5
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "rearguard-robson": {
+      "source": "https://offtracktravel.ca/berg-lake-trail-guide/",
+      "note": "Approx. 20.5 km one-way on the reconstructed trail alignment reopened 2025. Older official park PDF gives higher distances; do not mix or present this estimate as a BC Parks official measurement.",
+      "trailhead": "Berg Lake Trailhead at Kinney Lake Road",
+      "legacySource": "https://nrs.objectstore.gov.bc.ca/kuwyyf/berg_lake_trail_map_fce7c2b377.pdf",
+      "metricQuality": "2026 independently reported route estimate, not official GPS track",
+      "changes": {
+        "distanceKm": [
+          null,
+          20.5
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "robson-pass-robson": {
+      "source": "https://offtracktravel.ca/berg-lake-trail-guide/",
+      "note": "Approx. 21.5 km one-way on the reconstructed trail alignment reopened 2025. Older official park PDF gives higher distances; do not mix or present this estimate as a BC Parks official measurement.",
+      "trailhead": "Berg Lake Trailhead at Kinney Lake Road",
+      "legacySource": "https://nrs.objectstore.gov.bc.ca/kuwyyf/berg_lake_trail_map_fce7c2b377.pdf",
+      "metricQuality": "2026 independently reported route estimate, not official GPS track",
+      "changes": {
+        "distanceKm": [
+          null,
+          21.5
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "berg-lake-trail": {
+      "source": "https://offtracktravel.ca/berg-lake-trail-guide/",
+      "note": "21.5 km one-way to Robson Pass, the north end of Berg Lake Trail; Berg Lake campground is approximately 19.5 km along the new 2025+ alignment. Older BC Parks map reports Robson Pass at 23 km.",
+      "trailhead": "Berg Lake Trailhead at Kinney Lake Road",
+      "legacySource": "https://nrs.objectstore.gov.bc.ca/kuwyyf/berg_lake_trail_map_fce7c2b377.pdf",
+      "metricQuality": "2026 independently reported route estimate, not official GPS track",
+      "changes": {
+        "distanceKm": [
+          null,
+          21.5
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ],
+        "caution": [
+          "The trail had extensive repairs after washouts; inspect current advisories and campsite reservation rules.",
+          "Main distance is the one-way reconstructed route to Robson Pass, not a return hike or only to Berg Lake (about 19.5 km). BC Parks still links an older map with longer kilometre markers; verify current trail advisories and backcountry bookings."
+        ]
+      }
+    },
+    "howe-sound-crest-trail": {
+      "source": "https://bcparks.ca/cypress-park/hike-ski/",
+      "note": "BC Parks lists 29 km one-way for the full Howe Sound Crest Trail; exposed/backcountry sections may be harder to follow in poor weather.",
+      "trailhead": "Cypress Mountain alpine resort area to Highway 99 near Porteau Cove",
+      "changes": {
+        "distanceKm": [
+          null,
+          29
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "dog-mountain-seymour": {
+      "source": "https://bcparks.ca/mount-seymour-park/hiking/",
+      "note": "BC Parks lists 1 km to First Lake and another 2 km one-way from First Lake to Dog Mountain (3 km total one way). It describes elevation change as minimal; no numeric elevation gain entered.",
+      "trailhead": "Mount Seymour upper ski-area parking lot / First Lake access trail",
+      "changes": {
+        "distanceKm": [
+          null,
+          3
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "marble-canyon-kootenay": {
+      "source": "https://parks.canada.ca/pn-np/bc/kootenay/activ/randonnee-hike/jour-day",
+      "note": "Parks Canada hiking table gives 0.9 km one-way to the red chairs beyond the canyon and 65 m cumulative gain (plus 35 m descent).",
+      "trailhead": "Marble Canyon day-use parking lot",
+      "changes": {
+        "distanceKm": [
+          null,
+          0.9
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ],
+        "elevationGainM": [
+          null,
+          65
+        ]
+      }
+    },
+    "landslide-lake": {
+      "source": "https://bcparks.ca/strathcona-park/buttle-lake-trails/",
+      "note": "BC Parks describes Elk River Trail as 11 km to Landslide Lake and 600 m elevation change. Camping is not allowed at the lake itself.",
+      "trailhead": "Elk River trailhead on Highway 28",
+      "changes": {
+        "distanceKm": [
+          null,
+          11
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ],
+        "elevationGainM": [
+          null,
+          600
+        ]
+      }
+    },
+    "lower-elk-lake": {
+      "source": "https://bcparks.ca/elk-lakes-park/",
+      "note": "BC Parks says Lower Elk Lake campground is 1 km one-way from parking.",
+      "trailhead": "Elk Lakes parking lot",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "magnesia-meadows-cypress": {
+      "source": "https://bcparks.ca/cypress-park/hike-ski/",
+      "note": "14.5 km is the already-present one-way south-to-north approximate route marker. Park gives 29 km for the entire Howe Sound Crest Trail. No current official park marker was found for this specific camp.",
+      "trailhead": "Cypress Alpine (south Howe Sound Crest Trail entrance)",
+      "metricQuality": "existing route kilometres, trail start basis inferred from original dataset; not reverified against official kilometre table",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "brunswick-lake-cypress": {
+      "source": "https://bcparks.ca/cypress-park/hike-ski/",
+      "note": "19 km is the already-present one-way south-to-north approximate route marker. Park gives 29 km for the entire Howe Sound Crest Trail. No current official park marker was found for this specific camp.",
+      "trailhead": "Cypress Alpine (south Howe Sound Crest Trail entrance)",
+      "metricQuality": "existing route kilometres, trail start basis inferred from original dataset; not reverified against official kilometre table",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "deeks-lake-cypress": {
+      "source": "https://bcparks.ca/cypress-park/hike-ski/",
+      "note": "22 km is the already-present one-way south-to-north approximate route marker. Park gives 29 km for the entire Howe Sound Crest Trail. No current official park marker was found for this specific camp.",
+      "trailhead": "Cypress Alpine (south Howe Sound Crest Trail entrance)",
+      "metricQuality": "existing route kilometres, trail start basis inferred from original dataset; not reverified against official kilometre table",
+      "changes": {
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "bear-beach-jdf": {
+      "source": "https://nrs.objectstore.gov.bc.ca/kuwyyf/juan_de_fuca_brochure_acb8364968.pdf",
+      "note": "Approx 9 km one-way from China Beach at official trail kilometre 0, ending at Bear Beach km 9. Trail segment continuing to Chin Beach closed as of October 6 2026.",
+      "trailhead": "Juan de Fuca East / China Beach",
+      "metricQuality": "approx official map route markers rounded to whole kilometre",
+      "changes": {
+        "distanceKm": [
+          null,
+          9
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ],
+        "caution": [
+          "Backcountry camping permit is required, but it does not reserve a specific site. Expect tidal considerations and exposed beach travel.",
+          "Bear Beach remains accessible via the China Beach end, but the Juan de Fuca section between Bear Beach and Chin Beach is CLOSED due to a slope failure (BC Parks advisory Oct 6, 2026). Do not plan a through-hike."
+        ]
+      }
+    },
+    "chin-beach-jdf": {
+      "source": "https://nrs.objectstore.gov.bc.ca/kuwyyf/juan_de_fuca_brochure_acb8364968.pdf",
+      "note": "Approx 8 km one-way westward/eastward difference from Sombrio marker km 29 to Chin Beach marker km 21. This does NOT cross the closed Bear–Chin section. The eastward China Beach through approach is not currently accessible.",
+      "trailhead": "Sombrio Beach access to Juan de Fuca trail kilometre 29",
+      "metricQuality": "approx official map route markers rounded to whole kilometre",
+      "changes": {
+        "distanceKm": [
+          null,
+          8
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ],
+        "caution": [
+          "Backcountry camping permit is required, but it does not reserve a specific site. Plan around tides and slippery coastal trail sections.",
+          "Approach from Sombrio Beach (~8 km one-way via current open side), NOT from China Beach: the Juan de Fuca section between Bear Beach and Chin Beach is CLOSED as of October 6, 2026."
+        ]
+      }
+    },
+    "payzant-creek-jdf": {
+      "source": "https://bcparks.ca/juan-de-fuca-park/day-use-areas/",
+      "note": "Park BC Parks notes Payzant campground at trail km 40 and Parkinson Creek trailhead at km 37.6; approximately 2.4 km one-way from Parkinson, not from China Beach.",
+      "trailhead": "Parkinson Creek trailhead km 37.6",
+      "changes": {
+        "distanceKm": [
+          null,
+          2.4
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "little-kuitsche-creek-jdf": {
+      "source": "https://bcparks.ca/juan-de-fuca-park/day-use-areas/",
+      "note": "BC Parks locates Little Kuitsche Creek at km 33.5 and Parkinson Creek trailhead at km 37.6; approximately 4.1 km one-way from Parkinson.",
+      "trailhead": "Parkinson Creek trailhead km 37.6",
+      "changes": {
+        "distanceKm": [
+          null,
+          4.1
+        ],
+        "distanceType": [
+          null,
+          "one-way"
+        ]
+      }
+    },
+    "gimli-ridge-valhalla": {
+      "source": "https://bcparks.ca/valhalla-park/",
+      "note": "BC Parks restricts pets to Slocan Lakefront sites and Cahill/Beatrice trails. Gimli Ridge backcountry is not an allowed pet area; leash exception does not extend here."
+    },
+    "drinnon-lake": {
+      "source": "https://bcparks.ca/valhalla-park/",
+      "note": "BC Parks restricts pets to Slocan Lakefront sites and Cahill/Beatrice trails. Drinnon Lake backcountry is not an allowed pet area."
+    },
+    "englishman-river-falls": {
+      "source": "https://bcparks.ca/englishman-river-falls-park/",
+      "note": "BC Parks posted Jan 12, 2026 closures affecting upper waterfall viewing and adjacent trails. The park has ~3 km total trails, not a specified 3 km named destination walk; leave distance null.",
+      "statusAsOf2026-11-10": "upper falls routes closed until further notice as of 2026-11-10",
+      "changes": {
+        "caution": [
+          "Some upper falls trails were closed following storm damage in 2026; check BC Parks advisories.",
+          "Some upper waterfall trails and viewpoints are CLOSED until further notice due to storm damage (BC Parks advisory, January 12, 2026). Park-wide 3 km of trails is not a single recommended route."
+        ]
+      }
+    }
+  },
+  "method": "Original baseline metrics retained. Official BC Parks/Parks Canada metric updates are documented by destination. Rebuilt Berg Lake Trail distances are qualified third-party post-reconstruction estimates with original official-map alternative retained. Trailhead and distanceType must be considered together. Null means unverified, not zero.",
+  "coverageNote": "Campsites, viewpoints, parks and named lakes do not necessarily have one canonical approach. Do not infer gain from altitude endpoints or straight-line points. Source metadata explicitly distinguishes historical maps from recent field estimates."
+}

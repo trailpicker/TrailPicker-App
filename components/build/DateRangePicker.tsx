@@ -8,6 +8,12 @@ type Props = {
     endName: string;
     initialStart?: string;
     initialEnd?: string;
+    /** Optional controlled values for non-form editors such as booking details. */
+    startValue?: string;
+    endValue?: string;
+    onChange?: (start: string, end: string) => void;
+    allowPast?: boolean;
+    label?: string;
 };
 
 // Date-only values belong to the user's calendar, not UTC.
@@ -32,13 +38,20 @@ function duration(start: Date, end: Date) {
     return Math.round((Date.UTC(end.getFullYear(), end.getMonth(), end.getDate()) - Date.UTC(start.getFullYear(), start.getMonth(), start.getDate())) / 86400000);
 }
 
-export default function DateRangePicker({ startName, endName, initialStart, initialEnd }: Props) {
-    const [start, setStart] = useState(() => parseDate(initialStart));
-    const [end, setEnd] = useState(() => {
+export default function DateRangePicker({ startName, endName, initialStart, initialEnd, startValue, endValue, onChange, allowPast = false, label: accessibleLabel = "Trip dates" }: Props) {
+    const [localStart, setLocalStart] = useState(() => parseDate(initialStart));
+    const [localEnd, setLocalEnd] = useState(() => {
         const a = parseDate(initialStart), b = parseDate(initialEnd);
         return a && b && b >= a ? b : null;
     });
-    const [viewMonth, setViewMonth] = useState(() => monthOf(parseDate(initialStart) ?? new Date()));
+    const controlled = startValue !== undefined || endValue !== undefined;
+    const start = controlled ? parseDate(startValue) : localStart;
+    const end = controlled ? parseDate(endValue) : localEnd;
+    function setDates(nextStart: Date | null, nextEnd: Date | null) {
+        if (!controlled) { setLocalStart(nextStart); setLocalEnd(nextEnd); }
+        onChange?.(nextStart ? dateValue(nextStart) : "", nextEnd ? dateValue(nextEnd) : "");
+    }
+    const [viewMonth, setViewMonth] = useState(() => monthOf(parseDate(startValue ?? initialStart) ?? new Date()));
     const [hover, setHover] = useState<Date | null>(null);
     const [open, setOpen] = useState(false);
     const [position, setPosition] = useState({ top: 0, left: 0, width: 380, maxHeight: 600 });
@@ -68,9 +81,25 @@ export default function DateRangePicker({ startName, endName, initialStart, init
         const available = Math.max(0, placeAbove ? above : below);
         const maxHeight = Math.max(120, available);
         const top = placeAbove ? Math.max(margin, rect.top - Math.min(height, maxHeight) - 8) : Math.min(rect.bottom + 8, window.innerHeight - Math.min(height, maxHeight) - margin);
-        setPosition({ top: Math.max(margin, top), left: Math.max(margin, Math.min(rect.left, window.innerWidth - width - margin)), width, maxHeight: Math.min(maxHeight, window.innerHeight - margin * 2) });
+        const nextPosition = {
+            top: Math.max(margin, top),
+            left: Math.max(margin, Math.min(rect.left, window.innerWidth - width - margin)),
+            width,
+            maxHeight: Math.min(maxHeight, window.innerHeight - margin * 2),
+        };
+        // Resize/scroll events can fire repeatedly even when the panel hasn't moved.
+        // Keep the same state object unless its measured position actually changes.
+        setPosition(previous =>
+            previous.top === nextPosition.top && previous.left === nextPosition.left &&
+            previous.width === nextPosition.width && previous.maxHeight === nextPosition.maxHeight
+                ? previous : nextPosition
+        );
     }
-    useLayoutEffect(() => { if (open) updatePosition(); }, [open, viewMonth, start, end]);
+    // Controlled values are parsed into fresh Date objects on each render.
+    // Date-only strings are stable dependencies and avoid a layout-effect update loop.
+    const startKey = start ? dateValue(start) : "";
+    const endKey = end ? dateValue(end) : "";
+    useLayoutEffect(() => { if (open) updatePosition(); }, [open, viewMonth, startKey, endKey]);
     useEffect(() => {
         if (!open) return;
         const frame = requestAnimationFrame(() => {
@@ -95,8 +124,8 @@ export default function DateRangePicker({ startName, endName, initialStart, init
 
     function select(day: Date) {
         setHover(null);
-        if (!start || end || day < start) { setStart(day); setEnd(null); }
-        else setEnd(day);
+        if (!start || end || day < start) setDates(day, null);
+        else setDates(start, day);
     }
     const preview = start && !end && hover && hover >= start ? hover : end;
     const monthDays = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 0).getDate();
@@ -118,7 +147,7 @@ export default function DateRangePicker({ startName, endName, initialStart, init
                 </svg>
             </button>
             {open && typeof document !== "undefined" && createPortal(
-                <div ref={panelRef} id={id} role="dialog" aria-label="Choose trip dates" tabIndex={-1}
+                <div ref={panelRef} id={id} role="dialog" aria-label={`Choose ${accessibleLabel.toLowerCase()}`} tabIndex={-1}
                     style={{ position: "fixed", ...position, overflowY: "auto" }}
                     className="z-[999] rounded-2xl border border-slate-200 bg-white p-4 text-slate-900 shadow-[0_16px_48px_-12px_rgba(15,23,42,0.25)]"
                     onKeyDown={event => {
@@ -151,9 +180,9 @@ export default function DateRangePicker({ startName, endName, initialStart, init
                             const isToday = sameDay(day, today);
                             return <div key={dateValue(day)} className={`flex h-11 items-center justify-center ${between ? "bg-green-50" : ""} ${connected && isStart ? "rounded-l-full bg-green-50" : ""} ${connected && (isEnd || previewEnd) ? "rounded-r-full bg-green-50" : ""}`}>
                                 <button type="button" data-day={dateValue(day)} data-today={isToday ? "true" : undefined}
-                                    aria-label={`${day.toLocaleDateString(undefined, { weekday: "long", year: "numeric", month: "long", day: "numeric" })}${isStart ? ", departure date" : ""}${isEnd ? ", return date" : ""}`}
-                                    aria-pressed={selected} disabled={isPast} onClick={() => select(day)} onMouseEnter={() => setHover(day)} onFocus={() => setHover(day)}
-                                    className={`relative flex h-10 w-10 max-w-full items-center justify-center rounded-full text-sm transition-colors ${focusStyle} ${selected ? "bg-green-800 font-semibold text-white shadow-sm" : isPast ? "cursor-not-allowed text-slate-300" : `${outside ? "text-slate-400" : "text-slate-700"} cursor-pointer hover:bg-green-100`} ${isToday && !selected ? "ring-1 ring-inset ring-green-700" : ""} ${previewEnd ? "bg-green-100" : ""}`}>
+                                    aria-label={`${day.toLocaleDateString(undefined, { weekday: "long", year: "numeric", month: "long", day: "numeric" })}${isStart ? ", start date" : ""}${isEnd ? ", end date" : ""}`}
+                                    aria-pressed={selected} disabled={isPast && !allowPast} onClick={() => select(day)} onMouseEnter={() => setHover(day)} onFocus={() => setHover(day)}
+                                    className={`relative flex h-10 w-10 max-w-full items-center justify-center rounded-full text-sm transition-colors ${focusStyle} ${selected ? "bg-green-800 font-semibold text-white shadow-sm" : isPast && !allowPast ? "cursor-not-allowed text-slate-300" : `${outside ? "text-slate-400" : "text-slate-700"} cursor-pointer hover:bg-green-100`} ${isToday && !selected ? "ring-1 ring-inset ring-green-700" : ""} ${previewEnd ? "bg-green-100" : ""}`}>
                                     {day.getDate()}
                                 </button>
                             </div>;
@@ -162,7 +191,7 @@ export default function DateRangePicker({ startName, endName, initialStart, init
                     <div className="mt-4 border-t border-slate-100 pt-4">
                         <div aria-live="polite" className="mb-3"><p className="text-sm font-semibold">{start ? label : "Your next adventure"}</p><p className="mt-1 text-xs text-slate-500">{summary}</p></div>
                         <div className="flex items-center justify-between">
-                            {start ? <button type="button" onClick={() => { setStart(null); setEnd(null); setHover(null); }} className={`rounded-md px-2 py-2 text-xs font-medium text-slate-500 hover:bg-slate-100 hover:text-slate-900 ${focusStyle}`}>Clear dates</button> : <span />}
+                            {start ? <button type="button" onClick={() => { setDates(null, null); setHover(null); }} className={`rounded-md px-2 py-2 text-xs font-medium text-slate-500 hover:bg-slate-100 hover:text-slate-900 ${focusStyle}`}>Clear dates</button> : <span />}
                             <button type="button" disabled={!start || !end} onClick={close} className={`rounded-lg bg-green-800 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-900 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400 ${focusStyle}`}>Done</button>
                         </div>
                     </div>
@@ -171,3 +200,4 @@ export default function DateRangePicker({ startName, endName, initialStart, init
         </div>
     );
 }
+

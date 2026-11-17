@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import { calculateWeightBreakdown, calculateTotalCost } from "@/lib/calculations";
 import { type BuildForCompat, type CompatItem } from "@/lib/compatibility";
 import WeightSummary from "@/components/builder/WeightSummary";
+import { readFoodPlan } from "@/lib/food-plan";
 import BuildRow from "@/components/builder/BuildRow";
 import BuildHeader from "@/components/builder/BuildHeader";
 import CostSummary from "@/components/builder/CostSummary";
@@ -62,6 +63,10 @@ export default async function BuildPage({
 
   const { base, consumable, worn, total } = calculateWeightBreakdown(build.items);
   const totalCost = calculateTotalCost(build.items);
+  const plannedFood = readFoodPlan(build.tripLogistics);
+  const plannedConsumables = plannedFood.foods.filter(item=>item.countInPack).reduce((sum,item)=>sum+(item.gramsPerUnit??0)*item.startingUnits,0)
+    + (plannedFood.settings.countFuelInPack?plannedFood.settings.startingFuelGrams:0);
+  const plannedUnknown = plannedFood.foods.some(item=>item.countInPack && item.gramsPerUnit===null && item.startingUnits>0);
   // Ownership belongs to the signed-in build owner, not the public viewer.
   const ownedGearIds = view.canEdit && access?.userId
     ? new Set((await prisma.ownedGear.findMany({
@@ -117,7 +122,14 @@ export default async function BuildPage({
       location: build.location, locationLat: build.locationLat, locationLng: build.locationLng,
       startDate: build.startDate, endDate: build.endDate,
       people: build.people, minTemperature: build.minTemperature, conditions: build.conditions,
-      routeWaypoints: build.routeWaypoints,
+      // Hide new free-text resource annotations on public build pages.
+      // Booking references stay in private tripLogistics and never enter routeWaypoints.
+      routeWaypoints: Array.isArray(build.routeWaypoints) ? build.routeWaypoints.map(point => {
+        if (!point || typeof point !== "object" || Array.isArray(point)) return point;
+        const { resource: _privateResource, ...publicPoint } = point as Record<string, unknown>;
+        void _privateResource;
+        return publicPoint;
+      }) : build.routeWaypoints,
       days: build.days.map(day => ({
         id: day.id, date: day.date, minTemperature: day.minTemperature,
         conditions: day.conditions, notes: null,
@@ -161,7 +173,7 @@ export default async function BuildPage({
       />
 
       <div className="mx-auto mt-4 max-w-screen-2xl px-4">
-        <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+        <div className="relative overflow-visible rounded-2xl border border-gray-200 bg-white shadow-sm">
 
           <CompatibilityBar
             buildId={build.id}
@@ -177,6 +189,8 @@ export default async function BuildPage({
               isPublic={build.isPublic}
               createdAt={build.createdAt}
               updatedAt={build.updatedAt}
+              activeTab={activeTab}
+              gpxDays={build.days.map(day => ({ id: day.id, date: day.date }))}
             />
           </div>
 
@@ -242,6 +256,8 @@ export default async function BuildPage({
               consumable={consumable}
               worn={worn}
               total={total}
+              plannedConsumables={plannedConsumables}
+              plannedUnknown={plannedUnknown}
             />
 
             <CompatibilityDetails
@@ -258,4 +274,6 @@ export default async function BuildPage({
     </div>
   );
 }
+
+
 

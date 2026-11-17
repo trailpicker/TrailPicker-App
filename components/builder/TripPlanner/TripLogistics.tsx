@@ -12,7 +12,10 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { saveTripLogistics } from "@/lib/tracked-build-actions";
-import { readLogistics, type Logistics } from "@/lib/trip-planner";
+import { readLogistics, type Logistics, type PlannerDay } from "@/lib/trip-planner";
+import PermitReservationManager from "./PermitReservationManager";
+import { readArrangements } from "@/lib/trip-arrangements";
+import { readPrivateResources } from "@/lib/trip-resources";
 import { useBuildAutosave } from "@/lib/use-build-autosave";
 
 type FieldSpec = {
@@ -37,18 +40,7 @@ const SECTIONS: readonly LogisticsSection[] = [
     title: "Permits & reservations",
     description: "Access permits, campsite bookings and confirmation details",
     icon: Ticket,
-    fields: [
-      {
-        key: "permits",
-        label: "Permits",
-        placeholder: "Permit type, number, pickup location or requirements…",
-      },
-      {
-        key: "reservations",
-        label: "Reservations",
-        placeholder: "Campsite bookings, dates, confirmation numbers…",
-      },
-    ],
+    fields: [],
   },
   {
     id: "access",
@@ -121,19 +113,24 @@ function sectionPreview(section: LogisticsSection, values: Logistics): string {
 function TripLogisticsEditor({
   buildId,
   value,
+  days,
+  waypoints,
 }: {
   buildId: string;
   value: unknown;
+  days: PlannerDay[];
+  waypoints: unknown;
 }) {
-  const [values, setValues] = useState<Logistics>(() => readLogistics(value));
+  const cleanLegacyNotes = (logistics: Logistics): Logistics => ({ ...logistics, permits:"", reservations:"" });
+  const [values, setValues] = useState<Logistics>(() => cleanLegacyNotes(readLogistics(value)));
   const [expanded, setExpanded] = useState<SectionId | null>(() =>
-    Object.values(readLogistics(value)).some((entry) => entry.trim())
+    Object.entries(readLogistics(value)).some(([key,entry]) => !["permits","reservations"].includes(key) && entry.trim())
       ? null
       : "bookings"
   );
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
-  const committed = useRef(readLogistics(value));
+  const committed = useRef(cleanLegacyNotes(readLogistics(value)));
   const externalReset = useRef(false);
   const serverSignature = JSON.stringify(value ?? null);
   useEffect(() => {
@@ -144,7 +141,7 @@ function TripLogisticsEditor({
     return () => window.removeEventListener("trailpicker:build-replaced", onReplace);
   }, [buildId]);
   useEffect(() => {
-    const next = readLogistics(value);
+    const next = cleanLegacyNotes(readLogistics(value));
     if (externalReset.current || JSON.stringify(values) === JSON.stringify(committed.current)) {
       committed.current = next;
       setValues(next);
@@ -218,7 +215,35 @@ function TripLogisticsEditor({
               Boolean(values[key].trim())
             );
             const editorId = `logistics-${section.id}`;
+            const arrangementRows = section.id === "bookings" ? [...readArrangements(value).map(a => a.status), ...readPrivateResources(value).bookings.map(b => b.status)] : [];
+            const bookingPreview = arrangementRows.length ? `${arrangementRows.length} entries · ${arrangementRows.filter(s => s === "confirmed").length} confirmed` : section.description;
 
+            const legacyFields = (
+                  <div
+                    className={`grid gap-4 ${
+                      section.fields.length > 1 ? "md:grid-cols-2" : ""
+                    }`} 
+                  >
+                    {section.fields.map((field) => (
+                      <label key={field.key} className="block min-w-0">
+                        <span className="mb-1.5 block text-xs font-semibold text-gray-700">
+                          {field.label}
+                        </span>
+                        <textarea
+                          name={field.key}
+                          value={values[field.key]}
+                          onChange={(event) =>
+                            changeField(field.key, event.target.value)
+                          }
+                          rows={3}
+                          maxLength={5000}
+                          placeholder={field.placeholder}
+                          className="w-full resize-y rounded-lg border border-gray-200 bg-white px-3.5 py-3 text-sm leading-6 text-gray-900 outline-none transition-colors placeholder:text-gray-400 hover:border-gray-300 focus:border-green-700 focus:ring-2 focus:ring-green-700/10"
+                        />
+                      </label>
+                    ))}
+                  </div>
+            );
             return (
               <div
                 key={section.id}
@@ -244,7 +269,7 @@ function TripLogisticsEditor({
                           hasContent ? "text-gray-600" : "text-gray-500"
                         } ${open ? "" : "line-clamp-2"}`}
                       >
-                        {open ? section.description : sectionPreview(section, values)}
+                        {open ? section.description : section.id === "bookings" ? bookingPreview : sectionPreview(section, values)}
                       </span>
                     </span>
                     <ChevronDown
@@ -263,30 +288,8 @@ function TripLogisticsEditor({
                   hidden={!open}
                   className="pb-5 pl-0 sm:pl-[3.75rem] sm:pr-7"
                 >
-                  <div
-                    className={`grid gap-4 ${
-                      section.fields.length > 1 ? "md:grid-cols-2" : ""
-                    }`}
-                  >
-                    {section.fields.map((field) => (
-                      <label key={field.key} className="block min-w-0">
-                        <span className="mb-1.5 block text-xs font-semibold text-gray-700">
-                          {field.label}
-                        </span>
-                        <textarea
-                          name={field.key}
-                          value={values[field.key]}
-                          onChange={(event) =>
-                            changeField(field.key, event.target.value)
-                          }
-                          rows={3}
-                          maxLength={5000}
-                          placeholder={field.placeholder}
-                          className="w-full resize-y rounded-lg border border-gray-200 bg-white px-3.5 py-3 text-sm leading-6 text-gray-900 outline-none transition-colors placeholder:text-gray-400 hover:border-gray-300 focus:border-green-700 focus:ring-2 focus:ring-green-700/10"
-                        />
-                      </label>
-                    ))}
-                  </div>
+                  {section.id === "bookings" && <div className="mb-4"><PermitReservationManager buildId={buildId} value={value} days={days} waypoints={waypoints}/></div>}
+                  {section.id !== "bookings" && legacyFields}
                 </div>
               </div>
             );
@@ -300,9 +303,12 @@ function TripLogisticsEditor({
 export default function TripLogistics(props: {
   buildId: string;
   value: unknown;
+  days: PlannerDay[];
+  waypoints: unknown;
 }) {
   // If the client navigates between builds without remounting the page,
   // reset the editor and autosave baseline for the new build.
   return <TripLogisticsEditor key={props.buildId} {...props} />;
 }
+
 

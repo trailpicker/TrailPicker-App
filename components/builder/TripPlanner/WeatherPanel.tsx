@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { AlertTriangle, ChevronDown, CircleHelp, Cloud, CloudRain, CloudSnow, CloudSun, ExternalLink, MapPin, RefreshCw, Sun, Wind } from "lucide-react";
+import { AlertTriangle, ChevronDown, CircleHelp, Cloud, CloudRain, CloudSnow, CloudSun, ExternalLink, MapPin, RefreshCw, Sun, Sunrise, Sunset, Wind } from "lucide-react";
 import type { WeatherResult } from "@/lib/weather/service";
 import type { WeatherPoint } from "@/lib/weather/locations";
 import { loadWaypointWeather } from "@/lib/weather/client-cache";
@@ -9,6 +9,10 @@ import { comparePlan, forecastHints, tripDayForecast, localHour, type PlanningIn
 import { dateKey } from "@/lib/weather/core";
 import { useDisplayPreferences } from "@/components/settings/DisplayPreferencesProvider";
 import { temperatureNumber, windText } from "@/lib/user-preferences";
+import { clockLabel, type DaylightResult } from "@/lib/route-analysis-insights";
+import StopSelectPicker from "./StopSelectPicker";
+import WaypointIcon from "./WaypointIcon";
+import { waypointType } from "@/lib/waypoint-map";
 
 type Snapshot = { key: string; data?: WeatherResult; error?: string };
 
@@ -64,14 +68,16 @@ function SkyIcon({ kind, className = "h-8 w-8" }: { kind: SkyKind; className?: s
   }
 }
 
-export default function WeatherPanel({ points, date, defaultPointId, tripStart, tripEnd, planning, gearIssueCount = 0 }: {
+export default function WeatherPanel({ points, date, defaultPointId, tripStart, tripEnd, planning, daylight, gearIssueCount = 0, onLocationChange }: {
   points: WeatherPoint[];
   date?: string;
   defaultPointId?: string;
   tripStart?: string;
   tripEnd?: string;
   planning?: PlanningInputs;
+  daylight?: DaylightResult | null;
   gearIssueCount?: number;
+  onLocationChange?: (point: WeatherPoint) => void;
 }) {
   const { temperatureUnit, distanceUnit } = useDisplayPreferences();
   const temp = (value: number | null | undefined, withUnit = false) => {
@@ -186,41 +192,47 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
 
     return (
       <section aria-label={`Day forecast for ${shortDate(date)}`} className="min-w-0 text-sm text-gray-800">
-        <div className="rounded-xl border border-gray-200 bg-gray-50/50 px-3 py-3 sm:px-4">
-          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
-            <div className="flex min-w-0 items-center gap-2">
-              <SkyIcon kind={condition.kind} className="h-5 w-5 shrink-0" />
-              <span className="font-semibold text-gray-900">Day forecast</span>
-              {isLoading && <span role="status" className="text-xs text-gray-500">Updating…</span>}
-            </div>
-            <span className="text-xs text-gray-500">Model estimate</span>
+        <div className="rounded-xl border border-gray-200 bg-gray-50/50 px-3 py-3 shadow-sm sm:px-4">
+          {/* The itinerary owns the only Day forecast heading. Keep the card focused on weather. */}
+          <div className="flex items-center justify-end text-xs text-gray-500">
           </div>
 
           {!point ? (
-            <p className="mt-2 text-xs text-gray-600">Add a Canadian trip location or route waypoint to see weather.</p>
+            <div className="mt-3 flex items-center gap-2 text-sm text-gray-600">
+              <CircleHelp aria-hidden="true" className="h-6 w-6 shrink-0 text-gray-400" />
+              <span>Add a trip stop to see weather for this day.</span>
+            </div>
           ) : !data ? (
-            <p role={error ? "alert" : "status"} className="mt-3 text-xs text-gray-600">
-              {error ? "Forecast couldn't be loaded. Try reopening this day forecast." : "Loading forecast…"}
-            </p>
-          ) : !forecastAvailable ? (
-            <p className="mt-3 text-sm text-gray-600">Forecast not available for this day.</p>
+            <div role={error ? "alert" : "status"} className="mt-3 flex items-center gap-2 text-sm text-gray-600">
+              {error && <CircleHelp aria-hidden="true" className="h-6 w-6 shrink-0 text-gray-400" />}
+              <span>{error ? "Forecast couldn't be loaded. Try reopening this day forecast." : "Loading forecast…"}</span>
+            </div>
+          ) : !forecastAvailable || !hasNumbers ? (
+            <div className="mt-3 flex items-center gap-3 py-1 text-gray-600">
+              <CircleHelp aria-hidden="true" className="h-9 w-9 shrink-0 text-gray-400" />
+              <div>
+                <p className="text-sm font-medium text-gray-800">Forecast unavailable</p>
+                <p className="text-xs text-gray-500">No forecast available for this day.</p>
+              </div>
+            </div>
           ) : (
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-3">
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-x-5 gap-y-3">
               <div className="flex min-w-0 items-center gap-3">
                 <SkyIcon kind={condition.kind} className="h-9 w-9 shrink-0" />
                 <div>
                   <p className="text-xl font-semibold tabular-nums tracking-tight text-gray-950">
                     {temp(day.high)} <span className="font-normal text-gray-400">/</span> {temp(day.low)}
                   </p>
-                  <p className="text-xs text-gray-500">{hasNumbers ? condition.label : "Forecast values unavailable"}</p>
+                  <p className="text-xs text-gray-500">{condition.label}</p>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-gray-700">
-                <span className="inline-flex items-center gap-1.5">
+              {/* Keep precipitation and wind on the right, wrapping on small screens. */}
+              <div className="ml-auto flex flex-wrap items-center justify-end gap-x-4 gap-y-1.5 text-xs text-gray-700">
+                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
                   <CloudRain aria-hidden="true" className="h-4 w-4 text-gray-500" />
                   Precip. {number(day.pop, "%")}
                 </span>
-                <span className="inline-flex items-center gap-1.5">
+                <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
                   <Wind aria-hidden="true" className="h-4 w-4 text-gray-500" />
                   Wind {wind(day.wind)}
                 </span>
@@ -228,50 +240,86 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
             </div>
           )}
 
+          {/* The location selector stays full-width and visible, below the forecast like before. */}
           {point && (
-            <div className="mt-3 flex min-w-0 items-center gap-2 border-t border-gray-200 pt-3">
+            <div className="mt-4 flex min-w-0 items-center gap-2">
               <MapPin aria-hidden="true" className="h-4 w-4 shrink-0 text-gray-500" />
-              <label htmlFor={controlId} className="sr-only">Day forecast location</label>
-              <select
-                id={controlId}
-                aria-label="Day forecast location"
-                value={point.id}
-                onChange={event => {
-                  setSelected(event.target.value);
-                  setShowDetails(false);
-                  setDetailsError("");
-                }}
-                className="min-w-0 w-full rounded-lg border border-gray-200 bg-white px-2.5 py-2 text-xs text-gray-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700"
-              >
-                {points.map(item => (
-                  <option key={item.id} value={item.id}>{item.name}</option>
-                ))}
-              </select>
+              <div className="min-w-0 flex-1">
+                <StopSelectPicker
+                  label="Day forecast location"
+                  hideLabel
+                  value={point.id}
+                  options={points.map(item => ({
+                    value: item.id,
+                    label: item.name,
+                    icon: item.kind ? (
+                      <span style={{ color: waypointType(item.kind).color }}>
+                        <WaypointIcon kind={item.kind} className="h-4 w-4" />
+                      </span>
+                    ) : <MapPin className="h-4 w-4 text-gray-500" />,
+                  }))}
+                  onChange={nextId => {
+                    setSelected(nextId);
+                    const nextPoint = points.find(entry => entry.id === nextId);
+                    if (nextPoint) onLocationChange?.(nextPoint);
+                    setShowDetails(false);
+                    setDetailsError("");
+                  }}
+                />
+              </div>
             </div>
           )}
-          {point && !defaultPointId && (
-            <p className="mt-2 text-xs text-amber-900">
-              No unique waypoint matches this day&apos;s plan. Select the correct forecast location above.
-            </p>
+
+          {daylight && (
+            <div className="mt-4 border-t border-gray-200/80 pt-3">
+              <div className="flex flex-wrap items-center gap-x-7 gap-y-2 text-sm">
+                <span className="inline-flex items-center gap-2">
+                  <Sunrise className="h-4 w-4 shrink-0 text-green-800" aria-hidden="true" />
+                  <span className="text-gray-600">Sunrise</span>
+                  <strong className="font-semibold tabular-nums text-gray-900">
+                    {daylight.sunriseMinutes != null ? clockLabel(daylight.sunriseMinutes) : "Unavailable"}
+                  </strong>
+                </span>
+                <span className="inline-flex items-center gap-2">
+                  <Sunset className="h-4 w-4 shrink-0 text-green-800" aria-hidden="true" />
+                  <span className="text-gray-600">Sunset</span>
+                  <strong className="font-semibold tabular-nums text-gray-900">
+                    {daylight.sunsetMinutes != null ? clockLabel(daylight.sunsetMinutes) : "Unavailable"}
+                  </strong>
+                </span>
+              </div>
+              <p className="mt-1.5 text-[11px] text-gray-500">Times from {daylight.zone}</p>
+            </div>
           )}
+
           {error && data && <p role="status" className="mt-2 text-xs text-amber-800">Could not refresh; showing previously loaded data.</p>}
           {alertsUnknown && (
             <p role="status" className="mt-2 text-xs text-amber-900">Official weather alert status couldn&apos;t be checked.</p>
           )}
           {actualAlerts.length > 0 && (
-            <div className="mt-3 border-t border-amber-200 pt-2 text-xs text-amber-950">
-              <p className="flex items-center gap-1.5 font-semibold">
-                <AlertTriangle aria-hidden="true" className="h-4 w-4" />
-                {actualAlerts.length} active ECCC {actualAlerts.length === 1 ? "alert" : "alerts"} at this location
-              </p>
-              <p className="mt-1">Current alerts may not apply to your future trip date.</p>
-              {actualAlerts.map(alert => (
-                <details key={alert.id} className="mt-2">
-                  <summary className="cursor-pointer font-medium">{alert.title} · {alert.area}</summary>
-                  <p className="mt-1 whitespace-pre-wrap leading-relaxed">{alert.text}</p>
-                </details>
-              ))}
-            </div>
+            <details className="group mt-4 rounded-lg border border-gray-200/80 bg-white px-3 py-3 text-xs text-gray-800">
+              <summary className="flex cursor-pointer list-none items-center gap-2 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700 [&::-webkit-details-marker]:hidden">
+                <AlertTriangle aria-hidden="true" className="h-4 w-4 shrink-0 text-amber-600" />
+                <span className="min-w-0 flex-1">
+                  <span className="block font-semibold text-gray-900">
+                    {actualAlerts.length} active ECCC {actualAlerts.length === 1 ? "alert" : "alerts"}
+                  </span>
+                  <span className="mt-0.5 block truncate text-gray-500">
+                    {actualAlerts.length === 1 ? actualAlerts[0].area : "Current weather alerts for this location"}
+                  </span>
+                </span>
+                <ChevronDown aria-hidden="true" className="h-4 w-4 shrink-0 text-gray-500 transition-transform group-open:rotate-180" />
+              </summary>
+              <div className="mt-3 space-y-3 pl-6 text-gray-700">
+                <p className="text-gray-500">These are current alerts, not necessarily alerts for your trip date.</p>
+                {actualAlerts.map(alert => (
+                  <div key={alert.id}>
+                    <p className="font-semibold text-gray-900">{alert.title} · {alert.area}</p>
+                    <p className="mt-1 whitespace-pre-wrap leading-relaxed">{alert.text}</p>
+                  </div>
+                ))}
+              </div>
+            </details>
           )}
         </div>
       </section>
@@ -333,6 +381,8 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
                 value={point.id}
                 onChange={event => {
                   setSelected(event.target.value);
+                  const nextPoint=points.find(entry=>entry.id===event.target.value);
+                  if(nextPoint)onLocationChange?.(nextPoint);
                   setShowDetails(false);
                   setDetailsError("");
                 }}
@@ -629,4 +679,6 @@ export default function WeatherPanel({ points, date, defaultPointId, tripStart, 
     </section>
   );
 }
+
+
 

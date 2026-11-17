@@ -1,4 +1,7 @@
 "use client";
+import { useEffect, useState } from "react";
+import type { Waypoint } from "@/lib/trip-planner";
+import type { BreakSettings } from "@/lib/route-analysis-insights";
 import { evaluatePackIntelligence, type IntelligenceItem } from "@/lib/pack-intelligence";
 import type { PlannerBuild } from "@/lib/trip-planner";
 import { useIgnoredFindings } from "./useIgnoredFindings";
@@ -22,7 +25,21 @@ const styles = {
 };
 
 export default function CompatibilityBar({ buildId, trip, items, totalWeight }: Props) {
-  const findings = evaluatePackIntelligence(trip, items as IntelligenceItem[], trip.days).findings;
+  const [live, setLive] = useState<{points:Waypoint[];paceKmh:number;breakSettings:BreakSettings}|null>(null);
+  useEffect(() => {
+    const handle = (event:Event) => {
+      const details=(event as CustomEvent).detail as {buildId?:string;points?:Waypoint[];paceKmh?:number;breakSettings?:BreakSettings}|undefined;
+      if (details?.buildId === buildId && Array.isArray(details.points) && typeof details.paceKmh==='number' && details.breakSettings)
+        setLive({points:details.points,paceKmh:details.paceKmh,breakSettings:details.breakSettings});
+    };
+    window.addEventListener('trailpicker:route-timing',handle);
+    return () => window.removeEventListener('trailpicker:route-timing',handle);
+  },[buildId]);
+  const findings = evaluatePackIntelligence(
+    live ? {...trip,routeWaypoints:live.points} : trip,
+    items as IntelligenceItem[], trip.days, null,
+    live ? {paceKmh:live.paceKmh,breaks:live.breakSettings} : undefined,
+  ).findings;
   const { ignoredIds } = useIgnoredFindings(buildId ?? "", findings, !!buildId);
   const active = findings.filter(f => !ignoredIds.has(f.id));
   const summary = {
@@ -59,4 +76,5 @@ export default function CompatibilityBar({ buildId, trip, items, totalWeight }: 
     </div>
   );
 }
+
 

@@ -8,7 +8,7 @@ import {
     useMap,
 } from "react-leaflet";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -80,8 +80,12 @@ export default function LocationMap({
     onPick: (pos: LatLng) => void;
 }) {
 
+    const [mapBlocked,setMapBlocked]=useState(false);
+    const mapLink=position
+        ? `https://www.openstreetmap.org/?mlat=${position.lat}&mlon=${position.lng}#map=12/${position.lat}/${position.lng}`
+        : "https://www.openstreetmap.org/";
     return (
-        // components/build/LocationMap.tsx — only the className on MapContainer changes
+      <div className="relative">
 <MapContainer
     key={position ? `${position.lat}-${position.lng}` : "default"}
     center={position ? [position.lat, position.lng] : [49.28, -123.12]}
@@ -91,7 +95,9 @@ export default function LocationMap({
 >
 
             <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                referrerPolicy="origin"
+                eventHandlers={{tileerror:()=>setMapBlocked(true)}}
                 attribution="&copy; OpenStreetMap contributors"
             />
 
@@ -109,5 +115,7 @@ export default function LocationMap({
             )}
 
         </MapContainer>
+        {mapBlocked&&<div role="status" className="absolute inset-x-3 top-3 z-[800] rounded-lg border border-amber-200 bg-white/95 p-3 text-xs text-slate-700 shadow-md">Map tiles unavailable. You can still enter a location or <a href={mapLink} target="_blank" rel="noopener noreferrer" className="font-semibold text-green-900 underline">open OpenStreetMap</a>.</div>}
+      </div>
     );
 }

@@ -113,6 +113,10 @@ async function restoreSnapshot(
     );
     unassignedStops = linked.unassignedCount;
     const logistics = parseLogistics(snapshot.tripLogistics);
+    if (logistics?.arrangements) {
+      const dayMap = new Map(snapshot.days.map((day, index) => [day.id, days[index].id]));
+      logistics.arrangements = logistics.arrangements.map(entry => ({ ...entry, dayId: dayMap.get(entry.dayId) || "" }));
+    }
 
     const latest = await tx.buildRevision.findFirst({
       where: { buildId: access.id },
@@ -210,3 +214,4 @@ export async function undoLastBuildChange(buildId: string) {
   const result = await restoreSnapshot(access, target.id, `Undid: ${revisions[0].summary}`, revisions[0].id, revisions[0].snapshot);
   return { ...result, undone: revisions[0].summary };
 }
+

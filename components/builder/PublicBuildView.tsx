@@ -1,5 +1,6 @@
 
 import Link from "next/link";
+import {publicRouteWaypoints} from "@/lib/discover-public-route";
 import TripPlanner from "./TripPlanner/TripPlanner";
 import type { PlannerBuild } from "@/lib/trip-planner";
 import { evaluateCompatibility } from "@/lib/compatibility";
@@ -165,6 +166,7 @@ export default function PublicBuildView({
           <TripPlanner
             build={{
               ...build,
+              routeWaypoints: publicRouteWaypoints(build.routeWaypoints,build.days.map(day=>day.id)),
               tripLogistics: undefined,
               days: build.days.map((day) => ({
                 ...day,
@@ -184,3 +186,4 @@ export default function PublicBuildView({
     </div>
   );
 }
+

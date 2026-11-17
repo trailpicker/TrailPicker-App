@@ -3,6 +3,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import ConsumablesTimeline from "@/components/builder/ConsumablesTimeline";
+import FoodConsumablesPlanner from "@/components/builder/FoodConsumablesPlanner";
 import { analyzePack, type PackInputItem } from "@/lib/pack-analysis";
 import WeatherPanel from "./WeatherPanel";
 import { weatherPoints } from "@/lib/weather/locations";
@@ -61,6 +62,7 @@ export default function TripPlanner({
           {[
             "overview",
             "route",
+            "analysis",
             "weather",
             "consumables",
             ...(!readOnly ? ["logistics"] : []),
@@ -70,7 +72,7 @@ export default function TripPlanner({
               href={`#${section}`}
               className="shrink-0 border-b-2 border-transparent px-1 py-3 text-sm font-medium capitalize text-gray-600 transition-colors hover:border-green-700 hover:text-green-900"
             >
-              {section === "route" ? "Route & itinerary" : section}
+              {section === "route" ? "Route & itinerary" : section === "analysis" ? "Route analysis" : section}
             </a>
           ))}
         </div>
@@ -108,6 +110,10 @@ export default function TripPlanner({
         days={build.days}
         weatherPoints={points}
         readOnly={readOnly}
+        buildName={build.name || build.location || "Trip"}
+        people={build.people}
+        tripLogistics={build.tripLogistics}
+        packLines={pack.lines}
       />
 
       {/* Weather */}
@@ -127,7 +133,7 @@ export default function TripPlanner({
 
       {/* Consumables */}
       <div id="consumables" className="scroll-mt-20">
-        <ConsumablesTimeline pack={pack} trip={build} />
+        {readOnly ? <ConsumablesTimeline pack={pack} trip={build} /> : <FoodConsumablesPlanner pack={pack} trip={build} />}
       </div>
 
       {/* Logistics */}
@@ -135,9 +141,13 @@ export default function TripPlanner({
         <TripLogistics
           buildId={build.id}
           value={build.tripLogistics}
+          days={build.days}
+          waypoints={build.routeWaypoints}
         />
       )}
     </div>
   );
 }
+
+
 

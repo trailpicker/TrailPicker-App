@@ -184,6 +184,7 @@ export default function TripEditForm({
       return;
     }
 
+    autosave.markUserEdit();
     // Only confirming updates the actual trip form.
     // Browsing and cancelling do not change its location.
     setDestination(next);
@@ -509,3 +510,4 @@ export default function TripEditForm({
     </section>
   );
 }
+

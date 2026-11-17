@@ -2,6 +2,7 @@ import {
   readWaypoints,
   type PlannerBuild,
   type PlannerDay,
+  type Waypoint,
 } from "../trip-planner";
 export type WeatherPoint = {
   id: string;
@@ -9,6 +10,8 @@ export type WeatherPoint = {
   lat: number;
   lng: number;
   elevationM: number | null;
+  /** Optional original waypoint type for consistent location-picker icons. */
+  kind?: Waypoint["kind"];
 };
 export function weatherPoints(build: PlannerBuild): WeatherPoint[] {
   const points: WeatherPoint[] = readWaypoints(build.routeWaypoints).map(
@@ -18,6 +21,7 @@ export function weatherPoints(build: PlannerBuild): WeatherPoint[] {
       lat: p.lat,
       lng: p.lng,
       elevationM: p.elevationM,
+      kind: p.kind,
     }),
   );
   if (build.locationLat !== null && build.locationLng !== null)
@@ -43,3 +47,4 @@ export function dayWeatherPoint(
   }
   return undefined;
 }
+

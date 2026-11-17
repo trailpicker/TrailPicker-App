@@ -9,6 +9,7 @@ import { getDateRange } from "@/lib/trip";
 import { currentBuildUserId, hasGuestBuildAccess, requireBuildAccess, requireBuildItemAccess, setCurrentBuild } from "@/lib/build-access";
 import { guestBuildCookieName } from "@/lib/guest-build-token";
 import { getDestination } from "@/lib/destinations";
+import { createDiscoverDaySeed, createDiscoverLogistics } from "@/lib/discover-trip";
 import { Prisma } from "@/app/generated/prisma/client";
 import { randomUUID } from "node:crypto";
 import { remapRouteDays, validatedRoute } from "@/lib/itinerary-links";
@@ -131,7 +132,10 @@ export async function importBuildItems(formData: FormData) {
   // Reject invalid route objects before the database transaction rather than
   // storing values that readWaypoints later silently removes from the UI.
   const importRoute = mode === "replace" ? validatedRoute(payload.routeWaypoints) : null;
-  const importLogistics = mode === "replace" ? parseLogistics(payload.tripLogistics) : null;
+  const importLogistics = mode === "replace" ? parseLogistics(payload.tripLogistics,
+    days?.flatMap(day => day.sourceId ? [day.sourceId] : []) ?? [],
+    importRoute?.filter(p => p.kind === "camp").map(p => p.id) ?? [],
+    importRoute?.filter(p => p.kind === "resupply").map(p => p.id) ?? []) : null;
   const requestedGearIds = [...new Set(items.map((item) => item.gearId).filter((id): id is string => Boolean(id)))];
   const existingGear = requestedGearIds.length
     ? await prisma.gear.findMany({ where: { id: { in: requestedGearIds } }, select: { id: true } })
@@ -182,7 +186,21 @@ export async function importBuildItems(formData: FormData) {
           minTemperature: optionalNumber(payload.minTemperature, -100, 60, true),
           conditions: optionalText(payload.conditions, 50),
           routeWaypoints: linked.points == null ? Prisma.DbNull : JSON.parse(JSON.stringify(linked.points)),
-          tripLogistics: importLogistics == null ? Prisma.DbNull : importLogistics,
+          tripLogistics: importLogistics == null ? Prisma.DbNull : (() => {
+            const sourceToNewDay = new Map(importedRows.flatMap(row => row.sourceId ? [[row.sourceId, row.id] as const] : []));
+            const phase6 = importLogistics.phase6;
+            const phase7 = importLogistics.phase7;
+            const arrangements = importLogistics.arrangements;
+            return JSON.parse(JSON.stringify({ ...importLogistics,
+              ...(phase6 ? { phase6: { ...phase6, bookings: phase6.bookings.map(booking => ({
+                ...booking, dayId: booking.dayId ? sourceToNewDay.get(booking.dayId) || "" : "",
+              })) } } : {}),
+              ...(arrangements ? { arrangements: arrangements.map(entry => ({ ...entry, dayId: entry.dayId ? sourceToNewDay.get(entry.dayId) || "" : "" })) } : {}),
+              ...(phase7 ? { phase7: { ...phase7, meals: phase7.meals.map(meal => ({
+                ...meal, dayId: sourceToNewDay.get(meal.dayId) || meal.dayId,
+              })) } } : {}),
+            }));
+          })(),
         },
       });
 
@@ -383,6 +401,9 @@ export async function createBuild(formData: FormData) {
     : false;
   const parsed = parseBuildDetails(formData);
   const selected = getDestination(parsed.destinationId);
+  const discoverPlan = formData.get("discoverPlan") === "1" && selected !== null;
+  const seedItinerary = formData.get("seedItinerary") === "1";
+  const tripLogistics = discoverPlan && selected ? createDiscoverLogistics(selected) : undefined;
   const location = selected ? `${selected.name}, ${selected.park}` : parsed.location;
   const locationLat = selected?.latitude ?? parsed.latitude;
   const locationLng = selected?.longitude ?? parsed.longitude;
@@ -393,12 +414,16 @@ export async function createBuild(formData: FormData) {
         destinationId: selected?.id ?? null,
         location, locationLat, locationLng, ...parsed.dates,
         people: parsed.people, minTemperature: parsed.minTemperature,
-        conditions: parsed.conditions, userId: ownerId, isPublic: newBuildPublic,
+        conditions: parsed.conditions, userId: ownerId, isPublic: discoverPlan ? false : newBuildPublic,
+        ...(tripLogistics ? { tripLogistics } : {}),
       },
     });
     if (created.startDate && created.endDate) {
       await tx.tripDay.createMany({
-        data: getDateRange(created.startDate, created.endDate).map(date => ({ buildId: created.id, date })),
+        data: getDateRange(created.startDate, created.endDate).map((date, index, dates) => ({
+          buildId: created.id, date,
+          ...(discoverPlan && seedItinerary && selected ? createDiscoverDaySeed(selected, index, dates.length) : {}),
+        })),
         skipDuplicates: true,
       });
     }
@@ -406,7 +431,7 @@ export async function createBuild(formData: FormData) {
     return created;
   });
   await setCurrentBuild(build.id, !ownerId);
-  redirect(`/build/${build.id}`);
+  redirect(`/build/${build.id}${discoverPlan ? "?tab=trip" : ""}`);
 }
 export async function addGear(formData: FormData) {
   const buildId = formText(formData, "buildId", 200, true)!;
@@ -438,3 +463,6 @@ export async function removeGear(formData: FormData) {
 
 export async function updateTripDetails(formData: FormData) { return saveTripDetails(formData); }
 export async function updateTripDay(formData: FormData) { return saveTripDay(formData); }
+
+
+

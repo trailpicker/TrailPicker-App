@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { ChevronDown, ChevronRight, Menu, Tent, X } from "lucide-react";
 
 type Category = { id: string; name: string; slug: string; subcategories: { id: string; name: string; slug: string }[] };
-const links = [{ name: "Marketplace", href: "/marketplace" }, { name: "Community", href: "/community" }, { name: "Guides", href: "/guide" }];
+const links = [{ name: "Community", href: "/community" }, { name: "Discover", href: "/discover" }, { name: "Guides", href: "/guide" }];
 
 function NavbarNavigationContent({ builderHref, categories, account }: {
   builderHref: string; categories: Category[]; account: ReactNode;
@@ -106,3 +106,4 @@ export default function NavbarNavigation(props: {
 
   return <NavbarNavigationContent key={pathname} {...props} />;
 }
+

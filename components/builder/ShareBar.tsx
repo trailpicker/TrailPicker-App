@@ -13,12 +13,14 @@ type Props = {
   isPublic: boolean;
   createdAt: Date;
   updatedAt: Date;
+  activeTab: "gear" | "trip";
+  gpxDays: { id: string; date: Date | string }[];
 };
 
 const btnClass =
   "flex items-center gap-1.5 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:border-gray-400 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50";
 
-export default function ShareBar({ buildId, buildName, isPublic, createdAt, updatedAt }: Props) {
+export default function ShareBar({ buildId, buildName, isPublic, createdAt, updatedAt, activeTab, gpxDays }: Props) {
   const [copied, setCopied] = useState(false);
   const shareUrl = typeof window !== "undefined" ? `${window.location.origin}/build/${buildId}` : `/build/${buildId}`;
 
@@ -59,6 +61,8 @@ export default function ShareBar({ buildId, buildName, isPublic, createdAt, upda
         buildName={buildName}
         createdAt={createdAt}
         updatedAt={updatedAt}
+        activeTab={activeTab}
+        gpxDays={gpxDays}
         buttonClassName={btnClass}
       />
 
@@ -79,3 +83,4 @@ export default function ShareBar({ buildId, buildName, isPublic, createdAt, upda
     </div>
   );
 }
+
